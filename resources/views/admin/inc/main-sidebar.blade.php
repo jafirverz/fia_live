@@ -6,7 +6,10 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
             <li class="active">
-                <a href="{{ url('/admin/home') }}"><i class="fa fa-check"></i> <span>Dashboard</span></a>
+                <a href="{{ url('/admin/home') }}"><i class="fa fa-check"></i> <span>{{ __('constant.DASHBOARD') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i> <span>{{ __('constant.COUNTRY') }}</span></a>
             </li>
           </ul>
         </section>

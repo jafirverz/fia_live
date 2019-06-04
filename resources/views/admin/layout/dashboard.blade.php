@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel Multi Auth Guard') }}</title>
+    <title>{{ config('app.name', 'FIA') }}</title>
 
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
     <!-- Scripts -->
     <!-- jQuery 3 -->
@@ -61,6 +63,18 @@
 <script src="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.colVis.min.js') }}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 <!-- Slimscroll -->
@@ -69,4 +83,9 @@
 <script src="{{ asset('assets/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('.datatable').DataTable();
+    });
+</script>
 </html>
