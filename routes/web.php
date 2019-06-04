@@ -32,4 +32,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
+
+    //COUNTRY
+    Route::get('/country', 'CMS\CountryController@index');
+    Route::get('/country/create', 'CMS\CountryController@create');
+    Route::post('/country/store', 'CMS\CountryController@store');
+    Route::get('/country/edit/{id}', 'CMS\CountryController@edit');
+    Route::post('/country/update/{id}', 'CMS\CountryController@update');
+    Route::post('/country/destroy', 'CMS\CountryController@destroy');
 });
