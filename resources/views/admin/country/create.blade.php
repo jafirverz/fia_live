@@ -31,7 +31,19 @@
                                 </span>
                                 @endif
                             </div>
-
+                            <div class="form-group">
+                                <label for="">Country Flag</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <a id="country_flag" data-input="thumbnail" data-preview="holder"
+                                            class="btn btn-primary">
+                                            <i class="fa fa-picture-o"></i> Choose
+                                        </a>
+                                    </span>
+                                    <input id="thumbnail" class="form-control" type="text" name="country_flag">
+                                </div>
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
+                            </div>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -46,4 +58,7 @@
         <!-- /.box -->
     </section>
 </div>
+<script>
+    $('#country_flag').filemanager('image');
+</script>
 @endsection

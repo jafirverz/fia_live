@@ -6,6 +6,7 @@ return [
     'DASHBOARD' =>  'Dashboard',
     'COUNTRY'   =>  'Country',
     'REGULATORY'    =>  'Regulatory',
+    'TOPIC' =>  'Topic',
 
 
     //CRUD
