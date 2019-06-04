@@ -55,6 +55,10 @@ class CountryController extends Controller
 
         $country = new Country();
         $country->country_name = $request->country_name;
+        if($request->country_flag)
+        {
+            $country->country_flag = $request->country_flag;
+        }
         $country->save();
 
         return redirect('admin/country')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.COUNTRY')]));
@@ -80,7 +84,7 @@ class CountryController extends Controller
     public function edit($id)
     {
         $title = __('constant.COUNTRY');
-        $subtitle = 'Index';
+        $subtitle = 'Edit';
         $country = Country::findorfail($id);
 
         return view('admin.country.edit', compact('title', 'subtitle', 'country'));
@@ -101,6 +105,11 @@ class CountryController extends Controller
 
         $country = Country::findorfail($id);
         $country->country_name = $request->country_name;
+        if($request->country_flag)
+        {
+            $country->country_flag = $request->country_flag;
+        }
+        $country->updated_at = Carbon::now();
         $country->save();
 
         return redirect('admin/country')->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.COUNTRY')]));

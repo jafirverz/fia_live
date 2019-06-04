@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
     <!-- Scripts -->
     <!-- jQuery 3 -->
     <script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -42,6 +43,7 @@
     </script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/vendor/laravel-filemanager/js/lfm.js') }}"></script>
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
@@ -58,6 +60,8 @@
     @include('admin.inc.control-sidebar')
 </div>
 </body>
+<!-- Select2 -->
+<script src="{{ asset('assets/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
 <!-- daterangepicker -->
 <script src="{{ asset('assets/bower_components/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
@@ -86,6 +90,13 @@
 <script>
     $(document).ready(function () {
         $('.datatable').DataTable();
+        $('.datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+        });
+        $('.select2').select2({
+            placeholder: '-- Select --',
+        });
     });
 </script>
 </html>

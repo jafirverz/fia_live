@@ -9,7 +9,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('country') }}
+        {{ Breadcrumbs::render('topic') }}
     </section>
 
     <!-- Main content -->
@@ -20,7 +20,7 @@
                 <div class="box box-default">
                     <!-- /.box-header -->
                     <div class="box-header">
-                        <a href="{{ url('admin/country/create') }}" class="btn btn-primary pull-right">Create</a>
+                        <a href="{{ url('admin/topic/create') }}" class="btn btn-primary pull-right">Create</a>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -28,27 +28,25 @@
                                 <table class="table table-bordered table-hover datatable">
                                     <thead>
                                         <tr>
-                                            <th>Country Name</th>
-                                            <th>Country Flag</th>
+                                            <th>Topic Name</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($countries)
-                                        @foreach($countries as $country)
+                                        @if($topics)
+                                        @foreach($topics as $topic)
                                         <tr>
-                                            <td>{{ $country->country_name ?? '-' }}</td>
-                                            <td>@if($country->country_flag)<img src="{{ $country->country_flag ?? '-' }}" alt="{{ $country->country_flag ?? '-' }}" style="margin-top:15px;max-height:100px;"> @else - @endif</td>
-                                            <td>{{ $country->created_at->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ $country->updated_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $topic->topic_name ?? '-' }}</td>
+                                            <td>{{ $topic->created_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $topic->updated_at->format('d M, Y') ?? '-' }}</td>
                                             <td>
-                                                <a href="{{ url('admin/country/edit', $country->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <form action="{{ url('admin/country/destroy') }}" method="post">
+                                                <a href="{{ url('admin/topic/edit', $topic->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <form action="{{ url('admin/topic/destroy') }}" method="post">
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                    <input type="hidden" name="id" value="{{ $country->id }}">
+                                                    <input type="hidden" name="id" value="{{ $topic->id }}">
                                                 </form>
                                             </td>
                                         </tr>

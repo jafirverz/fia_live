@@ -40,4 +40,20 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/country/edit/{id}', 'CMS\CountryController@edit');
     Route::post('/country/update/{id}', 'CMS\CountryController@update');
     Route::post('/country/destroy', 'CMS\CountryController@destroy');
+
+    //REGULATORY
+    Route::get('/regulatory', 'CMS\RegulatoryController@index');
+    Route::get('/regulatory/create', 'CMS\RegulatoryController@create');
+    Route::post('/regulatory/store', 'CMS\RegulatoryController@store');
+    Route::get('/regulatory/edit/{id}', 'CMS\RegulatoryController@edit');
+    Route::post('/regulatory/update/{id}', 'CMS\RegulatoryController@update');
+    Route::post('/regulatory/destroy', 'CMS\RegulatoryController@destroy');
+
+    //TOPIC
+    Route::get('/topic', 'CMS\TopicController@index');
+    Route::get('/topic/create', 'CMS\TopicController@create');
+    Route::post('/topic/store', 'CMS\TopicController@store');
+    Route::get('/topic/edit/{id}', 'CMS\TopicController@edit');
+    Route::post('/topic/update/{id}', 'CMS\TopicController@update');
+    Route::post('/topic/destroy', 'CMS\TopicController@destroy');
 });
