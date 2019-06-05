@@ -7,6 +7,7 @@ return [
     'COUNTRY'   =>  'Country',
     'REGULATORY'    =>  'Regulatory',
     'TOPIC' =>  'Topic',
+    'CONTACTENQUIRY'   =>  'Contact Enquiry',
 
 
     //CRUD

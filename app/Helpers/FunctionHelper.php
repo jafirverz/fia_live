@@ -15,11 +15,10 @@ if (!function_exists('getTopics')) {
     {
         $id = json_decode($id);
         $topics = Topic::whereIn('id', $id)->get();
-        if($topics)
+        if($topics->count())
         {
             return $topics->pluck('topic_name');;
         }
-        return '-';
     }
 
     function getCountry($id)
