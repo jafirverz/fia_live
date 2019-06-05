@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
-    Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
+    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
@@ -56,4 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/topic/edit/{id}', 'CMS\TopicController@edit');
     Route::post('/topic/update/{id}', 'CMS\TopicController@update');
     Route::post('/topic/destroy', 'CMS\TopicController@destroy');
+
+    //CONTACT
+    Route::get('/contact-enquiry', 'CMS\ContactEnquiryController@index');
 });

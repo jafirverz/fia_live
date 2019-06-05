@@ -21,6 +21,10 @@
                 <a href="{{ url('/admin/topic') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.TOPIC') }}</span></a>
             </li>
+            <li>
+                <a href="{{ url('/admin/contact-enquiry') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.CONTACTENQUIRY') }}</span></a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

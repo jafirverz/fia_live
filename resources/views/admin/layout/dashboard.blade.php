@@ -77,7 +77,6 @@
 <script src="{{ asset('assets/plugins/datatables.net-bs/vfs_fonts.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables.net-bs/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables.net-bs/buttons.print.min.js') }}"></script>
-<script src="{{ asset('assets/dist/js/adminlte.min.js')}}"></script>
 <script src="{{ asset('assets/plugins/datatables.net-bs/buttons.colVis.min.js') }}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>

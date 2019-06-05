@@ -53,3 +53,9 @@ Breadcrumbs::for('topic_edit', function ($trail, $id) {
     $trail->parent('topic');
     $trail->push('Edit', url('/admin/topic/edit', $id));
 });
+
+//CONTACT ENQUIRY
+Breadcrumbs::for('contactenquiry', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Contact Enquiry', url('/admin/contact-enquiry'));
+});
