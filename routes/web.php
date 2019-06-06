@@ -59,4 +59,12 @@ Route::group(['prefix' => 'admin'], function () {
 
     //CONTACT
     Route::get('/contact-enquiry', 'CMS\ContactEnquiryController@index');
+
+    //REGULATORY
+    Route::get('/group-management', 'CMS\GroupManagementController@index');
+    Route::get('/group-management/create', 'CMS\GroupManagementController@create');
+    Route::post('/group-management/store', 'CMS\GroupManagementController@store');
+    Route::get('/group-management/edit/{id}', 'CMS\GroupManagementController@edit');
+    Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
+    Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
 });
