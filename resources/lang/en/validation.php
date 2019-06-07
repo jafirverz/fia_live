@@ -144,6 +144,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'topic_id' => 'topic',
+        'country_id'    =>  'country',
+    ],
 
 ];
