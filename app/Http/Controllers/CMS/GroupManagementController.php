@@ -112,7 +112,7 @@ class GroupManagementController extends Controller
         $groupmanagement->updated_at = Carbon::now();
         $groupmanagement->save();
 
-        return redirect('admin/group-management')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.GROUPMANAGEMENT')]));
+        return redirect('admin/group-management')->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.GROUPMANAGEMENT')]));
     }
 
     /**

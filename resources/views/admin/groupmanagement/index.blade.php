@@ -39,7 +39,17 @@
                                             @foreach($groups as $group)
                                             <tr>
                                                 <td>{{ $group->group_name ?? '-' }}</td>
-                                                <td></td>
+                                                <td>@if($group->group_members)
+                                                    @php
+                                                        $group_members = json_decode($group->group_members);
+                                                    @endphp
+                                                    @foreach ($group_members as $item)
+                                                        {{ $item }}
+                                                        @if (!$loop->last)
+                                                        ,
+                                                        @endif
+                                                    @endforeach
+                                                    @else - @endif</td>
                                                 <td>{{ inactiveActive($group->status) ?? '-' }}</td>
                                                 <td>
                                                     <a href="{{ url('admin/group-management/edit', $group->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>

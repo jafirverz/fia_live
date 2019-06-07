@@ -17,7 +17,7 @@ if (!function_exists('getTopics')) {
         $topics = Topic::whereIn('id', $id)->get();
         if($topics->count())
         {
-            return $topics->pluck('topic_name');;
+            return $topics->pluck('topic_name');
         }
     }
 
