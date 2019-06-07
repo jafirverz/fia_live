@@ -17,8 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/Ionicons/css/ionicons.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css') }}">
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/skins/_all-skins.min.css') }}">
@@ -32,6 +31,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/AdminLTE.min.css') }}">
     <!-- Scripts -->
     <!-- jQuery 3 -->
     <script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>

@@ -8,6 +8,7 @@ return [
     'REGULATORY'    =>  'Regulatory',
     'TOPIC' =>  'Topic',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
+    'GROUPMANAGEMENT'   =>  'Group Management',
 
 
     //CRUD

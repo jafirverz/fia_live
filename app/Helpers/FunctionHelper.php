@@ -17,7 +17,7 @@ if (!function_exists('getTopics')) {
         $topics = Topic::whereIn('id', $id)->get();
         if($topics->count())
         {
-            return $topics->pluck('topic_name');;
+            return $topics->pluck('topic_name');
         }
     }
 
@@ -39,5 +39,21 @@ if (!function_exists('getTopics')) {
             return $regulatory->title;
         }
         return '-';
+    }
+
+    function member($id = null)
+    {
+        $array_list = ['Arvind', 'Nikunj', 'Jafir', 'Apoorva', 'Glenn', 'Henry'];
+        return $array_list;
+    }
+
+    function inactiveActive($id = null)
+    {
+        $array_list = ['Inactive', 'Active'];
+        if($id)
+        {
+            return $array_list[$id];
+        }
+        return $array_list;
     }
 }

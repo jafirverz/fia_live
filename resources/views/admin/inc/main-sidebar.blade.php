@@ -25,6 +25,10 @@
                 <a href="{{ url('/admin/contact-enquiry') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.CONTACTENQUIRY') }}</span></a>
             </li>
+            <li>
+                <a href="{{ url('/admin/group-management') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.GROUPMANAGEMENT') }}</span></a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
