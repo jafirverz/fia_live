@@ -6,11 +6,14 @@ use App\Notifications\AdminResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Admin extends Authenticatable
 {
-    use Notifiable, AuthenticationLogable;
+    use Notifiable, AuthenticationLogable, LogsActivity;
 
+    protected static $logAttributes = ['*'];
+    protected static $logOnlyDirty = true;
     /**
      * The attributes that are mass assignable.
      *

@@ -4,13 +4,34 @@
     <section class="sidebar">
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
+        <ul class="sidebar-menu" data-widget="tree">
             <li class="active">
-                <a href="{{ url('/admin/home') }}"><i class="fa fa-check"></i> <span>Dashboard</span></a>
+                <a href="{{ url('/admin/home') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.DASHBOARD') }}</span></a>
             </li>
-          </ul>
-        </section>
-        <!-- /.sidebar -->
+            <li>
+                <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.COUNTRY') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/regulatory') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.REGULATORY') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/topic') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.TOPIC') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/contact-enquiry') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.CONTACTENQUIRY') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/group-management') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.GROUPMANAGEMENT') }}</span></a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
     </section>
     <!-- /.sidebar -->
 </aside>

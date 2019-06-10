@@ -12,7 +12,7 @@ return [
 
     // Middlewares which should be applied to all package routes.
     // For laravel 5.1 and before, remove 'web' from the array.
-    'middlewares' => ['web', 'auth'],
+    'middlewares' => ['web', 'auth:admin'],
 
     // The url to this package. Change it if necessary.
     'url_prefix' => 'laravel-filemanager',
@@ -110,7 +110,7 @@ return [
 
     // permissions to be set on file upload.
     'create_file_mode' => 0644,
-    
+
     // If true, it will attempt to chmod the file after upload
     'should_change_file_mode' => true,
 

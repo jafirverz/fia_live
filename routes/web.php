@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
-    Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
+    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
@@ -68,8 +68,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/group-management/edit/{id}', 'CMS\GroupManagementController@edit');
     Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
+
 	
-		  /*start filter Module backend*/
+	 /*start filter Module backend*/
   Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
   Route::get('/filter/create', 'CMS\FilterController@create');
   Route::post('/filter/store', 'CMS\FilterController@store');
@@ -92,5 +93,6 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
   /*end filter module backend*/
+
 
 });
