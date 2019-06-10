@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
-    Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
+    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
@@ -32,7 +32,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
-
 
     //COUNTRY
     Route::get('/country', 'CMS\CountryController@index');
@@ -68,22 +67,23 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/group-management/edit/{id}', 'CMS\GroupManagementController@edit');
     Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
+
 	
-		  /*start filter Module backend*/
+  //FILTER
   Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
   Route::get('/filter/create', 'CMS\FilterController@create');
   Route::post('/filter/store', 'CMS\FilterController@store');
   Route::get('/filter/edit/{id}', 'CMS\FilterController@edit');
   Route::post('/filter/update/{id}', 'CMS\FilterController@update');
   Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
-  
+  //BANNER
   Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
   Route::get('/banner/create', 'CMS\BannerController@create');
   Route::post('/banner/store', 'CMS\BannerController@store');
   Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
   Route::post('/banner/update/{id}', 'CMS\BannerController@update');
   Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
-  
+  //PAGE
   Route::get('/page', 'CMS\PageController@index')->name('page.index');
   Route::get('/page/create', 'CMS\PageController@create');
   Route::post('/page/store', 'CMS\PageController@store');
@@ -91,6 +91,15 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/page/edit/{id}', 'CMS\PageController@edit');
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
-  /*end filter module backend*/
-
+  
+   //Menu
+  Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
+  Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
+  Route::post('/menu/type-update/{id}', 'CMS\MenuController@type_update');
+  Route::get('/get-sub-menu/{id}', 'CMS\MenuController@getSubMenus')->name('get-sub-menu');
+  Route::get('/menu/create', 'CMS\MenuController@create')->name('menu-create');
+  Route::post('/menu/store', 'CMS\MenuController@store');
+  Route::get('/menu/edit/{id}', 'CMS\MenuController@edit')->name('menu-edit');
+  Route::post('/menu/update/{id}', 'CMS\MenuController@update');
+  Route::get('/menu/destroy/{id}', 'CMS\MenuController@destroy')->name('menu-destroy');
 });

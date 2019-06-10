@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     //MODULE
     'DASHBOARD' =>  'Dashboard',
     'COUNTRY'   =>  'Country',
@@ -8,6 +9,7 @@ return [
     'TOPIC' =>  'Topic',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
+
 	'FILTER' => 'Filter',
 	'BANNER' => 'Banner',
 	'PAGE' => 'Page',
@@ -15,6 +17,7 @@ return [
 	'CREATE' => 'Create',
     'EDIT' => 'Edit',
     'VIEW' => 'View',
+
     //CRUD
     'REMOVED' => ':Module has been removed.',
     'DELETED' => ':Module has been deleted.',
