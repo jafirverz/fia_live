@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Menu;
 use App\Page;
+use App\MenuPosition;
 use Carbon\Carbon;
 use Auth;
 
@@ -25,14 +26,12 @@ class MenuController extends Controller
      */
     public function index()
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $parent = 0;
-        $parentMenu = null;
         $title = __('constant.MENU');
-        $menus = Menu::where('parent', 0)
-            ->orderBy('view_order', 'ASC')
-            ->get();
-        return view('admin.menu.index', compact('title', 'menus', 'parent', 'parentMenu'));
+        $menu_types = MenuPosition::orderBy('view_order', 'ASC')->get();
+		//dd($menu_types);
+        return view('admin.menu.type', compact('title', 'menu_types'));
     }
 
     public function getSubMenus($id)
@@ -57,7 +56,7 @@ class MenuController extends Controller
      */
     public function create(Request $request)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
         $parentMenu = Menu::where('id', $request->parent)->first();
         $viewOrderMenu = Menu::where('parent', $request->parent)->orderBy('view_order', 'DESC')->first();
@@ -91,7 +90,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
         $validatorFields = [
             'title' => 'required|max:191',
@@ -175,7 +174,7 @@ class MenuController extends Controller
      */
     public function edit($id, Request $request)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $menu = Menu::findorfail($id);
         $parentMenu = Menu::find($request->parent);
@@ -200,6 +199,17 @@ class MenuController extends Controller
 
     }
 
+	public function type_edit($id)
+    {
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        $title = __('constant.EDIT');
+        
+		$menu_type = MenuPosition::where('id', $id)->first();
+        
+        return view('admin.menu.type_edit', compact('title', 'menu_type'));
+
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -207,9 +217,25 @@ class MenuController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
+	public function type_update(Request $request, $id)
+    {
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+
+        $menu = MenuPosition::findorfail($id);
+        
+        $request->validate([
+            'menu_name' => 'required|max:191',
+			'view_order' => 'required|numeric|max:191',
+        ]);
+        $menu->menu_name = $request->menu_name;
+		$menu->view_order = $request->view_order;
+        $menu->save();
+
+        return redirect(route('menu.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+    }
     public function update(Request $request, $id)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $menu = Menu::findorfail($id);
         $fields = $request->all();
         $validatorFields = [
@@ -281,7 +307,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $menu = Menu::findorfail($id);
 
 

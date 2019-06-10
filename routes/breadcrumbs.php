@@ -128,3 +128,49 @@ for ('page_edit', function ($trail, $id) {
     $trail->parent('page');
     $trail->push(__('constant.EDIT'), url('/admin/page/edit' . $id));
 }) ;
+
+//SUB_CONTENTS
+Breadcrumbs::
+for ('menu', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MENU'), url('/admin/menu'));
+}) ;
+
+Breadcrumbs::
+for ('sub_menu', function ($trail, $menu) {
+    if (!empty($menu) && !empty($menu->parent)) {
+        $menu1 = \App\Menu::findOrFail($menu->parent);
+        $trail->parent('sub_menu', $menu1);
+
+    } else {
+        $trail->parent('menu');
+    }
+    if(!empty($menu)){
+        $trail->push($menu->title, route('get-sub-menu', $menu->id));
+
+    }
+
+}) ;
+
+Breadcrumbs::
+for ('menu_create', function ($trail,$menu) {
+    $trail->parent('sub_menu', $menu);
+    $trail->push(__('constant.CREATE'), url('/admin/menu/create'));
+}) ;
+
+
+Breadcrumbs::
+for ('menu_edit', function ($trail, $id,$menu) {
+    $trail->parent('sub_menu', $menu);
+    $trail->push(__('constant.EDIT'), url('/admin/menu/edit' . $id));
+}) ;
+
+Breadcrumbs::
+for ('sub_menu_edit', function ($trail, $menu) {
+    if (!empty($menu) && !empty($menu->parent)) {
+        $trail->parent('sub_menu', $menu->parent);
+        $trail->push($menu->title, route('get-sub-menu', $menu->id));
+    } else {
+        $trail->parent('menu_edit');
+    }
+}) ;

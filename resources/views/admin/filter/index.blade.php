@@ -1,4 +1,5 @@
-@extends('admin.layout.app') @section('content')
+@extends('admin.layout.dashboard')
+@section('content')
         <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
