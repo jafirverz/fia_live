@@ -9,14 +9,14 @@ return [
     'TOPIC' =>  'Topic',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
+	'FILTER' => 'Filter',
+	'BANNER' => 'Banner',
+	'PAGE' => 'Page',
+    'MENU' => 'Menu',
+	'CREATE' => 'Create',
+    'EDIT' => 'Edit',
+    'VIEW' => 'View',
 
-     'FILTER' => 'Filter',
-     'BANNER' => 'Banner',
-     'PAGE' => 'Page',
-     'MENU' => 'Menu',
-     'CREATE' => 'Create',
-     'EDIT' => 'Edit',
-     'VIEW' => 'View',
 
     //CRUD
     'REMOVED' => ':Module has been removed.',

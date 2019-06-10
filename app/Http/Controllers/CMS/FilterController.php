@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
+
 class FilterController extends Controller
 {
 
@@ -18,7 +19,7 @@ class FilterController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('auth:admin');
+        $this->middleware('auth:admin');
         $this->module_name = 'FILTER';
     }
 

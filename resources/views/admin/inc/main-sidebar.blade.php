@@ -9,6 +9,9 @@
                 <a href="{{ url('/admin/home') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.DASHBOARD') }}</span></a>
             </li>
+            <li><a href="{{ url('admin/filter') }}"><i class="fa fa-check"></i> {{ __('constant.FILTER') }}</a></li>
+             <li><a href="{{ url('admin/banner') }}"><i class="fa fa-check"></i> {{ __('constant.BANNER') }}</a></li>
+             <li><a href="{{ url('admin/page') }}"><i class="fa fa-check"></i> {{ __('constant.PAGE') }}</a></li>
             <li>
                 <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.COUNTRY') }}</span></a>
