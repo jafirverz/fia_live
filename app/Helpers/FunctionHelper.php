@@ -41,6 +41,33 @@ if (!function_exists('getTopics')) {
         return '-';
     }
 
+	
+	function get_filter_name($value = null)
+    {
+        $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month'];
+
+        if ($value) {
+            return $array_list[$value];
+        }
+        return $array_list;
+    }
+	
+	function get_filter_name_by_id($value = null)
+	{
+		$array_list=get_filter_name();
+		return $array_list[$value];
+	}
+	
+	function ActiveInActinve($value = null)
+    {
+        $array_list = ["1" => 'Active', "0" => 'In-Active'];;
+        if ($value) {
+            return $array_list[$value - 1];
+        }
+        return $array_list;
+    }
+	
+
     function member($id = null)
     {
         $array_list = ['Arvind', 'Nikunj', 'Jafir', 'Apoorva', 'Glenn', 'Henry'];

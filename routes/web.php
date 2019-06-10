@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
+
     //COUNTRY
     Route::get('/country', 'CMS\CountryController@index');
     Route::get('/country/create', 'CMS\CountryController@create');
@@ -67,4 +68,31 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/group-management/edit/{id}', 'CMS\GroupManagementController@edit');
     Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
+
+	
+	 /*start filter Module backend*/
+  Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
+  Route::get('/filter/create', 'CMS\FilterController@create');
+  Route::post('/filter/store', 'CMS\FilterController@store');
+  Route::get('/filter/edit/{id}', 'CMS\FilterController@edit');
+  Route::post('/filter/update/{id}', 'CMS\FilterController@update');
+  Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
+  
+  Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
+  Route::get('/banner/create', 'CMS\BannerController@create');
+  Route::post('/banner/store', 'CMS\BannerController@store');
+  Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
+  Route::post('/banner/update/{id}', 'CMS\BannerController@update');
+  Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
+  
+  Route::get('/page', 'CMS\PageController@index')->name('page.index');
+  Route::get('/page/create', 'CMS\PageController@create');
+  Route::post('/page/store', 'CMS\PageController@store');
+  Route::post('/page/search', 'CMS\PageController@search');
+  Route::get('/page/edit/{id}', 'CMS\PageController@edit');
+  Route::post('/page/update/{id}', 'CMS\PageController@update');
+  Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
+  /*end filter module backend*/
+
+
 });
