@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
+
     //COUNTRY
     Route::get('/country', 'CMS\CountryController@index');
     Route::get('/country/create', 'CMS\CountryController@create');
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
 
 	
-  //FILTER
+
   Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
   Route::get('/filter/create', 'CMS\FilterController@create');
   Route::post('/filter/store', 'CMS\FilterController@store');
@@ -91,6 +92,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/page/edit/{id}', 'CMS\PageController@edit');
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
+
   
    //Menu
   Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
@@ -102,4 +104,9 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/menu/edit/{id}', 'CMS\MenuController@edit')->name('menu-edit');
   Route::post('/menu/update/{id}', 'CMS\MenuController@update');
   Route::get('/menu/destroy/{id}', 'CMS\MenuController@destroy')->name('menu-destroy');
+
+  /*end filter module backend*/
+
+
+
 });
