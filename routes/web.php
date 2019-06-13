@@ -98,6 +98,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
   Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
   Route::post('/menu/type-update/{id}', 'CMS\MenuController@type_update');
+  Route::get('/menu-list/{id}', 'CMS\MenuController@menu_list')->name('menu-list');
   Route::get('/get-sub-menu/{id}', 'CMS\MenuController@getSubMenus')->name('get-sub-menu');
   Route::get('/menu/create', 'CMS\MenuController@create')->name('menu-create');
   Route::post('/menu/store', 'CMS\MenuController@store');
@@ -105,6 +106,13 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('/menu/update/{id}', 'CMS\MenuController@update');
   Route::get('/menu/destroy/{id}', 'CMS\MenuController@destroy')->name('menu-destroy');
 
+
+ Route::get('/system-setting', 'CMS\SystemSettingController@index')->name('system-setting.index');
+  Route::get('/system-setting/create', 'CMS\SystemSettingController@create');
+  Route::post('/system-setting/store', 'CMS\SystemSettingController@store');
+  Route::get('/system-setting/edit/{id}', 'CMS\SystemSettingController@edit');
+  Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
+  Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
   /*end filter module backend*/
 
 

@@ -42,7 +42,7 @@
                                           name="contents">{{ old('contents') }}</textarea>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="meta_title" class=" control-label">Meta Title</label>
                             <div class="">
                                 <input class="form-control" placeholder="" value="{{ old('meta_title') }}" name="meta_title" type="text">
@@ -67,7 +67,7 @@
                                 <textarea class=" form-control" rows="5" id="description"
                                           name="meta_description">{{ old('meta_description') }}</textarea>
                             </div>
-                        </div>
+                        </div>-->
                         
                     </div>
                     <div class="box-footer">

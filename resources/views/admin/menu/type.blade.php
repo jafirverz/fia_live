@@ -1,4 +1,4 @@
-@extends('admin.layout.app') @section('content')
+@extends('admin.layout.dashboard') @section('content')
         <!-- Content Wrapper. Contains  content -->
 <div class="content-wrapper">
     <!-- Content Header ( header) -->
@@ -52,7 +52,7 @@
                                             
 
                                             <a class="" title="Menu List"
-                                               href="{{ route("get-sub-menu",["id"=>$menu->id]) }}">
+                                               href="{{ route("menu-list",["id"=>$menu->id]) }}">
                                                 <i class="fa fa-list btn btn-default "></i>
                                             </a>
                                         </td>

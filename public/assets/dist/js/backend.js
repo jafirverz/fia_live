@@ -1,3 +1,4 @@
+
 var editor_config = {
     path_absolute: APP_URL + '/',
     selector: ".tiny-editor",

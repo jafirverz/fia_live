@@ -49,7 +49,7 @@
                             </div>
                         @else
                         @endif
-                        <div class="form-group">
+                        <?php /*?><div class="form-group">
                             <label for="meta_title" class=" control-label">Meta Title</label>
                             <div class="">
                                 <input class="form-control" placeholder="" value="{{ $page->meta_title }}" name="meta_title" type="text">
@@ -73,7 +73,7 @@
 <textarea class=" form-control" rows="5" id="description"
                                           name="meta_description">{{ $page->meta_description }}</textarea>                            
                                </div>
-                        </div>
+                        </div><?php */?>
                         
                     </div>
                     <!-- /.box-body -->

@@ -1,11 +1,14 @@
-@extends('admin.layout.app') @section('content')
+@extends('admin.layout.dashboard') @section('content')
         <!-- Content Wrapper. Contains  content -->
 <div class="content-wrapper">
     <!-- Content Header ( header) -->
     <section class="content-header">
         <h1>
             {{ $title }}
-        </h1> {{ Breadcrumbs::render('sub_menu',$parentMenu) }}
+        </h1> 
+
+        {{ Breadcrumbs::render('sub_menu',$parentMenu,$type) }}
+        
     </section>
 
     <!-- Main content -->
@@ -16,16 +19,19 @@
                 @include('admin.inc.message')
                 <div class="box">
                     <div class="box-header with-border">
-                        <a href="{{ route("menu-create",["parent"=>$parent]) }}" class="btn btn-primary pull-right">Create</a>
+                   
+                        <a href="{{ route("menu-create",["parent"=>$parent,"type"=>$type]) }}" class="btn btn-primary pull-right">Create</a>
+                   
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
                         <table id="menu-table" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                               <th>S. No.</th>
                                 <th>Title</th>
                                 <th>Connected page</th>
-                                <th>View order</th>
+                                
                                 <th>Status</th>
                                 <th>Created on</th>
                                 <th>Updated on</th>
@@ -34,8 +40,13 @@
                             </thead>
                             <tbody>
                             @if($menus->count())
+                           @php  $k=0; @endphp
                                 @foreach($menus as $k=> $menu)
+                                @php $k++; @endphp
                                     <tr>
+                                        <td>
+                                            {{ $k }}
+                                        </td>
                                         <td>
                                             {{ $menu->title }}
                                         </td>
@@ -43,12 +54,10 @@
                                             @if(!$menu->page)
                                                 {{__('constant.NONE')}}
                                             @else
-                                                {{ $menu->page->name }}
+                                                {{ $menu->page->title }}
                                             @endif
                                         </td>
-                                        <td>
-                                            {{ $menu->view_order }}
-                                        </td>
+                                        
                                         <td>
                                             @if($menu->status==1)
                                                 {{__('constant.ACTIVATE')}}
@@ -66,7 +75,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route("menu-edit",["id"=>$menu->id,"parent"=>$parent]) }}"
+                                            <a href="{{ route("menu-edit",["id"=>$menu->id,"parent"=>$parent,"type"=>$type]) }}"
                                                title="Edit Menu">
                                                 <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
                                             </a>
@@ -78,7 +87,7 @@
                                             </a>
 
                                             <a class="" title="Menu List"
-                                               href="{{ route("get-sub-menu",["id"=>$menu->id]) }}">
+                                               href="{{ route("get-sub-menu",["id"=>$menu->id,"type"=>$type]) }}">
                                                 <i class="fa fa-list btn btn-default "></i>
                                             </a>
                                         </td>

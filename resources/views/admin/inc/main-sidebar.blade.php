@@ -10,8 +10,19 @@
                     <span>{{ __('constant.DASHBOARD') }}</span></a>
             </li>
             <li><a href="{{ url('admin/filter') }}"><i class="fa fa-check"></i> {{ __('constant.FILTER') }}</a></li>
-             <li><a href="{{ url('admin/banner') }}"><i class="fa fa-check"></i> {{ __('constant.BANNER') }}</a></li>
-             <li><a href="{{ url('admin/page') }}"><i class="fa fa-check"></i> {{ __('constant.PAGE') }}</a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-check"></i> <span>CMS</span>
+                    <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                </a>
+                    <ul class="treeview-menu">
+                     <li><a href="{{ url('admin/menu') }}"><i class="fa fa-check"></i> {{ __('constant.MENU') }}</a></li>
+                     <li><a href="{{ url('admin/banner') }}"><i class="fa fa-check"></i> {{ __('constant.BANNER') }}</a></li>
+                     <li><a href="{{ url('admin/page') }}"><i class="fa fa-check"></i> {{ __('constant.PAGE') }}</a></li>
+                     </ul>
+            </li>
             <li>
                 <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.COUNTRY') }}</span></a>

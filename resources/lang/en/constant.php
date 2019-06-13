@@ -16,6 +16,13 @@ return [
 	'CREATE' => 'Create',
     'EDIT' => 'Edit',
     'VIEW' => 'View',
+	'NONE' => 'None',
+	'ACTIVATE' => 'Active',
+	'DEACTIVATE' => 'De-Active',
+	'HEADER' => 'Top',
+	'FOOTER' => 'Footer',
+	'NONE' => 'none',
+	'SYSTEM_SETTING' => 'System Setting',
 
 
     //CRUD
@@ -24,4 +31,5 @@ return [
     'CREATED' => ':Module has been created.',
     'UPDATED' => ':Module has been updated.',
     'GENERATED' => ':Module has been generated.',
+	'MENULIMIT' => ':You can create or active 6 menu items.',
 ];

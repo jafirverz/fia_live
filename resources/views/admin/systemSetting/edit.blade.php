@@ -17,19 +17,20 @@
                         <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
-                    {!! Form::open(['url' => ['/admin/system-setting/update', $systemSetting->id], 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
+                    <form method="post" action="{{ url('/admin/system-setting/update/'.$systemSetting->id)}}" enctype="multipart/form-data"> 
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
                     <div class="box-body">
                         <div class="form-group">
-                            {{Form::label('title', 'Title',['class'=>' control-label'])}}
+                            <label for="title" class=" control-label">Title</label>
                             <div class="">
-                                {{Form::text('title', $systemSetting->title, ['class' => 'form-control', 'placeholder' => ''])}}
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->title }}" name="title" type="text"> 
                             </div>
                         </div>
                         <div class="form-group">
-                            {{Form::label('logo', 'Logo',['class'=>' control-label'])}}
+                            <label for="logo" class=" control-label">Logo</label>
                             <div class="row">
                                 <div class="@if(isset($systemSetting->logo) && ($systemSetting->logo != ''))col-sm-10 @endif">
-                                    {{Form::file('logo', ['class' => 'form-control', 'placeholder' => ''])}}
+                                    <input class="form-control" placeholder="" name="logo" type="file"> 
                                 </div>
                                 @if(isset($systemSetting->logo) && ($systemSetting->logo != ''))
                                     <div class=" col-sm-2">
@@ -41,58 +42,48 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{Form::label('email_sender_name', 'Email Sender Name',['class'=>' control-label'])}}
+                        <div class="form-group">                            
+                            <label for="email_sender_name" class=" control-label">Email Sender Name</label>
                             <div class="">
-                                {{Form::text('email_sender_name', $systemSetting->email_sender_name, ['class' => 'form-control', 'placeholder' => ''])}}
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->email_sender_name }}" name="email_sender_name" type="text"> 
                             </div>
                         </div>
                         <div class="form-group">
-                            {{Form::label('from_email', 'From Email',['class'=>' control-label'])}}
+                            <label for="from_email" class=" control-label">From Email</label>
                             <div class="">
-                                {{Form::text('from_email', $systemSetting->from_email, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->from_email }}" name="from_email" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            {{Form::label('to_email', 'To Email',['class'=>' control-label'])}}
+                            <label for="to_email" class=" control-label">To Email</label>
                             <div class="">
-                                {{Form::text('to_email',$systemSetting->to_email, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->to_email }}" name="to_email" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            {{Form::label('contact_phone', 'Contact No',['class'=>' control-label'])}}
+                            <label for="contact_phone" class=" control-label">Contact No</label>
                             <div class="">
-                                {{Form::text('contact_phone',$systemSetting->contact_phone, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->contact_phone }}" name="contact_phone" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            {{Form::label('contact_email', 'Contact Email',['class'=>' control-label'])}}
+                            <label for="contact_email" class=" control-label">Contact Email</label>
                             <div class="">
-                                {{Form::text('contact_email', $systemSetting->contact_email, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->contact_email }}" name="contact_email" type="text">
+
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            {{Form::label('contact_fax', 'Contact Fax',['class'=>' control-label'])}}
+                            <label for="contact_address" class=" control-label">Company Addresses</label>
                             <div class="">
-                                {{Form::text('contact_fax', $systemSetting->contact_fax, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                 <textarea class="form-control" name="contact_address">{{ $systemSetting->contact_address }}</textarea>
                             </div>
                         </div>
+                        
                         <div class="form-group">
-                            {{Form::label('contact_address', 'Company Addresses',['class'=>' control-label'])}}
-                            <div class="">
-                                {{Form::textarea('contact_address',$systemSetting->contact_address, ['class' => 'form-control ', 'placeholder' => ''])}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{Form::label('company_map', 'Company map',['class'=>' control-label'])}}
-                            <div class="">
-                                {{Form::textarea('company_map',$systemSetting->company_map, ['class' => 'form-control tiny-editor', 'placeholder' => ''])}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            {{Form::label('footer', 'Footer',['class'=>' control-label '])}}
-                            <div class="">
-                                {{Form::text('footer', $systemSetting->footer, ['class' => 'form-control tiny-editor', 'placeholder' => ''])}}
+<label for="footer" class=" control-label">Footer</label>                            <div class="">
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->footer }}" name="footer" type="text">
                             </div>
                         </div>
                     </div>
@@ -101,7 +92,7 @@
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary pull-right">Save</button>
                     </div>
-                    {!! Form::close() !!}
+                    </form>
                 </div>
                 <!-- /.box -->
             </div>

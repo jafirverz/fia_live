@@ -38,17 +38,21 @@
     <script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('assets/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+    
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
+	 var APP_URL = {!! json_encode(url('/')) !!} ;
     $.widget.bridge('uibutton', $.ui.button);
     </script>
+
     <!-- Bootstrap 3.3.7 -->
     <script src="{{ asset('assets/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/vendor/laravel-filemanager/js/lfm.js') }}"></script>
-    <script>
+    <script type="text/javascript">
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+
 
     </script>
 </head>
@@ -85,6 +89,9 @@
 <script src="{{ asset('assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('assets/bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
+    <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
+    <script src="{{ asset('assets/dist/js/backend.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 <script>
