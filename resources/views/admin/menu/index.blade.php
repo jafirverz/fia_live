@@ -30,7 +30,7 @@
                             <tr>
                                <th>S. No.</th>
                                 <th>Title</th>
-                                <th>Connected page</th>
+                                <th>Page</th>
                                 
                                 <th>Status</th>
                                 <th>Created on</th>
@@ -51,10 +51,10 @@
                                             {{ $menu->title }}
                                         </td>
                                         <td>
-                                            @if(!$menu->page)
+                                            @if(!$menu->page_id)
                                                 {{__('constant.NONE')}}
                                             @else
-                                                {{ $menu->page->title }}
+                                                {{ get_page_name($menu->page_id) }}
                                             @endif
                                         </td>
                                         

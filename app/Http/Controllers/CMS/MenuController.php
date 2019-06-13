@@ -115,24 +115,12 @@ class MenuController extends Controller
     {
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
-        $validatorFields = [
-            'title' => 'required|max:191',
+        $request->validate([
+            'title' => 'required|max:191|unique:menus,title,NULL,id,menu_type,'.$request->menu_type,
 			'external_link' => 'requiredIf:target_value,==,1',
-        ];
+        ]);
 
-        $validator = Validator::make($fields, $validatorFields);
-        $validator->sometimes('title', 'required|unique:menus', function ($input) {
-            if (Menu::where('title', ucfirst($input->title))
-                ->where('parent', '=', $input->parent)
-                ->exists()
-            ) {
-                return true;
-            }
-        });
-
-        if ($validator->getMessageBag()->count()) {
-            return back()->withInput()->withErrors($validator->errors());
-        }
+        
         $menu = new Menu;
         $menu->title = ucfirst($request->title);
         if ($request->page_id !='null') {
@@ -270,25 +258,13 @@ class MenuController extends Controller
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $menu = Menu::findorfail($id);
         $fields = $request->all();
-        $validatorFields = [
+        $request->validate([
             'title' => 'required|max:191',
 			'external_link' => 'requiredIf:target_value,==,1',
-        ];
+        ]);
 
-        $validator = Validator::make($fields, $validatorFields);
-        $validator->sometimes('title', 'required|unique:menus', function ($input) use ($id) {
-            if (Menu::where('title', ucfirst($input->title))
-                ->where('parent', '=', $input->parent)
-                ->whereNotIn('id', [$id])
-                ->exists()
-            ) {
-                return true;
-            }
-        });
 
-        if ($validator->getMessageBag()->count()) {
-            return back()->withInput()->withErrors($validator->errors());
-        }
+        
         $menu->title = ucfirst($request->title);
         if ($request->page_id !='null') {
             $menu->page_id = $request->page_id;
