@@ -33,6 +33,20 @@ class MenuController extends Controller
 		//dd($menu_types);
         return view('admin.menu.type', compact('title', 'menu_types'));
     }
+	
+	public function menu_list($id)
+    {
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        $parent = 0;
+		$type=$id;
+        $parentMenu = null;
+        $title = __('constant.MENU');
+        $menus = Menu::where('parent', 0)->where('menu_type',$id)
+            ->orderBy('view_order', 'ASC')
+            ->get();
+	
+        return view('admin.menu.index', compact('title', 'menus', 'parent', 'parentMenu','type'));
+    }
 
     public function getSubMenus($id)
     {
@@ -41,12 +55,13 @@ class MenuController extends Controller
             ->orderBy('view_order', 'ASC')
             ->get();
         $parent = 0;
+		$type=$_GET['type'];
         $parentMenu = null;
         if (!empty($id)) {
             $parentMenu = Menu::findorfail($id);
             $parent = $id;
         }
-        return view('admin.menu.index', compact('title', 'menus', 'id', 'parent', 'parentMenu'));
+        return view('admin.menu.index', compact('title', 'menus', 'id', 'parent', 'parentMenu', 'type'));
     }
 
     /**
@@ -74,7 +89,15 @@ class MenuController extends Controller
             }
         }
         $pages = $query->get();*/
-        $pages = Page::where('status', 1)->orderBy('name', 'asc')->get();
+		$menu_count= Menu::where('parent', 0)->where('menu_type',$_GET['type'])->where('status',1)->where('parent',0)
+            ->orderBy('view_order', 'ASC')
+            ->count();
+		if($request->parent==0 && $menu_count>=6)
+		{
+		return redirect(url('/admin/menu-list/'.$_GET['type']))->with('error', __('constant.MENULIMIT'));	
+		}	
+		
+        $pages = Page::where('status', 1)->orderBy('title', 'asc')->get();
 
 
         $parent = $request->parent;
@@ -94,6 +117,7 @@ class MenuController extends Controller
         $fields = $request->all();
         $validatorFields = [
             'title' => 'required|max:191',
+			'external_link' => 'requiredIf:target_value,==,1',
         ];
 
         $validator = Validator::make($fields, $validatorFields);
@@ -123,6 +147,9 @@ class MenuController extends Controller
             $menu->status = $request->status;
         }
         $menu->view_order = $request->view_order;
+		$menu->menu_type = $request->menu_type;
+		$menu->target_value = isset($request->target_value)?$request->target_value:null;
+		$menu->external_link = isset($request->external_link)?$request->external_link:"";
         $menu->child = 0;
         $mainMenuId = 0;
 
@@ -152,8 +179,12 @@ class MenuController extends Controller
         $menu->created_at = Carbon::now()->toDateTimeString();
         $menu->save();
 
-        return redirect(route('get-sub-menu', ['id' => $request->parent]))->with('success', __('constant.CREATED', ['module' => __('constant.MENU')]));
-    }
+    	if($request->parent==0)
+        return redirect(route('menu-list',array($request->menu_type)))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+		else
+		return redirect(route('get-sub-menu',array($request->parent,'type'=>$request->menu_type)))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+
+	}
 
     /**
      * Display the specified resource.
@@ -193,7 +224,7 @@ class MenuController extends Controller
 
         $pages = $query->get();*/
 
-        $pages = Page::where('status', 1)->orderBy('name', 'asc')->get();
+        $pages = Page::where('status', 1)->orderBy('title', 'asc')->get();
         $parent = $request->parent;
         return view('admin.menu.edit', compact('title', 'menu', "parentMenu", 'parent', 'pages'));
 
@@ -228,6 +259,7 @@ class MenuController extends Controller
 			'view_order' => 'required|numeric|max:191',
         ]);
         $menu->menu_name = $request->menu_name;
+		$menu->menu_type = $request->menu_type;
 		$menu->view_order = $request->view_order;
         $menu->save();
 
@@ -240,6 +272,7 @@ class MenuController extends Controller
         $fields = $request->all();
         $validatorFields = [
             'title' => 'required|max:191',
+			'external_link' => 'requiredIf:target_value,==,1',
         ];
 
         $validator = Validator::make($fields, $validatorFields);
@@ -266,6 +299,9 @@ class MenuController extends Controller
         if (isset($request->status)) {
             $menu->status = $request->status;
         }
+		$menu->target_value = isset($request->target_value)?$request->target_value:null;
+		$menu->external_link = isset($request->external_link)?$request->external_link:"";
+
         $menu->view_order = $request->view_order;
         $menu->child = 0;
         $mainMenuId = 0;
@@ -295,8 +331,12 @@ class MenuController extends Controller
         $menu->main = $mainMenuId;
         $menu->updated_at = Carbon::now()->toDateTimeString();
         $menu->save();
+		if($request->parent==0)
+        return redirect(route('menu-list',array($request->menu_type)))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+		else
+		return redirect(route('get-sub-menu',array($request->parent,'type'=>$request->menu_type)))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
 
-        return redirect(route('get-sub-menu', ['id' => $request->parent]))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+		
     }
 
     /**

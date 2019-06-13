@@ -67,10 +67,10 @@ class PageController extends Controller
         $page->title = $request->title;
         $page->slug = $request->slug;
         $page->contents = $request->contents;
-        $page->meta_title = $request->meta_title;
+        /*$page->meta_title = $request->meta_title;
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;
-        $page->meta_description = $request->meta_description;
+        $page->meta_description = $request->meta_description;*/
         $page->page_type = 0;
         if (empty($request->status)) {
             $page->status = 1;
@@ -134,10 +134,10 @@ class PageController extends Controller
         $page->title = $request->title;
         $page->slug = $request->slug;        
         $page->contents = $request->contents;
-        $page->meta_title = $request->meta_title;
+        /*$page->meta_title = $request->meta_title;
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;
-        $page->meta_description = $request->meta_description;
+        $page->meta_description = $request->meta_description;*/
         
         $page->save();
 

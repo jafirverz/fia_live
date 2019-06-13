@@ -25,7 +25,7 @@ class SystemSettingController extends Controller
      */
     public function index()
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.SYSTEM_SETTING');
         $systemSetting = SystemSetting::orderBy('id', 'desc')->first();
         if (!$systemSetting) {
@@ -41,7 +41,7 @@ class SystemSettingController extends Controller
      */
     public function create()
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
         return view('admin.systemSetting.create', compact('title'));
@@ -55,7 +55,7 @@ class SystemSettingController extends Controller
      */
     public function store(Request $request)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+      //  is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
         $validatorFields = [
             'title' => 'required|max:191',
@@ -136,7 +136,7 @@ class SystemSettingController extends Controller
      */
     public function edit($id)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $systemSetting = SystemSetting::findorfail($id);
         return view('admin.systemSetting.edit', compact('title', 'systemSetting'));
@@ -151,7 +151,7 @@ class SystemSettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+      //  is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
 
         $fields = $request->all();
         $request['slug'] = str_slug($request->slug, '-');
@@ -164,9 +164,8 @@ class SystemSettingController extends Controller
             'to_email' => 'required | email',
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
-            'contact_fax' => 'required',
             'contact_address' => 'required',
-            'company_map' => 'required',
+
         ];
         $validator = Validator::make($fields, $validatorFields);
         if ($validator->getMessageBag()->count()) {
@@ -230,7 +229,7 @@ class SystemSettingController extends Controller
      */
     public function destroy($id)
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+      //  is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $systemSetting = SystemSetting::findorfail($id);
         $systemSetting->delete();
 

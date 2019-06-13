@@ -8,7 +8,9 @@
     <div class="tab-content">
         <!-- Home tab content -->
         <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">System Settings</h3>
+            <h3 class="control-sidebar-heading"> <a href="{{ route('system-setting.index') }}">
+                        <i class="fa fa-cog"></i> <span>{{ __('constant.SYSTEM_SETTING')}}</span>
+                    </a></h3>
         </div>
         <!-- /.tab-pane -->
     </div>

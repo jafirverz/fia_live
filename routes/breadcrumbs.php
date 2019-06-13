@@ -135,15 +135,25 @@ for ('menu', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('constant.MENU'), url('/admin/menu'));
 }) ;
-
 Breadcrumbs::
-for ('sub_menu', function ($trail, $menu) {
+for ('menu_list', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MENU'), url('/admin/menu'));
+	$trail->push(__('constant.HEADER'), url('/menu-list/1'));
+}) ;
+Breadcrumbs::
+for ('sub_menu', function ($trail, $menu,$type=null) {
     if (!empty($menu) && !empty($menu->parent)) {
         $menu1 = \App\Menu::findOrFail($menu->parent);
         $trail->parent('sub_menu', $menu1);
 
     } else {
-        $trail->parent('menu');
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MENU'), url('/admin/menu'));
+	if($type==1)
+	$trail->push(__('constant.HEADER'), url('/admin/menu-list/'.$type));
+	else
+	$trail->push(__('constant.FOOTER'), url('/admin/menu-list/'.$type));
     }
     if(!empty($menu)){
         $trail->push($menu->title, route('get-sub-menu', $menu->id));
@@ -153,15 +163,15 @@ for ('sub_menu', function ($trail, $menu) {
 }) ;
 
 Breadcrumbs::
-for ('menu_create', function ($trail,$menu) {
-    $trail->parent('sub_menu', $menu);
+for ('menu_create', function ($trail,$menu,$type=null) {
+    $trail->parent('sub_menu', $menu,$type);
     $trail->push(__('constant.CREATE'), url('/admin/menu/create'));
 }) ;
 
 
 Breadcrumbs::
-for ('menu_edit', function ($trail, $id,$menu) {
-    $trail->parent('sub_menu', $menu);
+for ('menu_edit', function ($trail, $id,$menu,$type=null) {
+    $trail->parent('sub_menu', $menu,$type);
     $trail->push(__('constant.EDIT'), url('/admin/menu/edit' . $id));
 }) ;
 
@@ -174,3 +184,16 @@ for ('sub_menu_edit', function ($trail, $menu) {
         $trail->parent('menu_edit');
     }
 }) ;
+
+Breadcrumbs::for('system-setting-create', function ($trail) {
+    //$trail->parent('system_setting');
+    $trail->parent('dashboard');
+    $trail->push(__('constant.SYSTEM_SETTING'));
+    $trail->push(__('constant.CREATE'), url('/admin/system-setting/create'));
+});
+Breadcrumbs::for('system-setting-edit', function ($trail, $id) {
+    //$trail->parent('system-setting');
+    $trail->parent('dashboard');
+    $trail->push(__('constant.SYSTEM_SETTING'));
+    $trail->push(__('constant.EDIT'), url('/admin/system-setting/edit'. $id));
+});
