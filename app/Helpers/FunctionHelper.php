@@ -2,7 +2,7 @@
 use App\Topic;
 use App\Country;
 use App\Regulatory;
-
+use App\Page;
 if (!function_exists('getTopics')) {
 
     /**
@@ -67,6 +67,11 @@ if (!function_exists('getTopics')) {
         return $array_list;
     }
 	
+	function get_page_name($id)
+	{
+		$page = Page::where("id",$id)->select("title")->first();
+		return $page->title;
+	}
 
     function member($id = null)
     {

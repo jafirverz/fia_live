@@ -147,7 +147,7 @@ class BannerController extends Controller
          $request->validate([
             'page_name' => 'required|max:191|unique:banners,page_name,' . $id . ',id',
             'order_by' => 'required',
-            'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
+            'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
         ]);
 
         

@@ -41,7 +41,7 @@
                                             @if(!$banner->page_name)
                                                 {{__('constant.NONE')}}
                                             @else
-                                                {{ $banner->page_name }}
+                                                {{ get_page_name($banner->page_name) }}
                                             @endif
                                         </td>
                                         <td>
