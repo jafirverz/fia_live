@@ -1,4 +1,4 @@
-@extends('admin.layout.app') @section('content')
+@extends('admin.layout.dashboard') @section('content')
         <!-- Content Wrapper. Contains system-setting content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -82,8 +82,9 @@
                         </div>
                         
                         <div class="form-group">
-<label for="footer" class=" control-label">Footer</label>                            <div class="">
-                                 <input class="form-control" placeholder="" value="{{ $systemSetting->footer }}" name="footer" type="text">
+<label for="footer" class=" control-label">Footer</label>
+						<div class="">
+                                 <textarea class="form-control" name="footer">{{ $systemSetting->footer }}</textarea>
                             </div>
                         </div>
                     </div>
