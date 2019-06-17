@@ -114,7 +114,27 @@ Route::group(['prefix' => 'admin'], function () {
   Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
   Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
   /*end filter module backend*/
+Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
+    Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
+    Route::get('/roles-and-permission/create', 'AdminAuth\Account\PermissionController@create');
+    Route::post('/roles-and-permission/store', 'AdminAuth\Account\PermissionController@store');
+    Route::get('/roles-and-permission/edit/{id}', 'AdminAuth\Account\PermissionController@edit');
+    Route::post('/roles-and-permission/update/{id}', 'AdminAuth\Account\PermissionController@update');
+    Route::post('/roles-and-permission/delete', 'AdminAuth\Account\PermissionController@destroy');
 
-
+    Route::get('/roles/create', 'AdminAuth\Account\PermissionController@create_roles');
+    Route::post('/roles/store', 'AdminAuth\Account\PermissionController@store_roles');
+    Route::get('/roles/edit/{id}', 'AdminAuth\Account\PermissionController@edit_roles');
+    Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
+    Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
+	
+	 /*Email Templates route start*/
+  Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
+  Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');
+  Route::post('/email-template/store', 'CMS\EmailTemplateController@store');
+  Route::get('/email-template/edit/{id}', 'CMS\EmailTemplateController@edit');
+  Route::post('/email-template/update/{id}', 'CMS\EmailTemplateController@update');
+  //Route::get('/email-template/destroy/{id}', 'CMS\EmailTemplateController@destroy');
+  /*Email Templates route end*/
 
 });
