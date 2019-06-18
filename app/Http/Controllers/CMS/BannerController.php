@@ -66,7 +66,6 @@ class BannerController extends Controller
         
         $request->validate([
             'page_name' => 'required|unique:banners,page_name|max:191',
-            'order_by' => 'required',
             'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
         ]);
         
@@ -100,7 +99,7 @@ class BannerController extends Controller
         $banner->banner_image = $bannerPath;
 
         $banner->caption = ($request->caption?$request->caption:'');
-		$banner->order_by = $request->order_by;
+		$banner->order_by =($request->order_by?$request->order_by:0);;
         $banner->save();
 
         return redirect('admin/banner')->with('success', __('constant.CREATED', ['module' => __('constant.BANNER')]));
@@ -146,7 +145,6 @@ class BannerController extends Controller
         
          $request->validate([
             'page_name' => 'required|max:191|unique:banners,page_name,' . $id . ',id',
-            'order_by' => 'required',
             'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
         ]);
 
@@ -188,7 +186,7 @@ class BannerController extends Controller
         }
 
         $banner->caption = ($request->caption?$request->caption:'');
-		$banner->order_by = $request->order_by;
+		$banner->order_by =($request->order_by?$request->order_by:0);;
         $banner->save();
 
         return redirect('admin/banner')->with('success', __('constant.UPDATED', ['module' => __('constant.BANNER')]));

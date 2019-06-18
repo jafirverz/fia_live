@@ -25,7 +25,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="menu-table" class="table table-bordered table-striped">
+                        <table id="menu-table" class="table table-bordered table-striped datatable">
                             <thead>
                             <tr>
                                <th>S. No.</th>
@@ -109,24 +109,3 @@
 <!-- /.content-wrapper -->
 @endsection
 @push('scripts')
-<script>
-    $('#menu-table').DataTable(
-            {
-                "pageLength": 10,
-                'ordering': true,
-                'order': [[2, 'asc']],
-                "aoColumnDefs": [{
-                    "aTargets": [6],
-                    "bSortable": false
-                },
-                    {width: 100, targets: 0},
-                    {width: 150, targets: 1},
-                    {width: 100, targets: 2},
-                    {width: 150, targets: 3},
-                    {width: 150, targets: 4},
-                    {width: 150, targets: 5},
-                    {width: 150, targets: 6}
-                ]
-            });
-</script>
-@endpush

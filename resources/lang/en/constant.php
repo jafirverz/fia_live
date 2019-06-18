@@ -26,9 +26,12 @@ return [
 	'SYSTEM_SETTING' => 'System Setting',
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
     'ROLE' => 'Role',
+	'PAYMENT' => 'Payment',
 
     //CRUD
     'REMOVED' => ':Module has been removed.',
+	'EMAIL_TEMPLATE_ERROR' => ':Module only editable now.',
+	'EDITABLE' => ':Module only editable now.',
     'DELETED' => ':Module has been deleted.',
     'CREATED' => ':Module has been created.',
     'UPDATED' => ':Module has been updated.',

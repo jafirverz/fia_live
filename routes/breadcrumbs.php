@@ -237,3 +237,18 @@ Breadcrumbs::for('email_template_edit', function ($trail, $id) {
     $trail->parent('email_template');
     $trail->push(__('constant.EDIT'), url('/admin/email-template/edit'. $id));
 });
+
+//Payment
+Breadcrumbs::for('payment', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.PAYMENT'), url('/admin/payment'));
+});
+
+Breadcrumbs::for('payment_create', function ($trail) {
+    $trail->parent('payment');
+    $trail->push(__('constant.CREATE'), url('/admin/payment/create'));
+});
+Breadcrumbs::for('payment_edit', function ($trail, $id) {
+    $trail->parent('payment');
+    $trail->push(__('constant.EDIT'), url('/admin/payment/edit'. $id));
+});

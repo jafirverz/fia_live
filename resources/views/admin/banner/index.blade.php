@@ -21,7 +21,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="datatable_banner" class="table table-bordered table-striped">
+                        <table id="datatable_banner" class="table table-bordered table-striped datatable">
                             <thead>
                             <tr>
                                 <th>Page</th>
@@ -98,9 +98,3 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
-<script>
-    $(document).ready(function() {
-        $('#datatable_banner').dataTable();
-    });
-
-</script>

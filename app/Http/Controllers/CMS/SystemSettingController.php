@@ -42,9 +42,14 @@ class SystemSettingController extends Controller
     public function create()
     {
        // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+	    $systemSetting = SystemSetting::all()->count();
         $title = __('constant.CREATE');
-
+		if($systemSetting==0)
         return view('admin.systemSetting.create', compact('title'));
+		else
+		return redirect('admin/system-setting')->with('error', __('constant.EDITABLE', ['module' => __('constant.SYSTEM_SETTING')]));
+
+		
     }
 
     /**
@@ -66,9 +71,8 @@ class SystemSettingController extends Controller
             'to_email' => 'required | email',
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
-            'contact_fax' => 'required',
             'contact_address' => 'required',
-            'company_map' => 'required',
+
         ];
         $validator = Validator::make($fields, $validatorFields);
         if ($validator->getMessageBag()->count()) {
@@ -81,9 +85,7 @@ class SystemSettingController extends Controller
         $systemSetting->to_email = $request->to_email;
         $systemSetting->contact_phone = $request->contact_phone;
         $systemSetting->contact_email = $request->contact_email;
-        $systemSetting->contact_fax = $request->contact_fax;
         $systemSetting->contact_address = $request->contact_address;
-        $systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
 
         if (!is_dir('uploads')) {
