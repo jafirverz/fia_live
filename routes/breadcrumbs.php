@@ -197,3 +197,43 @@ Breadcrumbs::for('system-setting-edit', function ($trail, $id) {
     $trail->push(__('constant.SYSTEM_SETTING'));
     $trail->push(__('constant.EDIT'), url('/admin/system-setting/edit'. $id));
 });
+
+Breadcrumbs::for('roles-and-permission', function ($trail) {
+	$trail->parent('dashboard');
+    $trail->push('Roles and Permission', url('/admin/roles-and-permission'));
+});
+
+Breadcrumbs::for('create-roles-and-permission', function ($trail) {
+	$trail->parent('dashboard');
+    $trail->push('Roles and Permission', url('/admin/roles-and-permission/create'));
+});
+
+Breadcrumbs::for('edit-roles-and-permission', function ($trail, $id) {
+	$trail->parent('roles-and-permission');
+    $trail->push('Edit', url('/admin/edit-roles-and-permission/' . $id));
+});
+
+Breadcrumbs::for('create_role', function ($trail) {
+    $trail->parent('roles-and-permission');
+    $trail->push('Create Role', url('/admin/roles/create'));
+});
+
+Breadcrumbs::for('edit_role', function ($trail, $id) {
+    $trail->parent('roles-and-permission');
+    $trail->push('Edit Role', url('/admin/roles/edit/'.$id));
+});
+
+//Email templates
+Breadcrumbs::for('email_template', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.EMAIL_TEMPLATE'), url('/admin/email-template'));
+});
+
+Breadcrumbs::for('email_template_create', function ($trail) {
+    $trail->parent('email_template');
+    $trail->push(__('constant.CREATE'), url('/admin/email-template/create'));
+});
+Breadcrumbs::for('email_template_edit', function ($trail, $id) {
+    $trail->parent('email_template');
+    $trail->push(__('constant.EDIT'), url('/admin/email-template/edit'. $id));
+});

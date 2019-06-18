@@ -24,6 +24,10 @@
                      </ul>
             </li>
             <li>
+                <a href="{{ url('/admin/email-template') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.EMAIL_TEMPLATE') }}</span></a>
+            </li>
+            <li>
                 <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.COUNTRY') }}</span></a>
             </li>
@@ -42,6 +46,10 @@
             <li>
                 <a href="{{ url('/admin/group-management') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.GROUPMANAGEMENT') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/roles-and-permission') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.ROLES_AND_PERMISSION') }}</span></a>
             </li>
         </ul>
     </section>

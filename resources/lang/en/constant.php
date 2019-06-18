@@ -9,6 +9,7 @@ return [
     'TOPIC' =>  'Topic',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
+	'EMAIL_TEMPLATE' => 'Email Template',
 	'FILTER' => 'Filter',
 	'BANNER' => 'Banner',
 	'PAGE' => 'Page',
@@ -23,7 +24,8 @@ return [
 	'FOOTER' => 'Footer',
 	'NONE' => 'none',
 	'SYSTEM_SETTING' => 'System Setting',
-
+	'ROLES_AND_PERMISSION' => 'Roles and Permission',
+    'ROLE' => 'Role',
 
     //CRUD
     'REMOVED' => ':Module has been removed.',

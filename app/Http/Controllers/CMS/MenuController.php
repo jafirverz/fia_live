@@ -26,7 +26,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $parent = 0;
         $title = __('constant.MENU');
         $menu_types = MenuPosition::orderBy('view_order', 'ASC')->get();
@@ -36,7 +36,7 @@ class MenuController extends Controller
 	
 	public function menu_list($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $parent = 0;
 		$type=$id;
         $parentMenu = null;
@@ -50,7 +50,8 @@ class MenuController extends Controller
 
     public function getSubMenus($id)
     {
-        $title = __('constant.MENU');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+	    $title = __('constant.MENU');
         $menus = Menu::where('parent', $id)
             ->orderBy('view_order', 'ASC')
             ->get();
@@ -71,7 +72,7 @@ class MenuController extends Controller
      */
     public function create(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
         $parentMenu = Menu::where('id', $request->parent)->first();
         $viewOrderMenu = Menu::where('parent', $request->parent)->orderBy('view_order', 'DESC')->first();
@@ -113,7 +114,7 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
         $request->validate([
             'title' => 'required|max:191|unique:menus,title,NULL,id,menu_type,'.$request->menu_type,
@@ -193,7 +194,7 @@ class MenuController extends Controller
      */
     public function edit($id, Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $menu = Menu::findorfail($id);
         $parentMenu = Menu::find($request->parent);
@@ -220,7 +221,7 @@ class MenuController extends Controller
 
 	public function type_edit($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         
 		$menu_type = MenuPosition::where('id', $id)->first();
@@ -238,7 +239,7 @@ class MenuController extends Controller
      */
 	public function type_update(Request $request, $id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
 
         $menu = MenuPosition::findorfail($id);
         
@@ -255,7 +256,7 @@ class MenuController extends Controller
     }
     public function update(Request $request, $id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $menu = Menu::findorfail($id);
         $fields = $request->all();
         $request->validate([
@@ -323,7 +324,7 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $menu = Menu::findorfail($id);
 
 
