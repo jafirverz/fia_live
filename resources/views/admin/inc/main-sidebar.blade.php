@@ -28,6 +28,10 @@
                     <span>{{ __('constant.EMAIL_TEMPLATE') }}</span></a>
             </li>
             <li>
+                <a href="{{ url('/admin/payment') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.PAYMENT') }}</span></a>
+            </li>
+            <li>
                 <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.COUNTRY') }}</span></a>
             </li>

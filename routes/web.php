@@ -92,6 +92,14 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/page/edit/{id}', 'CMS\PageController@edit');
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
+  
+  //PAYMENT
+  Route::get('/payment', 'CMS\PaymentController@index')->name('payment.index');
+  Route::get('/payment/create', 'CMS\PaymentController@create');
+  Route::post('/payment/store', 'CMS\PaymentController@store');
+  Route::get('/payment/edit/{id}', 'CMS\PaymentController@edit');
+  Route::post('/payment/update/{id}', 'CMS\PaymentController@update');
+  Route::get('/payment/destroy/{id}', 'CMS\PaymentController@destroy');
 
   
    //Menu

@@ -21,7 +21,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="page-table" class="table table-bordered table-striped">
+                        <table id="page-table" class="table table-bordered table-striped datatable">
                             <thead>
                             <tr>
                                 <th>ID</th>
@@ -85,24 +85,3 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
-@push('scripts')
-<script>
-    $('#page-table').DataTable(
-            {
-                "pageLength": 10,
-                'ordering': true,
-                'order': [[4, 'desc']],
-                "aoColumnDefs": [{
-                    "aTargets": [5],
-                    "bSortable": false
-                },
-                    {width: 100, targets: 0},
-                    {width: 150, targets: 1},
-                    {width: 100, targets: 2},
-                    {width: 150, targets: 3},
-                    {width: 150, targets: 4},
-                    {width: 150, targets: 5}
-                ]
-            });
-</script>
-@endpush

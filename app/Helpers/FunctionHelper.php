@@ -96,7 +96,25 @@ if (!function_exists('getTopics')) {
 
 	function ActiveInActinve($value = null)
     {
-        $array_list = ["1" => 'Active', "0" => 'In-Active'];;
+        $array_list = ["1" => 'Active', "0" => 'De-Active'];;
+        if ($value) {
+            return $array_list[$value - 1];
+        }
+        return $array_list;
+    }
+	
+	function get_payment_mode($value = null)
+    {
+        $array_list = ["1" => 'Online', "0" => 'Offline'];;
+        if ($value) {
+            return $array_list[$value - 1];
+        }
+        return $array_list;
+    }
+	
+	function get_status($value = null)
+    {
+        $array_list = ["1" => 'Paid', "0" => 'UnPaid'];;
         if ($value) {
             return $array_list[$value - 1];
         }
@@ -123,5 +141,10 @@ if (!function_exists('getTopics')) {
             return $array_list[$id];
         }
         return $array_list;
+    }
+	
+	function guid()
+    {
+        return uniqid();
     }
 }
