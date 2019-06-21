@@ -40,10 +40,8 @@
                            
                         </div>
                         <div class="form-group">
-                            <label for="home_status" class="control-label">Home Page Status</label>
-                            
-						<input  name="home_status" type="checkbox" id="tag_name" value="1">                            
-                           
+                        <label for="home_status" class="control-label">Home Page Status</label>
+						<input  @if(1 == old('home_status')) checked="checked" @endif name="home_status" type="checkbox" value="1">                            
                         </div>
                         <div class="form-group">
 <label for="status" class="control-label">Status</label>

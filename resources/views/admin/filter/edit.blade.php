@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label for="home_status" class="control-label">Home Page Status</label>
                             <div class="">
-						<input  name="home_status" @if(1 == $filter->home_status) checked="checked" @endif  type="checkbox" id="tag_name" value="1">                            
+						<input  name="home_status" @if(1 == $filter->home_status) checked="checked" @endif  type="checkbox" value="1">                            
                             </div>
                         </div>
                         <div class="form-group">

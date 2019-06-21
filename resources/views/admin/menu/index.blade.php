@@ -51,10 +51,12 @@
                                             {{ $menu->title }}
                                         </td>
                                         <td>
-                                            @if(!$menu->page_id)
-                                                {{__('constant.NONE')}}
+                                            @if($menu->target_value!=1 && $menu->page_id>0)
+                                             {{ get_page_name($menu->page_id) }}
+                                            @elseif($menu->target_value==1 && $menu->external_link!="")    
+                                             {{ $menu->external_link}}
                                             @else
-                                                {{ get_page_name($menu->page_id) }}
+                                             {{__('constant.NONE')}}    
                                             @endif
                                         </td>
                                         
