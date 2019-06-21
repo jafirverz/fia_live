@@ -100,6 +100,8 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/payment/edit/{id}', 'CMS\PaymentController@edit');
   Route::post('/payment/update/{id}', 'CMS\PaymentController@update');
   Route::get('/payment/destroy/{id}', 'CMS\PaymentController@destroy');
+    Route::post('/payment/date-range-search', 'CMS\PaymentController@date_range_search');
+
 
   
    //Menu

@@ -36,7 +36,19 @@ class PaymentController extends Controller
         $payments = Payment::orderBy('id','desc')->get();
         return view("admin.payment.index", compact("payments", "title"));
     }
+public function date_range_search(Request $request)
+    {
+        //dd($request->all());
+        $title = __('constant.PAYMENT');
+        $daterange_old = $request->daterange;
+        $daterange = str_replace('/', '-', explode('-', $request->daterange));
+        $start_date = $daterange[0];
+        $end_date = $daterange[1];
 
+        $payments = Payment::whereBetween('payments.created_at', [$start_date, $end_date])->select('payments.*')->get();
+
+        return view('admin.payment.index', compact('title', 'payments', 'daterange_old'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -141,7 +153,6 @@ class PaymentController extends Controller
 		$payment->renewal_date = $request->renewal_date;
 		$payment->payee_email_id = $request->payee_email_id;
 		$payment->payee_name = $request->payee_name;
-        $payment->created_at = Carbon::now()->toDateTimeString();
 		$payment->payment_mode = ($request->payment_mode?$request->payment_mode:0);
 		$payment->status = ($request->status?$request->status:0);
         $payment->updated_at = Carbon::now()->toDateTimeString();

@@ -250,6 +250,7 @@ class MenuController extends Controller
         $menu->menu_name = $request->menu_name;
 		$menu->menu_type = $request->menu_type;
 		$menu->view_order = $request->view_order;
+		$menu->updated_at = Carbon::now()->toDateTimeString();
         $menu->save();
 
         return redirect(route('menu.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));

@@ -78,14 +78,14 @@
                         <div class="form-group">
                             <label for="contact_address" class=" control-label">Company Addresses</label>
                             <div class="">
-                                 <textarea class="form-control" name="contact_address">{{  old('contact_address') }}</textarea>
+                                 <textarea  class="form-control tiny-editor " name="contact_address">{{  old('contact_address') }}</textarea>
                             </div>
                         </div>
                         
                         <div class="form-group">
 <label for="footer" class=" control-label">Footer</label>
 						<div class="">
-                                 <textarea class="form-control" name="footer">{{  old('footer') }}</textarea>
+                                 <textarea  class="form-control tiny-editor " name="footer">{{  old('footer') }}</textarea>
                             </div>
                         </div>
                     </div>
