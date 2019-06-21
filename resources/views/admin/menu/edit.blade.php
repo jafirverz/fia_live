@@ -44,7 +44,7 @@
 
                             <div class="">
 
-                                <select class="form-control select2"
+                                <select id="page_id" @if($menu->target_value==1) disabled="disabled" @endif class="form-control select2"
                                         data-placeholder="" name="page_id"
                                         style="width: 100%;">
                                     <option value="null">{{__('constant.NONE')}}</option>
@@ -60,8 +60,9 @@
                         <div class="form-group">
                             <label for="view_order" class=" control-label">Open link in a new window </label>
                             <div class="">
-                           <input value="1" @if($menu->target_value==1) checked="checked" @endif id="checkbox1" name="target_value" type="checkbox">  
-                           @if($menu->target_value==1)
+                            @php $target_value=old('target_value'); @endphp
+                           <input value="1" @if($menu->target_value==1) checked="checked" @elseif($target_value==1) checked="checked" @endif id="checkbox1" name="target_value" type="checkbox">  
+                           @if($menu->target_value==1 || old('target_value')==1)
                            <input class="form-control" value="{{ $menu->external_link }}" name="external_link" id="external_link" placeholder="External Link" type="text">                          
                            @else
                            <input class="form-control hide" value="" name="external_link" id="external_link" placeholder="External Link" type="text">                          

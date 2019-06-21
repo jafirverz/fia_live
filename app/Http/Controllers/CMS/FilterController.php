@@ -115,7 +115,7 @@ class FilterController extends Controller
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $filter = Filter::findorfail($id);
         $request->validate([
-            'filter_name' => 'required|max:255|unique:filters,filter_name,'.$id,
+            'filter_name' => 'required|max:255',
             'tag_name' => 'required'
         ]);
 
