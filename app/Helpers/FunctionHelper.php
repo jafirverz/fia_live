@@ -124,7 +124,10 @@ if (!function_exists('getTopics')) {
 	function get_page_name($id)
 	{
 		$page = Page::where("id",$id)->select("title")->first();
+		if(isset($page))
 		return $page->title;
+		else
+		return NULL;
 	}
 
     function member($id = null)

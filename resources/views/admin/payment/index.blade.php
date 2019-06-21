@@ -19,6 +19,8 @@
                     <div class="box-header with-border">
                         <a href="{{ url('admin/payment/create') }}" class="btn btn-primary pull-right">Create</a>
                     </div>
+                    <form id="payment_search" action="{{ url('admin/payment/date-range-search') }}" method="post">
+        @csrf
                     <div class="box-header with-border">
                             <div class="input-group pull-right">
                                 <label for="inputEmail3" class="col-sm-4 control-label">Date Range</label>
@@ -28,6 +30,7 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
                         <table id="datatable_payment" class="table table-bordered table-striped">
@@ -199,11 +202,18 @@
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
                 },
+				{
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    }
+                },
                 {
                     extend: 'csvHtml5',
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
+					
                 }
             ]
         });
@@ -239,6 +249,10 @@
                     format: 'YYYY/MM/DD',
                 }
             });
+        });
+		
+		 $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+            $("#payment_search").submit();
         });
         /*$('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
             $("#orders").submit();

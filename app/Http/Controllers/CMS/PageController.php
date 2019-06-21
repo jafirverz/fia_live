@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Page;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 use Auth;
 
 class PageController extends Controller
@@ -77,6 +78,7 @@ class PageController extends Controller
         } else {
             $page->status = $request->status;
         }
+		$page->created_at = Carbon::now()->toDateTimeString();
         $page->save();
 
         return redirect('admin/page')->with('success', __('constant.CREATED', ['module' => __('constant.PAGE')]));
@@ -138,7 +140,7 @@ class PageController extends Controller
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;
         $page->meta_description = $request->meta_description;*/
-        
+        $page->updated_at = Carbon::now()->toDateTimeString();
         $page->save();
 
         return redirect('admin/page')->with('success', __('constant.UPDATED', ['module' => __('constant.PAGE')]));
