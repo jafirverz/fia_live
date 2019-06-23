@@ -41,8 +41,8 @@
                                         <tr>
                                             <td>{{ $country->country_name ?? '-' }}</td>
                                             <td>@if($country->country_flag)<img src="{{ $country->country_flag ?? '-' }}" alt="{{ $country->country_flag ?? '-' }}" style="margin-top:15px;max-height:100px;"> @else - @endif</td>
-                                            <td>{{ $country->created_at->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ $country->updated_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $country->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                            <td>{{ $country->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/country/edit', $country->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/country/destroy') }}" method="post">

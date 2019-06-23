@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('page');
 });
 
 Auth::routes();
@@ -69,7 +69,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
 
-	
+
 
   Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
   Route::get('/filter/create', 'CMS\FilterController@create');
@@ -92,7 +92,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/page/edit/{id}', 'CMS\PageController@edit');
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
-  
+
   //PAYMENT
   Route::get('/payment', 'CMS\PaymentController@index')->name('payment.index');
   Route::get('/payment/create', 'CMS\PaymentController@create');
@@ -103,7 +103,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/payment/date-range-search', 'CMS\PaymentController@date_range_search');
 
 
-  
+
    //Menu
   Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
   Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
@@ -137,7 +137,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
     Route::get('/roles/edit/{id}', 'AdminAuth\Account\PermissionController@edit_roles');
     Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
     Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
-	
+
 	 /*Email Templates route start*/
   Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
   Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');

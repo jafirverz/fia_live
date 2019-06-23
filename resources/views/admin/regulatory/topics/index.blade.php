@@ -39,8 +39,8 @@
                                         @foreach($topics as $topic)
                                         <tr>
                                             <td>{{ $topic->topic_name ?? '-' }}</td>
-                                            <td>{{ $topic->created_at->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ $topic->updated_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $topic->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                            <td>{{ $topic->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/topic/edit', $topic->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/topic/destroy') }}" method="post">

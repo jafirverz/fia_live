@@ -63,8 +63,8 @@
                                                 @endif
                                             </td>
                                             <td>{{ getCountry($regulatory->country_id) ?? '-' }}</td>
-                                            <td>{{ $regulatory->created_at->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ $regulatory->updated_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $regulatory->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                            <td>{{ $regulatory->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/regulatory/destroy') }}" method="post">

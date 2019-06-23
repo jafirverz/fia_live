@@ -108,7 +108,7 @@
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}" @if($regulatory->id==$country->id) selected @endif>{{ $country->country_name }}</option>
+                                    <option value="{{ $country->id }}" @if($regulatory->country_id==$country->id) selected @endif>{{ $country->country_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
