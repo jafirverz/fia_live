@@ -3,6 +3,7 @@ use App\Topic;
 use App\Country;
 use App\Regulatory;
 use App\Page;
+use App\Filter;
 use App\PermissionAccess;
 if (!function_exists('getTopics')) {
 
@@ -24,10 +25,10 @@ if (!function_exists('getTopics')) {
 
     function getCountry($id)
     {
-        $country = Country::find($id);
+        $country = Filter::find($id);
         if($country)
         {
-            return $country->country_name;
+            return $country->tag_name;
         }
         return '-';
     }
@@ -102,7 +103,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
-	
+
 	function get_payment_mode($value = null)
     {
         $array_list = ["1" => 'Online', "0" => 'Offline'];;
@@ -111,7 +112,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
-	
+
 	function get_status($value = null)
     {
         $array_list = ["1" => 'Paid', "0" => 'UnPaid'];;
@@ -145,7 +146,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
-	
+
 	function guid()
     {
         return uniqid();

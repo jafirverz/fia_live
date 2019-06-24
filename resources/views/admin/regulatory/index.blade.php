@@ -42,9 +42,6 @@
                                     <tbody>
                                         @if($regulatories)
                                         @foreach($regulatories as $regulatory)
-                                        @php
-                                            $topics = getTopics($regulatory->topic_id);
-                                        @endphp
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_reponsible ?? '-' }}</td>
@@ -52,8 +49,10 @@
                                             <td>{{ getParentRegulatory($regulatory->parent_id) ?? '-' }}</td>
                                             <td>
                                                 @if($topics)
-                                                @foreach ($topics as $topic)
-                                                    {{ $topic }}
+                                                @foreach($topics as $topic)
+                                                    @if(in_array($topic->id, json_decode($regulatory->topic_id)))
+                                                    {{ $topic->tag_name }}
+                                                    @endif
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif

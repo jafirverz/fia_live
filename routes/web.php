@@ -35,12 +35,12 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //COUNTRY
-    Route::get('/country', 'CMS\CountryController@index');
-    Route::get('/country/create', 'CMS\CountryController@create');
-    Route::post('/country/store', 'CMS\CountryController@store');
-    Route::get('/country/edit/{id}', 'CMS\CountryController@edit');
-    Route::post('/country/update/{id}', 'CMS\CountryController@update');
-    Route::post('/country/destroy', 'CMS\CountryController@destroy');
+    Route::get('/country-information', 'CMS\CountryInformationController@index');
+    Route::get('/country-information/create', 'CMS\CountryInformationController@create');
+    Route::post('/country-information/store', 'CMS\CountryInformationController@store');
+    Route::get('/country-information/edit/{id}', 'CMS\CountryInformationController@edit');
+    Route::post('/country-information/update/{id}', 'CMS\CountryInformationController@update');
+    Route::post('/country-information/destroy', 'CMS\CountryInformationController@destroy');
 
     //REGULATORY
     Route::get('/regulatory', 'CMS\RegulatoryController@index');
