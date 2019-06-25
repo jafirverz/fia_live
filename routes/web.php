@@ -151,6 +151,6 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
 
 });
 
-Route::get('/country-information-details', 'CMS\PagesController@country_information_details');
+Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 
-Route::get('/{page}', 'CMS\PagesController@index');
+Route::get('/{page}', 'PagesFrontController@index');

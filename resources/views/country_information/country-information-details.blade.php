@@ -34,8 +34,9 @@
 										</ul>
 									</div>
 								</div>
-							</div>
-							<div class="col-2">
+                            </div>
+							<div class="col-2">	
+                                @if(Auth::check())
 								<div class="tb-col title-wrap-1 break-640">
 									<div class="col">
 										<h1 class="title-1">{{ $_GET['country'] ?? '' }}</h1>
@@ -59,7 +60,10 @@
                                 </div>
                                 @endforeach
                                 @endif
-							</div>
+                            </div>
+                            @else
+                            @include('inc.signin')
+                            @endif
 						</div>
 					</div>
 
