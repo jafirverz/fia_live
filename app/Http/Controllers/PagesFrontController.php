@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\CMS;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Page;
 
-class PagesController extends Controller
+class PagesFrontController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
         $this->module_name = 'COUNTRY_INFORMATION';
     }
 
