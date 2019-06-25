@@ -4,9 +4,8 @@ return [
 
     //MODULE
     'DASHBOARD' =>  'Dashboard',
-    'COUNTRY'   =>  'Country',
+    'COUNTRY_INFORMATION'   =>  'Country Information',
     'REGULATORY'    =>  'Regulatory',
-    'TOPIC' =>  'Topic',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
 	'EMAIL_TEMPLATE' => 'Email Template',
