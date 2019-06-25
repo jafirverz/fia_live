@@ -17,7 +17,8 @@ class CreateCountryInformationTable extends Migration
             $table->bigIncrements('id');
             $table->string('country_id');
             $table->integer('information_filter_id');
-            $table->string('information_title');
+            $table->string('information_title')->unique();
+            $table->string('information_title_slug');
             $table->text('information_content');
             $table->foreign('information_filter_id')->references('id')->on('topics');
             $table->timestamps();

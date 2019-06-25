@@ -9,41 +9,70 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('country_edit', $country->id) }}
+        {{ Breadcrumbs::render('country_information_edit', $country_information->id) }}
     </section>
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ url('admin/country/update', $country->id) }}" method="post">
+        <form action="{{ url('admin/country-information/update', $country_information->id) }}" method="post">
             @csrf
             <div class="box box-default">
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group{{ $errors->has('country_name') ? ' has-error' : '' }}">
-                                <label for="">Country Name</label>
-                                <input type="text" name="country_name" class="form-control"
-                                    placeholder="Enter country name" value="{{ $country->country_name }}">
-                                @if ($errors->has('country_name'))
+                            <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
+                                <label for="">Country</label>
+                                <select name="country_id[]" class="form-control select2" style="width: 100%;" multiple>
+                                    <option value="">-- Select --</option>
+                                    @if($countries)
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}" @if($country_information->country_id) @if(in_array($country->id, json_decode($country_information->country_id))) selected @endif @endif>{{ $country->tag_name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('country_id'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('country_name') }}</strong>
+                                    <strong>{{ $errors->first('country_id') }}</strong>
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                    <label for="">Country Flag</label>
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <a id="country_flag" data-input="thumbnail" data-preview="holder"
-                                                class="btn btn-primary">
-                                                <i class="fa fa-picture-o"></i> Choose
-                                            </a>
-                                        </span>
-                                        <input id="thumbnail" class="form-control" type="text" name="country_flag">
-                                    </div>
-                                    <img @if($country->country_flag) src="{{ $country->country_flag }}" @endif id="holder" style="margin-top:15px;max-height:100px;">
-                                </div>
+                            <div class="form-group{{ $errors->has('information_filter_id') ? ' has-error' : '' }}">
+                                <label for="">Information Filter</label>
+                                <select name="information_filter_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">-- Select --</option>
+                                    @if($categories)
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if($category->id==$country_information->information_filter_id) selected @endif>{{ $category->tag_name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('information_filter_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('information_filter_id') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('information_title') ? ' has-error' : '' }}">
+                                <label for="">Title</label>
+                                <input type="text" name="information_title" class="form-control"
+                                    placeholder="Enter information title" value="{{ $country_information->information_title }}">
+                                @if ($errors->has('information_title'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('information_title') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('information_content') ? ' has-error' : '' }}">
+                                <label for="">Content</label>
+                                <textarea name="information_content" class="form-control simple-text-editor" cols="30" rows="10"
+                                    placeholder="Enter content">{!! $country_information->information_content !!}</textarea>
+                                @if ($errors->has('information_content'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('information_content') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -51,14 +80,12 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{{ url('admin/country-information') }}" class="btn btn-default">Cancel</a>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
                 </div>
             </div>
         </form>
         <!-- /.box -->
     </section>
 </div>
-<script>
-        $('#country_flag').filemanager('image');
-    </script>
 @endsection

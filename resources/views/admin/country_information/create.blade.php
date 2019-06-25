@@ -9,12 +9,12 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('country_create') }}
+        {{ Breadcrumbs::render('country_information_create') }}
     </section>
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ url('admin/country/store') }}" method="post">
+        <form action="{{ url('admin/country-information/store') }}" method="post">
             @csrf
             <div class="box box-default">
                 <!-- /.box-header -->
@@ -23,8 +23,13 @@
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                                 <label for="">Country</label>
-                                <select name="country_id" class="form-control select2" style="width: 100%;" multiple>
+                                <select name="country_id[]" class="form-control select2" style="width: 100%;" multiple>
                                     <option value="">-- Select --</option>
+                                    @if($countries)
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}" @if(old('country_id')) @if(in_array($country->id, old('country_id'))) selected @endif @endif>{{ $country->tag_name }}</option>
+                                    @endforeach
+                                    @endif
                                 </select>
                                 @if ($errors->has('country_id'))
                                 <span class="help-block">
@@ -36,6 +41,11 @@
                                 <label for="">Information Filter</label>
                                 <select name="information_filter_id" class="form-control select2" style="width: 100%;">
                                     <option value="">-- Select --</option>
+                                    @if($categories)
+                                    @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if($category->id==old('information_filter_id')) selected @endif>{{ $category->tag_name }}</option>
+                                    @endforeach
+                                    @endif
                                 </select>
                                 @if ($errors->has('information_filter_id'))
                                 <span class="help-block">
@@ -55,7 +65,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('information_content') ? ' has-error' : '' }}">
                                 <label for="">Content</label>
-                                <textarea name="description" class="form-control" cols="30" rows="10"
+                                <textarea name="information_content" class="form-control simple-text-editor" cols="30" rows="10"
                                     placeholder="Enter content">{{ old('information_content') }}</textarea>
                                 @if ($errors->has('information_content'))
                                 <span class="help-block">
@@ -78,8 +88,4 @@
         <!-- /.box -->
     </section>
 </div>
-<script>
-    $('#country_flag').filemanager('image');
-
-</script>
 @endsection
