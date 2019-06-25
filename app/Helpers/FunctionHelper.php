@@ -1,10 +1,9 @@
 <?php
-use App\Topic;
-use App\Country;
 use App\Regulatory;
 use App\Page;
 use App\Filter;
 use App\PermissionAccess;
+use App\CountryInformation;
 if (!function_exists('getTopics')) {
 
     /**
@@ -13,24 +12,24 @@ if (!function_exists('getTopics')) {
      * @param
      * @return
      */
-    function getTopics($id)
+
+    function getFilterCountry($id = null)
     {
-        $id = json_decode($id);
-        $topics = Topic::whereIn('id', $id)->get();
-        if($topics->count())
+        if($id)
         {
-            return $topics->pluck('topic_name');
+            $country = Filter::find($id);
+            if($country)
+            {
+                return $country->tag_name;
+            }
+            return '-';
         }
+        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-    function getCountry($id)
+    function getFilterCategory()
     {
-        $country = Filter::find($id);
-        if($country)
-        {
-            return $country->tag_name;
-        }
-        return '-';
+        return Filter::where('filter_name', 5)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getParentRegulatory($id)
@@ -64,7 +63,7 @@ if (!function_exists('getTopics')) {
 
 	function get_filter_name($value = null)
     {
-        $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month'];
+        $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month', "5" => 'Category'];
 
         if ($value) {
             return $array_list[$value];
@@ -150,5 +149,27 @@ if (!function_exists('getTopics')) {
 	function guid()
     {
         return uniqid();
+    }
+
+    function getCountryInformationCounter($country_id, $information_filter_id)
+    {
+        return CountryInformation::where('country_id', 'like', '%'.$country_id.'%')->where('information_filter_id', $information_filter_id)->count();
+    }
+
+    function getCountryInformation($country_id, $information_filter_id)
+    {
+        return CountryInformation::where('country_id', 'like', '%'.$country_id.'%')->where('information_filter_id', $information_filter_id)->get();
+    }
+
+    function getCountryInformationBasedOnDetails($country, $category)
+    {
+        $country_id = getFilterId($country);
+        $category_id = getFilterId($category);
+        return getCountryInformation($country_id, $category_id);
+    }
+
+    function getFilterId($tag_name)
+    {
+        return Filter::where('tag_name', $tag_name)->first()->id;
     }
 }

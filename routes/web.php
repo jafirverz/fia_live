@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/country-information/update/{id}', 'CMS\CountryInformationController@update');
     Route::post('/country-information/destroy', 'CMS\CountryInformationController@destroy');
 
+    Route::get('/country-information/list/{country_id}/{information_filter_id}', 'CMS\CountryInformationController@information_list');
+
     //REGULATORY
     Route::get('/regulatory', 'CMS\RegulatoryController@index');
     Route::get('/regulatory/create', 'CMS\RegulatoryController@create');
@@ -148,3 +150,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   /*Email Templates route end*/
 
 });
+
+Route::get('/country-information-details', 'CMS\PagesController@country_information_details');
+
+Route::get('/{page}', 'CMS\PagesController@index');
