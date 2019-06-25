@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Select Member</label>
-                                <select class="form-control select2" name="group_members[]" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                                <select class="form-control select2" name="group_members[]" multiple="multiple" data-placeholder="Select a member" style="width: 100%;">
                                     @php
                                         $group_members = json_decode($group->group_members);
                                     @endphp

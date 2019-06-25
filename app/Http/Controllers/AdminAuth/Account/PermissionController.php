@@ -31,7 +31,7 @@ class PermissionController extends Controller
 
         $roles = Role::all();
         $admins = Admin::join('roles', 'admins.admin_role', '=', 'roles.id')->select('admins.name as admin_name', 'roles.name as role_name', 'admins.id as admins_id', 'admins.created_at as admin_created_at', 'admins.updated_at as admin_updated_at', 'admins.*', 'roles.*')->get();
-			
+
         return view('admin.account.roles-and-permission', [
             'page_title' => 'Roles and Permission',
             'roles'      => $roles,

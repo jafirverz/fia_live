@@ -50,17 +50,17 @@ if (!function_exists('getTopics')) {
 
         return $modules_array;
     }
-	
+
 	 function is_permission_allowed($permission_id, $module, $type)
     {
-        $permission_access = PermissionAccess::join('admins', 'permission_access.role_id', '=', 'admins.admin_role')
-            ->where(['permission_access.role_id' => $permission_id, 'permission_access.module' => $module, $type => 1])
+        $permission_access = PermissionAccess::join('admins', 'permission_accesses.role_id', '=', 'admins.admin_role')
+            ->where(['permission_accesses.role_id' => $permission_id, 'permission_accesses.module' => $module, $type => 1])
             ->get();
         if (!$permission_access->count()) {
             abort(redirect('admin/access-not-allowed'));
         }
     }
-	
+
 	function get_filter_name($value = null)
     {
         $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month'];
@@ -70,7 +70,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
-	
+
 	function get_permission_access_value($type, $module, $value, $role_id = null)
     {
         $permission_access = PermissionAccess::where(['role_id' => $role_id, $type => $value, 'module' => $module])->get();
@@ -78,7 +78,7 @@ if (!function_exists('getTopics')) {
             return 'checked';
         }
     }
-	
+
 	function admin_last_login($id)
     {
         $authentication_log = DB::table('authentication_log')->where('authenticatable_id', $id)->orderby('id', 'desc')->first();
@@ -87,13 +87,13 @@ if (!function_exists('getTopics')) {
         }
         return "-";
     }
-	
+
 	function get_filter_name_by_id($value = null)
 	{
 		$array_list=get_filter_name();
 		return $array_list[$value];
 	}
-	
+
 	function ActiveInActinve($value = null)
     {
         $array_list = ["1" => 'Active', "0" => 'De-Active'];;
@@ -120,7 +120,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
-	
+
 	function get_page_name($id)
 	{
 		$page = Page::where("id",$id)->select("title")->first();
