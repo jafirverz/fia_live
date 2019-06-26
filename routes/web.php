@@ -146,5 +146,11 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::post('/email-template/update/{id}', 'CMS\EmailTemplateController@update');
   //Route::get('/email-template/destroy/{id}', 'CMS\EmailTemplateController@destroy');
   /*Email Templates route end*/
+  Route::get('/events', 'CMS\EventsController@index')->name('events.index');
+  Route::get('/events/create', 'CMS\EventsController@create');
+  Route::post('/events/store', 'CMS\EventsController@store');
+  Route::get('/events/edit/{id}', 'CMS\EventsController@edit');
+  Route::post('/events/update/{id}', 'CMS\EventsController@update');
+  Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
 
 });
