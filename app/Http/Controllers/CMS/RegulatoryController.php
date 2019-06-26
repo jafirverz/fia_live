@@ -5,8 +5,7 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Regulatory;
-use App\Topic;
-use App\Country;
+use App\Filter;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -28,8 +27,10 @@ class RegulatoryController extends Controller
         $subtitle = 'Index';
 
         $regulatories = Regulatory::all();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
 
-        return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories'));
+        return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics'));
     }
 
     /**
@@ -43,10 +44,10 @@ class RegulatoryController extends Controller
         $subtitle = 'Create';
 
         $regulatories = Regulatory::all()->where('parent_id', 0);
-        $topics = Topic::all();
-        $countries = Country::all();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
 
-        return view('admin.regulatory.create', compact('title', 'subtitle', 'regulatories', 'topics', 'countries'));
+        return view('admin.regulatory.create', compact('title', 'subtitle', 'regulatories', 'countries', 'topics'));
     }
 
     /**
@@ -103,10 +104,10 @@ class RegulatoryController extends Controller
 
         $regulatories = Regulatory::all()->where('parent_id', 0)->whereNotIn('id', $id);
         $regulatory = Regulatory::findorfail($id);
-        $topics = Topic::all();
-        $countries = Country::all();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
 
-        return view('admin.regulatory.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'topics', 'countries'));
+        return view('admin.regulatory.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'countries', 'topics'));
     }
 
     /**

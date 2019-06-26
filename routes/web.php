@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('page');
 });
 
 Auth::routes();
@@ -35,12 +35,14 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //COUNTRY
-    Route::get('/country', 'CMS\CountryController@index');
-    Route::get('/country/create', 'CMS\CountryController@create');
-    Route::post('/country/store', 'CMS\CountryController@store');
-    Route::get('/country/edit/{id}', 'CMS\CountryController@edit');
-    Route::post('/country/update/{id}', 'CMS\CountryController@update');
-    Route::post('/country/destroy', 'CMS\CountryController@destroy');
+    Route::get('/country-information', 'CMS\CountryInformationController@index');
+    Route::get('/country-information/create', 'CMS\CountryInformationController@create');
+    Route::post('/country-information/store', 'CMS\CountryInformationController@store');
+    Route::get('/country-information/edit/{id}', 'CMS\CountryInformationController@edit');
+    Route::post('/country-information/update/{id}', 'CMS\CountryInformationController@update');
+    Route::post('/country-information/destroy', 'CMS\CountryInformationController@destroy');
+
+    Route::get('/country-information/list/{country_id}/{information_filter_id}', 'CMS\CountryInformationController@information_list');
 
     //REGULATORY
     Route::get('/regulatory', 'CMS\RegulatoryController@index');
@@ -69,7 +71,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/group-management/update/{id}', 'CMS\GroupManagementController@update');
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
 
-	
+
 
   Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
   Route::get('/filter/create', 'CMS\FilterController@create');
@@ -92,7 +94,7 @@ Route::group(['prefix' => 'admin'], function () {
   Route::get('/page/edit/{id}', 'CMS\PageController@edit');
   Route::post('/page/update/{id}', 'CMS\PageController@update');
   Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
-  
+
   //PAYMENT
   Route::get('/payment', 'CMS\PaymentController@index')->name('payment.index');
   Route::get('/payment/create', 'CMS\PaymentController@create');
@@ -103,7 +105,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/payment/date-range-search', 'CMS\PaymentController@date_range_search');
 
 
-  
+
    //Menu
   Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
   Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
@@ -137,7 +139,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
     Route::get('/roles/edit/{id}', 'AdminAuth\Account\PermissionController@edit_roles');
     Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
     Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
-	
+
 	 /*Email Templates route start*/
   Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
   Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');
@@ -154,3 +156,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
 
 });
+
+Route::get('/country-information-details', 'PagesFrontController@country_information_details');
+
+Route::get('/{page}', 'PagesFrontController@index');

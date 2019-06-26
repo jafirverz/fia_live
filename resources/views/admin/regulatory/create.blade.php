@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                                 <label for="">Description</label>
-                                <textarea name="description" class="form-control" cols="30" rows="10"
+                                <textarea name="description" class="form-control simple-text-editor" cols="30" rows="10"
                                     placeholder="Enter description">{{ old('description') }}</textarea>
                                 @if ($errors->has('description'))
                                 <span class="help-block">
@@ -85,7 +85,7 @@
                                     <option value="">-- Select --</option>
                                     @if($topics)
                                     @foreach ($topics as $topic)
-                                    <option value="{{ $topic->id }}">{{ $topic->topic_name }}</option>
+                                    <option value="{{ $topic->id }}">{{ $topic->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -101,7 +101,7 @@
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                    <option value="{{ $country->id }}">{{ $country->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -118,7 +118,8 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{ url('admin/regulatory') }}" class="btn btn-default">Cancel</a>
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
                 </div>
             </div>
         </form>

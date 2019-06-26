@@ -42,9 +42,6 @@
                                     <tbody>
                                         @if($regulatories)
                                         @foreach($regulatories as $regulatory)
-                                        @php
-                                            $topics = getTopics($regulatory->topic_id);
-                                        @endphp
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_reponsible ?? '-' }}</td>
@@ -52,8 +49,10 @@
                                             <td>{{ getParentRegulatory($regulatory->parent_id) ?? '-' }}</td>
                                             <td>
                                                 @if($topics)
-                                                @foreach ($topics as $topic)
-                                                    {{ $topic }}
+                                                @foreach($topics as $topic)
+                                                    @if(in_array($topic->id, json_decode($regulatory->topic_id)))
+                                                    {{ $topic->tag_name }}
+                                                    @endif
                                                     @if (!$loop->last)
                                                     ,
                                                     @endif
@@ -63,8 +62,8 @@
                                                 @endif
                                             </td>
                                             <td>{{ getCountry($regulatory->country_id) ?? '-' }}</td>
-                                            <td>{{ $regulatory->created_at->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ $regulatory->updated_at->format('d M, Y') ?? '-' }}</td>
+                                            <td>{{ $regulatory->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                            <td>{{ $regulatory->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/regulatory/destroy') }}" method="post">

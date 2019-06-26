@@ -55,8 +55,8 @@
                             </div>
                             <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                                 <label for="">Description</label>
-                                <textarea name="description" class="form-control" cols="30" rows="10"
-                                    placeholder="Enter description">{{ $regulatory->description }}</textarea>
+                                <textarea name="description" class="form-control simple-text-editor" cols="30" rows="10"
+                                    placeholder="Enter description">{!! $regulatory->description !!}</textarea>
                                 @if ($errors->has('description'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('description') }}</strong>
@@ -85,14 +85,7 @@
                                     <option value="">-- Select --</option>
                                     @if($topics)
                                     @foreach ($topics as $topic)
-                                    <option value="{{ $topic->id }}"
-                                        @if($regulatory->topic_id)
-                                        @php
-                                            $topic_array = json_decode($regulatory->topic_id, true);
-                                        @endphp
-                                        @if(in_array($topic->id, $topic_array)) selected @endif
-                                        @endif
-                                    >{{ $topic->topic_name }}</option>
+                                    <option value="{{ $topic->id }}" @if(in_array($topic->id, json_decode($regulatory->topic_id))) selected @endif>{{ $topic->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -108,7 +101,7 @@
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}" @if($regulatory->id==$country->id) selected @endif>{{ $country->country_name }}</option>
+                                    <option value="{{ $country->id }}" @if($country->id==$regulatory->country_id) selected @endif>{{ $country->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -125,7 +118,8 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{{ url('admin/regulatory') }}" class="btn btn-default">Cancel</a>
+                    <button type="submit" class="btn btn-primary pull-right">Save</button>
                 </div>
             </div>
         </form>

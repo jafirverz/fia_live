@@ -32,16 +32,12 @@
                     <span>{{ __('constant.PAYMENT') }}</span></a>
             </li>
             <li>
-                <a href="{{ url('/admin/country') }}"><i class="fa fa-check"></i>
-                    <span>{{ __('constant.COUNTRY') }}</span></a>
+                <a href="{{ url('/admin/country-information') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.COUNTRY_INFORMATION') }}</span></a>
             </li>
             <li>
                 <a href="{{ url('/admin/regulatory') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.REGULATORY') }}</span></a>
-            </li>
-            <li>
-                <a href="{{ url('/admin/topic') }}"><i class="fa fa-check"></i>
-                    <span>{{ __('constant.TOPIC') }}</span></a>
             </li>
             <li>
                 <a href="{{ url('/admin/contact-enquiry') }}"><i class="fa fa-check"></i>

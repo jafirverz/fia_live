@@ -7,19 +7,24 @@ Breadcrumbs::for('dashboard', function ($trail) {
 
 
 //COUNTRY
-Breadcrumbs::for('country', function ($trail) {
+Breadcrumbs::for('country_information', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push(__('constant.COUNTRY'), url('/admin/country'));
+    $trail->push(__('constant.COUNTRY_INFORMATION'), url('/admin/country-information'));
 });
 
-Breadcrumbs::for('country_create', function ($trail) {
-    $trail->parent('country');
-    $trail->push('Create', url('/admin/country/create'));
+Breadcrumbs::for('country_information_create', function ($trail) {
+    $trail->parent('country_information');
+    $trail->push('Create', url('/admin/country-information/create'));
 });
 
-Breadcrumbs::for('country_edit', function ($trail, $id) {
-    $trail->parent('country');
-    $trail->push('Edit', url('/admin/country/edit', $id));
+Breadcrumbs::for('country_information_edit', function ($trail, $id) {
+    $trail->parent('country_information');
+    $trail->push('Edit', url('/admin/country-information/edit', $id));
+});
+
+Breadcrumbs::for('country_information_list', function ($trail, $country_id, $information_filter_id) {
+    $trail->parent('country_information');
+    $trail->push('List', url('/admin/country-information/list/' . $country_id . '/' . $information_filter_id));
 });
 
 //REGULATORY
@@ -36,22 +41,6 @@ Breadcrumbs::for('regulatory_create', function ($trail) {
 Breadcrumbs::for('regulatory_edit', function ($trail, $id) {
     $trail->parent('regulatory');
     $trail->push('Edit', url('/admin/regulatory/edit', $id));
-});
-
-//TOPIC
-Breadcrumbs::for('topic', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push(__('constant.TOPIC'), url('/admin/topic'));
-});
-
-Breadcrumbs::for('topic_create', function ($trail) {
-    $trail->parent('topic');
-    $trail->push('Create', url('/admin/topic/create'));
-});
-
-Breadcrumbs::for('topic_edit', function ($trail, $id) {
-    $trail->parent('topic');
-    $trail->push('Edit', url('/admin/topic/edit', $id));
 });
 
 //CONTACT ENQUIRY
@@ -80,7 +69,7 @@ Breadcrumbs::for ('filter', function ($trail) {
 		$trail->parent('dashboard');
 		$trail->push(__('constant.FILTER'), url('/admin/filter'));
 	}) ;
-	
+
 Breadcrumbs::for ('filter_create', function ($trail) {
 	$trail->parent('filter');
 	$trail->push(__('constant.CREATE'), url('/admin/filter/create'));
@@ -253,7 +242,6 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/payment/edit'. $id));
 });
 
-
 //EVENT
 Breadcrumbs::
 for ('event', function ($trail) {
@@ -273,3 +261,4 @@ for ('event_edit', function ($trail, $id) {
     $trail->parent('event');
     $trail->push(__('constant.EDIT'), url('/admin/events/edit' . $id));
 }) ;
+
