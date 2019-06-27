@@ -262,3 +262,24 @@ for ('event_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/events/edit' . $id));
 }) ;
 
+//EVENT
+Breadcrumbs::
+for ('topical_report', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.TOPICAL_REPORT'), url('/admin/topical-report'));
+
+});
+
+Breadcrumbs::
+for ('topical_report_create', function ($trail) {
+
+    $trail->parent('topical_report');
+    $trail->push(__('constant.CREATE'), url('/admin/topical-report/create'));
+}) ;
+Breadcrumbs::
+for ('topical_report_edit', function ($trail, $id) {
+    $trail->parent('topical_report');
+    $trail->push(__('constant.EDIT'), url('/admin/topical-report/edit' . $id));
+}) ;
+
+

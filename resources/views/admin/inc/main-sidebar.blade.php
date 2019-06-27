@@ -27,6 +27,14 @@
                 <a href="{{ url('/admin/email-template') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.EMAIL_TEMPLATE') }}</span></a>
             </li>
+             <li>
+                <a href="{{ url('/admin/events') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.EVENT') }}</span></a>
+            </li>
+             <li>
+                <a href="{{ url('/admin/topical-report') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.TOPICAL_REPORT') }}</span></a>
+            </li>
             <li>
                 <a href="{{ url('/admin/payment') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.PAYMENT') }}</span></a>

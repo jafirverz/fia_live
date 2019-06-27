@@ -4,13 +4,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Event;
-use App\EventProcess;
-use App\EventAttendee;
-
-use App\EventsFeescategory;
-
-use App\Helpers\helper\Helper;
-
 use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
