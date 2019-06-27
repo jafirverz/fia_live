@@ -71,6 +71,7 @@
 <script src="{{ asset('assets/bower_components/moment/min/moment.min.js') }}"></script>
 <script src="{{ asset('assets/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->
+<link rel="stylesheet" href="{{ url('css/bootstrap-datetimepicker.css') }}">
 <script src="{{ asset('assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <!-- DataTables -->
 <script src="{{ asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
@@ -92,6 +93,8 @@
     <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
     <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
     <script src="{{ asset('assets/dist/js/backend.js')}}"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.min.js')}}" id="script"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 <script>
@@ -104,6 +107,11 @@
         $('.select2').select2({
             placeholder: '-- Select --',
         });
+		
+		
     });
+	
+	 
+
 </script>
 </html>

@@ -241,3 +241,45 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
     $trail->parent('payment');
     $trail->push(__('constant.EDIT'), url('/admin/payment/edit'. $id));
 });
+
+//EVENT
+Breadcrumbs::
+for ('event', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.EVENT'), url('/admin/events'));
+
+});
+
+Breadcrumbs::
+for ('event_create', function ($trail) {
+
+    $trail->parent('event');
+    $trail->push(__('constant.CREATE'), url('/admin/events/create'));
+}) ;
+Breadcrumbs::
+for ('event_edit', function ($trail, $id) {
+    $trail->parent('event');
+    $trail->push(__('constant.EDIT'), url('/admin/events/edit' . $id));
+}) ;
+
+//EVENT
+Breadcrumbs::
+for ('topical_report', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.TOPICAL_REPORT'), url('/admin/topical-report'));
+
+});
+
+Breadcrumbs::
+for ('topical_report_create', function ($trail) {
+
+    $trail->parent('topical_report');
+    $trail->push(__('constant.CREATE'), url('/admin/topical-report/create'));
+}) ;
+Breadcrumbs::
+for ('topical_report_edit', function ($trail, $id) {
+    $trail->parent('topical_report');
+    $trail->push(__('constant.EDIT'), url('/admin/topical-report/edit' . $id));
+}) ;
+
+

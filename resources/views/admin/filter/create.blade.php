@@ -40,16 +40,16 @@
                            
                         </div>
                         <div class="form-group">
-                        <label for="home_status" class="control-label">Home Page Status</label>
+                        <label for="home_status" class="control-label">Active on map</label>
 						<input  @if(1 == old('home_status')) checked="checked" @endif name="home_status" type="checkbox" value="1">                            
                         </div>
                         <div class="form-group">
 <label for="status" class="control-label">Status</label>
                            
 <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
-						@foreach(ActiveInActinve() as $k => $v)
-                            <option value="{{$k}}"  @if(old('status')==$k) selected @endif>{{$v}}</option>
-                        @endforeach                             
+						@foreach (inactiveActive() as $key => $value)
+                                    <option @if($key==1) selected @endif value="{{ $key }}">{{ $value }}</option>
+                        @endforeach                           
 </select>                            
                            
                     </div>

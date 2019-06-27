@@ -172,4 +172,36 @@ if (!function_exists('getTopics')) {
     {
         return Filter::where('tag_name', $tag_name)->first()->id;
     }
+	
+	function getTopicsName($id = null)
+    {
+       $topics = DB::table('filters')->whereIn('id', $id)->select('tag_name')->get();
+	   foreach($topics as $topic)
+	   {
+		$title[]= $topic->tag_name; 
+	   }
+	  // print_r($title);
+	   if(is_array($title) && count($title)>0)
+	   return implode(',',$title);
+	   else
+	   return __('constant.NONE');
+    }
+	
+	function getCountryByTopicalReportId($id)
+    {
+        $countries = DB::table('filters')
+            ->join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')
+            ->where('topical_report_countries.topical_report_id', $id)
+            ->select('filters.tag_name')
+            ->get();
+			
+	   foreach($countries as $country)
+	   {
+		$title[]= $country->tag_name; 
+	   }
+        if(is_array($title) && count($title)>0)
+	   return implode(',',$title);
+	   else
+	   return __('constant.NONE');
+    }
 }

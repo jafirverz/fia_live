@@ -51,9 +51,10 @@
 							<label for="status" class=" control-label">Status</label>
                             <div class="">
                             <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
-                            @foreach(ActiveInActinve() as $k => $v)
-                            <option value="{{$k}}"  @if($filter->status==$k) selected @endif>{{$v}}</option>
-                            @endforeach                            
+                           
+                            @foreach (inactiveActive() as $key => $value)
+                                    <option  @if($filter->status==$k) selected @endif value="{{ $key }}">{{ $value }}</option>
+                            @endforeach                           
                             </select>                            
                             </div>
                         </div>

@@ -26,6 +26,8 @@ return [
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
     'ROLE' => 'Role',
 	'PAYMENT' => 'Payment',
+	'EVENT' => 'Event',
+	'TOPICAL_REPORT' => 'Topical Report',
 
     //CRUD
     'REMOVED' => ':Module has been removed.',
