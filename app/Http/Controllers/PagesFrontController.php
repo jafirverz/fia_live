@@ -18,6 +18,10 @@ class PagesFrontController extends Controller
         {
             return view('country_information.country-information');
         }
+        elseif($page=='regulatory-updates')
+        {
+            return view('regulatory.regulatory-updates');
+        }
     }
 
     public function country_information_details()
