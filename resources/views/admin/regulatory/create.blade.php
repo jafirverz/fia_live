@@ -111,6 +111,9 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline"><input type="checkbox" name="highlight" >Highlight</label>
+                            </div>
                         </div>
                         <!-- /.col -->
                     </div>
