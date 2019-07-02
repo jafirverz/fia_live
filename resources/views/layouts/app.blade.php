@@ -16,7 +16,7 @@
 
     <link href="{{ asset('css/plugin.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body>

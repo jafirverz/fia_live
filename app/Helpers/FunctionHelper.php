@@ -27,6 +27,62 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
+    function getFilterMonth($id = null)
+    {
+        if($id)
+        {
+            $month = Filter::find($id);
+            if($month)
+            {
+                return $month->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+    }
+
+    function getFilterYear($id = null)
+    {
+        if($id)
+        {
+            $year = Filter::find($id);
+            if($year)
+            {
+                return $year->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+    }
+
+    function getFilterTopic($id = null)
+    {
+        if($id)
+        {
+            $topic = Filter::find($id);
+            if($topic)
+            {
+                return $topic->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+    }
+
+    function getFilterStage($id = null)
+    {
+        if($id)
+        {
+            $stage = Filter::find($id);
+            if($stage)
+            {
+                return $stage->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+    }
+
     function getFilterCategory()
     {
         return Filter::where('filter_name', 5)->where('status', 1)->orderBy('tag_name', 'asc')->get();
@@ -63,7 +119,7 @@ if (!function_exists('getTopics')) {
 
 	function get_filter_name($value = null)
     {
-        $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month', "5" => 'Category'];
+        $array_list = ["1" => 'Country', "2" => 'Topic', "3" => 'Stage', "4" => 'Month', "5" => 'Category', '6' => 'Year'];
 
         if ($value) {
             return $array_list[$value];
@@ -172,13 +228,13 @@ if (!function_exists('getTopics')) {
     {
         return Filter::where('tag_name', $tag_name)->first()->id;
     }
-	
+
 	function getTopicsName($id = null)
     {
        $topics = DB::table('filters')->whereIn('id', $id)->select('tag_name')->get();
 	   foreach($topics as $topic)
 	   {
-		$title[]= $topic->tag_name; 
+		$title[]= $topic->tag_name;
 	   }
 	  // print_r($title);
 	   if(is_array($title) && count($title)>0)
@@ -186,7 +242,7 @@ if (!function_exists('getTopics')) {
 	   else
 	   return __('constant.NONE');
     }
-	
+
 	function getCountryByTopicalReportId($id)
     {
         $countries = DB::table('filters')
@@ -194,14 +250,32 @@ if (!function_exists('getTopics')) {
             ->where('topical_report_countries.topical_report_id', $id)
             ->select('filters.tag_name')
             ->get();
-			
+
 	   foreach($countries as $country)
 	   {
-		$title[]= $country->tag_name; 
+		$title[]= $country->tag_name;
 	   }
         if(is_array($title) && count($title)>0)
 	   return implode(',',$title);
 	   else
 	   return __('constant.NONE');
+    }
+
+    function getRegulatoriesHighlight($slug = null)
+    {
+        if($slug)
+        {
+            return Regulatory::where('slug', $slug)->first();
+        }
+        return Regulatory::limit(5)->get();
+    }
+
+    function getRegulatories($slug = null)
+    {
+        if($slug)
+        {
+            return Regulatory::where('slug', $slug)->first();
+        }
+        return Regulatory::latestregulatory();
     }
 }
