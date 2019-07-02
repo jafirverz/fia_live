@@ -61,7 +61,7 @@
                                                 -
                                                 @endif
                                             </td>
-                                            <td>{{ getCountry($regulatory->country_id) ?? '-' }}</td>
+                                            <td>{{ getFilterCountry($regulatory->country_id) ?? '-' }}</td>
                                             <td>{{ $regulatory->created_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>{{ $regulatory->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
