@@ -154,7 +154,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::get('/events/edit/{id}', 'CMS\EventsController@edit');
   Route::post('/events/update/{id}', 'CMS\EventsController@update');
   Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
-  
+
   Route::get('/topical-report', 'CMS\TopicalReportController@index')->name('topical_report.index');
   Route::get('/topical-report/create', 'CMS\TopicalReportController@create');
   Route::post('/topical-report/store', 'CMS\TopicalReportController@store');
@@ -165,5 +165,6 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
 });
 
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
+Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
 
 Route::get('/{page}', 'PagesFrontController@index');

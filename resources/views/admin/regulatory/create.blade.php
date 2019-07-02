@@ -31,13 +31,13 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('agency_reponsible') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('agency_responsible') ? ' has-error' : '' }}">
                                 <label for="">Agency Responsible</label>
-                                <input type="text" name="agency_reponsible" class="form-control"
-                                    placeholder="Enter agency responsible" value="{{ old('agency_reponsible') }}">
-                                @if ($errors->has('agency_reponsible'))
+                                <input type="text" name="agency_responsible" class="form-control"
+                                    placeholder="Enter agency responsible" value="{{ old('agency_responsible') }}">
+                                @if ($errors->has('agency_responsible'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('agency_reponsible') }}</strong>
+                                    <strong>{{ $errors->first('agency_responsible') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -112,7 +112,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label class="checkbox-inline"><input type="checkbox" name="highlight" >Highlight</label>
+                                <label class="checkbox-inline"><input type="checkbox" name="highlight" value="1">Highlight</label>
                             </div>
                         </div>
                         <!-- /.col -->

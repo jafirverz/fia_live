@@ -44,7 +44,7 @@
                                         @foreach($regulatories as $regulatory)
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
-                                            <td>{{ $regulatory->agency_reponsible ?? '-' }}</td>
+                                            <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
                                             <td>{{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }}</td>
                                             <td>{{ getParentRegulatory($regulatory->parent_id) ?? '-' }}</td>
                                             <td>
