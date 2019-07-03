@@ -53,7 +53,7 @@
 
 <a href="#toppage" class="smoothscroll gotop fas fa-angle-up">Go top</a>
 
-<script src="{{ asset('js/jquery.min.js') }}"></script>
+
 <script src="{{ asset('js/plugin.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
