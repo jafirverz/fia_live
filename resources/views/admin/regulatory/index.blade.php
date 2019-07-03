@@ -21,6 +21,7 @@
                     <!-- /.box-header -->
                     <div class="box-header">
                         <a href="{{ url('admin/regulatory/create') }}" class="btn btn-primary pull-right">Create</a>
+                        <a href="{{ url('admin/regulatory/highlight/edit') }}" class="btn btn-primary pull-right">Highlight</a>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -33,6 +34,7 @@
                                             <th>Date of Regulation in Force</th>
                                             <th>Parent</th>
                                             <th>Topic</th>
+                                            <th>Stage</th>
                                             <th>Country</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -51,16 +53,14 @@
                                                 @if($topics)
                                                 @foreach($topics as $topic)
                                                     @if(in_array($topic->id, json_decode($regulatory->topic_id)))
-                                                    {{ $topic->tag_name }}
-                                                    @endif
-                                                    @if (!$loop->last)
-                                                    ,
+                                                    {{ $topic->tag_name }},
                                                     @endif
                                                 @endforeach
                                                 @else
                                                 -
                                                 @endif
                                             </td>
+                                            <td>{{ getFilterStage($regulatory->stage_id) ?? '-' }}</td>
                                             <td>{{ getFilterCountry($regulatory->country_id) ?? '-' }}</td>
                                             <td>{{ $regulatory->created_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>{{ $regulatory->updated_at->format('d M, Y H:i A') ?? '-' }}</td>

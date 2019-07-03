@@ -65,20 +65,25 @@
                 <h1 class="title-1 text-center">Highlights</h1>
                 <div id="list-1" class="masony grid-4" data-num="8" data-load="#btn-load-1">
                     @if (getRegulatoriesHighlight())
-                    @foreach (getRegulatoriesHighlight() as $value)
-                    <div class="item @if($loop->first) w-1 @endif">
+                    @php
+                        $value = getRegulatoriesHighlight();
+                        $regulatory_main_highlight = getRegulatoryById($value->main_highlight);
+                    @endphp
+                    <div class="item @if($regulatory_main_highlight->main_highlight) w-1 @endif">
+                        @php
+
+                        @endphp
                         <div class="box-4">
                             <figure><img src="images/tempt/flag-korea.jpg" alt="korean flag" /></figure>
                             <div class="content">
-                                <h3 class="title">{{ $value->title }}</h3>
-                                <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |{{ $value->created_at->format('M d, Y') }}</p>
-                                {!! Illuminate\Support\Str::limit($value->description, 400) !!}
+                                <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
+                                <p class="date"><span class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span> |{{ $regulatory_main_highlight->created_at->format('M d, Y') }}</p>
+                                {!! Illuminate\Support\Str::limit($value->description, 300) !!}
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                             </div>
-                            <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
+                            <a class="detail" href="{{ url('regulatory-details', $regulatory_main_highlight->slug) }}">View detail</a>
                         </div>
                     </div>
-                    @endforeach
                     @endif
 
                     <!-- no loop this element -->
