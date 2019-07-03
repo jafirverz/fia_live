@@ -31,13 +31,13 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('agency_reponsible') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('agencyagency_responsible') ? ' has-error' : '' }}">
                                 <label for="">Agency Responsible</label>
-                                <input type="text" name="agency_reponsible" class="form-control"
-                                    placeholder="Enter agency responsible" value="{{ $regulatory->agency_reponsible }}">
-                                @if ($errors->has('agency_reponsible'))
+                                <input type="text" name="agencyagency_responsible" class="form-control"
+                                    placeholder="Enter agency responsible" value="{{ $regulatory->agencyagency_responsible }}">
+                                @if ($errors->has('agencyagency_responsible'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('agency_reponsible') }}</strong>
+                                    <strong>{{ $errors->first('agencyagency_responsible') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -111,6 +111,9 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group">
+                                    <label class="checkbox-inline"><input type="checkbox" name="highlight" value="1" @if ($regulatory->highlight==1) checked @endif>Highlight</label>
+                                </div>
                         </div>
                         <!-- /.col -->
                     </div>

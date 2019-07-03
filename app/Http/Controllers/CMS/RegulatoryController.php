@@ -58,9 +58,10 @@ class RegulatoryController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->highlight);
         $request->validate([
             'title'  =>  'required|unique:regulatories,title',
-            'agency_reponsible' =>  'required',
+            'agencyagency_responsible' =>  'required',
             'date_of_regulation_in_force'   =>  'required',
             'topic_id'  =>  'required',
             'country_id'    =>  'required',
@@ -69,7 +70,8 @@ class RegulatoryController extends Controller
         $regulatory = new Regulatory();
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->agency_reponsible = $request->agency_reponsible;
+        $regulatory->highlight = $request->highlight ?? 0;
+        $regulatory->agencyagency_responsible = $request->agencyagency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $request->parent_id;
@@ -121,7 +123,7 @@ class RegulatoryController extends Controller
     {
         $request->validate([
             'title'  =>  'required|unique:regulatories,title,'.$id.',id',
-            'agency_reponsible' =>  'required',
+            'agencyagency_responsible' =>  'required',
             'date_of_regulation_in_force'   =>  'required',
             'topic_id'  =>  'required',
             'country_id'    =>  'required',
@@ -130,7 +132,8 @@ class RegulatoryController extends Controller
         $regulatory = Regulatory::findorfail($id);
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->agency_reponsible = $request->agency_reponsible;
+        $regulatory->highlight = $request->highlight ?? 0;
+        $regulatory->agencyagency_responsible = $request->agencyagency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $request->parent_id;

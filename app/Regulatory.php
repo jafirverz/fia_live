@@ -15,4 +15,14 @@ class Regulatory extends Model
     protected $dates = [
         'date_of_regulation_in_force',
     ];
+
+    public function scopeLatestRegulatory($query)
+    {
+        return $query->where('highlight', 0)->latest()->get();
+    }
+
+    public function scopeChildRegulatory($query, $id)
+    {
+        return $query->where('parent_id', $id)->latest()->get();
+    }
 }
