@@ -41,11 +41,29 @@
                            <input class="form-control" placeholder="" value="{{ $filter->tag_name }}" name="tag_name" type="text" id="tag_name">                            
  
                         </div>
+                        <div class="form-group @if($filter->filter_name!=1) hide else '' @endif" id="country_image_id">
                         <div class="form-group">
                             <label for="home_status" class="control-label">Home Page Status</label>
                             <div class="">
 						<input  name="home_status" @if(1 == $filter->home_status) checked="checked" @endif  type="checkbox" value="1">                            
                             </div>
+                        </div>
+                        <div class="form-group">
+                                <label class='control-label' for="">Country Image :</label>
+                               <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <a id="country_image" data-input="thumbnail" data-preview="holder"
+                                            class="btn btn-primary">
+                                            <i class="fa fa-picture-o"></i> Choose
+                                        </a>
+                                    </span>
+                                    <input id="thumbnail" class="form-control" type="text" name="country_image">
+                                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                                
+                                
+                                </div>
+                               
+                 </div>
                         </div>
                         <div class="form-group">
 							<label for="status" class=" control-label">Status</label>
@@ -74,4 +92,21 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+$(document).ready(function() {
+	$('#country_image').filemanager('image');
+	$("select[name='filter_name']").on("change", function() {
+				if($(this).val()==1)
+				{
+					$("#country_image_id").removeClass('hide');
+				}
+				else
+				{
+					$("#country_image_id").addClass('hide');	
+				}
+			});
+});		
+		
+</script>
+
 @endsection

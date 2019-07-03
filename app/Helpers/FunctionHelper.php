@@ -2,6 +2,7 @@
 use App\Regulatory;
 use App\Page;
 use App\Filter;
+use App\Menu;
 use App\PermissionAccess;
 use App\CountryInformation;
 if (!function_exists('getTopics')) {
@@ -109,13 +110,117 @@ if (!function_exists('getTopics')) {
 
 	 function is_permission_allowed($permission_id, $module, $type)
     {
-        $permission_access = PermissionAccess::join('admins', 'permission_accesses.role_id', '=', 'admins.admin_role')
-            ->where(['permission_accesses.role_id' => $permission_id, 'permission_accesses.module' => $module, $type => 1])
+        $permission_access = PermissionAccess::join('admins', 'permission_access.role_id', '=', 'admins.admin_role')
+            ->where(['permission_access.role_id' => $permission_id, 'permission_access.module' => $module, $type => 1])
             ->get();
         if (!$permission_access->count()) {
             abort(redirect('admin/access-not-allowed'));
         }
     }
+	
+	function get_menu_has_child($parent=0,$type=1)
+	{
+		$string=[];
+		$menus= Menu::where('menus.parent' , $parent)
+			->where('menus.menu_type', $type)
+			->select('menus.*')
+            ->get();
+
+		if($menus->count()>0)
+		{
+			$string[]='<ul>';
+				foreach($menus as $menu)
+				{
+				 $link=create_menu_link($menu);
+				 if($menu->page_id==NULL)
+				 $target='target="_blank"';
+				 else 
+				 $target="";
+				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+				  if(has_child_menu($menu->id)>0)
+				  {   
+				      
+					 $string[]=get_menu_has_child($menu->id,1);
+				  }
+				 $string[]='</li>';	 
+				
+				}
+			$string[]='</ul>';
+		}
+
+		return join("",$string);
+	}
+	
+    function pageDetail($slug)
+    {
+        //check page
+        $page = Page::where('slug', $slug)
+            ->where('status', 1)
+            ->first();
+        return $page;
+
+    }
+
+    function bannersDetail($pageId)
+    {
+        $banners = Banner::where('page_name', $pageId)
+            ->where('status', 1)
+            ->get();
+        return $banners;
+
+    }
+	
+	function get_parent_menu($parent=0,$type=1)
+	{
+		$string=[];
+		$menus= Menu::where('menus.parent' , $parent)
+			->where('menus.menu_type', $type)
+			->select('menus.*')
+            ->get();
+
+		if($menus->count()>0)
+		{
+			$string[]='<ul class="links">';
+				foreach($menus as $menu)
+				{
+				 $link=create_menu_link($menu);
+				 if($menu->page_id==NULL)
+				 $target='target="_blank"';
+				 else 
+				 $target="";
+				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+				 $string[]='</li>';	 
+				
+				}
+			$string[]='</ul>';
+		}
+
+		return join("",$string);
+	}
+	
+	function create_menu_link($item=[])
+	{
+
+		if($item['page_id']==NULL)
+		{
+		return $item->external_link;
+	    }
+		else
+		{
+		$page= Page::where('id',$item['page_id'])->select('pages.slug')->first();
+		return url($page['slug']);
+		}
+	}
+	
+	function has_child_menu($parent=0)
+	{
+		$menus= Menu::where('parent', $parent)->count();
+		if($menus>0)
+		return $menus;
+		else 
+		return 0;
+	
+	}
 
 	function get_filter_name($value = null)
     {

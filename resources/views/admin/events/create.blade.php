@@ -57,7 +57,7 @@
                 <div class="form-group">
                    <div class="row"> <label class='col-sm-2 control-label'>Event Address:</label>
  <div class="col-sm-10"><textarea class="tiny-editor form-control" rows="5" id="event_address"
-                              name="description">{{ old('event_address') }}</textarea></div>
+                              name="event_address">{{ old('event_address') }}</textarea></div>
                 </div>
                </div></div>
                 <!-- /.box-body -->

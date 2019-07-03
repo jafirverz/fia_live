@@ -65,7 +65,7 @@ class BannerController extends Controller
 
         
         $request->validate([
-            'page_name' => 'required|unique:banners,page_name|max:191',
+            'page_name' => 'required|max:191',
             'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
         ]);
         
@@ -145,7 +145,7 @@ class BannerController extends Controller
         $banner = Banner::findorfail($id);
         
          $request->validate([
-            'page_name' => 'required|max:191|unique:banners,page_name,' . $id . ',id',
+            'page_name' => 'required|max:191',
             'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
         ]);
 
