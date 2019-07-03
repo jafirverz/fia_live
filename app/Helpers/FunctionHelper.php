@@ -69,6 +69,38 @@ if (!function_exists('getTopics')) {
         }
         return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
+	
+	function getTopics($topics)
+	{
+	$topics = Filter::whereIn('id',$topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	  $names=[];	
+	  foreach($topics as $topic)
+	  {
+	  $names[]=$topic->tag_name;
+	  }	
+	 // dd($names);
+	  if($topics->count()>0)
+	  return implode(',',$names);
+	  else
+	  return "";
+	}
+	
+	function getCountryImages($id)
+	{
+	$topics = Filter::join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')->where('topical_report_countries.topical_report_id',$id)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	$names=[];	
+	//dd($topics);
+	  foreach($topics as $topic)
+	  {
+	  if($topic->country_image!="")
+	  $names[]='<span class="show-tooltip" title="'.$topic->tag_name.'"><img src="'.asset($topic->country_image).'" alt="'.$topic->tag_name.' flag" /></span>';
+	  }	
+	  
+	  if(count($names)>0)
+	  return join('',$names);
+	  else
+	  return "";
+	}
 
     function getFilterStage($id = null)
     {

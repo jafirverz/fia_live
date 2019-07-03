@@ -47,7 +47,7 @@
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="event_image">
                                 </div>
-<img id="holder" @if($filter->event_image!="") src="{{url($filter->event_image)}}" @endif  style="margin-top:15px;max-height:100px;">                                </div>
+<img id="holder" @if($event->event_image!="") src="{{url($event->event_image)}}" @endif  style="margin-top:15px;max-height:100px;">                                </div>
                                  
                                 </div>
                             </div>

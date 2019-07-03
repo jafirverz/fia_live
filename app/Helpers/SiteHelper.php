@@ -3,6 +3,7 @@
 use App\SystemSetting;
 use App\Page;
 use App\Menu;
+use App\Banner;
 use Illuminate\Support\Arr;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Session;
@@ -121,72 +122,7 @@ if (!function_exists('DummyFunction')) {
         }
     }
 
-    function RDP($detail)
-    {
-        $secret_key = env('RDP_SECRET_KEY');
-        $m_id = env('RDP_MID');
 
-        $request_transaction = [
-            "api_mode" => "redirection_hosted",
-            "redirect_url" => "http://verz1.com/rdp.php",
-            "notify_url" => "http://verz1.com/rdp.php",
-            "back_url" => "http://verz1.com/rdp.php",
-            "mid" => $m_id,
-            "payment_type" => "S",
-        ];
-        $request_transaction['merchant_reference'] = $detail['merchant_reference'];
-        $request_transaction['payer_name'] = $detail['payer_name'];
-        $request_transaction['payer_email'] = $detail['payer_email'];
-        $request_transaction['card_no'] = $detail['card_no'];
-        $request_transaction['exp_date'] = $detail['exp_date'];
-        $request_transaction['cvv2'] = $detail['cvv2'];
-        $request_transaction['order_id'] = $detail['order_id'];
-        $request_transaction['amount'] = $detail['amount'];
-        $request_transaction['ccy'] = $detail['ccy'];
-
-
-        /* given $params contains the parameters you would like to sign */
-        $fields_for_sign = array('mid', 'order_id', 'payment_type', 'amount', 'ccy');
-        $aggregated_field_str = "";
-        foreach ($fields_for_sign as $f) {
-            $aggregated_field_str .= trim($request_transaction[$f]);
-        }
-        $aggregated_field_str .= $secret_key;
-        $signature = hash('sha512', $aggregated_field_str);
-
-
-        $request_transaction['signature'] = $signature;
-
-        $json_request = json_encode($request_transaction);
-
-        $response = postRDP($json_request);
-        //dd($response);
-        $response_array = json_decode($response, true);
-        return $response_array;
-
-    }
-
-    function postRDP($json_request)
-    {
-        $url = env('RDP_API');
-        $curl = curl_init($url);
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_POST => 1,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_POSTFIELDS => $json_request,
-            CURLOPT_HTTPHEADER =>
-                array('Content-Type: application/json')
-        ));
-        $response = curl_exec($curl);
-        $curl_errno = curl_errno($curl);
-        $curl_err = curl_error($curl);
-        curl_close($curl);
-
-        return $response;
-    }
 
     function getSelectedMenus($menuId, $pageId = 1)
     {
@@ -237,7 +173,19 @@ if (!function_exists('DummyFunction')) {
             ->get();
         return $details;
     }
-
+	function get_page_banner($page_id)
+	{
+	$banner = Banner::where('page_name', $page_id)->first();
+	if($banner->count()>0)	
+	return $banner;
+	else
+	return "";
+	}
+    function pageDetails($slug)
+	{
+	$details = Page::where('slug', $slug)->where('status','1')->first();
+    return $details;	
+	}
     function setOption($id, $pageParent = null, $parent = 0)
     {
         $parentPages = getParentPages($id);
