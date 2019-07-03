@@ -16,16 +16,16 @@ class PagesFrontController extends Controller
         $this->module_name = 'COUNTRY_INFORMATION';
     }
 
-    public function index($page)
+    public function index($slug)
     {
 
        
 		
-		 $page = Page::where('pages.slug', $page)
+		$page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
 
-        $result = Page::where('slug', $page)->count();
+        $result = Page::where('slug', $slug)->count();
         if($result<1)
         {
             return abort(404);
