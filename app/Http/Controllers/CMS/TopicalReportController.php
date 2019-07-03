@@ -112,10 +112,10 @@ class TopicalReportController extends Controller
         $TopicalReport->topical_id = json_encode($request->topical_id);
         $TopicalReport->title = $request->title;
 		$TopicalReport->description = $request->description;
-		if($request->banner_image)
+		/*if($request->banner_image)
         {
             $TopicalReport->banner_image = $request->banner_image;
-        }
+        }*/
         if($request->pdf)
         {
             $TopicalReport->pdf = $request->pdf;
@@ -179,10 +179,10 @@ class TopicalReportController extends Controller
         $TopicalReport->title = $request->title;
 		$TopicalReport->description = $request->description;
 		
-		if($request->banner_image)
+		/*if($request->banner_image)
         {
             $TopicalReport->banner_image = $request->banner_image;
-        }
+        }*/
         if($request->pdf)
         {
             $TopicalReport->pdf = $request->pdf;
