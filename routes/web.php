@@ -171,7 +171,8 @@ Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
 Route::post('/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
-Route::get('/events/details/{id}', 'EventController@detail');
+Route::get('/topical-reports', 'EventController@reports')->name('reports');
+Route::get('/event/details/{id}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
 

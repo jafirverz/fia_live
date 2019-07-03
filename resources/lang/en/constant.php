@@ -3,7 +3,8 @@
 return [
 
     //MODULE
-    'DASHBOARD' =>  'Dashboard',
+    'HOME' =>  'Home',
+	'DASHBOARD' =>  'Dashboard',
     'COUNTRY_INFORMATION'   =>  'Country Information',
     'REGULATORY'    =>  'Regulatory',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
@@ -21,15 +22,18 @@ return [
 	'DEACTIVATE' => 'De-Active',
 	'HEADER' => 'Top',
 	'FOOTER' => 'Footer',
-	'NONE' => 'none',
 	'SYSTEM_SETTING' => 'System Setting',
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
     'ROLE' => 'Role',
 	'PAYMENT' => 'Payment',
 	'EVENT' => 'Event',
+	'EVENT_DETAIL' => 'Event Detail',
 	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
-
+	'TOPICAL_REPORTS' => 'Topical Reports',
+	//PAGE SLUG NAME
+	'EVENTS_DETAIL_SLUG' => 'event-details',
+	'TOPICAL_REPORT_SLUG' => 'topical-reports',
     //CRUD
     'REMOVED' => ':Module has been removed.',
 	'EMAIL_TEMPLATE_ERROR' => ':Module only editable now.',
