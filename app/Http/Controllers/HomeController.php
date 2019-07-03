@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Page;
+use App\Banner;
+use App\Regulatory;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -21,8 +23,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($slug = 'home')
     {
-        return view('home');
+        
+		$page=Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+		$banners = Banner::where('page_name', $page->id)->get();	
+		$regulatories = Regulatory::all();
+		return view('home',compact('page','banners','regulatories'));
     }
 }

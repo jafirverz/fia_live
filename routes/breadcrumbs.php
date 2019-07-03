@@ -42,13 +42,21 @@ Breadcrumbs::for('regulatory_edit', function ($trail, $id) {
     $trail->parent('regulatory');
     $trail->push('Edit', url('/admin/regulatory/edit', $id));
 });
-
+Breadcrumbs::
+for ('admin_profile', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.PROFILE'), url('/admin/profile/edit'));
+}) ;
 //CONTACT ENQUIRY
 Breadcrumbs::for('contactenquiry', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('constant.CONTACTENQUIRY'), url('/admin/contact-enquiry'));
 });
-
+Breadcrumbs::
+for ('front_contact', function ($trail) {
+	$trail->parent('dashboard');
+    $trail->push(__('constant.CONTACT'), url('/contact-us'));
+}) ;
 //GROUP MANAGEMENT
 Breadcrumbs::for('groupmanagement', function ($trail) {
     $trail->parent('dashboard');

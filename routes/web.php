@@ -11,15 +11,19 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('page');
 });
 
-Auth::routes();
+*/
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/', 'HomeController@index')->name('home');
+Auth::routes();
 Route::group(['prefix' => 'admin'], function () {
+	
+	  Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
+  Route::post('/profile/update', 'AdminAuth\ProfileController@update');
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
     Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
     Route::post('/login', 'AdminAuth\LoginController@login');
@@ -163,7 +167,11 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
 
 });
-
+Route::get('/contact-us', 'ContactController@index');
+Route::post('/contact-store', 'ContactController@store')->name('contacts');
+Route::post('/search', 'EventController@search');
+Route::get('/events', 'EventController@index')->name('events');
+Route::get('/events/details/{id}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 
 Route::get('/{page}', 'PagesFrontController@index');

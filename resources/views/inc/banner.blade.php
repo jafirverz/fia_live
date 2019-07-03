@@ -1,40 +1,15 @@
+@if($page->slug=="home")
 <div class="banner">
     <div class="bn-slide" id="slider">
+    	@foreach($banners as $banner)
         <div class="item bg">
-            <img class="bgimg" src="images/tempt/banner-1.jpg" alt="" />
+            <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="" />
             <div class="caption">
-                Lorem ipsum vivamus diam magna pellentesque sit...
+                {{$banner->caption}}
                 <a href="about.html" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
             </div>
         </div>
-        <div class="item bg">
-            <img class="bgimg" src="images/tempt/banner-2.jpg" alt="" />
-            <div class="caption">
-                Lorem ipsum vivamus diam magna pellentesque sit...
-                <a href="about.html" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
-            </div>
-        </div>
-        <div class="item bg">
-            <img class="bgimg" src="images/tempt/banner-3.jpg" alt="" />
-            <div class="caption">
-                Lorem ipsum vivamus diam magna pellentesque sit...
-                <a href="about.html" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
-            </div>
-        </div>
-        <div class="item bg">
-            <img class="bgimg" src="images/tempt/banner-4.jpg" alt="" />
-            <div class="caption">
-                Lorem ipsum vivamus diam magna pellentesque sit...
-                <a href="about.html" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
-            </div>
-        </div>
-        <div class="item bg">
-            <img class="bgimg" src="images/tempt/banner-5.jpg" alt="" />
-            <div class="caption">
-                Lorem ipsum vivamus diam magna pellentesque sit...
-                <a href="about.html" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
-            </div>
-        </div>
+        @endforeach
     </div>
     <div class="search-wrap">
         <h2>What are you searching for?</h2>
@@ -110,3 +85,25 @@
         </form>
     </div>
 </div>
+@else
+<div class="bn-inner bg nobg">
+					@isset($banner->banner_image)
+                    <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="{{ $page->title }}" />
+                    @endif
+					<div class="container">
+						<div class="tb-col">
+							<div class="col">
+								<h2>{{ $page->title }}</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="breadcrumb-wrap">
+					<div class="container">
+						<ul class="breadcrumb">
+							<li><a href="{{ url('/') }}">Home</a></li>
+							<li>{{ $page->title }}</li>
+						</ul>
+					</div>
+				</div>
+@endif

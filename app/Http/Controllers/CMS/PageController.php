@@ -68,6 +68,9 @@ class PageController extends Controller
         $page->title = $request->title;
         $page->slug = $request->slug;
         $page->contents = $request->contents;
+		$page->other_contents1 = isset($request->other_contents1)?$request->other_contents1:"";
+		$page->other_contents2 = isset($request->other_contents2)?$request->other_contents2:"";
+		$page->other_contents3 = isset($request->other_contents3)?$request->other_contents3:"";
         /*$page->meta_title = $request->meta_title;
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;
@@ -136,6 +139,9 @@ class PageController extends Controller
         $page->title = $request->title;
         $page->slug = $request->slug;        
         $page->contents = $request->contents;
+		$page->other_contents1 = isset($request->other_contents1)?$request->other_contents1:"";
+		$page->other_contents2 = isset($request->other_contents2)?$request->other_contents2:"";
+		$page->other_contents3 = isset($request->other_contents3)?$request->other_contents3:"";
         /*$page->meta_title = $request->meta_title;
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;

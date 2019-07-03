@@ -27,6 +27,7 @@ return [
     'ROLE' => 'Role',
 	'PAYMENT' => 'Payment',
 	'EVENT' => 'Event',
+	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
 
     //CRUD

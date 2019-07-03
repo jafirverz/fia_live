@@ -112,9 +112,13 @@ class TopicalReportController extends Controller
         $TopicalReport->topical_id = json_encode($request->topical_id);
         $TopicalReport->title = $request->title;
 		$TopicalReport->description = $request->description;
-		if($request->event_image)
+		if($request->banner_image)
         {
-            $TopicalReport->event_image = $request->event_image;
+            $TopicalReport->banner_image = $request->banner_image;
+        }
+        if($request->pdf)
+        {
+            $TopicalReport->pdf = $request->pdf;
         }
         $TopicalReport->updated_at = Carbon::now()->toDateTimeString();
         $TopicalReport->save();
@@ -175,9 +179,13 @@ class TopicalReportController extends Controller
         $TopicalReport->title = $request->title;
 		$TopicalReport->description = $request->description;
 		
-		if($request->event_image)
+		if($request->banner_image)
         {
-            $TopicalReport->event_image = $request->event_image;
+            $TopicalReport->banner_image = $request->banner_image;
+        }
+        if($request->pdf)
+        {
+            $TopicalReport->pdf = $request->pdf;
         }
 		$TopicalReport->save();
 		

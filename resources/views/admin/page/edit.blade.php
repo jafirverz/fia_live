@@ -49,6 +49,32 @@
                             </div>
                         @else
                         @endif
+                        
+                        @if($page->slug=='home')
+                            <div class="form-group">
+                            <label class=' control-label' for="contents">Other Contents 1 :</label>
+                                <div class="">
+                                    <textarea class="tiny-editor form-control" rows="5" id="other_contents1"
+                                          name="other_contents1">{{ $page->other_contents1 }}</textarea>
+                                </div>
+                            </div>
+                            
+                           <div class="form-group">
+                            <label class=' control-label' for="contents">Other Contents 2 :</label>
+                                <div class="">
+                                    <textarea class="tiny-editor form-control" rows="5" id="other_contents2"
+                                          name="other_contents2">{{ $page->other_contents2 }}</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                            <label class=' control-label' for="contents">Other Contents 3 :</label>
+                                <div class="">
+                                    <textarea class="tiny-editor form-control" rows="5" id="other_contents3"
+                                          name="other_contents3">{{ $page->other_contents3 }}</textarea>
+                                </div>
+                            </div>
+                        @endif
                         <?php /*?><div class="form-group">
                             <label for="meta_title" class=" control-label">Meta Title</label>
                             <div class="">

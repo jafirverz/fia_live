@@ -31,18 +31,33 @@
                         @endforeach                             
 </select> 
                             </div>
-
-                        
-                        <div class="form-group">
-                            <label for="tag_name" class=" control-label">Tag Name</label>
+                    <div class="form-group">
+                     <label for="tag_name" class=" control-label">Tag Name</label>
+                    <input class="form-control" placeholder="" value="{{ old('tag_name') }}" name="tag_name" type="text" id="tag_name">                            
+					</div>
+                    
+                    <div class="hide" id="country_image_id">
+                    <div class="form-group">
+                    <label for="home_status" class="control-label">Active on map</label>
+                    <input  @if(1 == old('home_status')) checked="checked" @endif name="home_status" type="checkbox" value="1">                            
+                    </div>
+                    <div class="form-group">
+                            <label class='control-label' for="">Country Image :</label>
+                           <div class="input-group">
+                                <span class="input-group-btn">
+                                    <a id="country_image" data-input="thumbnail" data-preview="holder"
+                                        class="btn btn-primary">
+                                        <i class="fa fa-picture-o"></i> Choose
+                                    </a>
+                                </span>
+                                <input id="thumbnail" class="form-control" type="text" name="country_image">
+                                <img id="holder" style="margin-top:15px;max-height:100px;">
                             
-<input class="form-control" placeholder="" value="{{ old('tag_name') }}" name="tag_name" type="text" id="tag_name">                            
+                            
+                            </div>
                            
-                        </div>
-                        <div class="form-group">
-                        <label for="home_status" class="control-label">Active on map</label>
-						<input  @if(1 == old('home_status')) checked="checked" @endif name="home_status" type="checkbox" value="1">                            
-                        </div>
+             </div>
+                    </div>
                         <div class="form-group">
 <label for="status" class="control-label">Status</label>
                            
@@ -69,5 +84,23 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+
+
+$(document).ready(function() {
+	$('#country_image').filemanager('image');
+	$("select[name='filter_name']").on("change", function() {
+				if($(this).val()==1)
+				{
+					$("#country_image_id").removeClass('hide');
+				}
+				else
+				{
+					$("#country_image_id").addClass('hide');	
+				}
+			});
+});		
+		
+</script>
 @endsection
 

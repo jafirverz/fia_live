@@ -104,8 +104,7 @@ class EventsController extends Controller
                 'description' => 'required',
                 'event_date' => 'required|date',
                 'oth_date' => 'nullable|date',
-                'event_address' => 'required',
-                'event_image' => 'nullable|image'
+                'event_address' => 'required'
 
             ];
 
@@ -159,8 +158,7 @@ class EventsController extends Controller
                 'description' => 'required',
                 'event_date' => 'required|date',
                 'oth_date' => 'nullable|date',
-                'event_address' => 'required',
-                'event_image' => 'required|image'
+                'event_address' => 'required'
 
             ];
 

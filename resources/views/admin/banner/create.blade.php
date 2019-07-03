@@ -28,10 +28,9 @@
 
                             <div class="">
 
-                                <select class="form-control select2"
-                                        data-placeholder="" name="page_name"
+                                <select class="form-control select2" name="page_name"
                                         style="width: 100%;">
-                                    <option value="">Choose One</option>
+									<option value="">-- Select --</option>
                                     @if($pages->count())
                                         @foreach($pages as $page)
                                             <option value="{{ $page->id }}" @if(old('page_name')==$page->id) selected="selected" @endif>{{ $page->title }}</option>

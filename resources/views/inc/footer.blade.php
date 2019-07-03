@@ -5,23 +5,19 @@
             <div class="col-md-7 col">
                 <div class="row break-560 row-col">
                     <div class="col-sm-7 col-xs-6 col">
-                        <h4>Food Industry Asia</h4>
-                        <p class="ico fas fa-envelope"><a href="mailto:regulatory@foodindustry.asia">regulatory@foodindustry.asia</a></p>
-                        <p class="ico fas fa-phone">+65  6235  3854</p>
-                        <address class="ico fas fa-map-marker-alt">1 Scott Road,<br/>
-                           Shaw Centre #19-07/08<br/>
-                           Singapore 228208</address>
+                        {!!  setting()->footer!!}
                     </div>
                     <div class="col-sm-5 col-xs-6 col">
                         <h4>Sitemap</h4>
-                        <ul class="links">
+                        {!! get_parent_menu(0,2) !!}
+                        <!--<ul class="links">
                             <li class="active"><a href="index.html">Home</a></li>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="updates.html">Regulatory Updates</a></li>
                             <li><a href="reports.html">Topical Reports</a></li>
                             <li><a href="country.html">Country Information</a></li>
                             <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                 </div>
             </div>
@@ -41,7 +37,7 @@
                     </div>
                     <div class="col-sm-5 col-xs-6 col">
                         <div class="logo">
-                            <a href="index.html"><img src="images/fia-logo.png" alt="FIA" /></a>
+                            <a href="{{url('/')}}"><img src="{{asset(setting()->logo)}}" alt="FIA" /></a>
                         </div>
                     </div>
                 </div>
@@ -60,3 +56,46 @@
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/plugin.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/jquery.validate.js') }}"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("form[name='contact']").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2
+                },
+                emailid: {
+                    required: true,
+                    email: true
+                },
+                enquiry_type: "required",
+                message: "required"
+
+            },
+            submitHandler: function (form) {
+                if (grecaptcha.getResponse()) {
+                    form.submit();
+                } else {
+                    $("#cap-response").show();
+                    $('#cap-response').html('Please verify captcha.').show().delay(2000).slideUp();
+                    //alert('Please confirm captcha to proceed');
+                    return false;
+                }
+                return false;
+            }
+        });
+    });
+    $(document).ready(function () {
+        $("form[name='mc-embedded-subscribe-form']").validate({
+            rules: {
+                EMAIL: {
+                    required: true,
+                    email: true
+                }
+
+            }
+        });
+    });
+</script>
