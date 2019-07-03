@@ -248,7 +248,7 @@ class MenuController extends Controller
 			'view_order' => 'required|numeric|max:191',
         ]);
         $menu->menu_name = $request->menu_name;
-		$menu->menu_type = $request->menu_type;
+		//$menu->menu_type = $request->menu_type;
 		$menu->view_order = $request->view_order;
 		$menu->updated_at = Carbon::now()->toDateTimeString();
         $menu->save();
