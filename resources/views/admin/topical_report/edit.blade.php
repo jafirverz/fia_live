@@ -65,7 +65,7 @@
                 @endif
                 </div>
                 
-                <div class="form-group">
+                <?php /*?><div class="form-group">
                 
                                 <label class='control-label' for="">Banner Image :</label>
                                <div class="input-group">
@@ -76,16 +76,16 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="banner_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
                                 
                                 
                                 </div>
+        <img id="holder" @if($filter->banner_image!="") src="{{url($filter->banner_image)}}" @endif  style="margin-top:15px;max-height:100px;">
                                @if ($errors->has('banner_image'))
                 <span class="help-block">
                     <strong>{{ $errors->first('banner_image') }}</strong>
                 </span>
                 @endif 
-                 </div>
+                 </div><?php */?>
                 <div class="form-group">
                 
                                 <label class='control-label' for="">PDF :</label>

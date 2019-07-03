@@ -19,7 +19,7 @@
                 <div class="box box-primary">
                     <!-- form start -->
                    
-                    <form name="filter" method="post" action="{{ url('/admin/filter/store')}}">
+                    <form name="filter" method="post" action="{{ url('/admin/filter/store')}}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="box-body">
                         <div class="form-group">

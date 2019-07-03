@@ -1,242 +1,72 @@
 @extends('layouts.app')
 
 @section('content')
-
-<!-- Content Containers -->
-
-	<div class="main-container">
-
-		@include('inc.breadcrumb-banner')
-
-       
-
-		<!-- Section -->
-
-		<div class="fullcontainer bg-img" style="background-image:url(images/bg4.jpg);">
-
-			<div class="fullcontainer bg-img-tl" style="background-image:url(images/bg1.png);">
-
-				<div class="inner-container-md">
-
-					<div class="container">
-                    <div class="cont-sm">
-
-							<div class="pod-search-tool-bar">
-							<div class="row">
-{!! $page->contents !!}
-						</div></div></div>
-                        
-                        <h2 class="text-center"><span>Check out our</span><strong>Latest Events</strong></h2>
-
-						<div class="cont-sm">
-
-							<div class="pod-search-tool-bar">
-
-								<div class="row">
-
-                                
-
-                                {!! Form::open(['url' => '/search', 'method' => 'post']) !!}
-
-                                {{ csrf_field() }}
-
-									<div class="col-sm-6">
-
-										<div class="tool-box">
-
-											<label>Search:</label>
-
-											<input name="search_content" type="text" class="form-control alt" placeholder="BGST Online">
-
-										</div>
-
-									</div>
-
-									<div class="col-sm-6">
-
-										<div class="tool-box">
-
-											<label>Filter by:</label>
-
-                                             <?php $event_types = \DB::table('event_types')->orderBy('event_type_title','asc')->get();?>
-
-											<select onchange="this.form.submit()" class="selectpicker alt" name="eventtype" data-width="100%" data-style="" title="Filter by">
-
-                                                <option value="all"> See All </option>
-
-                                                @foreach($event_types as $type)
-
-												<option value="{{ $type->id }}">{{ $type->event_type_title }}</option>
-
-                                                @endforeach
-
-											</select>
-
-										</div>
-
-									</div>
-
-                                    <input type="hidden" value="1" name="search" />
-
-                                   <input type="submit" style="position: absolute; left: -9999px"/>
-
-                                {!! Form::close() !!}
-
+      <div class="main-wrap">   
+				@include('inc.banner');
+				<div class="filter-wrap fw-type">
+					<div class="container">						
+						<div class="tb-col break-480">
+							<div class="col">
+								<label>Filter by</label>
+								<div class="w-1">
+									<select class="selectpicker">
+										<option>Month</option>
+										<option>January</option>
+										<option>February</option>
+										<option>March</option>
+										<option>April</option>
+										<option>May</option>
+										<option>June</option>
+										<option>July</option>
+										<option>August</option>
+										<option>September</option>
+										<option>October</option>
+										<option>November</option>
+										<option>December</option>
+									</select>
 								</div>
-
-							</div>
-
-							<div class="pod-list events-pods">
-
-								<div class="row">
-
-                                @if(count($events)>0)
-
-									@foreach($events as $event)
-
-
-
-                                   <?php $event_type = \DB::table('event_types')->where('id', $event->type)->get();?>
-
-
-
-                                    @if($event->speaker)
-
-
-
-								   <?php 
-
-
-
-								    
-
-
-
-									$speaker=json_decode($event->speaker);
-
-
-
-									$sp="";
-
-									$n=0;
-
-										foreach($speaker as $key=>$value)
-
-
-
-										{
-
-										$n++;
-
-										$speakers  = \DB::table('teachers')->select('teacher_name')->where('id',$value)->get();
-
-
-
-										if($speakers->count())
-
-
-
-										$sp.=$speakers[0]->teacher_name;
-
-										
-
-										if(count($speaker)!=$n)
-
-										$sp.=', ';
-
-										}
-
-
-
-										?>
-
-
-
-                                    @endif
-
-									<div class="col-sm-6">
-
-										<div class="pod-box"><a href="{{ url('events/details/' . $event->id) }}" class="img-effect">
-
-											<div class="image-holder"><figure><img src="{!! asset($event->event_image) !!}" class="responsive" height="483" alt="BIBLICAL GRADUATE SCHOOL OF THEOLOGY."/></figure></div>
-
-											<div class="pod-info-holder">
-
-												<div class="pod-info equalheight height736">
-
-													<h5> 
-
-                                                     @if($event_type->count())
-
-                                                     {{ $event_type[0]->event_type_title }}:
-
-                                                     @endif
-
-                                                    <strong>{{ $event->title }}</strong></h5>
-
-													<h5>Speaker: 
-
-                                                     @if($event->speaker)
-
-                                                    <strong>{{ $sp  }}</strong>
-
-                                                    @endif
-
-                                                    </h5>
-													@if($event->start_date)
-													<!--<label>Start: </label>--> {{ date("F j Y",strtotime($event->start_date)) }}   |   {{ date("h:m A",strtotime($event->start_date)) }}<br>
-													@endif
-                                                    @if($event->end_date)
-                                                    <!--<label>End: </label>--> {{ date("F j Y",strtotime($event->end_date)) }}   |   {{ date("h:m A",strtotime($event->end_date)) }}<br>
-                                                    @endif
-
-                                                      @if($event->oth_date!=null)
-
-                                                   <?php /*?><label>Other Date: </label> {{ date("F j Y",strtotime($event->oth_date)) }}<br><?php */?>
-
-                                                    @endif
-
-                                                    <span class="badge">{{ ($event->paid_event==1)? 'PAID' : 'FREE' }}</span></p>
-
-												</div>
-
-												<div class="text-center"><span class="button btn-light">More Info</span></div>
-
-											</div>
-
-											</a></div>
-
-									</div>
-
-                                    @endforeach
-
-                                  @else
-
-                                  No records found.
-
-                                  @endif
-
+								<div class="w-2">
+									<select class="selectpicker">
+										<option>Year</option>
+										<option>2019</option>
+										<option>2020</option>
+										<option>2021</option>
+									</select>
 								</div>
-
 							</div>
-
+							<div class="col">
+								<a class="lk-back" href="#">Clear all</a>
+							</div>
 						</div>
-
 					</div>
-
 				</div>
-
-			</div>
-
-		</div>
-
-		<!-- Section END --> 
-
-	</div>
-
-	<!-- Content Containers END -->
-
-
-
+				<div class="container space-1">
+					
+					<h1 class="title-1 text-center">Upcoming Events</h1>
+					<div id="events" class="masony" data-num="5" data-load="#btn-load">
+						@foreach($events as $event)
+						<div class="grid-1 item">
+							<div class="tb-col">
+								<div class="col date-col">
+									<span class="month">{{date("F",strtotime($event->event_date))}}</span> <strong>{{date("d",strtotime($event->event_date))}}</strong> {{date("Y",strtotime($event->event_date))}}
+								</div>
+								<div class="col content-col">
+									<div class="content">								
+										<h2>{{$event->event_title}}</h2>
+										<p class="date-post">{{date("D",strtotime($event->event_date))}}  |  2:00 PM</p>
+										<p>{{$event->event_address}}</p>
+										<span class="btn-4">See More <i class="fas fa-angle-double-right"></i></span>
+									</div>
+								</div>
+							</div>
+							<a href="{{url('event/details/'.$event->id)}}" class="more">Read more</a>
+						</div>
+                        @endforeach
+						
+						<!-- no loop this element --> <div class="grid-sizer"></div> <!-- no loop this element -->					
+					</div>
+					<div class="more-wrap"><button id="btn-load" class="btn-4 load-more"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+				</div>
+                
+            </div>
 @endsection
-

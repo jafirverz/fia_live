@@ -46,16 +46,9 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="event_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                </div></div>
-                                 @if(isset($event->event_image) && ($event->event_image != ''))
-                                        <div class=" col-sm-2">
-                                            <div class="attachment-block clearfix">
-                                                <img class="attachment-img" src="{!! asset($event->event_image) !!}"
-                                                     alt="Event Image">
-                                            </div>
-                                        </div>
-                                    @endif
+                                </div>
+<img id="holder" @if($filter->event_image!="") src="{{url($filter->event_image)}}" @endif  style="margin-top:15px;max-height:100px;">                                </div>
+                                 
                                 </div>
                             </div>
                 <div class="form-group">
