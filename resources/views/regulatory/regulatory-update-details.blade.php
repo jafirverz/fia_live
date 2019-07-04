@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="intro-2">
-                <h1 class="title-1 text-center space-2"><img src="images/tempt/flag-korea.jpg" alt="korea" /> {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                <h1 class="title-1 text-center space-2"><img src="images/tempt/flag-korea.jpg" alt="{{ getFilterCountry($regulatory->country_id) }}" /> {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
                 <table>
                     <tbody>
                         <tr>
@@ -57,8 +57,8 @@
                     <a class="head-box head-tb" data-height="0" href="#update-{{ ($key+1) }}">
                         <span class="tb-col break-640">
                             <span class="col">{{ $value->title }}</span>
-                            <span class="col w-1">Draft</span>
-                            <span class="col w-2">1 Feb 2018</span>
+                            <span class="col w-1">{{ getFilterStage($value->stage_id) }}</span>
+                            <span class="col w-2">{{ $value->updated_at->format('d M Y') }}</span>
                         </span>
                     </a>
                     <div class="content-box" id="update-{{ ($key+1) }}">

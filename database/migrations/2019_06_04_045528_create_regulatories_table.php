@@ -23,6 +23,7 @@ class CreateRegulatoriesTable extends Migration
             $table->text('description')->nullable();
             $table->integer('parent_id')->nullable()->default(0);
             $table->integer('topic_id');
+            $table->integer('stage_id');
             $table->integer('country_id');
             $table->timestamps();
         });

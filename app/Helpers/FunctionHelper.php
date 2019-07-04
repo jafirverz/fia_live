@@ -5,6 +5,8 @@ use App\Filter;
 use App\Menu;
 use App\PermissionAccess;
 use App\CountryInformation;
+use App\RegulatoryHighlight;
+
 if (!function_exists('getTopics')) {
 
     /**
@@ -149,7 +151,7 @@ if (!function_exists('getTopics')) {
             abort(redirect('admin/access-not-allowed'));
         }
     }
-	
+
 	function get_menu_has_child($parent=0,$type=1)
 	{
 		$string=[];
@@ -166,23 +168,23 @@ if (!function_exists('getTopics')) {
 				 $link=create_menu_link($menu);
 				 if($menu->page_id==NULL)
 				 $target='target="_blank"';
-				 else 
+				 else
 				 $target="";
-				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
 				  if(has_child_menu($menu->id)>0)
-				  {   
-				      
+				  {
+
 					 $string[]=get_menu_has_child($menu->id,1);
 				  }
-				 $string[]='</li>';	 
-				
+				 $string[]='</li>';
+
 				}
 			$string[]='</ul>';
 		}
 
 		return join("",$string);
 	}
-	
+
     function pageDetail($slug)
     {
         //check page
@@ -201,7 +203,7 @@ if (!function_exists('getTopics')) {
         return $banners;
 
     }
-	
+
 	function get_parent_menu($parent=0,$type=1)
 	{
 		$string=[];
@@ -218,18 +220,18 @@ if (!function_exists('getTopics')) {
 				 $link=create_menu_link($menu);
 				 if($menu->page_id==NULL)
 				 $target='target="_blank"';
-				 else 
+				 else
 				 $target="";
-				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
-				 $string[]='</li>';	 
-				
+				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
+				 $string[]='</li>';
+
 				}
 			$string[]='</ul>';
 		}
 
 		return join("",$string);
 	}
-	
+
 	function create_menu_link($item=[])
 	{
 
@@ -243,15 +245,15 @@ if (!function_exists('getTopics')) {
 		return url($page['slug']);
 		}
 	}
-	
+
 	function has_child_menu($parent=0)
 	{
 		$menus= Menu::where('parent', $parent)->count();
 		if($menus>0)
 		return $menus;
-		else 
+		else
 		return 0;
-	
+
 	}
 
 	function get_filter_name($value = null)
@@ -398,13 +400,9 @@ if (!function_exists('getTopics')) {
 	   return __('constant.NONE');
     }
 
-    function getRegulatoriesHighlight($slug = null)
+    function getRegulatoriesHighlight()
     {
-        if($slug)
-        {
-            return Regulatory::where('slug', $slug)->first();
-        }
-        return Regulatory::limit(5)->get();
+        return RegulatoryHighlight::first();
     }
 
     function getRegulatories($slug = null)
@@ -414,5 +412,21 @@ if (!function_exists('getTopics')) {
             return Regulatory::where('slug', $slug)->first();
         }
         return Regulatory::latestregulatory();
+    }
+
+    function getRegulatoryById($id = null)
+    {
+        if($id)
+        {
+            return Regulatory::where('id', $id)->first();
+        }
+    }
+
+    function getFilterData($id)
+    {
+        if($id)
+        {
+            return Filter::where('filter_name', $id)->where('status', 1)->get();
+        }
     }
 }
