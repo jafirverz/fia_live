@@ -178,5 +178,6 @@ Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::get('/event/details/{id}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
+Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 
 Route::get('/{slug}', 'PagesFrontController@index');

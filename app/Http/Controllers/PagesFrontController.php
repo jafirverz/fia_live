@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Page;
-
+use Illuminate\Support\Str;
 use App\Banner;
 use App\Regulatory;
 
@@ -55,5 +55,59 @@ class PagesFrontController extends Controller
         $regulatory = Regulatory::where('slug', $slug)->first();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory'));
+    }
+
+    public function regulatory_details_search()
+    {
+        $country = isset($_GET['country']) ? $_GET['country'][0] : '';
+        $month = isset($_GET['month']) ? $_GET['month'][0] : '';
+        $year = isset($_GET['year']) ? $_GET['year'][0] : '';
+        $topic = isset($_GET['topic']) ? $_GET['topic'][0] : '';
+        $stage = isset($_GET['stage']) ? $_GET['stage'][0] : '';
+
+        $query = Regulatory::query();
+        if($country)
+        {
+            $query->whereIn('country_id', $country);
+        }
+        if($month)
+        {
+            $query->whereMonth('created_at', date('m', strtotime($month)));
+        }
+        if($year)
+        {
+            $query->whereYear('created_at', date('Y', strtotime($year)));
+        }
+        if($topic)
+        {
+            $query->where('topic_id', 'like', '%'.$topic.'%');
+        }
+        if($stage)
+        {
+            $query->where('stage_id', $stage);
+        }
+        $result = $query->get();
+
+        if($result->count()<1)
+        {
+            $result = Regulatory::all();
+        }
+        foreach($result as $value)
+        {
+        ?>
+            <div class="item">
+                <div class="box-4">
+                    <figure><img src="images/tempt/flag-korea.jpg" alt="thailand flag" /></figure>
+                    <div class="content">
+                        <h3 class="title"><?php echo $value->title ?></h3>
+                        <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
+                            <?php echo $value->created_at->format('M d, Y'); ?></p>
+                            <?php echo html_entity_decode(Str::limit($value->description, 400)); ?>
+                    </div>
+                    <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>
+                </div>
+            </div>
+        <?php
+        }
     }
 }
