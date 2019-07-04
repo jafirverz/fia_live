@@ -65,7 +65,7 @@
                 @endif
                 </div>
                 
-                <div class="form-group">
+                <!--<div class="form-group">
                 
                                 <label class='control-label' for="">Banner Image :</label>
                                <div class="input-group">
@@ -85,28 +85,15 @@
                     <strong>{{ $errors->first('banner_image') }}</strong>
                 </span>
                 @endif 
-                 </div>
+                 </div>-->
                 <div class="form-group">
-                
-                                <label class='control-label' for="">PDF :</label>
-                               <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <a id="pdf" data-input="thumbnail" data-preview="holder"
-                                            class="btn btn-primary">
-                                            <i class="fa fa-picture-o"></i> Choose
-                                        </a>
-                                    </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="pdf">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                
-                            </div> 
-                @if ($errors->has('pdf'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('pdf') }}</strong>
-                </span>
-                @endif  
-                 </div>                    
-                <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
+                            <label for="pdf" class=" control-label">PDF</label>                            
+                            <div class="">
+                                <input type="file" name="pdf" class="form-control" placeholder="" />
+                               
+                            </div>
+                        </div>                    
+                <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                 
                     <label class='control-label' for="contents">Description :</label>
 <textarea class="tiny-editor form-control" rows="5" id="description"

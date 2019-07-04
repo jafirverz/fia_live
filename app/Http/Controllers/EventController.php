@@ -36,12 +36,14 @@ class EventController extends Controller
         if (!$page) {
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
         }
+		//dd($page->id);
         $banner = get_page_banner($page->id);
 
         $title = __('constant.EVENT');
-       // $breadcrumbs = $breadcrumbs->generate('front_event_listing');
+        $breadcrumbs = $breadcrumbs->generate('front_event_listing');
 		$events =Event::all();
-        return view('resources/index', compact('title', 'events', 'page', 'banner'));
+		$data=array('month'=>'','year'=>'');
+        return view('resources/index', compact('title', 'events', 'page', 'banner' ,'data','breadcrumbs'));
     }
 	
 	public function reports(BreadcrumbsManager $breadcrumbs)
@@ -56,52 +58,71 @@ class EventController extends Controller
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
         }
         $banner = get_page_banner($page->id);
+        $data=array('topic'=>"");
+        $title = __('constant.TOPICAL_REPORTS');
+        $breadcrumbs = $breadcrumbs->generate('front_report_listing');
+		$reports =TopicalReport::all();
+        return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
+    }
+	
+	public function search_report(BreadcrumbsManager $breadcrumbs, Request $request)
+    {
+
+        $page=Page::where('pages.slug', __('constant.TOPICAL_REPORT_SLUG'))
+            ->where('pages.status', 1)
+            ->first();
+        if (!$page) {
+            return redirect(url('/home'))->with('error', __('constant.OPPS'));
+        }
+        $banner = get_page_banner($page->id);
 
         $title = __('constant.TOPICAL_REPORTS');
-       // $breadcrumbs = $breadcrumbs->generate('front_event_listing');
-		$reports =TopicalReport::all();
-        return view('resources/index-report', compact('title', 'reports', 'page', 'banner'));
+        $breadcrumbs = $breadcrumbs->generate('front_report_listing');
+        //dd($request);
+        $topic = $request->topic;
+		$data=array('topic'=>$topic);
+        if ($topic != "")
+        {
+		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%"');
+		}
+        
+        return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
     }
 	
 	
     public function search(BreadcrumbsManager $breadcrumbs, Request $request)
     {
 
-        $page = $this->pageDetail(__('constant.EVENTS_ROUTE'));
+        $page=Page::where('pages.slug','events')
+            ->where('pages.status', 1)
+            ->first();
         if (!$page) {
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
         }
-        $banners = $this->bannersDetail($page->id);
+		//dd($page->id);
+        $banner = get_page_banner($page->id);
 
         $title = __('constant.EVENT');
         $breadcrumbs = $breadcrumbs->generate('front_event_listing');
         //dd($request);
-        $search_content = $request->search_content;
-        if ($search_content != "" && $request->eventtype == "")
-            {
-			//$events = Event::whereDate('start_date', '>', Carbon::now())->where('title', 'LIKE', '%' . $search_content . '%')->get();
-
-		$events = DB::select("SELECT * FROM events WHERE events.title LIKE '%".$search_content."%' AND (events.end_date>now() OR events.start_date>now()) OR (start_date IS NULL AND end_date IS NULL) AND delete_status=0  ORDER BY start_date ASC");
-			
-
-			}
-        else if ($search_content == "" && $request->eventtype != "")
-         {
-			if($request->eventtype=='all')
-			{$events = DB::select("SELECT * FROM events WHERE (events.end_date>now() OR events.start_date>now()) OR (start_date IS NULL AND end_date IS NULL) AND delete_status=0  ORDER BY start_date ASC");}
-			else
-			{
-			$events = DB::select("SELECT * FROM events WHERE events.type=".$request->eventtype." AND (events.end_date>now() OR events.start_date>now()) OR (start_date IS NULL AND end_date IS NULL) AND delete_status=0   ORDER BY start_date ASC");
-			}
+        $year = $request->year;
+		$month = $request->month;
+		$data=array('month'=>$month,'year'=>$year);
+        if ($month != "" && $year == "")
+        {
+		$events = DB::select('SELECT * FROM events WHERE MONTH(event_date)='.$month);
+		}
+        else if ($month == "" && $year != "")
+        {
+		$events = DB::select('SELECT * FROM events WHERE YEAR(event_date)='.$year);
 		}
         else
         {
-//$events = Event::whereDate('start_date', '>', Carbon::now())->where('title', 'LIKE', '%' . $search_content . '%')->where('type', $request->eventtype)->get();
-		$events = DB::select("SELECT * FROM events WHERE events.type=".$request->eventtype." AND events.title LIKE '%".$search_content."%' AND (events.end_date>now() OR events.start_date>now()) OR (start_date IS NULL AND end_date IS NULL) AND delete_status=0   ORDER BY start_date ASC");
+		$events = DB::select('SELECT * FROM events WHERE MONTH(event_date)='.$month.' AND YEAR(event_date)='.$year);		
 		}
         //print_r($events);die;
 
-        return view('event/events', compact('title', 'breadcrumbs', 'events', 'page', 'banners'));
+        return view('resources/index', compact('title', 'breadcrumbs', 'events', 'page', 'banner', 'data'));
     }
 
 

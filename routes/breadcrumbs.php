@@ -130,9 +130,11 @@ for ('page_edit', function ($trail, $id) {
 
 //SUB_CONTENTS
 Breadcrumbs::
-for ('menu', function ($trail) {
+for ('menu', function ($trail,$parent=null) {
     $trail->parent('dashboard');
     $trail->push(__('constant.MENU'), url('/admin/menu'));
+	if($parent!=null)
+	$trail->push(__('constant.FOOTER'), url('/admin/menu'));
 }) ;
 Breadcrumbs::
 for ('menu_list', function ($trail) {
@@ -254,9 +256,19 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
 
 //EVENT
 Breadcrumbs::
-for ('front_event_listing', function ($trail) {
+for ('front_resource', function ($trail) {
 	$trail->parent('front_home');
-    $trail->push(__('constant.EVENT'), url('/events'));
+    $trail->push(__('constant.RESOURCES'), url('#'));
+}) ;
+Breadcrumbs::
+for ('front_report_listing', function ($trail) {
+	$trail->parent('front_resource');
+    $trail->push(__('constant.TOPICAL_REPORTS'), url('/topical-reports'));
+}) ;
+Breadcrumbs::
+for ('front_event_listing', function ($trail) {
+	$trail->parent('front_resource');
+    $trail->push(__('constant.UPCOMING_EVENT'), url('/events'));
 }) ;
 
 Breadcrumbs::

@@ -111,7 +111,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
    //Menu
-  Route::get('/menu', 'CMS\MenuController@index')->name('menu.index');
+  Route::get('/menu', 'CMS\MenuController@index')->name('menu');
   Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
   Route::post('/menu/type-update/{id}', 'CMS\MenuController@type_update');
   Route::get('/menu-list/{id}', 'CMS\MenuController@menu_list')->name('menu-list');
@@ -169,9 +169,10 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
 });
 Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
-Route::post('/search', 'EventController@search');
+Route::post('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
+Route::post('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/details/{id}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');

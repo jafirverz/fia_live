@@ -116,9 +116,36 @@ class TopicalReportController extends Controller
         {
             $TopicalReport->banner_image = $request->banner_image;
         }*/
-        if($request->pdf)
-        {
-            $TopicalReport->pdf = $request->pdf;
+        if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }
+
+        if (!is_dir('uploads/pdf')) {
+            mkdir('uploads/pdf');
+        }
+        $destinationPath = 'uploads/pdf'; // upload path
+        $pdf_url = '';
+        $pdfPath = null;
+        if ($request->hasFile('pdf')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('pdf')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('pdf')->getClientOriginalExtension();
+            // Filename to store
+            $pdf_url = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('pdf')->move($destinationPath, $pdf_url);
+            $pdfPath = $destinationPath . "/" . $pdf_url;;
+        }
+        if ($request->hasFile('pdf')) {
+            if ($TopicalReport->pdf) {
+                File::delete($TopicalReport->pdf);
+            }
+            $pdfPath = $destinationPath . '/' . $pdf_url;
+            $TopicalReport->pdf = $pdfPath;
         }
         $TopicalReport->updated_at = Carbon::now()->toDateTimeString();
         $TopicalReport->save();
@@ -183,10 +210,31 @@ class TopicalReportController extends Controller
         {
             $TopicalReport->banner_image = $request->banner_image;
         }*/
-        if($request->pdf)
-        {
-            $TopicalReport->pdf = $request->pdf;
+        if (!is_dir('uploads')) {
+            mkdir('uploads');
         }
+
+        if (!is_dir('uploads/pdf')) {
+            mkdir('uploads/pdf');
+        }
+        $destinationPath = 'uploads/pdf'; // upload path
+        $pdf_url = '';
+        $pdfPath = null;
+        if ($request->hasFile('pdf')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('pdf')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('pdf')->getClientOriginalExtension();
+            // Filename to store
+            $pdf_url = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('pdf')->move($destinationPath, $pdf_url);
+            $pdfPath = $destinationPath . "/" . $pdf_url;;
+        }
+        $TopicalReport->pdf = $pdfPath;
 		$TopicalReport->save();
 		
 		if(count($request->country_id)>0)
