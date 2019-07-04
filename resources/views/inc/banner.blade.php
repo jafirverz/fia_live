@@ -100,10 +100,27 @@
 				</div>
 				<div class="breadcrumb-wrap">
 					<div class="container">
-						<ul class="breadcrumb">
-							<li><a href="{{ url('/') }}">Home</a></li>
-							<li>{{ $page->title }}</li>
-						</ul>
+						
+                        @if (isset($breadcrumbs) && count($breadcrumbs))
+                            <ul class="breadcrumb">
+                                @foreach ($breadcrumbs as $breadcrumb)
+                                @if(is_array($breadcrumb))
+                                @if($loop->last)
+                                    <li><strong>{{ $breadcrumb['title'] }}</strong></li>
+                                @else
+                                    <li><a href="{{ url($breadcrumb['slug']) }}">{{ $breadcrumb['title'] }}</a></li>
+                                @endif
+                                @else
+                                @if ($breadcrumb->url && !$loop->last)
+                                    <li><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
+                                @else
+                                    <li><strong>{{ $breadcrumb->title }}</strong></li>
+                                @endif
+                                @endif
+                                @endforeach
+                            </ul>
+                        
+                    @endif
 					</div>
 				</div>
 @endif

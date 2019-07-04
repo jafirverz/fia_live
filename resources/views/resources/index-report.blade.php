@@ -2,22 +2,28 @@
 
 @section('content')
       <div class="main-wrap">   
-				@include('inc.banner');
+				@include('inc.banner')
 				<div class="filter-wrap fw-type">
 					<div class="container">						
 						<div class="tb-col break-480">
-							<div class="col">
+				<form name="filter" method="post" action="{{ url('/topical-reports/search')}}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                	<div class="col">
 								<label>Filter by</label>
 								<div class="w-1">
-									<select class="selectpicker">
-										<option>Topic</option>
+									<select name="topic" onchange="this.form.submit()" class="selectpicker">
+										<option value="">Topic</option>
+                                        @foreach(getAllTopics() as $name)
+                                        <option @if($data['topic']==$name->id) selected="selected" @endif value="{{$name->id}}">{{$name->tag_name}}</option>
+                                        @endforeach
 									</select>
 								</div>
 							</div>
+                </form>	
 							<div class="col">
 								<a class="lk-back" href="#">Clear all</a>
 							</div>
-						</div>
+					</div>
 					</div>
 				</div>
 				<div class="container space-1">

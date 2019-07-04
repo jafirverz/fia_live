@@ -175,8 +175,9 @@ if (!function_exists('DummyFunction')) {
     }
 	function get_page_banner($page_id)
 	{
+	//dd($page_id);	
 	$banner = Banner::where('page_name', $page_id)->first();
-	if($banner->count()>0)	
+	if(isset($banner) && $banner->count()>0)	
 	return $banner;
 	else
 	return "";

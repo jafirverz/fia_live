@@ -81,7 +81,7 @@ if (!function_exists('getTopics')) {
 	  $names[]=$topic->tag_name;
 	  }	
 	 // dd($names);
-	  if($topics->count()>0)
+	  if(isset($topics) && $topics->count()>0)
 	  return implode(',',$names);
 	  else
 	  return "";
@@ -98,7 +98,7 @@ if (!function_exists('getTopics')) {
 	  $names[]='<span class="show-tooltip" title="'.$topic->tag_name.'"><img src="'.asset($topic->country_image).'" alt="'.$topic->tag_name.' flag" /></span>';
 	  }	
 	  
-	  if(count($names)>0)
+	  if(isset($names) && count($names)>0)
 	  return join('',$names);
 	  else
 	  return "";
@@ -254,6 +254,39 @@ if (!function_exists('getTopics')) {
 		else
 		return 0;
 
+	}
+	function getAllTopics()
+	{
+	  $topics = Filter::where('filter_name',2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	  
+	 // dd($names);
+	  if(isset($topics) && $topics->count()>0)
+	  return $topics;
+	  else
+	  return "";
+	}
+	function checkCountryExist($country=Null)
+	{
+		
+	$country = Filter::where('filter_name',1)->where('status', 1)->where('home_status', 1)->where('tag_name',$country)->count();	
+	if($country>0)
+	return 1;
+	else
+	return 0;
+	}
+	function getYearList()
+	{
+		return range(2019, 2025);
+	}
+	function getMonthList()
+	{
+	return array(
+                    "1" => "January", "2" => "February", "3" => "March", "4" => "April",
+                    "5" => "May", "6" => "June", "7" => "July", "8" => "August",
+                    "9" => "September", "10" => "October", "11" => "November", "12" => "December",
+                );
+				
+	  	
 	}
 
 	function get_filter_name($value = null)

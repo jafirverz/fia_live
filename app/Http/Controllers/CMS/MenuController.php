@@ -29,7 +29,10 @@ class MenuController extends Controller
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $parent = 0;
         $title = __('constant.MENU');
-        $menu_types = MenuPosition::orderBy('view_order', 'ASC')->get();
+		if(isset($_GET['parent']) && $_GET['parent']!="")
+        $menu_types = MenuPosition::orderBy('view_order', 'ASC')->where('parent',$_GET['parent'])->get();
+		else
+		$menu_types = MenuPosition::orderBy('view_order', 'ASC')->where('parent',0)->get();
 		//dd($menu_types);
         return view('admin.menu.type', compact('title', 'menu_types'));
     }

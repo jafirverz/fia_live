@@ -5,7 +5,12 @@
     <section class="content-header">
         <h1>
             {{ $title }}
-        </h1> {{ Breadcrumbs::render('menu') }}
+        </h1> 
+        @if(isset($_GET['parent']) && $_GET['parent']!="")
+        {{ Breadcrumbs::render('menu',$_GET['parent']) }}
+        @else
+        {{ Breadcrumbs::render('menu') }}
+        @endif
     </section>
 
     <!-- Main content -->
@@ -50,11 +55,17 @@
                                             </a>
 
                                             
-
+                                           @if($menu->id==2)
                                             <a class="" title="Menu List"
+                                               href="{{ route("menu",["parent"=>$menu->id]) }}">
+                                                <i class="fa fa-list btn btn-default "></i>
+                                            </a>
+                                           @else
+                                           <a class="" title="Menu List"
                                                href="{{ route("menu-list",["id"=>$menu->id]) }}">
                                                 <i class="fa fa-list btn btn-default "></i>
                                             </a>
+                                           @endif
                                         </td>
                                     </tr>
                                 @endforeach

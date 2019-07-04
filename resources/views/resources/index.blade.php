@@ -2,40 +2,35 @@
 
 @section('content')
       <div class="main-wrap">   
-				@include('inc.banner');
+				@include('inc.banner')
 				<div class="filter-wrap fw-type">
 					<div class="container">						
 						<div class="tb-col break-480">
+                <form name="filter" method="post" action="{{ url('/events/search')}}" enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 							<div class="col">
 								<label>Filter by</label>
 								<div class="w-1">
-									<select class="selectpicker">
-										<option>Month</option>
-										<option>January</option>
-										<option>February</option>
-										<option>March</option>
-										<option>April</option>
-										<option>May</option>
-										<option>June</option>
-										<option>July</option>
-										<option>August</option>
-										<option>September</option>
-										<option>October</option>
-										<option>November</option>
-										<option>December</option>
+									<select onchange="this.form.submit()" name="month" class="selectpicker">
+										<option value="">Month</option>
+                                        @foreach(getMonthList() as $key=>$value)
+										<option @if($data['month']==$key) selected="selected" @endif value="{{$key}}">{{$value}}</option>
+                                        @endforeach
 									</select>
 								</div>
 								<div class="w-2">
-									<select class="selectpicker">
-										<option>Year</option>
-										<option>2019</option>
-										<option>2020</option>
-										<option>2021</option>
+                                
+									<select onchange="this.form.submit()" name="year" class="selectpicker">
+										<option value="">Year</option>
+										@foreach(getYearList() as $year)
+										<option @if($data['year']==$year) selected="selected" @endif value="{{$year}}">{{$year}}</option>
+                                        @endforeach
 									</select>
 								</div>
 							</div>
+                </form>
 							<div class="col">
-								<a class="lk-back" href="#">Clear all</a>
+								<a class="lk-back" href="{{url('events')}}">Clear all</a>
 							</div>
 						</div>
 					</div>
