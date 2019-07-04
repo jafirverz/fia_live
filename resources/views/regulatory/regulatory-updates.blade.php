@@ -15,8 +15,7 @@
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
                             <option
-                                data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> {{ $country->tag_name }}'
-                                @if($country->tag_name=='Singapore') selected @endif> {{ $country->tag_name }}</option>
+                                data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -43,7 +42,7 @@
                             <select class="selectpicker" name="topic">
                                 <option value="">-- Topic --</option>
                                 @foreach (getFilterTopic() as $topic)
-                                <option value="{{ $topic->tag_name }}">{{ $topic->tag_name }}</option>
+                                <option value="{{ $topic->id }}">{{ $topic->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -51,7 +50,7 @@
                             <select class="selectpicker" name="stage">
                                 <option value="">-- Stage --</option>
                                 @foreach (getFilterStage() as $stage)
-                                <option value="{{ $stage->tag_name }}">{{ $stage->tag_name }}</option>
+                                <option value="{{ $stage->id }}">{{ $stage->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -167,13 +166,73 @@
 
 </div><!-- //page -->
 <script>
+
     $(document).ready(function () {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("a.lk-back").on("click", function (e) {
             e.preventDefault();
             $("select[name='country[]']").val('Singapore');
             $("select[name='month'], select[name='year'], select[name='topic'], select[name='stage']")
                 .val('').selectpicker('refresh');
+            getSearchResult();
         });
+
+        var country_array = [];
+        var month_array = [];
+        var year_array = [];
+        var topic_array = [];
+        var stage_array = [];
+
+        $("select[name='country[]']").on("change", function() {
+            country_array.push($(this).val());
+            getSearchResult();
+        });
+
+        $("select[name='month']").on("change", function() {
+            month_array.push($(this).val());
+            getSearchResult();
+        });
+
+        $("select[name='year']").on("change", function() {
+            year_array.push($(this).val());
+            getSearchResult();
+        });
+
+        $("select[name='topic']").on("change", function() {
+            topic_array.push($(this).val());
+            getSearchResult();
+        });
+
+        $("select[name='stage']").on("change", function() {
+            stage_array.push($(this).val());
+            getSearchResult();
+        });
+
+        function getSearchResult() {
+
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('/regulatory-details-search') }}",
+                data  : {
+                    country : country_array,
+                    month : month_array,
+                    year : year_array,
+                    topic : topic_array,
+                    stage : stage_array,
+                    _token: CSRF_TOKEN,
+                },
+                cache: false,
+                async: false,
+                success: function(data) {
+                    $("#list-2").html(data);
+                }
+            });
+            country_array = [];
+            month_array = [];
+            year_array = [];
+            topic_array = [];
+            stage_array = [];
+        }
     });
 
 </script>
