@@ -388,7 +388,6 @@ if (!function_exists('getTopics')) {
         {
             return Regulatory::where('id', $id)->first();
         }
-        return Regulatory::all();
     }
 
     function getFilterData($id)

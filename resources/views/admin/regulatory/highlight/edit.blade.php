@@ -48,7 +48,7 @@
                                 </span>
                                 @endif
                             </div>
-                            @for ($i = 1; $i <= 5; $i++)
+                            @for ($i = 1; $i <= count($other_highlight_array); $i++)
                             <div class="form-group{{ $errors->has('main_highlight'.$i) ? ' has-error' : '' }}">
                                     <label for="">Other Highlight {{ $i }}</label>
                                     <select name="other_highlight{{ $i }}" class="form-control select2" style="width: 100%;">
