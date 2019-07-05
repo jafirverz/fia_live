@@ -24,6 +24,7 @@ class PagesFrontController extends Controller
 		 $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
+            $banner = Banner::where('page_name', $page->id)->first();
         if(!$page)
         {
             return abort(404);
@@ -31,11 +32,11 @@ class PagesFrontController extends Controller
 
         if($page->slug=='country-information')
         {
-            return view('country_information.country-information');
+            return view('country_information.country-information', compact('banner'));
         }
         elseif($page->slug=='regulatory-updates')
         {
-            return view('regulatory.regulatory-updates');
+            return view('regulatory.regulatory-updates', compact('banner'));
         }
       elseif ($page->page_type == 0) {
 
@@ -64,6 +65,8 @@ class PagesFrontController extends Controller
         $year = isset($_GET['year']) ? $_GET['year'][0] : '';
         $topic = isset($_GET['topic']) ? $_GET['topic'][0] : '';
         $stage = isset($_GET['stage']) ? $_GET['stage'][0] : '';
+        $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
+
 
         $query = Regulatory::query();
         if($country)
@@ -88,7 +91,7 @@ class PagesFrontController extends Controller
         }
         $result = $query->get();
 
-        if($result->count()<1)
+        if($option_type)
         {
             $result = Regulatory::all();
         }
