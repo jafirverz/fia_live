@@ -3,6 +3,7 @@
 @section('content')
 <div id="toppage" class="page">
     <div class="main-wrap">
+        @include('inc.banner');
         @include('inc.breadcrumb');
         <div class="filter-wrap fw-type">
             <div class="container">
