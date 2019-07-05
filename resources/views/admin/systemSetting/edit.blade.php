@@ -87,6 +87,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+<label for="social_link" class=" control-label">Social Link</label>
+						<div class="">
+                                 <textarea class="form-control tiny-editor " name="social_link">{{ $systemSetting->social_link }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
 <label for="footer" class=" control-label">Footer</label>
 						<div class="">
                                  <textarea class="form-control tiny-editor " name="footer">{{ $systemSetting->footer }}</textarea>

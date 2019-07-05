@@ -48,7 +48,7 @@
 								<div class="col content-col">
 									<div class="content">								
 										<h2>{{$event->event_title}}</h2>
-										<p class="date-post">{{date("D",strtotime($event->event_date))}}  |  2:00 PM</p>
+										<p class="date-post">{{date("D",strtotime($event->event_date))}}  |  {{ date("h:m A",strtotime($event->event_date)) }}</p>
 										<p>{{$event->event_address}}</p>
 										<span class="btn-4">See More <i class="fas fa-angle-double-right"></i></span>
 									</div>

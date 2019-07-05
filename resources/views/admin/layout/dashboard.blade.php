@@ -108,7 +108,9 @@
             placeholder: '-- Select --',
         });
 		
-		
+		 $('.pick_date_time').datetimepicker({
+           autoclose: true
+    	});
     });
 	
 	 

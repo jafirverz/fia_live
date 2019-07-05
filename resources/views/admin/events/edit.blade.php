@@ -26,7 +26,7 @@
                 </div></div></div>
                 <div class="form-group">
                     <div class="row"><label class='col-sm-2 control-label'>Event Date:</label>
-<div class="col-sm-10"><input type="text" class="form-control datepicker" name="event_date" id="event_date" value="{{  $event->event_date  }}">
+<div class="col-sm-10"><input type="text" class="form-control pick_date_time" name="event_date" id="event_date" value="{{  $event->event_date  }}">
                 </div></div></div>
                 <div class="form-group">
                     <div class="row"><label class='col-sm-2 control-label' for="contents">Description :</label>
