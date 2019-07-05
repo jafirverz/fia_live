@@ -170,6 +170,7 @@ class SystemSettingController extends Controller
             'contact_email' => 'required | email ',
             'contact_address' => 'required',
 			'pagination_limit' => 'required',
+			'social_link' => 'required',
 
         ];
         $validator = Validator::make($fields, $validatorFields);
@@ -189,6 +190,7 @@ class SystemSettingController extends Controller
         $systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
 		$systemSetting->pagination_limit = $request->pagination_limit;
+		$systemSetting->social_link = $request->social_link;
 
         if (!is_dir('uploads')) {
             mkdir('uploads');

@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-5 col-xs-6 col">
                         <h4>Sitemap</h4>
-                        {!! get_parent_menu(0,2) !!}
+                        {!! get_parent_menu(0,3) !!}
                         <!--<ul class="links">
                             <li class="active"><a href="index.html">Home</a></li>
                             <li><a href="about.html">About Us</a></li>
@@ -25,15 +25,13 @@
                 <div class="row break-560 row-col">
                     <div class="col-sm-7 col-xs-6 col">
                         <h4>Others</h4>
-                        <ul class="links">
+                        <!--<ul class="links">
                             <li><a href="privacy-policy.html">Privacy Policy</a></li>
                             <li><a href="temrs.html">Terms and Conditions</a></li>
-                        </ul>
+                        </ul>-->
+                        {!! get_parent_menu(0,4) !!}
                         <h4 class="sp">Follow Us</h4>
-                        <ul class="socials">
-                            <li><a class="fab fa-linkedin-in" href="https://www.linkedin.com/" target="_blank">LinkedIn</a></li>
-                            <li><a class="fab fa-twitter" href="https://twitter.com/" target="_blank">Twitter</a></li>
-                        </ul>
+                        {!!  setting()->social_link!!}
                     </div>
                     <div class="col-sm-5 col-xs-6 col">
                         <div class="logo">
