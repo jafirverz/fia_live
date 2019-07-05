@@ -80,7 +80,18 @@
                                  <textarea class="form-control tiny-editor " name="contact_address">{{ $systemSetting->contact_address }}</textarea>
                             </div>
                         </div>
-                        
+                        <div class="form-group">
+                            <label for="pagination_limit" class=" control-label">Pagination Limit</label>
+                            <div class="">
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->pagination_limit }}" name="pagination_limit" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+<label for="social_link" class=" control-label">Social Link</label>
+						<div class="">
+                                 <textarea class="form-control tiny-editor " name="social_link">{{ $systemSetting->social_link }}</textarea>
+                            </div>
+                        </div>
                         <div class="form-group">
 <label for="footer" class=" control-label">Footer</label>
 						<div class="">

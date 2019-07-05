@@ -67,6 +67,8 @@ class FilterController extends Controller
         $filter = new Filter;
         $filter->filter_name = $request->filter_name;
         $filter->tag_name = $request->tag_name;
+		if(isset($request->country_image))
+		$filter->country_image = $request->country_image;
 		$filter->status = $request->status;
 		$filter->home_status = ($request->home_status?$request->home_status:0);
         $filter->created_at = Carbon::now()->toDateTimeString();
@@ -122,6 +124,8 @@ class FilterController extends Controller
 
         $filter->filter_name = $request->filter_name;
         $filter->tag_name = $request->tag_name;
+		if(isset($request->country_image))
+		$filter->country_image = $request->country_image;
 		$filter->status = $request->status;
 		$filter->home_status = ($request->home_status?$request->home_status:0);
         $filter->updated_at = Carbon::now()->toDateTimeString();

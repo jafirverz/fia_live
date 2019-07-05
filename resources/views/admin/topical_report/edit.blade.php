@@ -65,7 +65,7 @@
                 @endif
                 </div>
                 
-                <div class="form-group">
+                <?php /*?><div class="form-group">
                 
                                 <label class='control-label' for="">Banner Image :</label>
                                <div class="input-group">
@@ -76,36 +76,26 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="banner_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
                                 
                                 
                                 </div>
+        <img id="holder" @if($filter->banner_image!="") src="{{url($filter->banner_image)}}" @endif  style="margin-top:15px;max-height:100px;">
                                @if ($errors->has('banner_image'))
                 <span class="help-block">
                     <strong>{{ $errors->first('banner_image') }}</strong>
                 </span>
                 @endif 
-                 </div>
+                 </div><?php */?>
                 <div class="form-group">
-                
-                                <label class='control-label' for="">PDF :</label>
-                               <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <a id="pdf" data-input="thumbnail" data-preview="holder"
-                                            class="btn btn-primary">
-                                            <i class="fa fa-picture-o"></i> Choose
-                                        </a>
-                                    </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="pdf">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                
-                            </div> 
-                @if ($errors->has('pdf'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('pdf') }}</strong>
-                </span>
-                @endif  
-                 </div>                    
+                            <label for="pdf" class=" control-label">PDF</label>                            
+                            <div class="">
+                                <input type="file" name="pdf" class="form-control" placeholder="" />
+                               
+                            </div>
+  @if($topicalReport->pdf!="")                         
+  <a href='{{ asset($topicalReport->pdf) }}' target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Open PDF in New Tab</a>
+  @endif
+                        </div>                    
                 <div class="form-group">
                 
                     <label class='control-label' for="contents">Description :</label>

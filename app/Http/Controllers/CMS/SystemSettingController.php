@@ -72,6 +72,7 @@ class SystemSettingController extends Controller
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
             'contact_address' => 'required',
+			'pagination_limit' => 'required',
 
         ];
         $validator = Validator::make($fields, $validatorFields);
@@ -87,6 +88,7 @@ class SystemSettingController extends Controller
         $systemSetting->contact_email = $request->contact_email;
         $systemSetting->contact_address = $request->contact_address;
         $systemSetting->footer = $request->footer;
+		$systemSetting->pagination_limit = $request->pagination_limit;
 
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -167,6 +169,8 @@ class SystemSettingController extends Controller
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
             'contact_address' => 'required',
+			'pagination_limit' => 'required',
+			'social_link' => 'required',
 
         ];
         $validator = Validator::make($fields, $validatorFields);
@@ -185,6 +189,8 @@ class SystemSettingController extends Controller
         $systemSetting->contact_address = $request->contact_address;
         $systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
+		$systemSetting->pagination_limit = $request->pagination_limit;
+		$systemSetting->social_link = $request->social_link;
 
         if (!is_dir('uploads')) {
             mkdir('uploads');

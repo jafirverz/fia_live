@@ -19,7 +19,7 @@
                 <div class="box box-primary">
                     <!-- form start -->
                    
-                     <form name="filter" method="post" action="{{ url('/admin/filter/update/'.$filter->id)}}">
+                     <form name="filter" method="post" action="{{ url('/admin/filter/update/'.$filter->id)}}" enctype="multipart/form-data">
                      <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                     <div class="box-body">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group @if($filter->filter_name!=1) hide else '' @endif" id="country_image_id">
                         <div class="form-group">
-                            <label for="home_status" class="control-label">Home Page Status</label>
+                            <label for="home_status" class="control-label">Active on map</label>
                             <div class="">
 						<input  name="home_status" @if(1 == $filter->home_status) checked="checked" @endif  type="checkbox" value="1">                            
                             </div>
@@ -58,11 +58,12 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="country_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
+                                    
                                 
                                 
                                 </div>
-                               
+                                <img id="holder" @if($filter->country_image!="") src="{{url($filter->country_image)}}" @endif  style="margin-top:15px;max-height:100px;">
+                                    
                  </div>
                         </div>
                         <div class="form-group">

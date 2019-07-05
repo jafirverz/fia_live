@@ -4,7 +4,9 @@
 Breadcrumbs::for('dashboard', function ($trail) {
     $trail->push(__('constant.DASHBOARD'), url('/admin/home'));
 });
-
+Breadcrumbs::for('front_home', function ($trail) {
+    $trail->push(__('constant.HOME'), url('/home'));
+});
 
 //COUNTRY
 Breadcrumbs::for('country_information', function ($trail) {
@@ -72,7 +74,7 @@ Breadcrumbs::for('groupmanagement_edit', function ($trail, $id) {
     $trail->parent('groupmanagement');
     $trail->push('Edit', url('/admin/group-management/edit', $id));
 });
-
+//FILTER
 Breadcrumbs::for ('filter', function ($trail) {
 		$trail->parent('dashboard');
 		$trail->push(__('constant.FILTER'), url('/admin/filter'));
@@ -128,9 +130,11 @@ for ('page_edit', function ($trail, $id) {
 
 //SUB_CONTENTS
 Breadcrumbs::
-for ('menu', function ($trail) {
+for ('menu', function ($trail,$parent=null) {
     $trail->parent('dashboard');
     $trail->push(__('constant.MENU'), url('/admin/menu'));
+	if($parent!=null)
+	$trail->push(__('constant.FOOTER'), url('/admin/menu'));
 }) ;
 Breadcrumbs::
 for ('menu_list', function ($trail) {
@@ -251,6 +255,22 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
 });
 
 //EVENT
+Breadcrumbs::
+for ('front_resource', function ($trail) {
+	$trail->parent('front_home');
+    $trail->push(__('constant.RESOURCES'), url('#'));
+}) ;
+Breadcrumbs::
+for ('front_report_listing', function ($trail) {
+	$trail->parent('front_resource');
+    $trail->push(__('constant.TOPICAL_REPORTS'), url('/topical-reports'));
+}) ;
+Breadcrumbs::
+for ('front_event_listing', function ($trail) {
+	$trail->parent('front_resource');
+    $trail->push(__('constant.UPCOMING_EVENT'), url('/events'));
+}) ;
+
 Breadcrumbs::
 for ('event', function ($trail) {
     $trail->parent('dashboard');

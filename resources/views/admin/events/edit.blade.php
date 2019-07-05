@@ -26,7 +26,7 @@
                 </div></div></div>
                 <div class="form-group">
                     <div class="row"><label class='col-sm-2 control-label'>Event Date:</label>
-<div class="col-sm-10"><input type="text" class="form-control datepicker" name="event_date" id="event_date" value="{{  $event->event_date  }}">
+<div class="col-sm-10"><input type="text" class="form-control pick_date_time" name="event_date" id="event_date" value="{{  $event->event_date  }}">
                 </div></div></div>
                 <div class="form-group">
                     <div class="row"><label class='col-sm-2 control-label' for="contents">Description :</label>
@@ -46,16 +46,9 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="event_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                </div></div>
-                                 @if(isset($event->event_image) && ($event->event_image != ''))
-                                        <div class=" col-sm-2">
-                                            <div class="attachment-block clearfix">
-                                                <img class="attachment-img" src="{!! asset($event->event_image) !!}"
-                                                     alt="Event Image">
-                                            </div>
-                                        </div>
-                                    @endif
+                                </div>
+<img id="holder" @if($event->event_image!="") src="{{url($event->event_image)}}" @endif  style="margin-top:15px;max-height:100px;">                                </div>
+                                 
                                 </div>
                             </div>
                 <div class="form-group">
