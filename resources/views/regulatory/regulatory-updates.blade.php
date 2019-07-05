@@ -3,6 +3,7 @@
 @section('content')
 <div id="toppage" class="page">
     <div class="main-wrap">
+        @include('inc.banner');
         @include('inc.breadcrumb');
         <div class="filter-wrap fw-type">
             <div class="container">
@@ -15,7 +16,7 @@
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
                             <option
-                                data-content='<img src="{{ $country->country_image ?? '#' }}" alt="china" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
+                                data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -208,8 +209,7 @@
             getSearchResult();
         });
 
-        function getSearchResult($option_type) {
-
+        function getSearchResult(option_type) {
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/regulatory-details-search') }}",

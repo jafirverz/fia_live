@@ -48,14 +48,25 @@ class PagesFrontController extends Controller
 
     public function country_information_details()
     {
-        return view('country_information.country-information-details');
+        $slug = 'COUNTRY_INFORMATION_DETAILS';
+        $page = Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+        $banner = Banner::where('page_name', $page->id)->first();
+        return view('country_information.country-information-details', compact('banner'));
     }
 
     public function regulatory_details($slug)
     {
+        $slug = 'REGULATORY_DETAILS';
+        $page = Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+        $banner = Banner::where('page_name', $page->id)->first();
+
         $regulatory = Regulatory::where('slug', $slug)->first();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
-        return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory'));
+        return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', 'banner'));
     }
 
     public function regulatory_details_search()
@@ -100,7 +111,7 @@ class PagesFrontController extends Controller
         ?>
             <div class="item">
                 <div class="box-4">
-                    <figure><img src="images/tempt/flag-korea.jpg" alt="thailand flag" /></figure>
+                    <figure><img src="<?php  echo getFilterCountryImage($value->country_id); ?>" alt="<?php  echo getFilterCountry($value->country_id); ?> flag" /></figure>
                     <div class="content">
                         <h3 class="title"><?php echo $value->title ?></h3>
                         <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |

@@ -5,6 +5,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 @section('content')
 <div id="toppage" class="page">
     <div class="main-wrap">
+        @include('inc.banner');
         @include('inc.breadcrumb');
         <div class="tempt-1">
             <div class="container">
