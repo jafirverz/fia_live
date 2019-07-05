@@ -100,7 +100,7 @@ class PagesFrontController extends Controller
         ?>
             <div class="item">
                 <div class="box-4">
-                    <figure><img src="images/tempt/flag-korea.jpg" alt="thailand flag" /></figure>
+                    <figure><img src="<?php  echo getFilterCountryImage($value->country_id); ?>" alt="<?php  echo getFilterCountry($value->country_id); ?> flag" /></figure>
                     <div class="content">
                         <h3 class="title"><?php echo $value->title ?></h3>
                         <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |

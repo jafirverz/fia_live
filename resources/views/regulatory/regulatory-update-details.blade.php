@@ -8,7 +8,7 @@
         <div class="container space-1">
             <div class="tb-col action-wrap-1">
                 <div class="col">
-                    <a class="fas fa-angle-double-left lk-back" href="updates.html">Back</a>
+                    <a class="fas fa-angle-double-left lk-back" href="{{ url('regulatory-updates') }}">Back</a>
                 </div>
                 <div class="col">
                     <a href="#" class="btn-4">EXPORT <i class="fas fa-file-export"></i></a>
