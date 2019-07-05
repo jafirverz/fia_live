@@ -15,7 +15,7 @@
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
                             <option
-                                data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
+                                data-content='<img src="{{ $country->country_image ?? '#' }}" alt="china" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="item  @if($regulatory_highlight->main_highlight) w-1 @endif">
                         @if($regulatory_main_highlight)
                         <div class="box-4">
-                            <figure><img src="images/tempt/flag-laos.jpg" alt="Laos flag" /></figure>
+                            <figure><img src="{{ getFilterCountryImage($regulatory_main_highlight->country_id) }}" alt="Laos flag" /></figure>
                             <div class="content">
                                 <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
                                 <p class="date"><span
@@ -144,7 +144,7 @@
             @foreach ($regulatory as $value)
             <div class="item">
                 <div class="box-4">
-                    <figure><img src="images/tempt/flag-korea.jpg" alt="thailand flag" /></figure>
+                    <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
                     <div class="content">
                         <h3 class="title">{{ $value->title }}</h3>
                         <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
@@ -174,7 +174,7 @@
             $("select[name='country[]']").val('Singapore');
             $("select[name='month'], select[name='year'], select[name='topic'], select[name='stage']")
                 .val('').selectpicker('refresh');
-            getSearchResult();
+            getSearchResult('clear');
         });
 
         var country_array = [];
@@ -208,7 +208,7 @@
             getSearchResult();
         });
 
-        function getSearchResult() {
+        function getSearchResult($option_type) {
 
             $.ajax({
                 type: 'GET',
@@ -219,6 +219,7 @@
                     year : year_array,
                     topic : topic_array,
                     stage : stage_array,
+                    option_type : option_type,
                     _token: CSRF_TOKEN,
                 },
                 cache: false,
