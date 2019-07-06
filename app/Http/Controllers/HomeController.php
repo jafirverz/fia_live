@@ -30,7 +30,7 @@ class HomeController extends Controller
             ->where('pages.status', 1)
             ->first();
 		$banners = Banner::where('page_name', $page->id)->get();	
-		$regulatories = Regulatory::all();
+		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
 }

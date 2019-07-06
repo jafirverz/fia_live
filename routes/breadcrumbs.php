@@ -202,11 +202,13 @@ Breadcrumbs::for('system-setting-edit', function ($trail, $id) {
 Breadcrumbs::for('roles-and-permission', function ($trail) {
 	$trail->parent('dashboard');
     $trail->push('Roles and Permission', url('/admin/roles-and-permission'));
+	
 });
 
 Breadcrumbs::for('create-roles-and-permission', function ($trail) {
 	$trail->parent('dashboard');
-    $trail->push('Roles and Permission', url('/admin/roles-and-permission/create'));
+    $trail->push('Roles and Permission', url('/admin/roles-and-permission'));
+	$trail->push(__('constant.CREATE'), url('/admin/roles-and-permission/create'));
 });
 
 Breadcrumbs::for('edit-roles-and-permission', function ($trail, $id) {

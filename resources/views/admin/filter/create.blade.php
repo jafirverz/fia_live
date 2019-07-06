@@ -51,10 +51,10 @@
                                     </a>
                                 </span>
                                 <input id="thumbnail" class="form-control" type="text" name="country_image">
-                                <img id="holder" style="margin-top:15px;max-height:100px;">
+                                
                             
                             
-                            </div>
+                            </div><img id="holder" style="margin-top:15px;max-height:100px;">
                            
              </div>
                     </div>

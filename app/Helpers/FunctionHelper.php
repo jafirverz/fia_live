@@ -166,17 +166,21 @@ if (!function_exists('getTopics')) {
         }
     }
 
-	function get_menu_has_child($parent=0,$type=1)
+	
+	function get_menu_has_child($parent=0,$type=1,$page_id="")
+
 	{
 		$string=[];
 		$menus= Menu::where('menus.parent' , $parent)
 			->where('menus.menu_type', $type)
 			->select('menus.*')
+			->orderBy('view_order', 'asc')
             ->get();
 
 		if($menus->count()>0)
 		{
 			$string[]='<ul>';
+			$sel='';
 				foreach($menus as $menu)
 				{
 				 $link=create_menu_link($menu);
@@ -184,7 +188,13 @@ if (!function_exists('getTopics')) {
 				 $target='target="_blank"';
 				 else
 				 $target="";
-				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
+
+				 if($page_id==$menu->page_id)
+				 $sel='class="active"';
+				 else
+				 $sel='';
+				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+
 				  if(has_child_menu($menu->id)>0)
 				  {
 
@@ -218,12 +228,15 @@ if (!function_exists('getTopics')) {
 
     }
 
-	function get_parent_menu($parent=0,$type=1)
+	
+	function get_parent_menu($parent=0,$type=1,$page_id="")
+
 	{
 		$string=[];
 		$menus= Menu::where('menus.parent' , $parent)
 			->where('menus.menu_type', $type)
 			->select('menus.*')
+			->orderBy('view_order', 'asc')
             ->get();
 
 		if($menus->count()>0)
@@ -236,8 +249,16 @@ if (!function_exists('getTopics')) {
 				 $target='target="_blank"';
 				 else
 				 $target="";
-				 $string[]='<li><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
-				 $string[]='</li>';
+
+				 
+				 if($page_id==$menu->page_id)
+				 $sel='class="active"';
+				 else
+				 $sel='';
+				 
+				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+				 $string[]='</li>';	 
+				
 
 				}
 			$string[]='</ul>';

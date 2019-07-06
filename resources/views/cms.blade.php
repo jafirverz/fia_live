@@ -2,7 +2,7 @@
 
 @section('content')
             <div class="main-wrap">   
-				@include('inc.banner');
+				@include('inc.banner')
 				<div class="container space-1">
 					
 						<a class="fas fa-angle-double-left lk-back" href="">Back</a>

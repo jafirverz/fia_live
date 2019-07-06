@@ -100,7 +100,6 @@
 				</div>
 				<div class="breadcrumb-wrap">
 					<div class="container">
-						
                         @if (isset($breadcrumbs) && count($breadcrumbs))
                             <ul class="breadcrumb">
                                 @foreach ($breadcrumbs as $breadcrumb)
