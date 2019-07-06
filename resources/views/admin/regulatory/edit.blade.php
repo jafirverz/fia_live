@@ -31,13 +31,13 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('agencyagency_responsible') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('agency_responsible') ? ' has-error' : '' }}">
                                 <label for="">Agency Responsible</label>
-                                <input type="text" name="agencyagency_responsible" class="form-control"
-                                    placeholder="Enter agency responsible" value="{{ $regulatory->agencyagency_responsible }}">
-                                @if ($errors->has('agencyagency_responsible'))
+                                <input type="text" name="agency_responsible" class="form-control"
+                                    placeholder="Enter agency responsible" value="{{ $regulatory->agency_responsible }}">
+                                @if ($errors->has('agency_responsible'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('agencyagency_responsible') }}</strong>
+                                    <strong>{{ $errors->first('agency_responsible') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -95,6 +95,22 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group{{ $errors->has('stage_id') ? ' has-error' : '' }}">
+                                <label for="">Stage</label>
+                                <select name="stage_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">-- Select --</option>
+                                    @if($stages)
+                                    @foreach ($stages as $stage)
+                                    <option value="{{ $stage->id }}" @if($stage->id==$regulatory->stage_id) selected @endif>{{ $stage->tag_name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('stage_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('stage_id') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                             <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                                 <label for="">Country</label>
                                 <select name="country_id" class="form-control select2" style="width: 100%;">
@@ -111,9 +127,6 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                    <label class="checkbox-inline"><input type="checkbox" name="highlight" value="1" @if ($regulatory->highlight==1) checked @endif>Highlight</label>
-                                </div>
                         </div>
                         <!-- /.col -->
                     </div>

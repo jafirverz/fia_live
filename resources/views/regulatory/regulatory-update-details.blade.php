@@ -4,18 +4,19 @@
 <div id="toppage" class="page">
 
     <div class="main-wrap">
+        @include('inc.banner');
         @include('inc.breadcrumb');
         <div class="container space-1">
             <div class="tb-col action-wrap-1">
                 <div class="col">
-                    <a class="fas fa-angle-double-left lk-back" href="updates.html">Back</a>
+                    <a class="fas fa-angle-double-left lk-back" href="{{ url('regulatory-updates') }}">Back</a>
                 </div>
                 <div class="col">
                     <a href="#" class="btn-4">EXPORT <i class="fas fa-file-export"></i></a>
                 </div>
             </div>
             <div class="intro-2">
-                <h1 class="title-1 text-center space-2"><img src="images/tempt/flag-korea.jpg" alt="korea" /> {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                <h1 class="title-1 text-center space-2"><img src="{{ getFilterCountryImage($regulatory->country_id) }}" alt="{{ getFilterCountry($regulatory->country_id) }}" /> {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
                 <table>
                     <tbody>
                         <tr>
@@ -57,8 +58,8 @@
                     <a class="head-box head-tb" data-height="0" href="#update-{{ ($key+1) }}">
                         <span class="tb-col break-640">
                             <span class="col">{{ $value->title }}</span>
-                            <span class="col w-1">Draft</span>
-                            <span class="col w-2">1 Feb 2018</span>
+                            <span class="col w-1">{{ getFilterStage($value->stage_id) }}</span>
+                            <span class="col w-2">{{ $value->updated_at->format('d M Y') }}</span>
                         </span>
                     </a>
                     <div class="content-box" id="update-{{ ($key+1) }}">

@@ -27,11 +27,14 @@ class RegulatoryController extends Controller
         $subtitle = 'Index';
 
         $regulatories = Regulatory::all();
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
-        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
+        $countries = getFilterData(1);
+        $topics = getFilterData(2);
+        $stages = getFilterData(3);
 
-        return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics'));
+        return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,10 +47,11 @@ class RegulatoryController extends Controller
         $subtitle = 'Create';
 
         $regulatories = Regulatory::all()->where('parent_id', 0);
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
-        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
+        $countries = getFilterData(1);
+        $topics = getFilterData(2);
+        $stages = getFilterData(3);
 
-        return view('admin.regulatory.create', compact('title', 'subtitle', 'regulatories', 'countries', 'topics'));
+        return view('admin.regulatory.create', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
     }
 
     /**
@@ -61,21 +65,22 @@ class RegulatoryController extends Controller
         //dd($request->highlight);
         $request->validate([
             'title'  =>  'required|unique:regulatories,title',
-            'agencyagency_responsible' =>  'required',
+            'agency_responsible' =>  'required',
             'date_of_regulation_in_force'   =>  'required',
             'topic_id'  =>  'required',
+            'stage_id'  =>  'required',
             'country_id'    =>  'required',
         ]);
 
         $regulatory = new Regulatory();
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->highlight = $request->highlight ?? 0;
-        $regulatory->agencyagency_responsible = $request->agencyagency_responsible;
+        $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $request->parent_id;
         $regulatory->topic_id = json_encode($request->topic_id);
+        $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;
         $regulatory->save();
 
@@ -106,10 +111,11 @@ class RegulatoryController extends Controller
 
         $regulatories = Regulatory::all()->where('parent_id', 0)->whereNotIn('id', $id);
         $regulatory = Regulatory::findorfail($id);
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
-        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
+        $countries = getFilterData(1);
+        $topics = getFilterData(2);
+        $stages = getFilterData(3);
 
-        return view('admin.regulatory.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'countries', 'topics'));
+        return view('admin.regulatory.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'countries', 'topics', 'stages'));
     }
 
     /**
@@ -123,21 +129,22 @@ class RegulatoryController extends Controller
     {
         $request->validate([
             'title'  =>  'required|unique:regulatories,title,'.$id.',id',
-            'agencyagency_responsible' =>  'required',
+            'agency_responsible' =>  'required',
             'date_of_regulation_in_force'   =>  'required',
             'topic_id'  =>  'required',
+            'stage_id'  =>  'required',
             'country_id'    =>  'required',
         ]);
 
         $regulatory = Regulatory::findorfail($id);
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->highlight = $request->highlight ?? 0;
-        $regulatory->agencyagency_responsible = $request->agencyagency_responsible;
+        $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $request->parent_id;
         $regulatory->topic_id = json_encode($request->topic_id);
+        $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;
         $regulatory->updated_at = Carbon::now();
         $regulatory->save();
