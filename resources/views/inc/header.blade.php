@@ -22,7 +22,7 @@
                     <a class="btn-1" href="sign-in.html">Sign in</a>
                     <a class="btn-2" href="register.html">Register</a>
                 </div>
-                {!! get_menu_has_child(0,1) !!}
+                {!! get_menu_has_child(0,1,$page->id) !!}
                 <!--<ul>
                     <li class="active"><a href="index.html">Home</a></li>
                     <li><a href="about.html">About us</a></li>

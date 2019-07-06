@@ -87,25 +87,26 @@ if (!function_exists('DummyFunction')) {
                 $main_menu[] = $menu->page_id;
             }
         }
-
+		
         //return $main_menu;
 
         if ($main_menu) {
             $page = Page::where('slug', 'home')->first();
             $breadcrumbs[] = [
                 'slug' => $page->slug,
-                'title' => $page->name,
+                'title' => $page->title,
             ];
             foreach ($main_menu as $values) {
                 if ($values) {
                     $page = Page::find($values);
                     $breadcrumbs[] = [
                         'slug' => $page->slug,
-                        'title' => $page->name,
+                        'title' => $page->title,
                     ];
                 }
             }
         }
+		//dd($breadcrumbs);
         return $breadcrumbs;
     }
 

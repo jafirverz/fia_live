@@ -475,7 +475,7 @@
                                 <div class="content">
                                     <h3 class="title">{{$regulatory->title}}</h3>
                                     <p class="date"><span class="country">{{$regulatory->country_id}}</span> | {{date("F,jY",strtotime($regulatory->created_at))}}</p>
-                                    {!! $regulatory->description !!}
+                                    <p>{!! substr(strip_tags($regulatory->description),0,120) !!}</p>
                                     <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                 </div>
                                 <a class="detail" href="#">View detail</a>

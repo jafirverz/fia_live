@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-5 col-xs-6 col">
                         <h4>Sitemap</h4>
-                        {!! get_parent_menu(0,3) !!}
+                        {!! get_parent_menu(0,3,$page->id) !!}
                         <!--<ul class="links">
                             <li class="active"><a href="index.html">Home</a></li>
                             <li><a href="about.html">About Us</a></li>
@@ -29,7 +29,7 @@
                             <li><a href="privacy-policy.html">Privacy Policy</a></li>
                             <li><a href="temrs.html">Terms and Conditions</a></li>
                         </ul>-->
-                        {!! get_parent_menu(0,4) !!}
+                        {!! get_parent_menu(0,4,$page->id) !!}
                         <h4 class="sp">Follow Us</h4>
                         {!!  setting()->social_link!!}
                     </div>

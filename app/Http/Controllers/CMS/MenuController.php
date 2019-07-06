@@ -256,7 +256,7 @@ class MenuController extends Controller
 		$menu->updated_at = Carbon::now()->toDateTimeString();
         $menu->save();
 
-        return redirect(route('menu.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
+        return redirect(route('menu'))->with('success', __('constant.UPDATED', ['module' => __('constant.MENU')]));
     }
     public function update(Request $request, $id)
     {

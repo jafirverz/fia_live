@@ -46,7 +46,7 @@
 								<div class="tb-col break-720">
 									<div class="col">
 										<h4>Countries which have regulations or draft regulations:</h4>
-										<div class="flag-wrap">{{getCountryImages($report->id)}}</div>
+										<div class="flag-wrap">{!!getCountryImages($report->id)!!}</div>
 									</div>
                                     @if($report->pdf!="")
 									<div class="col">
