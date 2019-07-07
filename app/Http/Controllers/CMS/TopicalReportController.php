@@ -103,6 +103,7 @@ class TopicalReportController extends Controller
 				'country_id'  =>  'required',
                 'topical_id' => 'required',
 				'title' => 'required',
+				'pdf' => 'nullable|mimes:pdf',
                 'description' => 'required'
             ];
 
@@ -193,6 +194,7 @@ class TopicalReportController extends Controller
 				'country_id'  =>  'required',
                 'topical_id' => 'required',
 				'title' => 'required',
+				'pdf' => 'nullable|mimes:pdf',
                 'description' => 'required'
 
             ];

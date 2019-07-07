@@ -7,7 +7,7 @@ use App\Page;
 use Illuminate\Support\Str;
 use App\Banner;
 use App\Regulatory;
-
+use Auth;
 
 class PagesFrontController extends Controller
 {
@@ -21,27 +21,33 @@ class PagesFrontController extends Controller
 
 
 
+
 		 $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
             $banner = Banner::where('page_name', $page->id)->first();
         if(!$page)
         {
+
             return abort(404);
+
         }
+
 
         if($page->slug=='country-information')
         {
             return view('country_information.country-information', compact('banner'));
         }
+
         elseif($page->slug=='regulatory-updates')
         {
             return view('regulatory.regulatory-updates', compact('banner'));
         }
       elseif ($page->page_type == 0) {
 
-		      $banner = Banner::where('page_name', $page->id)->first();
-                return view("cms", compact("page", "banner"));
+              $breadcrumbs = getBreadcrumb($page);
+                return view("cms", compact("page", "banner", "breadcrumbs"));
+
             }
 
     }

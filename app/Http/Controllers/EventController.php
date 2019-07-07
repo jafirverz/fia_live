@@ -34,7 +34,7 @@ class EventController extends Controller
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
-            return redirect(url('/home'))->with('error', __('constant.OPPS'));
+            return abort(404);
         }
 		//dd($page->id);
         $banner = get_page_banner($page->id);
@@ -55,7 +55,7 @@ class EventController extends Controller
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
-            return redirect(url('/home'))->with('error', __('constant.OPPS'));
+            return abort(404);
         }
         $banner = get_page_banner($page->id);
         $data=array('topic'=>"");
@@ -72,7 +72,7 @@ class EventController extends Controller
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
-            return redirect(url('/home'))->with('error', __('constant.OPPS'));
+            return abort(404);
         }
         $banner = get_page_banner($page->id);
 
@@ -127,7 +127,7 @@ class EventController extends Controller
 
 
 
-    public function detail(BreadcrumbsManager $breadcrumbs, $id)
+    public function detail(BreadcrumbsManager $breadcrumbs, $slug)
     {
 
         $page = pageDetails(__('constant.EVENTS_DETAIL_SLUG'));
@@ -136,9 +136,12 @@ class EventController extends Controller
         }
         $title = __('constant.EVENT_DETAIL');
 		$banner = get_page_banner($page->id);
-        $breadcrumbs = $breadcrumbs->generate('front_event_listing');
-		$event = Event::where('id', $id)->first();
-		
+		$slug=str_replace("-"," ",$slug);
+		$breadcrumbs = $breadcrumbs->generate('front_event_detail',strtoupper($slug));
+		$event = Event::where('event_title', strtoupper($slug))->first();
+		if (!$event) {
+           return abort(404);
+        }
 
         //dd($news);
         return view('resources/event-details', compact('title', 'breadcrumbs', 'event',  'page' , 'banner'));

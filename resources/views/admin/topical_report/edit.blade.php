@@ -13,7 +13,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-12">
-                @include('admin.inc.message')
+                <!--@include('admin.inc.message')-->
                         <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
@@ -53,12 +53,12 @@
                                 </span>
                                 @endif
                             </div>
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                 
                     <label class='control-label'>Title:</label>
     <input type="text" class="form-control" name="title" id="title"  value="{{ $topicalReport->title }}">
                
-               @if ($errors->has('topical_id'))
+               @if ($errors->has('title'))
                 <span class="help-block">
                     <strong>{{ $errors->first('title') }}</strong>
                 </span>
@@ -86,22 +86,27 @@
                 </span>
                 @endif 
                  </div><?php */?>
-                <div class="form-group">
+                 <div class="form-group{{ $errors->has('pdf') ? ' has-error' : '' }}">
                             <label for="pdf" class=" control-label">PDF</label>                            
                             <div class="">
                                 <input type="file" name="pdf" class="form-control" placeholder="" />
                                
                             </div>
+                            @if ($errors->has('pdf'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('pdf') }}</strong>
+                </span>
+                @endif
   @if($topicalReport->pdf!="")                         
   <a href='{{ asset($topicalReport->pdf) }}' target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Open PDF in New Tab</a>
   @endif
                         </div>                    
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                 
                     <label class='control-label' for="contents">Description :</label>
 <textarea class="tiny-editor form-control" rows="5" id="description"
                               name="description">{{ $topicalReport->description }}</textarea>
-                  @if ($errors->has('topical_id'))
+                  @if ($errors->has('description'))
                 <span class="help-block">
                                <strong>{{ $errors->first('description') }}</strong>
      </span>

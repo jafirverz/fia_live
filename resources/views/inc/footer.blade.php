@@ -73,15 +73,9 @@
 
             },
             submitHandler: function (form) {
-                if (grecaptcha.getResponse()) {
+				if (grecaptcha.execute()) {
                     form.submit();
-                } else {
-                    $("#cap-response").show();
-                    $('#cap-response').html('Please verify captcha.').show().delay(2000).slideUp();
-                    //alert('Please confirm captcha to proceed');
-                    return false;
                 }
-                return false;
             }
         });
     });
@@ -97,3 +91,6 @@
         });
     });
 </script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  

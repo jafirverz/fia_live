@@ -13,7 +13,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-12">
-                @include('admin.inc.message')
+                <!--@include('admin.inc.message')-->
                         <!-- general form elements -->
                     <!-- /.box-header -->
                     <div class="box box-primary">
@@ -53,7 +53,7 @@
                                 </span>
                                 @endif
                             </div>
-                <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                 
                     <label class='control-label'>Title:</label>
     <input type="text" class="form-control" name="title" id="title"  value="{{ old('title') }}">
@@ -86,12 +86,16 @@
                 </span>
                 @endif 
                  </div>-->
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('pdf') ? ' has-error' : '' }}">
                             <label for="pdf" class=" control-label">PDF</label>                            
-                            <div class="">
+                            
                                 <input type="file" name="pdf" class="form-control" placeholder="" />
                                
-                            </div>
+                            @if ($errors->has('pdf'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('pdf') }}</strong>
+                </span>
+                @endif
                         </div>                    
                 <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
                 

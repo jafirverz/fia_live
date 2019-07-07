@@ -61,8 +61,12 @@ class FilterController extends Controller
        // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $request->validate([
             'filter_name' => 'required|max:255|unique:filters,filter_name,NULL,id,tag_name,'.$request->tag_name,
-            'tag_name' => 'required'
-        ]);
+            'tag_name' => 'required',
+			'country_image' => 'required_if:filter_name,==,1'
+        ],
+    [
+        'country_image.required_if' => 'The :attribute field is required.'
+    ]);
 
         $filter = new Filter;
         $filter->filter_name = $request->filter_name;

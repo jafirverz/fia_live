@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\DynamicRoute;
 use Illuminate\Support\Facades\Mail;
 use Exception;
-
+use Auth;
 
 
 class ContactController extends Controller
@@ -32,11 +32,13 @@ class ContactController extends Controller
             ->where('pages.status', 1)
             ->first();
 		$banner = Banner::where('page_name', $page->id)->first();	
-
+		if (!$page) {
+		return abort(404);
+		}
         $title = __('constant.CONTACT');
         $breadcrumbs = $breadcrumbs->generate('front_contact');
 
-        return view('contact',compact('page','banner'));
+        return view('contact',compact('page','banner','breadcrumbs'));
     }
 
     public function store(Request $request)
@@ -57,28 +59,19 @@ class ContactController extends Controller
         $contact->save();
 
         //Jafir code.. comment by Nikunj
-       if($request->inquiry_type=='General Inquiry')
+      /* if($request->inquiry_type=='General Inquiry')
             $toEmail = 'inquiry@bgst.edu.sg';
         else if($request->inquiry_type=='Admissions/Academics Inquiry')
             $toEmail = 'registration@bgst.edu.sg';
         else if($request->inquiry_type=='Library Inquiry')
             $toEmail = 'lib@bgst.edu.sg';
-        else if($request->inquiry_type=='Online Education Inquiry')
-            $toEmail = 'registration@bgst.edu.sg';
+        else if($request->inquiry_type=='Online Education Inquiry')*/
+         $toEmail = 'jafir.verz@gmail.com';
 
-        /* $message="";
-        $message.='<table width="100%" border="0" cellpadding="0" cellspacing="0">
-			<tr><td>Name:</td><td>'.$request->contact_name.'</td></tr>
-			<tr><td>Email:</td><td>'.$request->emailid.'</td></tr>
-			<tr><td>Inquiry Type:</td><td>'.$request->inquiry_type.'</td></tr>
-			<tr>Message:<td></td><td>'.$msg.'</td></tr>
-			</table>';
-
-        Mail::to('jafir.verz@gmail.com')->send(new FeedbackMail($message));
         //dd($_REQUEST);
-        return redirect(route('success'))->with('success', __('constant.CREATED', ['module' => __('constant.CONTACT')]));*/
 
-        /*$emailTemplate = $this->emailTemplate(__('constant.CONTACT_US_EMAIL_TEMP_ID'));
+
+        $emailTemplate = $this->emailTemplate(__('constant.CONTACT_US_ADMIN_EMAIL_TEMP_ID'));
 		$emailTemplate_user = $this->emailTemplate(__('constant.CONTACT_US_USER_EMAIL_TEMP_ID'));
         if ($emailTemplate) {
 
@@ -87,8 +80,8 @@ class ContactController extends Controller
             $data['email_sender_name'] = setting()->email_sender_name;
             $data['from_email'] = setting()->from_email;
             $data['subject'] = $emailTemplate->subject;
-            $key = ['{{name}}', '{{phone}}', '{{email}}', '{{inquiry_type}}', '{{message}}'];
-            $value = [$request->contact_name, $request->phone_no, $request->emailid, $request->inquiry_type, $request->message];
+            $key = ['{{name}}',  '{{email}}', '{{enquiry_type}}', '{{message}}'];
+            $value = [$request->name,$request->emailid, $request->enquiry_type, $request->message];
             $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
             $data['contents'] = $newContents;
             
@@ -101,8 +94,8 @@ class ContactController extends Controller
             $data_user['email_sender_name'] = setting()->email_sender_name;
             $data_user['from_email'] = setting()->from_email;
             $data_user['subject'] = $emailTemplate_user->subject;
-            $key_user = ['{{name}}','{{inquiry_type}}'];
-            $value_user = [$request->contact_name,$request->inquiry_type];
+            $key_user = ['{{name}}'];
+            $value_user = [$request->name];
             $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
             $data_user['contents'] = $newContents_user;
             
@@ -117,7 +110,7 @@ class ContactController extends Controller
                 //dd($exception);
                 return redirect(url('/contact-us'))->with('error', __('constant.OPPS'));
 
-            }*/
+            }
         return redirect(url('/thank-you'))->with('success', __('constant.CREATED', ['module' => __('constant.CONTACT')]));
 
     }
