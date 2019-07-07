@@ -136,6 +136,16 @@ for ('menu', function ($trail,$parent=null) {
 	if($parent!=null)
 	$trail->push(__('constant.FOOTER'), url('/admin/menu'));
 }) ;
+
+Breadcrumbs::
+for ('menu_type_edit', function ($trail,$parent=null) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MENU'), url('/admin/menu'));
+	if($parent!=null)
+	$trail->push(__('constant.FOOTER'), url('/admin/menu'));
+	$trail->push(__('constant.EDIT'), url('/admin/menu'));
+}) ;
+
 Breadcrumbs::
 for ('menu_list', function ($trail) {
     $trail->parent('dashboard');
@@ -151,10 +161,16 @@ for ('sub_menu', function ($trail, $menu,$type=null) {
     } else {
     $trail->parent('dashboard');
     $trail->push(__('constant.MENU'), url('/admin/menu'));
-	if($type==1)
-	$trail->push(__('constant.HEADER'), url('/admin/menu-list/'.$type));
-	else
-	$trail->push(__('constant.FOOTER'), url('/admin/menu-list/'.$type));
+		if($type==1)
+		{$trail->push(__('constant.HEADER'), url('/admin/menu-list/'.$type));}
+		else
+		{
+			$trail->push(__('constant.FOOTER'), url('/admin/menu?parent=2'));
+			if($type==3)
+			$trail->push(__('constant.SITEMAP'), url('/admin/menu-list/'.$type));
+			elseif($type==4)
+			$trail->push(__('constant.OTHERS'), url('/admin/menu-list/'.$type));
+		}
     }
     if(!empty($menu)){
         $trail->push($menu->title, route('get-sub-menu', $menu->id));
@@ -271,6 +287,13 @@ Breadcrumbs::
 for ('front_event_listing', function ($trail) {
 	$trail->parent('front_resource');
     $trail->push(__('constant.UPCOMING_EVENT'), url('/events'));
+}) ;
+
+Breadcrumbs::
+for ('front_event_detail', function ($trail,$event_name) {
+	$trail->parent('front_resource');
+    $trail->push(__('constant.UPCOMING_EVENT'), url('/events'));
+	$trail->push($event_name, "#");
 }) ;
 
 Breadcrumbs::

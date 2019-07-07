@@ -20,8 +20,11 @@ return [
 	'NONE' => 'None',
 	'ACTIVATE' => 'Active',
 	'DEACTIVATE' => 'De-Active',
-	'HEADER' => 'Top',
+	'HEADER' => 'Header',
 	'FOOTER' => 'Footer',
+	'SITEMAP' => 'Sitemap',
+	'CONTACT' => 'Contact Us',
+	'OTHERS' => 'Others',
 	'SYSTEM_SETTING' => 'System Setting',
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
     'ROLE' => 'Role',
@@ -36,6 +39,9 @@ return [
 	//PAGE SLUG NAME
 	'EVENTS_DETAIL_SLUG' => 'event-details',
 	'TOPICAL_REPORT_SLUG' => 'topical-reports',
+	//	EMAIL TEMPLATE ID
+	'CONTACT_US_USER_EMAIL_TEMP_ID' => 1,
+	'CONTACT_US_ADMIN_EMAIL_TEMP_ID' => 2,
     //CRUD
     'REMOVED' => ':Module has been removed.',
 	'EMAIL_TEMPLATE_ERROR' => ':Module only editable now.',

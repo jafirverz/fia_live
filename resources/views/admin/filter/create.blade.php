@@ -23,7 +23,7 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="box-body">
                         <div class="form-group">
-<label for="filter_name" class=" control-label">Filter Name</label>                            
+<label for="filter_name" class=" control-label">Filter Name:</label>                            
                                <select  name="filter_name" class="form-control select2"  id="selectpicker">
                                <option value="">Choose One</option>
  						@foreach(get_filter_name() as $k => $v)
@@ -32,17 +32,19 @@
 </select> 
                             </div>
                     <div class="form-group">
-                     <label for="tag_name" class=" control-label">Tag Name</label>
+                     <label for="tag_name" class=" control-label">Tag Name:</label>
                     <input class="form-control" placeholder="" value="{{ old('tag_name') }}" name="tag_name" type="text" id="tag_name">                            
 					</div>
                     
-                    <div class="hide" id="country_image_id">
+                    <div @if(old('filter_name')==1) class="" @else class="hide" @endif id="country_image_id">
+                    
+                    
                     <div class="form-group">
-                    <label for="home_status" class="control-label">Active on map</label>
-                    <input  @if(1 == old('home_status')) checked="checked" @endif name="home_status" type="checkbox" value="1">                            
-                    </div>
+<label class="checkbox-inline"><input  @if(1 == old('home_status')) checked="checked" @endif type="checkbox" name="home_status" value="1"><strong>Active on map</strong></label>
+                            </div>
+                            
                     <div class="form-group">
-                            <label class='control-label' for="">Country Image :</label>
+                            <label class='control-label' for="">Country Image:</label>
                            <div class="input-group">
                                 <span class="input-group-btn">
                                     <a id="country_image" data-input="thumbnail" data-preview="holder"
@@ -59,7 +61,7 @@
              </div>
                     </div>
                         <div class="form-group">
-<label for="status" class="control-label">Status</label>
+<label for="status" class="control-label">Status:</label>
                            
 <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
 						@foreach (inactiveActive() as $key => $value)
