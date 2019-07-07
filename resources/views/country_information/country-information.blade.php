@@ -4,6 +4,7 @@
 <div id="toppage" class="page">
 
     <div class="main-wrap">
+        @include('inc.banner');
         @include('inc.breadcrumb');
         <div class="container space-1 mheight">
             <h1 class="title-1 text-center">Search for Country Information</h1>

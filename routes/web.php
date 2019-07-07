@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 Route::group(['prefix' => 'admin'], function () {
-	
+
 	  Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
   Route::post('/profile/update', 'AdminAuth\ProfileController@update');
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
@@ -55,6 +55,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/regulatory/edit/{id}', 'CMS\RegulatoryController@edit');
     Route::post('/regulatory/update/{id}', 'CMS\RegulatoryController@update');
     Route::post('/regulatory/destroy', 'CMS\RegulatoryController@destroy');
+
+    Route::get('/regulatory/highlight/edit', 'CMS\RegulatoryHighlightController@edit');
+    Route::post('/regulatory/highlight/update', 'CMS\RegulatoryHighlightController@update');
 
     //TOPIC
     Route::get('/topic', 'CMS\TopicController@index');
@@ -176,5 +179,6 @@ Route::post('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
+Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 
-Route::get('/{page}', 'PagesFrontController@index');
+Route::get('/{slug}', 'PagesFrontController@index');

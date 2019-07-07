@@ -7,6 +7,7 @@ return [
 	'DASHBOARD' =>  'Dashboard',
     'COUNTRY_INFORMATION'   =>  'Country Information',
     'REGULATORY'    =>  'Regulatory',
+    'REGULATORY_HIGHLIGHT'  =>  'Regulatory Highlight',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
 	'EMAIL_TEMPLATE' => 'Email Template',
@@ -50,5 +51,9 @@ return [
     'CREATED' => ':Module has been created.',
     'UPDATED' => ':Module has been updated.',
     'GENERATED' => ':Module has been generated.',
-	'MENULIMIT' => ':You can create or active 6 menu items.',
+    'MENULIMIT' => ':You can create or active 6 menu items.',
+
+    //SLUG
+    'COUNTRY_INFORMATION_DETAILS'   =>  'country-information-details',
+    'REGULATORY_DETAILS'    =>  'regulatory-update-details'
 ];

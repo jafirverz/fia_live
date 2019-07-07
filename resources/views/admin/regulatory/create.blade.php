@@ -95,6 +95,22 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group{{ $errors->has('stage_id') ? ' has-error' : '' }}">
+                                <label for="">Stage</label>
+                                <select name="stage_id" class="form-control select2" style="width: 100%;">
+                                    <option value="">-- Select --</option>
+                                    @if($stages)
+                                    @foreach ($stages as $stage)
+                                    <option value="{{ $stage->id }}">{{ $stage->tag_name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('stage_id'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('stage_id') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                             <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                                 <label for="">Country</label>
                                 <select name="country_id" class="form-control select2" style="width: 100%;">
@@ -110,9 +126,6 @@
                                     <strong>{{ $errors->first('country_id') }}</strong>
                                 </span>
                                 @endif
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-inline"><input type="checkbox" name="highlight" value="1">Highlight</label>
                             </div>
                         </div>
                         <!-- /.col -->
