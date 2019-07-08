@@ -33,4 +33,21 @@ class HomeController extends Controller
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
+	
+	 public function search(Request $request)
+    {
+       
+        dd($request);
+        $country = $request->country;
+        $search_content = $request->search_content;
+       
+		$page=Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+		$banners = Banner::where('page_name', $page->id)->get();	
+        
+       
+       return view('search-results',compact('page','banners'));
+
+    }
 }
