@@ -20,7 +20,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('regulatory_create') }}
+        {{ Breadcrumbs::render('regulatory_highlight_edit') }}
     </section>
 
     <!-- Main content -->
