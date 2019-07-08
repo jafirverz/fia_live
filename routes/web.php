@@ -19,6 +19,8 @@
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 Route::group(['prefix' => 'admin'], function () {
 
@@ -180,5 +182,6 @@ Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
+Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 
 Route::get('/{slug}', 'PagesFrontController@index');

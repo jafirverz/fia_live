@@ -2,13 +2,25 @@
     <div class="info">
         <div class="container">
             <div class="tb-col">
+                @if(Auth::check())
+                    <div class="col">
+                        Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, Welcome to <strong>Food Industry Asia!</strong>
+                    </div>
+                    <div class="col text-right">
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn-1">Logout</button>
+                        </form>
+                    </div>
+                @else
                 <div class="col">
                     Hi Guest, Welcome to <strong>Food Industry Asia!</strong>
                 </div>
                 <div class="col text-right">
-                    <a class="btn-1" href="sign-in.html">Sign in</a>
-                    <a class="btn-2" href="register.html">Register</a>
+                    <a class="btn-1" href="{{ url('login') }}">Sign in</a>
+                    <a class="btn-2" href="{{ url('register') }}">Register</a>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -19,8 +31,8 @@
             </div>
             <nav id="menu" class="menu">
                 <div class="mb-btn clearfix">
-                    <a class="btn-1" href="sign-in.html">Sign in</a>
-                    <a class="btn-2" href="register.html">Register</a>
+                    <a class="btn-1" href="{{ url('login') }}">Sign in</a>
+                    <a class="btn-2" href="{{ url('register') }}">Register</a>
                 </div>
                 {!! get_menu_has_child(0,1,$page->id) !!}
                 <!--<ul>

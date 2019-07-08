@@ -4,7 +4,6 @@
 <div id="toppage" class="page">
     <div class="main-wrap">
         @include('inc.banner');
-        @include('inc.breadcrumb');
         <div class="filter-wrap fw-type">
             <div class="container">
                 <div class="cw-1">
@@ -16,7 +15,8 @@
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
                             <option
-                                data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}' value="{{ $country->id }}" > {{ $country->tag_name }}</option>
+                                data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}'
+                                value="{{ $country->id }}"> {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -65,8 +65,7 @@
         <div class="bg-tempt">
             <div class="container space-1">
                 <h1 class="title-1 text-center">Highlights</h1>
-                <div id="list-1" class="masony grid-4" data-num="8" data-load="#btn-load-1">
-
+                <div class="row grid-4">
                     @if(getRegulatoriesHighlight())
                     @php
                     $regulatory_highlight = getRegulatoriesHighlight();
@@ -81,101 +80,121 @@
 
                     $regulatory_main_highlight = getRegulatoryById($regulatory_highlight->main_highlight);
                     @endphp
-                    <div class="item  @if($regulatory_highlight->main_highlight) w-1 @endif">
-                        @if($regulatory_main_highlight)
+                    <div class="col-md-8">
                         <div class="box-4">
-                            <figure><img src="{{ getFilterCountryImage($regulatory_main_highlight->country_id) }}" alt="Laos flag" /></figure>
+                            @if($regulatory_main_highlight)
+                            <figure><img src="{{ getFilterCountryImage($regulatory_main_highlight->country_id) }}"
+                                    alt="{{ getFilterCountry($regulatory_main_highlight->country_id) }}" /></figure>
                             <div class="content">
-                                <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
-                                <p class="date"><span
-                                        class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span>
-                                    | {{ $regulatory_main_highlight->created_at->format('d m Y') }}</p>
-                                {!! Illuminate\Support\Str::limit($regulatory_main_highlight->description, 800) !!}
+                                <div class="text-1">
+                                    <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
+                                    <p class="date"><span
+                                            class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span>
+                                        | {{ $regulatory_main_highlight->created_at->format('d m Y') }}</p>
+                                    {!! Illuminate\Support\Str::limit($regulatory_main_highlight->description, 800) !!}
+                                </div>
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                             </div>
                             <a class="detail"
                                 href="{{ url('regulatory-details', $regulatory_main_highlight->slug) }}">View detail</a>
+                            @endif
                         </div>
-                        @endif
+                        <div class="row eheight">
+                            @for ($i = 0; $i < 2; $i++) @php
+                                $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp <div
+                                class="col-sm-6">
+                                <div class="box-4">
+                                    <figure><img
+                                            src="{{ getFilterCountryImage($regulatory_other_highlight->country_id) }}"
+                                            alt="{{ getFilterCountry($regulatory_other_highlight->country_id) }}" />
+                                    </figure>
+                                    <div class="content">
+                                        <div class="ecol">
+                                            <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
+                                            <p class="date"><span
+                                                    class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
+                                                | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
+                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
+                                            300) !!}
+                                        </div>
+                                        <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                    </div>
+                                    <a class="detail" href="{{ url('regulatory-details', $regulatory_other_highlight->slug) }}">View detail</a>
+                                </div>
+                        </div>
+                        @endfor
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row eheight">
+                        @for ($i = 2; $i < count($other_highlight_array); $i++) @php
+                            $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp
+                            @if($regulatory_other_highlight) <div class="col-md-12 col-sm-6">
+                            <div class="box-4">
+                                <figure><img src="{{ getFilterCountryImage($regulatory_other_highlight->country_id) }}"
+                                        alt="{{ getFilterCountry($regulatory_other_highlight->country_id) }}" />
+                                </figure>
+                                <div class="content">
+                                    <div class="ecol">
+                                        <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
+                                        <p class="date"><span
+                                                class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
+                                            | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
+                                        {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
+                                        !!}
+                                    </div>
+                                    <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                </div>
+                                <a class="detail" href="{{ url('regulatory-details', $regulatory_other_highlight->slug) }}">View detail</a>
+                            </div>
                     </div>
                     @endif
-                    @if($regulatory_highlight)
-                    @php
-
-                    @endphp
-                    @endif
-                    @for ($i = 0; $i < count($other_highlight_array); $i++) @php
-                        $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp <div
-                        class="item">
-                        @if($regulatory_other_highlight)
-                        <div class="box-4">
-
-                            <figure><img src="images/tempt/flag-laos.jpg" alt="Laos flag" /></figure>
-                            <div class="content">
-                                <h3 class="title">{{ $regulatory_other_highlight->title ?? '' }}</h3>
-                                <p class="date"><span class="country"></span>{{ getFilterCountry($regulatory_main_highlight->country_id) }} |
-                                    {{ isset($regulatory_other_highlight->created_at) ?$regulatory_other_highlight->created_at->format('d m Y') : '' }}
-                                </p>
-                                {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description ?? '', 200)
-                                !!}
-                                <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
-                            </div>
-                            <a class="detail"
-                                href="{{ url('regulatory-details', $regulatory_other_highlight->slug ?? '#') }}">View
-                                detail</a>
-
-                        </div>
-                        @endif
+                    @endfor
                 </div>
-                @endfor
-                <!-- no loop this element -->
-                <div class="grid-sizer"></div> <!-- no loop this element -->
+                @endif
             </div>
-            <div class="more-wrap"><button id="btn-load-1" class="btn-4 load-more"> Load more <i
-                        class="fas fa-angle-double-down"></i></button></div>
         </div>
     </div>
-    <div class="container space-1">
-        <h1 class="title-1 text-center">Latest Updates</h1>
-        <div id="list-2" class="masony grid-2" data-num="8" data-load="#btn-load-2">
-            @php
-            $regulatory = getRegulatories();
-            @endphp
-            @if($regulatory)
-            @foreach ($regulatory as $value)
-            <div class="item">
-                <div class="box-4">
-                    <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
-                    <div class="content">
+</div>
+<div class="container space-1 search-results">
+    <h1 class="title-1 text-center">Latest Updates</h1>
+    <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
+        @php
+        $regulatory = getRegulatories();
+        @endphp
+        @if($regulatory)
+        @foreach ($regulatory as $value)
+        <div class="item mbox">
+            <div class="box-4">
+                <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
+                <div class="content">
+                    <div class="ecol">
                         <h3 class="title">{{ $value->title }}</h3>
                         <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
                             {{ $value->created_at->format('M d, Y') }}</p>
                         {!! Illuminate\Support\Str::limit($value->description, 400) !!}
                     </div>
-                    <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
                 </div>
+                <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
             </div>
-            @endforeach
-            @endif
-            <!-- no loop this element -->
-            <div class="grid-sizer"></div> <!-- no loop this element -->
         </div>
-        <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
-                    class="fas fa-angle-double-down"></i></button></div>
+        @endforeach
+        @endif
+        <!-- no loop this element -->
+        <div class="grid-sizer"></div> <!-- no loop this element -->
     </div>
+    <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
+                class="fas fa-angle-double-down"></i></button></div>
+</div>
 </div><!-- //main -->
 
 </div><!-- //page -->
 <script>
-
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("a.lk-back").on("click", function (e) {
             e.preventDefault();
-            $("select[name='country[]']").val('Singapore');
-            $("select[name='month'], select[name='year'], select[name='topic'], select[name='stage']")
-                .val('').selectpicker('refresh');
-            getSearchResult('clear');
+            window.location.reload();
         });
 
         var country_array = [];
@@ -184,27 +203,27 @@
         var topic_array = [];
         var stage_array = [];
 
-        $("select[name='country[]']").on("change", function() {
+        $("select[name='country[]']").on("change", function () {
             country_array.push($(this).val());
             getSearchResult();
         });
 
-        $("select[name='month']").on("change", function() {
+        $("select[name='month']").on("change", function () {
             month_array.push($(this).val());
             getSearchResult();
         });
 
-        $("select[name='year']").on("change", function() {
+        $("select[name='year']").on("change", function () {
             year_array.push($(this).val());
             getSearchResult();
         });
 
-        $("select[name='topic']").on("change", function() {
+        $("select[name='topic']").on("change", function () {
             topic_array.push($(this).val());
             getSearchResult();
         });
 
-        $("select[name='stage']").on("change", function() {
+        $("select[name='stage']").on("change", function () {
             stage_array.push($(this).val());
             getSearchResult();
         });
@@ -213,19 +232,20 @@
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/regulatory-details-search') }}",
-                data  : {
-                    country : country_array,
-                    month : month_array,
-                    year : year_array,
-                    topic : topic_array,
-                    stage : stage_array,
-                    option_type : option_type,
+                data: {
+                    country: country_array,
+                    month: month_array,
+                    year: year_array,
+                    topic: topic_array,
+                    stage: stage_array,
+                    option_type: option_type,
                     _token: CSRF_TOKEN,
                 },
                 cache: false,
                 async: false,
-                success: function(data) {
-                    $("#list-2").html(data);
+                success: function (data) {
+                    $(".search-results").html(data);
+                    $(".bg-tempt").addClass("hide");
                 }
             });
             country_array = [];

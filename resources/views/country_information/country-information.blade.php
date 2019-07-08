@@ -5,7 +5,6 @@
 
     <div class="main-wrap">
         @include('inc.banner');
-        @include('inc.breadcrumb');
         <div class="container space-1 mheight">
             <h1 class="title-1 text-center">Search for Country Information</h1>
             <form action="{{ url('country-information-details') }}?country={{ $_GET['country'] ?? '' }}&category={{ $_GET['category'] ?? '' }}" class="search-wrap-1 clearfix" method="GET">

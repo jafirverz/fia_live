@@ -6,6 +6,7 @@ use App\Menu;
 use App\PermissionAccess;
 use App\CountryInformation;
 use App\RegulatoryHighlight;
+use Illuminate\Support\Arr;
 
 if (!function_exists('getTopics')) {
 
@@ -15,6 +16,18 @@ if (!function_exists('getTopics')) {
      * @param
      * @return
      */
+
+    function CountryList($value = null)
+    {
+        $country_list = DB::table('country')->orderBy('country', 'asc')->get();
+        return $country_list;
+    }
+
+    function salutation()
+    {
+        $array_list = ['Mrs.', 'Mr.', 'Miss.', 'Ms.', 'Mdm.', 'Dr.'];
+        return $array_list;
+    }
 
     function getFilterCountry($id = null)
     {
@@ -166,7 +179,7 @@ if (!function_exists('getTopics')) {
         }
     }
 
-	
+
 	function get_menu_has_child($parent=0,$type=1,$page_id="")
 
 	{
@@ -193,7 +206,7 @@ if (!function_exists('getTopics')) {
 				 $sel='class="active"';
 				 else
 				 $sel='';
-				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
+				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
 
 				  if(has_child_menu($menu->id)>0)
 				  {
@@ -228,7 +241,7 @@ if (!function_exists('getTopics')) {
 
     }
 
-	
+
 	function get_parent_menu($parent=0,$type=1,$page_id="")
 
 	{
@@ -250,15 +263,15 @@ if (!function_exists('getTopics')) {
 				 else
 				 $target="";
 
-				 
+
 				 if($page_id==$menu->page_id)
 				 $sel='class="active"';
 				 else
 				 $sel='';
-				 
-				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';	
-				 $string[]='</li>';	 
-				
+
+				 $string[]='<li '.$sel.'><a '.$target.' href="'.$link.'">'.$menu->title.'</a>';
+				 $string[]='</li>';
+
 
 				}
 			$string[]='</ul>';

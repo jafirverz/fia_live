@@ -24,14 +24,14 @@ class ContactController extends Controller
 
     public function index(BreadcrumbsManager $breadcrumbs,$slug='contact-us')
     {
-        
+
         /*if (!$page) {
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
         }*/
         $page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
-		$banner = Banner::where('page_name', $page->id)->first();	
+		$banner = Banner::where('page_name', $page->id)->first();
 		if (!$page) {
 		return abort(404);
 		}
@@ -84,9 +84,9 @@ class ContactController extends Controller
             $value = [$request->name,$request->emailid, $request->enquiry_type, $request->message];
             $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
             $data['contents'] = $newContents;
-            
+
         }
-		
+
 		if ($emailTemplate_user) {
 
             $data_user = [];
@@ -98,10 +98,10 @@ class ContactController extends Controller
             $value_user = [$request->name];
             $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
             $data_user['contents'] = $newContents_user;
-            
+
         }
-		
-		
+
+
 		try {
 				$mail = Mail::to($toEmail)->send(new AdminSideMail($data));
 				$mail_user = Mail::to($request->emailid)->send(new UserSideMail($data_user));
