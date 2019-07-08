@@ -44,6 +44,12 @@ Breadcrumbs::for('regulatory_edit', function ($trail, $id) {
     $trail->parent('regulatory');
     $trail->push('Edit', url('/admin/regulatory/edit', $id));
 });
+
+Breadcrumbs::for('regulatory_highlight_edit', function ($trail) {
+    $trail->parent('regulatory');
+    $trail->push('Highlight', url('/admin/regulatory/highlight/edit'));
+});
+
 Breadcrumbs::
 for ('admin_profile', function ($trail) {
     $trail->parent('dashboard');
@@ -218,7 +224,7 @@ Breadcrumbs::for('system-setting-edit', function ($trail, $id) {
 Breadcrumbs::for('roles-and-permission', function ($trail) {
 	$trail->parent('dashboard');
     $trail->push('Roles and Permission', url('/admin/roles-and-permission'));
-	
+
 });
 
 Breadcrumbs::for('create-roles-and-permission', function ($trail) {

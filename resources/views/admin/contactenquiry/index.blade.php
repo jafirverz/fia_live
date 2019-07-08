@@ -33,7 +33,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        @if ($contact_enquiry)
+                                        @foreach ($contact_enquiry as $item)
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->emailid }}</td>
+                                            <td>{{ $item->enquiry_type }}</td>
+                                            <td>{{ $item->message }}</td>
+                                            <td>{{ $item->created_at->format('d M, Y H:i A') }}</td>
+                                            <td>{{ $item->updated_at->format('d M, Y H:i A') }}</td>
+                                        @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
