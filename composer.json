@@ -12,6 +12,7 @@
         "barryvdh/laravel-cors": "^0.11.3",
         "barryvdh/laravel-debugbar": "^3.2",
         "browner12/helpers": "^2.1",
+        "cedextech/trait-generator": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
         "fideloper/proxy": "^4.0",
         "hesto/multi-auth": "^2.0",
@@ -21,6 +22,7 @@
         "spatie/laravel-activitylog": "^3.2",
         "spatie/laravel-permission": "^2.37",
         "spatie/laravel-sitemap": "^5.2",
+        "srmklive/paypal": "~1.0",
         "unisharp/laravel-filemanager": "^1.9",
         "yadahan/laravel-authentication-log": "^1.1"
     },
