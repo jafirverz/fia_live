@@ -26,6 +26,7 @@ class PagesFrontController extends Controller
             ->where('pages.status', 1)
             ->first();
             $banner = Banner::where('page_name', $page->id)->first();
+            $breadcrumbs = getBreadcrumb($page);
         if(!$page)
         {
 
@@ -36,16 +37,16 @@ class PagesFrontController extends Controller
 
         if($page->slug=='country-information')
         {
-            return view('country_information.country-information', compact('banner'));
+            return view('country_information.country-information', compact("page", "banner", "breadcrumbs"));
         }
 
         elseif($page->slug=='regulatory-updates')
         {
-            return view('regulatory.regulatory-updates', compact('banner'));
+            return view('regulatory.regulatory-updates', compact("page", "banner", "breadcrumbs"));
         }
       elseif ($page->page_type == 0) {
 
-              $breadcrumbs = getBreadcrumb($page);
+
                 return view("cms", compact("page", "banner", "breadcrumbs"));
 
             }
@@ -59,7 +60,8 @@ class PagesFrontController extends Controller
             ->where('pages.status', 1)
             ->first();
         $banner = Banner::where('page_name', $page->id)->first();
-        return view('country_information.country-information-details', compact('banner'));
+        $breadcrumbs = getBreadcrumb($page);
+        return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
     public function regulatory_details($slug)
@@ -69,10 +71,11 @@ class PagesFrontController extends Controller
             ->where('pages.status', 1)
             ->first();
         $banner = Banner::where('page_name', $page->id)->first();
+        $breadcrumbs = getBreadcrumb($page);
 
         $regulatory = Regulatory::where('slug', $slug)->first();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
-        return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', 'banner'));
+        return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
     }
 
     public function regulatory_details_search()
