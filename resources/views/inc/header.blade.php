@@ -34,7 +34,7 @@
                     <a class="btn-1" href="{{ url('login') }}">Sign in</a>
                     <a class="btn-2" href="{{ url('register') }}">Register</a>
                 </div>
-                {!! get_menu_has_child(0,1,$page->id) !!}
+                {!! get_menu_has_child(0,1, isset($page) ? $page->id : null) !!}
                 <!--<ul>
                     <li class="active"><a href="index.html">Home</a></li>
                     <li><a href="about.html">About us</a></li>
