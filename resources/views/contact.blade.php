@@ -10,7 +10,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-md-push-6">
-                            <form name="contact" class="form-type form-ani contact-form" method="post" action="{{ url('/contact-store')}}">
+                            <form id="contact" name="contact" class="form-type form-ani contact-form" method="post" action="{{ url('/contact-store')}}">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 								<div class="inrow">
 									<span><input name="name" type="text" class="form-control" /></span>
@@ -32,7 +32,16 @@
 									<span><textarea name="message" cols="30" rows="7" class="form-control"></textarea></span>
 									<label><span class="required">*</span> Message</label>
 								</div>	
-								<div class="captcha"><img src="images/tempt/captcha.png" alt="" /></div>
+								<div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="google-recaptcha">
+                                    <div class="g-recaptcha" data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                    <input type="hidden" title="Please verify this" class="required" name="keycode" id="keycode">
+                                    <div id="cap-response" style="display:none; color:#F00;"></div>
+
+                                </div>
+                            </div>
+                        </div>
 								<button type="submit" class="btn-2">SUBMIT ENQUIRY</button>
 							</form>
 						</div>
@@ -43,6 +52,6 @@
 				</div>
                 
             </div><!-- //main -->
-            
+      
 
 @endsection

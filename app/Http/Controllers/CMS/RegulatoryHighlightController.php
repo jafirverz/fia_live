@@ -18,7 +18,7 @@ class RegulatoryHighlightController extends Controller
     public function edit()
     {
         $title = __('constant.REGULATORY_HIGHLIGHT');
-        $subtitle = 'Edit';
+        $subtitle = 'Highlight';
 
         $regulatories = Regulatory::all();
         $regulatory_highlight = RegulatoryHighlight::first();

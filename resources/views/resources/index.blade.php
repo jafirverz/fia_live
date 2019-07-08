@@ -54,7 +54,8 @@
 									</div>
 								</div>
 							</div>
-							<a href="{{url('event/details/'.$event->id)}}" class="more">Read more</a>
+                            @php $event_title=str_replace(" ","-",$event->event_title);@endphp
+							<a href="{{url('event/'.strtolower($event_title))}}" class="more">Read more</a>
 						</div>
                         @endforeach
 						

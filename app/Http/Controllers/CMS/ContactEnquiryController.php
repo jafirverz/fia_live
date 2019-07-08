@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Contact;
 
 class ContactEnquiryController extends Controller
 {
@@ -21,8 +22,9 @@ class ContactEnquiryController extends Controller
     {
         $title = __('constant.CONTACTENQUIRY');
         $subtitle = 'Index';
+        $contact_enquiry = Contact::all();
 
-        return view('admin.contactenquiry.index', compact('title', 'subtitle'));
+        return view('admin.contactenquiry.index', compact('title', 'subtitle', 'contact_enquiry'));
     }
 
     /**

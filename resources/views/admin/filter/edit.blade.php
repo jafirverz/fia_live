@@ -42,12 +42,10 @@
  
                         </div>
                         <div class="form-group @if($filter->filter_name!=1) hide else '' @endif" id="country_image_id">
+                        
                         <div class="form-group">
-                            <label for="home_status" class="control-label">Active on map</label>
-                            <div class="">
-						<input  name="home_status" @if(1 == $filter->home_status) checked="checked" @endif  type="checkbox" value="1">                            
+<label class="checkbox-inline"><input  @if(1 == $filter->home_status) checked="checked" @endif type="checkbox" name="home_status" value="1"><strong>Active on map</strong></label>
                             </div>
-                        </div>
                         <div class="form-group">
                                 <label class='control-label' for="">Country Image :</label>
                                <div class="input-group">

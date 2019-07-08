@@ -9,7 +9,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('regulatory_create') }}
+        {{ Breadcrumbs::render('regulatory_edit', $regulatory->id) }}
     </section>
 
     <!-- Main content -->

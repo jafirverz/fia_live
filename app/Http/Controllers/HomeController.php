@@ -5,7 +5,7 @@ use App\Page;
 use App\Banner;
 use App\Regulatory;
 use Illuminate\Http\Request;
-
+use Auth;
 class HomeController extends Controller
 {
     /**

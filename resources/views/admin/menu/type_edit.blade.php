@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
             {{ $title }}
-        </h1>{{ Breadcrumbs::render('menu') }}
+        </h1>{{ Breadcrumbs::render('menu_type_edit') }}
     </section>
 
     <!-- Main content -->
