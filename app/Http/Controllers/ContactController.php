@@ -12,15 +12,18 @@ use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\DynamicRoute;
+use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
 use Exception;
+use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 use Auth;
 
 
 class ContactController extends Controller
 {
-    //use DynamicRoute;
-    //use GetEmailTemplate;
+    use DynamicRoute;
+    use GetEmailTemplate;
 
     public function index(BreadcrumbsManager $breadcrumbs,$slug='contact-us')
     {
