@@ -143,6 +143,12 @@ if (!function_exists('getTopics')) {
         }
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
+	
+	function replaceStrByValue($key, $value, $contents)
+    {
+        $newContents = str_replace($key, $value, $contents);
+        return $newContents;
+    }
 
     function getFilterCategory()
     {
