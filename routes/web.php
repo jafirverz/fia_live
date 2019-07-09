@@ -183,5 +183,6 @@ Route::get('/country-information-details', 'PagesFrontController@country_informa
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
+Route::get('/search-results', 'HomeController@search');
 
 Route::get('/{slug}', 'PagesFrontController@index');

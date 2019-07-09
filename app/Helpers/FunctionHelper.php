@@ -130,6 +130,18 @@ if (!function_exists('getTopics')) {
 	  else
 	  return "";
 	}
+	
+	
+	function getAllCountry()
+	{
+	  
+	  $country = Filter::where('filters.filter_name',1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+
+	  if(isset($country) && $country->count()>0)
+	  return $country;
+	  else
+	  return "";
+	}
 
     function getFilterStage($id = null)
     {
@@ -143,6 +155,12 @@ if (!function_exists('getTopics')) {
             return '-';
         }
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+    }
+	
+	function replaceStrByValue($key, $value, $contents)
+    {
+        $newContents = str_replace($key, $value, $contents);
+        return $newContents;
     }
 
     function getFilterCategory()

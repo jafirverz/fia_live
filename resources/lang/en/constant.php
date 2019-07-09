@@ -44,6 +44,7 @@ return [
 	'CONTACT_US_USER_EMAIL_TEMP_ID' => 1,
     'CONTACT_US_ADMIN_EMAIL_TEMP_ID' => 2,
     'STUDENT_VERIFICATION'  =>  3,
+
     //CRUD
     'REMOVED' => ':Module has been removed.',
 	'EMAIL_TEMPLATE_ERROR' => ':Module only editable now.',
