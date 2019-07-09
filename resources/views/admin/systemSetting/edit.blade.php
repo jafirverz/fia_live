@@ -61,6 +61,24 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="membership_emailid" class=" control-label">Membership Emailid</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->membership_emailid }}" name="membership_emailid" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="general_emailid" class=" control-label">General Emailid</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->general_emailid }}" name="general_emailid" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="regulatory_emailid" class=" control-label">Regulatory Emailid</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->regulatory_emailid }}" name="regulatory_emailid" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="contact_phone" class=" control-label">Contact No</label>
                             <div class="">
                                  <input class="form-control" placeholder="" value="{{ $systemSetting->contact_phone }}" name="contact_phone" type="text">
@@ -74,12 +92,12 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label for="contact_address" class=" control-label">Company Addresses</label>
                             <div class="">
                                  <textarea class="form-control tiny-editor " name="contact_address">{{ $systemSetting->contact_address }}</textarea>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="form-group">
                             <label for="pagination_limit" class=" control-label">Pagination Limit</label>
                             <div class="">
