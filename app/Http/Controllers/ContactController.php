@@ -22,6 +22,7 @@ use Auth;
 
 class ContactController extends Controller
 {
+
     use DynamicRoute;
     use GetEmailTemplate;
 
@@ -73,9 +74,9 @@ class ContactController extends Controller
 
         //dd($_REQUEST);
 
-
         $emailTemplate = $this->emailTemplate(__('constant.CONTACT_US_ADMIN_EMAIL_TEMP_ID'));
 		$emailTemplate_user = $this->emailTemplate(__('constant.CONTACT_US_USER_EMAIL_TEMP_ID'));
+
         if ($emailTemplate) {
 
             $data = [];
@@ -110,7 +111,7 @@ class ContactController extends Controller
 				$mail_user = Mail::to($request->emailid)->send(new UserSideMail($data_user));
 
             } catch (Exception $exception) {
-                //dd($exception);
+                dd($exception);
                 return redirect(url('/contact-us'))->with('error', __('constant.OPPS'));
 
             }
