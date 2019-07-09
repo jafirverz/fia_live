@@ -341,4 +341,5 @@ for ('topical_report_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/topical-report/edit' . $id));
 }) ;
 
+//students route start
 
