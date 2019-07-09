@@ -5,7 +5,6 @@
 
     <div class="main-wrap">
         @include('inc.banner');
-        @include('inc.breadcrumb');
         <div class="container space-1">
             <div class="tb-col action-wrap-1">
                 <div class="col">
