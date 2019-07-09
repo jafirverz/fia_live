@@ -23,11 +23,11 @@
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                                 <label for="">Country</label>
-                                <select name="country_id[]" class="form-control select2" style="width: 100%;" multiple>
+                                <select name="country_id" class="form-control select2" style="width: 100%;" >
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}" @if($country_information->country_id) @if(in_array($country->id, json_decode($country_information->country_id))) selected @endif @endif>{{ $country->tag_name }}</option>
+                                    <option value="{{ $country->id }}" @if($country_information->country_id) @if($country->id==$country_information->country_id) selected @endif @endif>{{ $country->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>

@@ -130,11 +130,11 @@ if (!function_exists('getTopics')) {
 	  else
 	  return "";
 	}
-	
-	
+
+
 	function getAllCountry()
 	{
-	  
+
 	  $country = Filter::where('filters.filter_name',1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
 
 	  if(isset($country) && $country->count()>0)
@@ -156,7 +156,7 @@ if (!function_exists('getTopics')) {
         }
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
-	
+
 	function replaceStrByValue($key, $value, $contents)
     {
         $newContents = str_replace($key, $value, $contents);
@@ -447,7 +447,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformationCounter($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', 'like', '%'.$country_id.'%')->where('information_filter_id', $information_filter_id)->count();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->count();
     }
 
     function getCountryInformation($country_id, $information_filter_id)
@@ -464,7 +464,11 @@ if (!function_exists('getTopics')) {
 
     function getFilterId($tag_name)
     {
-        return Filter::where('tag_name', $tag_name)->first()->id;
+        $result = Filter::where('tag_name', $tag_name)->first();
+        if($result)
+        {
+            return $result->id;
+        }
     }
 
 	function getTopicsName($id = null)
