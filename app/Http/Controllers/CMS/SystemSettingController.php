@@ -166,9 +166,11 @@ class SystemSettingController extends Controller
             'email_sender_name' => 'required',
             'from_email' => 'required | email',
             'to_email' => 'required | email',
+			'membership_emailid' => 'required | email',
+			'general_emailid' => 'required | email',
+			'regulatory_emailid' => 'required | email',
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
-            'contact_address' => 'required',
 			'pagination_limit' => 'required',
 			'social_link' => 'required',
 
@@ -183,10 +185,13 @@ class SystemSettingController extends Controller
         $systemSetting->email_sender_name = ucfirst($request->email_sender_name);
         $systemSetting->from_email = $request->from_email;
         $systemSetting->to_email = $request->to_email;
+		$systemSetting->membership_emailid = $request->membership_emailid;
+		$systemSetting->general_emailid = $request->general_emailid;
+		$systemSetting->regulatory_emailid = $request->regulatory_emailid;
         $systemSetting->contact_phone = $request->contact_phone;
         $systemSetting->contact_email = $request->contact_email;
         $systemSetting->contact_fax = $request->contact_fax;
-        $systemSetting->contact_address = $request->contact_address;
+        //$systemSetting->contact_address = $request->contact_address;
         $systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
 		$systemSetting->pagination_limit = $request->pagination_limit;

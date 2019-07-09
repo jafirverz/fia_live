@@ -37,7 +37,23 @@ class HomeController extends Controller
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
-	
+	 public function search_regulatory($slug = 'search-results-regulatory')
+	 {
+		//dd($_GET); 
+		 $country=getCountryId($_GET['country']);
+		 $regulatories = Regulatory::where('country_id', $country)->get();
+		 $page=Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+		if (!$page) {
+            return abort(404);
+        }	
+		
+		$banner = get_page_banner($page->id);
+		//dd($banner->banner_image);
+		$breadcrumbs = getBreadcrumb($page);
+		return view('search-results-regulatory',compact('page','banner','regulatories','breadcrumbs'));
+	}
 	 public function search(Request $request)
     {
        

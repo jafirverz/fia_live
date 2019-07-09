@@ -129,6 +129,17 @@ if (!function_exists('getTopics')) {
 	  else
 	  return "";
 	}
+	
+	function getCountryId($country=null)
+	{
+	  
+	  $country = Filter::where('filters.filter_name',1)->where('tag_name', $country)->first();
+
+	  if(isset($country) && $country->count()>0)
+	  return $country->id;
+	  else
+	  return "";
+	}
 
     function getFilterStage($id = null)
     {
