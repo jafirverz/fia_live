@@ -27,7 +27,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.BANNER');
         $banners = Banner::all();
         return view('admin.banner.index', compact('title', 'banners'));
@@ -40,7 +40,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
         //$viewOrderBanner = Banner::orderBy('view_order', 'DESC')->first();
         $viewOrderBanner = null;
@@ -61,7 +61,7 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
 
         
         $request->validate([
@@ -125,7 +125,7 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $pages = Page::select('id', 'title')->where('status', 1)->get();
         $title = __('constant.EDIT');
         $banner = Banner::findorfail($id);
@@ -141,7 +141,7 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $banner = Banner::findorfail($id);
         
          $request->validate([
@@ -202,7 +202,7 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $banner = Banner::findorfail($id);
         $banner->delete();
 

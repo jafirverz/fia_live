@@ -25,7 +25,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.PAGE');
         $pages = Page::all();
         return view('admin.page.index', compact('title', 'pages'));
@@ -38,7 +38,7 @@ class PageController extends Controller
      */
     public function create()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
         return view('admin.page.create', compact('title'));
@@ -52,7 +52,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
         $request['slug'] = str_slug($request->slug, '-');
         $validatorFields = [
@@ -106,7 +106,7 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $page = Page::findorfail($id);
         return view('admin.page.edit', compact('title', 'page'));
@@ -122,7 +122,7 @@ class PageController extends Controller
     public function update(Request $request, $id)
     {
 
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+          is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $fields = $request->all();
         $request['slug'] = str_slug($request->slug, '-');
         $validatorFields = [
@@ -160,7 +160,7 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $page = Page::findorfail($id);
         $page->delete();
 

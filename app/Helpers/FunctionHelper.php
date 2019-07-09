@@ -179,7 +179,7 @@ if (!function_exists('getTopics')) {
 	function get_modules()
     {
         $modules_array = [
-            'DASHBOARD',  'MENU', 'BANNER',  'PAGE','ROLES_AND_PERMISSION','TOPIC','REGULATORY','EMAIL_TEMPLATE',
+            'DASHBOARD','FILTER',  'MENU', 'BANNER',  'PAGE','EVENT','TOPICAL_REPORT','PAYMENT','COUNTRY_INFORMATION','REGULATORY','CONTACTENQUIRY','GROUPMANAGEMENT','EMAIL_TEMPLATE','ROLES_AND_PERMISSION'
         ];
 
         return $modules_array;

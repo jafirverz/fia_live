@@ -63,13 +63,13 @@
                                             @if ($filter->created_at == null)
                                                 {{$filter->created_at}}
                                             @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($filter->created_at))   !!}
+                                            {{ $filter->created_at->format('d M, Y H:i A') }}
 
                                         </td>
                                         <td>@if ($filter->updated_at == null)
                                                 {{$filter->updated_at}}
                                             @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($filter->updated_at))   !!}
+                                            {{ $filter->updated_at->format('d M, Y H:i A') }}
 
                                         </td>
                                         <td>
