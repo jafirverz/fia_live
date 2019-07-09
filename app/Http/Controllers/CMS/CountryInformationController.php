@@ -62,7 +62,7 @@ class CountryInformationController extends Controller
         ]);
 
         $country_information = new CountryInformation();
-        $country_information->country_id = json_encode($request->country_id);
+        $country_information->country_id = $request->country_id;
         $country_information->information_filter_id = $request->information_filter_id;
         $country_information->information_title = $request->information_title;
         $country_information->information_title_slug = Str::slug($request->information_title, '-');
@@ -117,7 +117,7 @@ class CountryInformationController extends Controller
         ]);
 
         $country_information = CountryInformation::findorfail($id);
-        $country_information->country_id = json_encode($request->country_id);
+        $country_information->country_id = $request->country_id;
         $country_information->information_filter_id = $request->information_filter_id;
         $country_information->information_title = $request->information_title;
         $country_information->information_title_slug = Str::slug($request->information_title, '-');
