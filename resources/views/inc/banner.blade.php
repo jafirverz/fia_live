@@ -37,7 +37,7 @@
 </div>
 @elseif($page->slug=="search-results")
 <div class="bn-inner bg">
-@if(isset($banner) && is_array($banner))
+@if(isset($banner))
 					<img class="bgimg" src="{{asset($banner->banner_image)}}" alt="Search Results" />
 @endif
 					<div class="container">
@@ -79,7 +79,8 @@
 				</div>
 @else
 <div class="bn-inner bg nobg">
-					@if(isset($banner) && is_array($banner))
+
+					@if(isset($banner))
                     <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="{{ $page->title }}" />
                     @endif
 					<div class="container">

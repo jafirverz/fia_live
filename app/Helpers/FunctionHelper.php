@@ -89,47 +89,61 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-    function getTopics($topics)
-    {
-        $topics = Filter::whereIn('id', $topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
-        $names = [];
-        foreach ($topics as $topic) {
-            $names[] = $topic->tag_name;
-        }
-        // dd($names);
-        if (isset($topics) && $topics->count() > 0)
-            return implode(',', $names);
-        else
-            return "";
-    }
 
-    function getCountryImages($id)
-    {
-        $topics = Filter::join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')->where('topical_report_countries.topical_report_id', $id)->where('status', 1)->orderBy('tag_name', 'asc')->get();
-        $names = [];
-        //dd($topics);
-        foreach ($topics as $topic) {
-            if ($topic->country_image != "")
-                $names[] = '<span class="show-tooltip" title="' . $topic->tag_name . '"><img src="' . asset($topic->country_image) . '" alt="' . $topic->tag_name . ' flag" /></span>';
-        }
+	function getTopics($topics)
+	{
+	$topics = Filter::whereIn('id',$topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	  $names=[];
+	  foreach($topics as $topic)
+	  {
+	  $names[]=$topic->tag_name;
+	  }
+	 // dd($names);
+	  if(isset($topics) && $topics->count()>0)
+	  return implode(',',$names);
+	  else
+	  return "";
+	}
 
-        if (isset($names) && count($names) > 0)
-            return join('', $names);
-        else
-            return "";
-    }
+	function getCountryImages($id)
+	{
+	$topics = Filter::join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')->where('topical_report_countries.topical_report_id',$id)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	$names=[];
+	//dd($topics);
+	  foreach($topics as $topic)
+	  {
+	  if($topic->country_image!="")
+	  $names[]='<span class="show-tooltip" title="'.$topic->tag_name.'"><img src="'.asset($topic->country_image).'" alt="'.$topic->tag_name.' flag" /></span>';
+	  }
+
+	  if(isset($names) && count($names)>0)
+	  return join('',$names);
+	  else
+	  return "";
+	}
 
 
-    function getAllCountry()
-    {
+	function getAllCountry()
+	{
 
-        $country = Filter::where('filters.filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+	  $country = Filter::where('filters.filter_name',1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
 
-        if (isset($country) && $country->count() > 0)
-            return $country;
-        else
-            return "";
-    }
+	  if(isset($country) && $country->count()>0)
+	  return $country;
+	  else
+	  return "";
+	}
+	
+	function getCountryId($country=null)
+	{
+	  
+	  $country = Filter::where('filters.filter_name',1)->where('tag_name', $country)->first();
+
+	  if(isset($country) && $country->count()>0)
+	  return $country->id;
+	  else
+	  return "";
+	}
 
     function getFilterStage($id = null)
     {
@@ -143,7 +157,7 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-    function replaceStrByValue($key, $value, $contents)
+	function replaceStrByValue($key, $value, $contents)
     {
         $newContents = str_replace($key, $value, $contents);
         return $newContents;
@@ -427,7 +441,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformationCounter($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', 'like', '%' . $country_id . '%')->where('information_filter_id', $information_filter_id)->count();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->count();
     }
 
     function getCountryInformation($country_id, $information_filter_id)
@@ -444,7 +458,11 @@ if (!function_exists('getTopics')) {
 
     function getFilterId($tag_name)
     {
-        return Filter::where('tag_name', $tag_name)->first()->id;
+        $result = Filter::where('tag_name', $tag_name)->first();
+        if($result)
+        {
+            return $result->id;
+        }
     }
 
     function getTopicsName($id = null)

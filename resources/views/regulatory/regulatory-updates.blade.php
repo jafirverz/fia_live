@@ -62,24 +62,24 @@
                 </div>
             </div>
         </div>
+        @if(getRegulatoriesHighlight())
+        @php
+        $regulatory_highlight = getRegulatoriesHighlight();
+
+        $other_highlight_array = [
+        $regulatory_highlight->other_highlight1,
+        $regulatory_highlight->other_highlight2,
+        $regulatory_highlight->other_highlight3,
+        $regulatory_highlight->other_highlight4,
+        $regulatory_highlight->other_highlight5,
+        ];
+
+        $regulatory_main_highlight = getRegulatoryById($regulatory_highlight->main_highlight);
+        @endphp
         <div class="bg-tempt">
             <div class="container space-1">
                 <h1 class="title-1 text-center">Highlights</h1>
                 <div class="row grid-4">
-                    @if(getRegulatoriesHighlight())
-                    @php
-                    $regulatory_highlight = getRegulatoriesHighlight();
-
-                    $other_highlight_array = [
-                    $regulatory_highlight->other_highlight1,
-                    $regulatory_highlight->other_highlight2,
-                    $regulatory_highlight->other_highlight3,
-                    $regulatory_highlight->other_highlight4,
-                    $regulatory_highlight->other_highlight5,
-                    ];
-
-                    $regulatory_main_highlight = getRegulatoryById($regulatory_highlight->main_highlight);
-                    @endphp
                     <div class="col-md-8">
                         <div class="box-4">
                             @if($regulatory_main_highlight)
@@ -101,8 +101,9 @@
                         </div>
                         <div class="row eheight">
                             @for ($i = 0; $i < 2; $i++) @php
-                                $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp <div
-                                class="col-sm-6">
+                            $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp
+                            <div class="col-sm-6">
+                                @if($regulatory_other_highlight)
                                 <div class="box-4">
                                     <figure><img
                                             src="{{ getFilterCountryImage($regulatory_other_highlight->country_id) }}"
@@ -115,78 +116,79 @@
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
                                                 | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
                                             {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
-                                            300) !!}
+                                            400) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                     </div>
                                     <a class="detail" href="{{ url('regulatory-details', $regulatory_other_highlight->slug) }}">View detail</a>
                                 </div>
-                        </div>
-                        @endfor
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row eheight">
-                        @for ($i = 2; $i < count($other_highlight_array); $i++) @php
-                            $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp
-                            @if($regulatory_other_highlight) <div class="col-md-12 col-sm-6">
-                            <div class="box-4">
-                                <figure><img src="{{ getFilterCountryImage($regulatory_other_highlight->country_id) }}"
-                                        alt="{{ getFilterCountry($regulatory_other_highlight->country_id) }}" />
-                                </figure>
-                                <div class="content">
-                                    <div class="ecol">
-                                        <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
-                                        <p class="date"><span
-                                                class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
-                                            | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
-                                        {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
-                                        !!}
-                                    </div>
-                                    <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
-                                </div>
-                                <a class="detail" href="{{ url('regulatory-details', $regulatory_other_highlight->slug) }}">View detail</a>
+                                @endif
                             </div>
+                            @endfor
+                        </div>
                     </div>
-                    @endif
-                    @endfor
+                    <div class="col-md-4">
+                        <div class="row eheight">
+                            @for ($i = 2; $i < count($other_highlight_array); $i++) @php
+                            $regulatory_other_highlight=getRegulatoryById($other_highlight_array[$i]); @endphp
+                            <div class="col-md-12 col-sm-6">
+                                @if($regulatory_other_highlight)
+                                <div class="box-4">
+
+                                    <figure><img src="{{ getFilterCountryImage($regulatory_other_highlight->country_id) }}"
+                                            alt="{{ getFilterCountry($regulatory_other_highlight->country_id) }}" />
+                                    </figure>
+                                    <div class="content">
+                                        <div class="ecol">
+                                            <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
+                                            <p class="date"><span
+                                                    class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
+                                                | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
+                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
+                                            !!}
+                                        </div>
+                                        <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                    </div>
+                                    <a class="detail" href="{{ url('regulatory-details', $regulatory_other_highlight->slug) }}">View detail</a>
+                                </div>
+                                @endif
+                            </div>
+                            @endfor
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="container space-1 search-results">
+            <h1 class="title-1 text-center">Latest Updates</h1>
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
+                @php
+                $regulatory = getRegulatories();
+                @endphp
+                @if($regulatory)
+                @foreach ($regulatory as $value)
+                <div class="item mbox">
+                    <div class="box-4">
+                        <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
+                        <div class="content">
+                            <div class="ecol">
+                                <h3 class="title">{{ $value->title }}</h3>
+                                <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
+                                    {{ $value->created_at->format('M d, Y') }}</p>
+                                {!! Illuminate\Support\Str::limit($value->description, 400) !!}
+                            </div>
+                        </div>
+                        <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
+                    </div>
+                </div>
+                @endforeach
                 @endif
+                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
+                            class="fas fa-angle-double-down"></i></button></div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container space-1 search-results">
-    <h1 class="title-1 text-center">Latest Updates</h1>
-    <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
-        @php
-        $regulatory = getRegulatories();
-        @endphp
-        @if($regulatory)
-        @foreach ($regulatory as $value)
-        <div class="item mbox">
-            <div class="box-4">
-                <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
-                <div class="content">
-                    <div class="ecol">
-                        <h3 class="title">{{ $value->title }}</h3>
-                        <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
-                            {{ $value->created_at->format('M d, Y') }}</p>
-                        {!! Illuminate\Support\Str::limit($value->description, 400) !!}
-                    </div>
-                </div>
-                <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
-            </div>
-        </div>
-        @endforeach
         @endif
-        <!-- no loop this element -->
-        <div class="grid-sizer"></div> <!-- no loop this element -->
-    </div>
-    <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
-                class="fas fa-angle-double-down"></i></button></div>
-</div>
-</div><!-- //main -->
+    </div><!-- //main -->
 
 </div><!-- //page -->
 <script>
