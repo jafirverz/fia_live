@@ -42,7 +42,7 @@ class TopicalReportController extends Controller
     public function index()
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.TOPICAL_REPORT');
 
         $TopicalReports = TopicalReport::all();
@@ -58,7 +58,7 @@ class TopicalReportController extends Controller
     public function create()
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
 		$topics = Filter::where('filter_name', 2)->where('status', 1)->get();
@@ -71,7 +71,7 @@ class TopicalReportController extends Controller
     public function edit($id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
 
         $topicalReport = TopicalReport::findorfail($id);
@@ -94,7 +94,7 @@ class TopicalReportController extends Controller
     public function update(Request $request, $id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $TopicalReport = TopicalReport::findorfail($id);
 
 
@@ -173,7 +173,7 @@ class TopicalReportController extends Controller
     public function destroy($id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $event = TopicalReport::findorfail($id);
         $event->delete();
         DB::table('topical_report_countries')->where('topical_report_id', $id)->delete();
@@ -189,7 +189,7 @@ class TopicalReportController extends Controller
     public function store(Request $request)
     {
 
-        
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $validatorFields = [
 				'country_id'  =>  'required',
                 'topical_id' => 'required',

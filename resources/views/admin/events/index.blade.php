@@ -48,7 +48,7 @@
                                                         
                                                         <td>
                                                             @if($event->event_date)
-                                                                {{ date('j,F Y',strtotime($event->event_date)) }}
+                                                                {{ date('j,F Y H:i A',strtotime($event->event_date)) }}
                                                             @else
                                                                {{__('constant.NONE')}}
                                                             @endif
@@ -66,13 +66,13 @@
                                                             @if ($event->created_at == null)
                                                                 {{$event->created_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d H:i:s", strtotime($event->created_at))   !!}
+                                                            {{  $event->created_at->format('d M, Y H:i A')   }}
 
                                                         </td>
                                                         <td data-order="{{ $event->updated_at }}">@if ($event->updated_at == null)
                                                                 {{$event->updated_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d H:i:s", strtotime($event->updated_at))   !!}
+                                                            {{  $event->updated_at->format('d M, Y H:i A')   }}
 
                                                         </td>
                                                         <td class="text-center">

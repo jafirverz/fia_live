@@ -27,7 +27,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
 
         $roles = Role::all();
         $admins = Admin::join('roles', 'admins.admin_role', '=', 'roles.id')->select('admins.name as admin_name', 'roles.name as role_name', 'admins.id as admins_id', 'admins.created_at as admin_created_at', 'admins.updated_at as admin_updated_at', 'admins.*', 'roles.*')->get();
@@ -46,7 +46,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
 
         return view('admin.account.create_permission', [
             'page_title' => 'Create',
@@ -62,7 +62,7 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $role = Role::create(['guard_name' => 'admin', 'name' => $request->role_name]);
         DB::table('role_has_permissions')->insert(
             ['permission_id' => $role->id, 'role_id' => $role->id]
@@ -100,7 +100,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
 
         return view('admin.account.edit-roles-and-permission', [
             'page_title' => 'Edit',
@@ -119,7 +119,7 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         foreach ($request->module as $module) {
             $permission = PermissionAccess::where(['role_id'    =>  $id, 'module'   =>  $module])->first();
             $has_permission = PermissionAccess::where(['role_id'    =>  $id, 'module'   =>  $module])->get();
@@ -166,7 +166,7 @@ class PermissionController extends Controller
 
     public function create_roles()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $roles = Role::all();
         $title = "Create Role";
 
@@ -175,7 +175,7 @@ class PermissionController extends Controller
 
     public function store_roles(Request $request)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $request->validate([
             'name'  =>  'required',
             'email' =>  'required|email|unique:admins',
@@ -196,7 +196,7 @@ class PermissionController extends Controller
 
     public function edit_roles($id)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $roles = Role::all();
         $admin = Admin::find($id);
         $title = "Create Role";
@@ -206,7 +206,7 @@ class PermissionController extends Controller
 
     public function update_roles(Request $request, $id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $request->validate([
             'name'  =>  'required',
             'email' =>  'required|email|unique:admins,email,'.$id.',id',
