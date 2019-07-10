@@ -37,6 +37,8 @@ return [
 	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
 	'TOPICAL_REPORTS' => 'Topical Reports',
+	'USER' => 'Users',
+	'MASTER_SETTING' => 'Master Setting',
 	//PAGE SLUG NAME
 	'EVENTS_DETAIL_SLUG' => 'event-details',
 	'TOPICAL_REPORT_SLUG' => 'topical-reports',
@@ -60,4 +62,6 @@ return [
     'REGULATORY_DETAILS'    =>  'regulatory-update-details',
     'REGISTER'  =>  'register',
     'LOGIN' =>  'login',
+
+
 ];
