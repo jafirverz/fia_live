@@ -89,7 +89,6 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-
 	function getTopics($topics)
 	{
 	$topics = Filter::whereIn('id',$topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
@@ -133,10 +132,10 @@ if (!function_exists('getTopics')) {
 	  else
 	  return "";
 	}
-	
+
 	function getCountryId($country=null)
 	{
-	  
+
 	  $country = Filter::where('filters.filter_name',1)->where('tag_name', $country)->first();
 
 	  if(isset($country) && $country->count()>0)

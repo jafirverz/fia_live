@@ -2,20 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c2c3e66-5f78-46bf-97ed-2621719e65d3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/admin/masterSetting/create.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/admin/masterSetting/edit.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/banners/bn-updates_1562669892.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/search-results-regulatory.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CMS/CountryInformationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CMS/CountryInformationController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Helpers/FunctionHelper.php" afterPath="$PROJECT_DIR$/app/Helpers/FunctionHelper.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PayPalController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PayPalController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/breadcrumbs.php" afterPath="$PROJECT_DIR$/routes/breadcrumbs.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/lang/en/constant.php" afterPath="$PROJECT_DIR$/resources/lang/en/constant.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/inc/control-sidebar.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/inc/control-sidebar.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/layout/dashboard.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/layout/dashboard.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/inc/main-sidebar.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/inc/main-sidebar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CMS/SystemSettingController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CMS/SystemSettingController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/inc/banner.blade.php" afterPath="$PROJECT_DIR$/resources/views/inc/banner.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/country_information/country-information-details.blade.php" afterPath="$PROJECT_DIR$/resources/views/country_information/country-information-details.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/country_information/create.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/country_information/create.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/country_information/edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/country_information/edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/systemSetting/edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/systemSetting/edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/home.blade.php" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/regulatory/regulatory-updates.blade.php" afterPath="$PROJECT_DIR$/resources/views/regulatory/regulatory-updates.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="fia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,16 +42,18 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/SystemSettingController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="125.03226">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding>
+                <marker date="1562730289684" expanded="true" signature="5510:5780" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MasterSettingController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MasterSettingController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/MasterSettingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14131898">
+            <state vertical-scroll-proportion="-1.0714285">
               <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
               <folding>
                 <element signature="e#44#72#0#PHP" expanded="true" />
@@ -100,8 +103,8 @@
       <file leaf-file-name="edit.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/admin/systemSetting/edit.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.677419">
-              <caret line="71" column="101" selection-start-line="71" selection-start-column="85" selection-end-line="71" selection-end-column="101" />
+            <state vertical-scroll-proportion="-18.451612">
+              <caret line="89" column="101" selection-start-line="89" selection-start-column="101" selection-end-line="89" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -119,11 +122,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FunctionHelper.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FunctionHelper.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Helpers/FunctionHelper.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.0">
-              <caret line="522" column="36" selection-start-line="522" selection-start-column="31" selection-end-line="522" selection-end-column="36" />
+            <state vertical-scroll-proportion="12.731118">
+              <caret line="443" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
               <folding>
                 <element signature="e#6#25#0#PHP" expanded="true" />
               </folding>
@@ -156,11 +159,11 @@
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/routes/breadcrumbs.php" />
         <option value="$PROJECT_DIR$/app/MasterSetting.php" />
-        <option value="$PROJECT_DIR$/app/Helpers/FunctionHelper.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/inc/control-sidebar.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/masterSetting/create.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/masterSetting/edit.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CMS/MasterSettingController.php" />
+        <option value="$PROJECT_DIR$/app/Helpers/FunctionHelper.php" />
       </list>
     </option>
   </component>
@@ -178,8 +181,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-4" />
     <option name="y" value="-4" />
-    <option name="width" value="1928" />
-    <option name="height" value="1038" />
+    <option name="width" value="1716" />
+    <option name="height" value="918" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -696,7 +699,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1928" height="1038" extended-state="6" />
+    <frame x="-4" y="-4" width="1716" height="918" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2631016" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -905,9 +908,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1562645685780" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1562645685780" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1562645685780" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1562730289788" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1562730289788" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1562730289788" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -933,7 +936,7 @@
         <state vertical-scroll-proportion="-2.7741935">
           <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
           <folding>
-            <element signature="e#44#72#0#PHP" expanded="true" />
+            <element signature="e#44#72#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -943,7 +946,7 @@
         <state vertical-scroll-proportion="-18.451612">
           <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
           <folding>
-            <element signature="e#44#72#0#PHP" expanded="true" />
+            <element signature="e#44#72#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1017,7 +1020,7 @@
         <state vertical-scroll-proportion="-36.580647">
           <caret line="244" column="20" selection-start-line="244" selection-start-column="20" selection-end-line="244" selection-end-column="20" />
           <folding>
-            <element signature="e#40#56#0#PHP" expanded="true" />
+            <element signature="e#40#56#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1080,21 +1083,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Helpers/FunctionHelper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.0">
-          <caret line="522" column="36" selection-start-line="522" selection-start-column="31" selection-end-line="522" selection-end-column="36" />
-          <folding>
-            <element signature="e#6#25#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/SystemSettingController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="125.03226">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding>
+            <marker date="1562730289684" expanded="true" signature="5510:5780" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1116,8 +1111,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/admin/systemSetting/edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.677419">
-          <caret line="71" column="101" selection-start-line="71" selection-start-column="85" selection-end-line="71" selection-end-column="101" />
+        <state vertical-scroll-proportion="-18.451612">
+          <caret line="89" column="101" selection-start-line="89" selection-start-column="101" selection-end-line="89" selection-end-column="101" />
           <folding />
         </state>
       </provider>
@@ -1164,10 +1159,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/MasterSettingController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14131898">
+        <state vertical-scroll-proportion="-1.0714285">
           <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
           <folding>
             <element signature="e#44#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Helpers/FunctionHelper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="12.731118">
+          <caret line="443" column="0" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#25#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
