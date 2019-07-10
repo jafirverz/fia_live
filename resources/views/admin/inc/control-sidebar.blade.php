@@ -11,6 +11,10 @@
             <h3 class="control-sidebar-heading"> <a href="{{ route('system-setting.index') }}">
                         <i class="fa fa-cog"></i> <span>{{ __('constant.SYSTEM_SETTING')}}</span>
                     </a></h3>
+
+            <h3 class="control-sidebar-heading"> <a href="{{ route('master-setting.index') }}">
+                    <i class="fa fa-support"></i> <span>{{ __('constant.MASTER_SETTING')}}</span>
+                </a></h3>
         </div>
         <!-- /.tab-pane -->
     </div>

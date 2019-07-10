@@ -116,4 +116,5 @@
 	 
 
 </script>
+@stack('scripts')
 </html>

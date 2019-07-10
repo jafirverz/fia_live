@@ -14,17 +14,18 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link href="{{ asset('css/plugin.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/plugin.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 </head>
 
 <body>
- <div id="toppage" class="page"> 
+<div id="toppage" class="page">
     @include('inc.header')
     @yield('content')
- </div>
-    @include('inc.footer')
+</div>
+@include('inc.footer')
+@stack('scripts')
 </body>
 
 </html>

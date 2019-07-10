@@ -26,9 +26,9 @@ class UserController extends Controller
 
     public function index()
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
-        $title = __('constant.STUDENTS');
+        $title = __('constant.USER');
+        $subtitle = 'Index';
         $users = User::all();
-        return view('admin.uesrs.index', compact('title', 'users'));
+        return view('admin.users.index', compact('title', 'users','subtitle'));
     }
 }

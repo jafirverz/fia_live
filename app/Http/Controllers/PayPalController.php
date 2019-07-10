@@ -242,4 +242,8 @@ class PayPalController extends Controller
 
         return $invoice;
     }
+    public function recurringPaymentProfileDetail($id){
+        $response = $this->provider->getRecurringPaymentsProfileDetails($id);
+        dd($response);
+    }
 }
