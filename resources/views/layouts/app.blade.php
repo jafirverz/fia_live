@@ -20,7 +20,7 @@
 </head>
 
 <body>
- <div id="toppage" class="page"> 
+ <div id="toppage" class="page">
     @include('inc.header')
     @yield('content')
  </div>
