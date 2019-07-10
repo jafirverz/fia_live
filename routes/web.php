@@ -205,4 +205,25 @@ Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate'
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/subscription', 'PayPalController@getIndex');
+Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
+Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
+Route::get('paypal/adaptive-pay', 'PayPalController@getAdaptivePay');
+Route::post('paypal/notify', 'PayPalController@notify');
+Route::get('recurring-profile/{id}', 'PayPalController@recurringPaymentProfileDetail');
+Route::get('recurring-profile-update/{id}', 'PayPalController@recurringPaymentProfileDetailUpdate');
+
 Route::get('/{slug}', 'PagesFrontController@index');
