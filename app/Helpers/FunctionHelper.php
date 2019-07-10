@@ -134,6 +134,24 @@ if (!function_exists('getTopics')) {
 	  return "";
 	}
 	
+	function get_categry_by_country($country_id=null)
+	{
+	 $category=CountryInformation::where('country_id', $country_id)->first();
+	 if($category->information_filter_id!="")
+	 {
+	 $filter = Filter::where('filters.filter_name',5)->where('id', $category->information_filter_id)->first();
+	 if($filter)
+	 return $filter->tag_name;
+	 else
+	 return '#';
+	 }
+	 else
+	 {
+	 return "#";
+	 }
+	 
+	}
+	
 	function getCountryId($country=null)
 	{
 	  
