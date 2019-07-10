@@ -203,5 +203,5 @@ Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::get('/search-results', 'HomeController@search');
-
+Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
 Route::get('/{slug}', 'PagesFrontController@index');
