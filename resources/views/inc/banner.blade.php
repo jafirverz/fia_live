@@ -1,6 +1,7 @@
 @if($page->slug=="home")
 <div class="banner">
     <div class="bn-slide" id="slider">
+        @if($banners)
     	@foreach($banners as $banner)
         <div class="item bg">
             <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="" />
@@ -10,6 +11,7 @@
             </div>
         </div>
         @endforeach
+        @endif
     </div>
     <div class="search-wrap">
         <h2>What are you searching for?</h2>
@@ -37,7 +39,7 @@
 </div>
 @elseif($page->slug=="search-results")
 <div class="bn-inner bg">
-@if(isset($banner))
+@if($banner)
 					<img class="bgimg" src="{{asset($banner->banner_image)}}" alt="Search Results" />
 @endif
 					<div class="container">
@@ -80,7 +82,7 @@
 @else
 <div class="bn-inner bg nobg">
 
-					@if(isset($banner))
+					@if($banner)
                     <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="{{ $page->title }}" />
                     @endif
 					<div class="container">
