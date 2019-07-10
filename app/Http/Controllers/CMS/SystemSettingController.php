@@ -25,7 +25,7 @@ class SystemSettingController extends Controller
      */
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.SYSTEM_SETTING');
         $systemSetting = SystemSetting::orderBy('id', 'desc')->first();
         if (!$systemSetting) {
@@ -60,7 +60,7 @@ class SystemSettingController extends Controller
      */
     public function store(Request $request)
     {
-      //  is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $fields = $request->all();
         $validatorFields = [
             'title' => 'required|max:191',
@@ -140,7 +140,7 @@ class SystemSettingController extends Controller
      */
     public function edit($id)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $systemSetting = SystemSetting::findorfail($id);
         return view('admin.systemSetting.edit', compact('title', 'systemSetting'));
@@ -155,7 +155,7 @@ class SystemSettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-      //  is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
 
         $fields = $request->all();
         $request['slug'] = str_slug($request->slug, '-');

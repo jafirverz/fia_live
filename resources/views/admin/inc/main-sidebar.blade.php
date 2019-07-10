@@ -23,10 +23,7 @@
                      <li><a href="{{ url('admin/page') }}"><i class="fa fa-check"></i> {{ __('constant.PAGE') }}</a></li>
                      </ul>
             </li>
-            <li>
-                <a href="{{ url('/admin/email-template') }}"><i class="fa fa-check"></i>
-                    <span>{{ __('constant.EMAIL_TEMPLATE') }}</span></a>
-            </li>
+           
              <li>
                 <a href="{{ url('/admin/events') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.EVENT') }}</span></a>
@@ -55,9 +52,17 @@
                 <a href="{{ url('/admin/group-management') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.GROUPMANAGEMENT') }}</span></a>
             </li>
+             <li>
+                <a href="{{ url('/admin/email-template') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.EMAIL_TEMPLATE') }}</span></a>
+            </li>
             <li>
                 <a href="{{ url('/admin/roles-and-permission') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.ROLES_AND_PERMISSION') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ url('/admin/user') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.USER') }}</span></a>
             </li>
         </ul>
     </section>

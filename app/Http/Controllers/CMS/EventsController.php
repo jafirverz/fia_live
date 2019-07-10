@@ -40,7 +40,7 @@ class EventsController extends Controller
     public function index()
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.EVENT');
 
         $events = Event::orderBy('event_date', 'desc')->get();
@@ -56,7 +56,7 @@ class EventsController extends Controller
     public function create()
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
 
@@ -69,7 +69,7 @@ class EventsController extends Controller
     public function edit($id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
 
         $event = Event::findorfail($id);
@@ -92,7 +92,7 @@ class EventsController extends Controller
     public function update(Request $request, $id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $event = Event::findorfail($id);
 
 
@@ -133,7 +133,7 @@ class EventsController extends Controller
     public function destroy($id)
 
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $event = Event::findorfail($id);
 
         $event->delete();
@@ -151,7 +151,7 @@ class EventsController extends Controller
     public function store(Request $request)
     {
 
-        
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $validatorFields = [
 
                 'event_title' => 'required|unique:events,event_title',

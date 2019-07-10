@@ -171,6 +171,25 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::post('/topical-report/update/{id}', 'CMS\TopicalReportController@update');
   Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
 
+  /*start User Module backend*/
+  Route::get('/user', 'CMS\UserController@index')->name('user.index');
+  Route::get('/user/create', 'CMS\UserController@create');
+  Route::post('/user/store', 'CMS\UserController@store');
+  Route::get('/user/edit/{id}', 'CMS\UserController@edit');
+  Route::post('/user/update/{id}', 'CMS\UserController@update');
+  Route::post('/user/update-status', 'CMS\UserController@updateStatus');
+  Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
+  /*end user module backend*/
+
+  /*Master Setting Start*/
+  Route::get('/master-setting', 'CMS\MasterSettingController@index')->name('master-setting.index');
+  Route::get('/master-setting/create', 'CMS\MasterSettingController@create');
+  Route::post('/master-setting/store', 'CMS\MasterSettingController@store');
+  Route::get('/master-setting/edit/{id}', 'CMS\MasterSettingController@edit');
+  Route::post('/master-setting/update/{id}', 'CMS\MasterSettingController@update');
+  Route::get('/master-setting/destroy/{id}', 'CMS\MasterSettingController@destroy');
+  /*Master Setting End*/
+
 });
 Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
@@ -184,5 +203,6 @@ Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::get('/search-results', 'HomeController@search');
+Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
 Route::get('/{slug}', 'PagesFrontController@index');

@@ -343,3 +343,31 @@ for ('topical_report_edit', function ($trail, $id) {
 
 //students route start
 
+Breadcrumbs::for('user', function ($trail) {
+    $trail->parent('home');
+    $trail->push(__('constant.STUDENT'), url('/admin/user'));
+});
+
+Breadcrumbs::for('user_create', function ($trail) {
+    $trail->parent('user');
+    $trail->push(__('constant.CREATE'), url('/admin/user/create'));
+});
+Breadcrumbs::for('user_edit', function ($trail, $id) {
+    $trail->parent('user');
+    $trail->push(__('constant.EDIT'), url('/admin/student/edit'. $id));
+});
+
+
+//Master Setting
+Breadcrumbs::for('master-setting-create', function ($trail) {
+    //$trail->parent('master_setting');
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MASTER_SETTING'));
+    $trail->push(__('constant.CREATE'), url('/admin/master-setting/create'));
+});
+Breadcrumbs::for('master-setting-edit', function ($trail, $id) {
+    //$trail->parent('master-setting');
+    $trail->parent('dashboard');
+    $trail->push(__('constant.MASTER_SETTING'));
+    $trail->push(__('constant.EDIT'), url('/admin/master-setting/edit'. $id));
+});

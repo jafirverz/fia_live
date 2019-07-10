@@ -1,11 +1,14 @@
-@extends('admin.layout.app') @section('content')
-<!-- Content Wrapper. Contains page content -->
+@extends('admin.layout.dashboard')
+@section('content')
+        <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             {{ $title }}
-        </h1> {{ Breadcrumbs::render('users') }}
+            <small>{{ $subtitle }}</small>
+        </h1>
+        {{ Breadcrumbs::render('user') }}
     </section>
 
     <!-- Main content -->
@@ -17,84 +20,114 @@
                 <div class="box">
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="datatable" class="table table-bordered table-striped">
+                        <table id="users" class="table table-bordered table-hover">
                             <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>St Email</th>
-                                    <th>Student ID</th>
-                                    <th>Telephone</th>
-                                    <th>DOB</th>
-                                    <th>Gender</th>
-                                    <th>Nationality</th>
-                                    <th>Race</th>
-                                    <th>Religion</th>
-                                    <th>Marital Status</th>
-                                    <th>NRIC/Passport No.</th>
-                                    <th>Applicant Type</th>
-                                    <th>Fees Paid</th>
-                                    <th>Country</th>
-                                    <th>Church</th>
-                                    <th>Denomination</th>
-                                    <th>Occupation</th>
-                                    <th>Date of Student Registration</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-
-                                </tr>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Member Type</th>
+                                <th>Organization</th>
+                                <th>Job Title</th>
+                                <th>Mobile Number</th>
+                                <th>Telephone Number</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th>Email</th>
+                                <th>Payment Status</th>
+                                <th>Group Name</th>
+                                <th>Subscription Date</th>
+                                <th>Subscription Status</th>
+                                <th>Renewal Date</th>
+                                <th>Registration Date</th>
+                                <th>Overall Status</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @if($students->count())
-                                @foreach($students as $student)
-                                <tr>
-                                    <td>{{ $student->student_name ?? '-' }}</td>
-                                    <td>{{ $student->student_email ?? '-' }}</td>
-                                    <td>{{ $student->student_id ?? '-' }}</td>
-                                    <td>{{ $student->telephone ?? '-' }}</td>
-                                    <td>@if($student->student_dob) {{ date('d M, Y', strtotime($student->student_dob)) }} @else - @endif</td>
-                                    <td>@if($student->student_gender==0) Male @else Female @endif</td>
-                                    <td>@if($student->student_nationality) @if($student->student_nationality=='Other') {{ $student->student_nationality_other }} @else {{ $student->student_nationality }} @endif @else - @endif</td>
-                                    <td>@if($student->race) @if($student->race=='Other') {{ $student->race_other }} @else {{ $student->race }} @endif @else - @endif</td>
-                                    <td>@if($student->religion) @if($student->religion=='Other') {{ $student->religion_other }} @else {{ $student->religion }} @endif @else - @endif</td>
-                                    <td>@if($student->marital_status) {{ marital_status($student->marital_status) }} @else - @endif</td>
-                                    <td>{{ $student->nric_passport_no ?? '-' }}</td>
-                                    <td>{{ $student->applicant_type ?? '-' }}</td>
-                                    <td>{{ $student->fees_paid ?? '-' }}</td>
-                                    <td>{{ $student->country ?? '-' }}</td>
-                                    <td>{{ $student->church ?? '-' }}</td>
-                                    <td>{{ $student->denomination ?? '-' }}</td>
-                                    <td>{{ $student->occupation ?? '-' }}</td>
-                                    <td data-order="{{ $student->created_at }}">
-                                        @if ($student->created_at == null)
-                                        {{$student->created_at}}
-                                        @endif
-                                        {!! date("Y-m-d", strtotime($student->created_at)) !!}
+                            @if($users->count())
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td>{{ $user->firstname ?? '-' }}</td>
+                                        <td>{{ $user->lastname ?? '-' }}</td>
+                                        <td>
+                                            {{memberType($user->member_type)}}
+                                        </td>
+                                        <td>{{ $user->organization ?? '-' }}</td>
+                                        <td>{{ $user->job_title ?? '-' }}</td>
+                                        <td>{{ '+'.$user->mobile_code}}&nbsp;{{$user->mobile_number ?? '-' }}</td>
+                                        <td>{{ '+'.$user->telephone_code}}&nbsp;{{$user->telephone_number ?? '-' }}</td>
+                                        <td>{{ $user->country ?? '-' }}</td>
+                                        <td>{{ $user->city ?? '-' }}</td>
+                                        <td>{{ $user->email ?? '-' }}</td>
+                                        <td>Payment Status</td>
+                                        <td>Group Name</td>
+                                        <td data-order="<?php echo $user->created_at->format('d M, Y H:i:s') ?? '-' ?>">{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                        <td>Subscription Status</td>
+                                        <td>Renewal Date</td>
+                                        <td>Registration Date</td>
+                                        <td>Overall Status</td>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <a class="" title="View User"
+                                                           href="{{ url('admin/user/view/' . $user->id) }}">
+                                                            <i class="fa fa-eye btn btn-success"> View</i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="" title="Edit User"
+                                                           href="{{ url('admin/user/edit/' . $user->id) }}">
+                                                            <i class="fa fa-pencil btn btn-primary"> Edit</i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="" title="Delete User"
+                                                           onclick="return confirm('Are you sure to delete this user?')"
+                                                           href="{{ url('admin/user/destroy/' . $user->id) }}">
+                                                            <i class="fa fa-trash btn btn-danger"> Delete</i>
+                                                        </a>
+                                                    </td>
+                                                </tr></table><table>
+                                                <tr>
+                                                    <td>
+                                                        <a class="" title="Approve and send payment"
+                                                           href="#">
+                                                            <i class="fa fa-send btn btn-success"> Approve and Send
+                                                                Payment</i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="" title="Approve"
+                                                           href="#">
+                                                            <i class="fa fa-check btn btn-success"> Approve</i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table><table>
+                                                <tr>
+                                                    <td>
+                                                        <a class="" title="Reject"
+                                                           href="#">
+                                                            <i class="fa fa-ban btn btn-danger"> Reject</i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a class="" title="Un-subscribe"
+                                                           href="#">
+                                                            <i class="fa fa-bell-slash btn btn-danger"> Unsubscribe</i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
 
-                                    </td>
-                                    <td>
-                                        <select class="form-control" name="status" data-student-id={{$student->id}}>
-                                            <option value="">-- Select --</option>
-                                            @foreach(studentRegistrationApprovedStatus() as $key => $value)
-                                            <option value="{{ $key }}" @if($student->registration_status==($key))
-                                                selected @endif>{{ $value }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a class="" title="Edit Student"
-                                            href="{{ url('admin/student/edit/' . $student->id) }}">
-                                            <i class="fa fa-pencil btn btn-primary"></i>
-                                        </a>
-                                        <a class="" title="Delete student"
-                                            onclick="return confirm('Are you sure to delete this student?')"
-                                            href="{{ url('admin/student/destroy/' . $student->id) }}">
-                                            <i class="fa fa-trash btn btn-danger"></i>
-                                        </a>
-                                    </td>
 
-                                </tr>
+                                        </td>
+
+
+                                    </tr>
                                 @endforeach
-                                @endif
+                            @endif
                             </tbody>
 
                         </table>
@@ -109,57 +142,26 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#datatable').DataTable({
-            'order': [17, 'desc'],
-            dom: 'Bfrtip',
-            buttons: [
-                'csv', 'excel',
-            ],
-            "columnDefs": [{
-                "targets": [18, 19],
-                "orderable": false
-            }],
-        });
-
-        $('#datatable tfoot th').each(function () {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-        });
-
-        // DataTable
-        var table = $('#datatable').DataTable();
-
-        // Apply the search
-        $("select[name='status']").on("change", function () {
-            var r = confirm("Are you sure?");
-            if (r == true) {
-                var status = $(this).val();
-                var s_id = $(this).data('student-id');
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    method: "POST",
-                    url: "student/update-status",
-                    data: {
-                        registration_status: status,
-                        s_id: s_id,
-                        _token: CSRF_TOKEN
-                    },
-                    cache: false,
-                    async: false,
-                    success: function (data) {
-                        alert(data);
-                        if (data == "Success") {
-                            alert("Status has been changed.");
-                        } else {
-                            location.reload();
-                        }
-                    }
-                });
-            }
-        });
-    });
-
-</script>
 @endsection
+@push('scripts')
+<script>
+    $('#users').DataTable(
+            {
+                "pageLength": 10,
+                'ordering': true,
+                'order': [[12, 'desc']],
+                "aoColumnDefs": [{
+                    "aTargets": [2, 6],
+                    "bSortable": false
+                },
+                    {width: 100, targets: 0},
+                    {width: 150, targets: 1},
+                    {width: 300, targets: 2},
+                    {width: 150, targets: 3},
+                    {width: 150, targets: 4},
+                    {width: 150, targets: 6}
+
+                ]
+            });
+</script>
+@endpush
