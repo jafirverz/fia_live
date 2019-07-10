@@ -21,14 +21,14 @@ class UserController extends Controller
     {
 
         $this->middleware('auth:admin');
-        $this->module_name = 'STUDENT';
+        $this->module_name = 'USER';
     }
 
     public function index()
     {
-        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
-        $title = __('constant.STUDENTS');
-        $students = User::all();
-        return view('admin.students.index', compact('title', 'students'));
+        $title = __('constant.USER');
+        $subtitle = 'Index';
+        $users = User::all();
+        return view('admin.users.index', compact('title', 'users','subtitle'));
     }
 }

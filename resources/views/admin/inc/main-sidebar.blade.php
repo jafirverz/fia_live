@@ -60,6 +60,10 @@
                 <a href="{{ url('/admin/roles-and-permission') }}"><i class="fa fa-check"></i>
                     <span>{{ __('constant.ROLES_AND_PERMISSION') }}</span></a>
             </li>
+            <li>
+                <a href="{{ url('/admin/user') }}"><i class="fa fa-check"></i>
+                    <span>{{ __('constant.USER') }}</span></a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

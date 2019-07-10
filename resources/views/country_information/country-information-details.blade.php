@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @php
 $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['category']);
+//dd($contents);
 @endphp
 @section('content')
 <div id="toppage" class="page">
     <div class="main-wrap">
         @include('inc.banner');
-        @include('inc.breadcrumb');
         <div class="tempt-1">
+            @if($contents)
             <div class="container">
                 <div class="clearfix">
                     <div class="col-1">
@@ -38,7 +39,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                         </div>
                     </div>
                     <div class="col-2">
-                        @if(Auth::check())
+                        @if(!Auth::check())
                         <div class="tb-col title-wrap-1 break-640">
                             <div class="col">
                                 <h1 class="title-1">{{ $_GET['country'] ?? '' }}</h1>
@@ -68,7 +69,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                     @endif
                 </div>
             </div>
-
+            @endif
         </div>
 
     </div><!-- //main -->
