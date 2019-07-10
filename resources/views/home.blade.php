@@ -33,7 +33,7 @@
                 <!--<a class="pin p-ban" href="#bangladesh"><span class="flag"><img src="images/tempt/flag-bangladesh.jpg" alt="Bangladesh flag" /></span><span class="text">Bangladesh</span></a>-->
                 <!--<a class="pin p-pak" href="#pakistan"><span class="flag"><img src="images/tempt/flag-pakistan.jpg" alt="Pakistan flag" /></span><span class="text">Pakistan</span></a>-->
                @if(checkCountryExist('Macau SAR')==1)
-                <a class="pin p-mac" href="#macau"><span class="flag"><img src="images/tempt/flag-macau.jpg"
+                <a class="pin p-mac" href="#macau_sar"><span class="flag"><img src="images/tempt/flag-macau.jpg"
                             alt="Macau SAR flag" /></span><span class="text">Macau SAR</span></a>
                @endif             
                @if(checkCountryExist('Myanmar')==1)             
@@ -150,13 +150,13 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-		
-		$("span[class='text']").on("click", function() {
+		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+		$(".map-pins a").on("click", function() {
 			var country= $(this).text();
 		   country=country.toLowerCase();
 		   country=country.replace(" ", "_");
+		   
 		   var content;
-		  
 		   content+='<div id="'+country+'" class="pin-pp">';
            content+='<div class="tb-col">';
            content+='<div class="col">';
@@ -164,9 +164,23 @@
            content+='<a href="#new" class="fas fa-times">Close</a>';
            content+='<h2>'+$(this).text()+'</h2>';
            content+='<a class="fas fa-angle-double-right link" href="search-results-regulatory?country='+$(this).text()+'"><span class="ico"><img src="images/tempt/ico-5.png" alt="" /></span> Regulatory Updates</a>';
-           content+='<a class="fas fa-angle-double-right link" href="country.html"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
-           content+='</div></div></div></div>';
-
+           
+			$.ajax({
+                type: 'GET',
+                url: "{{ url('/country-information-category') }}",
+                data: {
+                    country:$(this).text(),
+                    _token: CSRF_TOKEN,
+                },
+                cache: false,
+                async: false,
+                success: function (data) {
+           content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+$(this).text()+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
+                   // $(".search-results").html(data);
+                }
+            });
+			
+			content+='</div></div></div></div>';
            //alert(content);
 		   $( "#map_country_detail" ).html(content); 
         });

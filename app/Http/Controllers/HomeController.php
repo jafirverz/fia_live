@@ -274,4 +274,13 @@ class HomeController extends Controller
        return view('search-results',compact('page','banner','resources','others','regulatories','informations'));
 
     }
+	
+	 public function get_category()
+    {
+        $country = isset($_GET['country']) ? $_GET['country'] : '';
+		$country_id=getCountryId($country);
+ 		$category=get_categry_by_country($country_id);
+		return $category;
+        
+    }
 }
