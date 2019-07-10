@@ -74,7 +74,14 @@
             },
             submitHandler: function (form) {
 				
-				alert(grecaptcha.getResponse());
+				if (grecaptcha.getResponse()) {
+				// 2) finally sending form data
+				form.submit();
+				}else{
+				// 1) Before sending we must validate captcha
+				grecaptcha.reset();
+				grecaptcha.execute();
+				}  
 				
 				
 				
