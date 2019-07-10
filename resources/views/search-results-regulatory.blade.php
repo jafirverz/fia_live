@@ -12,11 +12,16 @@
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
                         <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
+                        @if($_GET['country'])
+                        @php $countryID=getCountryId($_GET['country']);@endphp
+                        @else
+                        @php $countryID="";@endphp
+                        @endif
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
-                            <option
+                            <option @if($countryID==$country->id) selected="selected" @endif
                                 data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}'
-                                value="{{ $country->id }}"> {{ $country->tag_name }}</option>
+                                value="{{ $country->id }}" > {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -65,7 +70,9 @@
         
         
         <div class="container space-1 search-results">
+        <h1 class="title-1 text-center">Search Results</h1>
         <div id="search-list" class="masony grid-2" data-num="8" data-load="#btn-load">
+        
          @if($regulatories)
                     @foreach($regulatories as $regulatory)
 						<div class="item">
