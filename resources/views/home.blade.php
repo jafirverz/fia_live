@@ -41,7 +41,7 @@
                             alt="Myanmar flag" /></span><span class="text">Myanmar</span></a>
                @endif            
                @if(checkCountryExist('Laos')==1)             
-                <a class="pin p-lao" href="#macau"><span class="flag"><img src="images/tempt/flag-laos.jpg"
+                <a class="pin p-lao" href="#laos"><span class="flag"><img src="images/tempt/flag-laos.jpg"
                             alt="Laos flag" /></span><span class="text">Laos</span></a>
                @endif             
                @if(checkCountryExist('India')==1)             
@@ -152,6 +152,7 @@
     $(document).ready(function() {
 		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 		$(".map-pins a").on("click", function() {
+			var country_name= $(this).text();
 			var country= $(this).text();
 		   country=country.toLowerCase();
 		   country=country.replace(" ", "_");
@@ -175,7 +176,7 @@
                 cache: false,
                 async: false,
                 success: function (data) {
-           content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+$(this).text()+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
+           content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+country_name+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
                    // $(".search-results").html(data);
                 }
             });

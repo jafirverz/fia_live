@@ -63,14 +63,13 @@ class ContactController extends Controller
         $contact->save();
 
         //Jafir code.. comment by Nikunj
-      /* if($request->inquiry_type=='General Inquiry')
-            $toEmail = 'inquiry@bgst.edu.sg';
-        else if($request->inquiry_type=='Admissions/Academics Inquiry')
-            $toEmail = 'registration@bgst.edu.sg';
-        else if($request->inquiry_type=='Library Inquiry')
-            $toEmail = 'lib@bgst.edu.sg';
-        else if($request->inquiry_type=='Online Education Inquiry')*/
-         $toEmail = 'jafir.verz@gmail.com';
+        if($request->inquiry_type=='Membership Enquiry')
+            $toEmail = setting()->membership_emailid;
+        else if($request->inquiry_type=='General Enquiry')
+            $toEmail = setting()->general_emailid;
+        else if($request->inquiry_type=='Regulatory Advisory')
+            $toEmail = setting()->regulatory_emailid;
+        
 
         //dd($_REQUEST);
 

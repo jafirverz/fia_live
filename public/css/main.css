@@ -367,7 +367,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .form-wrap-1 .links a { color: #fb7a10; text-decoration: underline; }
 .form-wrap-1 .links a:hover { color: #000; }
 .form-wrap-1 .checkbox { margin-bottom: 30px; margin-top: 30px; }
-
+.error{color:#F00;}
 .contact-form { margin-top: 20px; }
 .contact-form .inrow { margin-bottom: 30px; }
 
