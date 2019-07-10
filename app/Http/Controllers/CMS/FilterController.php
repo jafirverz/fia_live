@@ -31,7 +31,7 @@ class FilterController extends Controller
 
     public function index()
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.FILTER');
         $filters = Filter::all();
         return view("admin.filter.index", compact("filters", "title"));
@@ -44,7 +44,7 @@ class FilterController extends Controller
      */
     public function create()
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
         //get pages detail
         return view("admin.filter.create", compact("title"));
@@ -58,7 +58,7 @@ class FilterController extends Controller
      */
     public function store(Request $request)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $request->validate([
             'filter_name' => 'required|max:255|unique:filters,filter_name,NULL,id,tag_name,'.$request->tag_name,
             'tag_name' => 'required',
@@ -102,7 +102,7 @@ class FilterController extends Controller
     public
     function edit($id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $title = __('constant.EDIT');
         $filter = Filter::findorfail($id);
         return view("admin.filter.edit", compact("title", "filter"));
@@ -118,7 +118,7 @@ class FilterController extends Controller
     public
     function update(Request $request, $id)
     {
-        //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
+         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $filter = Filter::findorfail($id);
         $request->validate([
             'filter_name' => 'required|max:255',
@@ -145,7 +145,7 @@ class FilterController extends Controller
      */
     public function destroy($id)
     {
-       // is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $filter = Filter::findorfail($id);
 
         $status = ObjectDelete($filter);

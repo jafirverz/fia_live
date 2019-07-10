@@ -73,9 +73,11 @@
 
             },
             submitHandler: function (form) {
-				if (grecaptcha.execute()) {
-                    form.submit();
-                }
+				
+				alert(grecaptcha.getResponse());
+				
+				
+				
             }
         });
     });
