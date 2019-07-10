@@ -7,7 +7,7 @@ use App\Banner;
 use Illuminate\Support\Arr;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Session;
-
+use App\MasterSetting;
 if (!function_exists('DummyFunction')) {
 
     /**
@@ -21,7 +21,11 @@ if (!function_exists('DummyFunction')) {
         $setting = SystemSetting::orderBy('id', 'desc')->first();
         return $setting;
     }
-
+    function masterSetting()
+    {
+        $setting = masterSetting::orderBy('id', 'desc')->first();
+        return $setting;
+    }
     function getMenus($id)
     {
         $menus = [];
