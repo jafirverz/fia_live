@@ -357,7 +357,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 
 .form-ani .form-control, .form-ani .form-control:focus { background: none; padding-top: 20px; position: relative; z-index: 2; }
 .form-ani .inrow { margin-bottom: 20px; position: relative; }
-.form-ani .inrow label { bottom: 0; color: #909090; font-size: 14px; font-weight: 400; left: 20px; position: absolute; right: 0; top: 17px; margin: 0; padding: 0; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; }
+.form-ani .inrow label { bottom: 0; color: #909090; font-size: 14px; font-weight: 400; left: 20px; position: absolute; right: 0; top: 50px; margin: 0; padding: 0; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; }
 .form-ani .not-empty .form-control { background: #fff; padding-top: 5px; }
 .form-ani .focus + label { color: #999; font-size: 70%; padding: 1px 0; text-transform: uppercase; top: 0; }
 
@@ -367,7 +367,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .form-wrap-1 .links a { color: #fb7a10; text-decoration: underline; }
 .form-wrap-1 .links a:hover { color: #000; }
 .form-wrap-1 .checkbox { margin-bottom: 30px; margin-top: 30px; }
-
+.error{color:#F00;}
 .contact-form { margin-top: 20px; }
 .contact-form .inrow { margin-bottom: 30px; }
 
