@@ -37,7 +37,7 @@ return [
 	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
 	'TOPICAL_REPORTS' => 'Topical Reports',
-	'USER' => 'Users',
+	'USER' => 'Membership Management',
 	'MASTER_SETTING' => 'Master Setting',
 	//PAGE SLUG NAME
 	'EVENTS_DETAIL_SLUG' => 'event-details',
