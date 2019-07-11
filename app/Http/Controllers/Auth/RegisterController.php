@@ -81,9 +81,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $student_id = guid();
+        $user_id = guid();
         return User::create([
-            'student_id'    =>  $student_id,
+            'user_id'    =>  $user_id,
             'salutation' => $data['salutation'],
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
@@ -104,7 +104,7 @@ class RegisterController extends Controller
         ]);
 
         $student = [
-            'button_url' => url('/register/verification/' . $student_id),
+            'button_url' => url('/register/verification/' . $user_id),
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
