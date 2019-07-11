@@ -58,9 +58,12 @@ class HomeController extends Controller
     {
        
         //dd($request);
-		$page=pageDetails('search-results');
-			
+		$slug = __('constant.SEARCH_RESULTS');
+		$page=pageDetails($slug);
+		$breadcrumbs = getBreadcrumb($page);	
 		$banner =get_page_banner($page->id);
+		$country_name=getCountryId($request->country);
+		//dd($country_name);
 		
 		$events=$others=$reports=$regulatories=$informations=[];
 		//Events
@@ -202,7 +205,7 @@ class HomeController extends Controller
 		  foreach($regulatories_description as $regulatory)
 		  {
 		  $item['content']=$regulatory->description;
-		  $item['link']="#";
+		  $item['link']=url('search-results-regulatory?country='.$country_name);
 		  $regulatories[]=$item;
 		  }
 		}
@@ -228,7 +231,7 @@ class HomeController extends Controller
 		  foreach($regulatories_title as $regulatory)
 		  {
 		  $item['content']=$regulatory->title;
-		  $item['link']='#';
+		  $item['link']=url('regulatory-details',$regulatory->slug);
 		  $regulatories[]=$item;
 		  }
 		}
@@ -236,42 +239,67 @@ class HomeController extends Controller
 		//dd($regulatories);
 		
 		//Country Information
+		if($request->country!="" && $request->search_content!="")
+		{
+		$information_title = DB::table('country_information')
+                ->where('information_title', 'like', '%'.$request->search_content.'%')
+				->where('country_id',$request->country)
+                ->get();
+		}
+		else
+		{
 		$information_title = DB::table('country_information')
                 ->where('information_title', 'like', '%'.$request->search_content.'%')
                 ->get();
+		}
+		
 		if(isset($information_title) && $information_title->count())
 		{
 
 		  foreach($information_title as $information)
 		  {
+		  $category=get_categry_by_country($information->country_id);
 		  $item['content']=$information->information_title;
-		  $item['link']='#';
+		  $item['link']=url('country-information-details?country='.getFilterCountry($information->country_id).'&category='.$category);
 		  $informations[]=$item;
 		  }
 		}
 		
+		
+		if($request->country!="" && $request->search_content!="")
+		{
+		$information_description = DB::table('country_information')
+                ->where('information_content', 'like', '%'.$request->search_content.'%')
+				->where('country_id',$request->country)
+                ->get();
+		}
+		else
+		{
 		$information_description = DB::table('country_information')
                 ->where('information_content', 'like', '%'.$request->search_content.'%')
                 ->get();
+		}		
+				
 		if(isset($information_description) && $information_description->count())
 		{
 		
 		  foreach($information_description as $info)
 		  {
+		  $category=get_categry_by_country($info->country_id);
 		  $item['content']=$info->information_content;
-		  $item['link']='#';
+		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);
 		  $informations[]=$item;
 		  }
 		}
 		
 		
-        $country = $request->country;
-        $search_content = $request->search_content;
+        //$country = $request->country;
+        //$search_content = $request->search_content;
        
 			
         $resources=(array_merge($events,$reports));
        
-       return view('search-results',compact('page','banner','resources','others','regulatories','informations'));
+       return view('search-results',compact('page','banner','resources','others','regulatories','informations','breadcrumbs'));
 
     }
 	

@@ -23,7 +23,7 @@ class PagesFrontController extends Controller
 		 $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
-            $banner = Banner::where('page_name', $page->id)->first();
+            $banner = get_page_banner($page->id);
             $breadcrumbs = getBreadcrumb($page);
         if(!$page)
         {
@@ -62,7 +62,7 @@ class PagesFrontController extends Controller
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
-        $banner = Banner::where('page_name', $page->id)->first();
+        $banner = get_page_banner($page->id);
         $breadcrumbs = getBreadcrumb($page);
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
@@ -73,7 +73,8 @@ class PagesFrontController extends Controller
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
             ->first();
-        $banner = Banner::where('page_name', $page->id)->first();
+			
+        $banner = get_page_banner($page->id);
         $breadcrumbs = getBreadcrumb($page);
 
         $regulatory = Regulatory::where('slug', $slug)->first();

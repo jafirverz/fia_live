@@ -42,53 +42,68 @@
         </div>
     </div>
 @elseif($page->slug=="search-results")
-    <div class="bn-inner bg">
-        @if($banner)
-            <img class="bgimg" src="{{asset($banner->banner_image)}}" alt="Search Results"/>
-        @endif
-        <div class="container">
-            <div class="tb-col">
-                <div class="col">
-                    <h2>What Can We Help Search For You?</h2>
 
-                    <form action="{{ url('/search-results')}}" class="tb-col search-wrap-2 break-320">
-                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+<div class="bn-inner bg">
+@if($banner)
+					<img class="bgimg" src="{{asset($banner->banner_image)}}" alt="Search Results" />
+@endif
+					<div class="container">
+						<div class="tb-col">
+							<div class="col">
+								<h2>What Can We Help Search For You?</h2>
+                                <form action="{{ url('/search-results')}}" class="tb-col search-wrap-2 break-320">
+        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+								<div class="tb-col search-wrap-2 break-320">
+									<div class="col sl-country hideico">
+										<select name="country" class="selectpicker">
+											<option value="" data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
+                                            @foreach(getAllCountry() as $country)
+      <option value="{{$country->id}}" data-content='<img src="{{$country->country_image}}" alt="{{$country->tag_name}}" /> {{$country->tag_name}}'>{{$country->tag_name}}</option>
+                    @endforeach
+										</select>
+									</div>
+									<div class="col">
+										<div class="input-group">
+											<input name="search_content" required="required" type="text" class="form-control" value="{{$_GET['search_content']}}" placeholder="Name of Regulation / Issue / Topic..." />
 
-                        <div class="tb-col search-wrap-2 break-320">
-                            <div class="col sl-country hideico">
-                                <select class="selectpicker">
-                                    <option value="" data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
-                                    @foreach(getAllCountry() as $country)
-                                        <option value="{{$country->id}}"
-                                                data-content='<img src="{{$country->country_image}}" alt="{{$country->tag_name}}" /> {{$country->tag_name}}'>{{$country->tag_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col">
-                                <div class="input-group">
-                                    <input required="required" type="text" class="form-control"
-                                           value="{{$_GET['search_content']}}"
-                                           placeholder="Name of Regulation / Issue / Topic..."/>
 											<span class="input-group-btn">
 												<button type="submit" class="btn-5"><i class="fas fa-search"></i>
                                                 </button>
 											</span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="breadcrumb-wrap">
-        <div class="container">
-            <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li>Search Results</li>
-            </ul>
-        </div>
-    </div>
+
+										</div>
+									</div>
+								</div>
+                                </form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="breadcrumb-wrap">
+					<div class="container">
+                        @if (isset($breadcrumbs) && count($breadcrumbs))
+                            <ul class="breadcrumb">
+                                @foreach ($breadcrumbs as $breadcrumb)
+                                @if(is_array($breadcrumb))
+                                @if($loop->last)
+                                    <li><strong>{{ $breadcrumb['title'] }}</strong></li>
+                                @else
+                                    <li><a href="{{ url($breadcrumb['slug']) }}">{{ $breadcrumb['title'] }}</a></li>
+                                @endif
+                                @else
+                                @if ($breadcrumb->url && !$loop->last)
+                                    <li><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
+                                @else
+                                    <li><strong>{{ $breadcrumb->title }}</strong></li>
+                                @endif
+                                @endif
+                                @endforeach
+                            </ul>
+                        
+                    @endif
+					</div>
+				</div>
+
 @else
     @if($banner)
 

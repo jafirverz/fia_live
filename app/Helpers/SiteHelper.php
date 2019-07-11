@@ -182,7 +182,7 @@ if (!function_exists('DummyFunction')) {
 	{
 	//dd($page_id);	
 	$banner = Banner::where('page_name', $page_id)->first();
-	if(isset($banner) && $banner->count()>0)	
+	if(isset($banner))	
 	return $banner;
 	else
 	return "";
