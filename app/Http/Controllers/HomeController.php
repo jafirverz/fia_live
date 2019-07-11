@@ -205,7 +205,7 @@ class HomeController extends Controller
 		  foreach($regulatories_description as $regulatory)
 		  {
 		  $item['content']=$regulatory->description;
-		  $item['link']=url('search-results-regulatory?country='.$country_name);
+		  $item['link']=url('regulatory-details',$regulatory->slug);
 		  $regulatories[]=$item;
 		  }
 		}
