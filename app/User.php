@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function invoice()
+    {
+        return Invoice::where('user_id',233)->orderBy('created_at','desc')->first();
+
+    }
 }

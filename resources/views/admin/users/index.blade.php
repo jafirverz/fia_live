@@ -64,8 +64,8 @@
                                         <td data-order="<?php echo $user->created_at->format('d M, Y H:i:s') ?? '-' ?>">{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
                                         <td>Subscription Status</td>
                                         <td>Renewal Date</td>
-                                        <td>Registration Date</td>
-                                        <td>Overall Status</td>
+                                        <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                        <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
                                             <table>
                                                 <tr>
