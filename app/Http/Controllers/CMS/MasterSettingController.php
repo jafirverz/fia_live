@@ -152,7 +152,7 @@ class MasterSettingController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $masterSetting = new MasterSetting;
+        $masterSetting = MasterSetting::findorfail($id);
         $masterSetting->subscription_value = $request->subscription_value;
         $masterSetting->subscription_validity = $request->subscription_validity;
         $masterSetting->subscription_validity_type = $request->subscription_validity_type;
