@@ -77,10 +77,13 @@
                             <div class="input-group ig-1">
                                 <div class="input-group-addon sl-1">
                                     <select class="selectpicker" name="telephone_code">
-                                        <option data-content='<img src="images/tempt/flag-singapore.jpg" alt="" /> +65'>
-                                            +65</option>
-                                        <option data-content='<img src="images/tempt/flag-vietnam.jpg" alt="" /> +84'>
-                                            +84</option>
+                                        @if (CountryList())
+                                            @foreach (CountryList() as $item)
+                                            <option value="{{ $item->phonecode }}" data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}' @if($item->iso=='SG') selected @endif>
+                                            +{{ $item->phonecode }}</option>
+                                            @endforeach
+                                        @endif
+
                                     </select>
                                 </div>
                                 <input type="text" class="form-control" value="" name="telephone_number" value="{{ old('telephone_number') }}" />
@@ -91,10 +94,12 @@
                             <div class="input-group ig-1">
                                 <div class="input-group-addon sl-1">
                                     <select class="selectpicker" name="mobile_code">
-                                        <option data-content='<img src="images/tempt/flag-singapore.jpg" alt="" /> +65'>
-                                            +65</option>
-                                        <option data-content='<img src="images/tempt/flag-vietnam.jpg" alt="" /> +84'>
-                                            +84</option>
+                                        @if (CountryList())
+                                            @foreach (CountryList() as $item)
+                                            <option value="{{ $item->phonecode }}" data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}' @if($item->iso=='SG') selected @endif>
+                                                +{{ $item->phonecode }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <input type="text" class="form-control" value="" name="mobile_number" value="{{ old('mobile_number') }}" />

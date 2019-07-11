@@ -344,7 +344,7 @@ for ('topical_report_edit', function ($trail, $id) {
 //students route start
 
 Breadcrumbs::for('user', function ($trail) {
-    $trail->parent('home');
+    $trail->parent('dashboard');
     $trail->push(__('constant.STUDENT'), url('/admin/user'));
 });
 
