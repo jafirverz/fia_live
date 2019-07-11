@@ -136,7 +136,7 @@ if (!function_exists('getTopics')) {
 	function get_categry_by_country($country_id=null)
 	{
 	 $category=CountryInformation::where('country_id', $country_id)->first();
-	 if($category->information_filter_id!="")
+	 if($category)
 	 {
 	 $filter = Filter::where('filters.filter_name',5)->where('id', $category->information_filter_id)->first();
 	 if($filter)

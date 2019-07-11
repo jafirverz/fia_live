@@ -61,6 +61,8 @@ return [
     'COUNTRY_INFORMATION_DETAILS'   =>  'country-information-details',
     'REGULATORY_DETAILS'    =>  'regulatory-update-details',
     'REGISTER'  =>  'register',
+	'SEARCH_RESULTS'  =>  'search-results',
+	'SEARCH_RESULTS_REGULATORY'  =>  'search-results-regulatory',
     'LOGIN' =>  'login',
 
 

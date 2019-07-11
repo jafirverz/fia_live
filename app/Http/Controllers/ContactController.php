@@ -35,7 +35,7 @@ class ContactController extends Controller
         $page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
-		$banner = Banner::where('page_name', $page->id)->first();
+		$banner = get_page_banner($page->id);
 		if (!$page) {
 		return abort(404);
 		}
