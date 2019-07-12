@@ -26,7 +26,8 @@
                                         <option value="">Select Salutation</option>
                                         @if (salutation())
                                         @foreach (salutation() as $item)
-                                        <option value="{{ $item }}" @if($item==old('salutation')) selected @endif>{{ $item }}</option>
+                                        <option value="{{ $item }}" @if($item==old('salutation')) selected @endif>
+                                            {{ $item }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -78,15 +79,18 @@
                                 <div class="input-group-addon sl-1">
                                     <select class="selectpicker" name="telephone_code">
                                         @if (CountryList())
-                                            @foreach (CountryList() as $item)
-                                            <option value="{{ $item->phonecode }}" data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}' @if($item->iso=='SG') selected @endif>
+                                        @foreach (CountryList() as $item)
+                                        <option value="{{ $item->phonecode }}"
+                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}'
+                                            @if($item->iso=='SG') selected @endif>
                                             +{{ $item->phonecode }}</option>
-                                            @endforeach
+                                        @endforeach
                                         @endif
 
                                     </select>
                                 </div>
-                                <input type="text" class="form-control" value="" name="telephone_number" value="{{ old('telephone_number') }}" />
+                                <input type="text" class="form-control" name="telephone_number"
+                                    value="{{ old('telephone_number') }}" />
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -95,14 +99,17 @@
                                 <div class="input-group-addon sl-1">
                                     <select class="selectpicker" name="mobile_code">
                                         @if (CountryList())
-                                            @foreach (CountryList() as $item)
-                                            <option value="{{ $item->phonecode }}" data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}' @if($item->iso=='SG') selected @endif>
-                                                +{{ $item->phonecode }}</option>
-                                            @endforeach
+                                        @foreach (CountryList() as $item)
+                                        <option value="{{ $item->phonecode }}"
+                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}'
+                                            @if($item->iso=='SG') selected @endif>
+                                            +{{ $item->phonecode }}</option>
+                                        @endforeach
                                         @endif
                                     </select>
                                 </div>
-                                <input type="text" class="form-control" value="" name="mobile_number" value="{{ old('mobile_number') }}" />
+                                <input type="text" class="form-control" name="mobile_number"
+                                    value="{{ old('mobile_number') }}" />
                             </div>
                         </div>
                     </div>
@@ -113,7 +120,8 @@
                                 <option value="">Select Country</option>
                                 @if (CountryList())
                                 @foreach (CountryList() as $item)
-                                <option value="{{ $item->country }}" @if($item->country==old('country')) selected @endif>{{ $item->country }}</option>
+                                <option value="{{ $item->country }}" @if($item->country==old('country')) selected
+                                    @endif>{{ $item->country }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -125,13 +133,13 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="lb">City</label>
-                            <input type="text" class="form-control" value="" name="city" value="{{ old('city') }}"/>
+                            <input type="text" class="form-control"  name="city" value="{{ old('city') }}" />
                         </div>
                     </div>
                     <label class="lb">Address Line 1</label>
-                    <input type="text" class="form-control" value="" name="address1" value="{{ old('address1') }}" />
+                    <input type="text" class="form-control" name="address1" value="{{ old('address1') }}" />
                     <label class="lb">Address Line 2</label>
-                    <input type="text" class="form-control" value="" name="address2" value="{{ old('address2') }}"/>
+                    <input type="text" class="form-control" name="address2" value="{{ old('address2') }}" />
                 </div>
             </div>
             <div class="box-2">
@@ -140,7 +148,7 @@
                         <p class="text-center" style="margin-bottom: 20px;">This will also serve as your username.</p>
                         <div class="inrow">
                             <span><input type="text" class="form-control  @if ($errors->has('email')) is-invalid @endif"
-                                    name="email" value="{{ old('email') }}"/></span>
+                                    name="email" value="{{ old('email') }}" /></span>
                             <label><span class="required">*</span> Email Address</label>
                             @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
@@ -149,7 +157,9 @@
                             @endif
                         </div>
                         <div class="inrow">
-                            <span><input type="password" class="form-control @if ($errors->has('password')) is-invalid @endif" name="password" /></span>
+                            <span><input type="password"
+                                    class="form-control @if ($errors->has('password')) is-invalid @endif"
+                                    name="password" /></span>
                             <label><span class="required">*</span> Password</label>
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
@@ -158,7 +168,9 @@
                             @endif
                         </div>
                         <div class="inrow">
-                            <span><input type="password" class="form-control @if ($errors->has('password_confirmation')) is-invalid @endif" name="password_confirmation" /></span>
+                            <span><input type="password"
+                                    class="form-control @if ($errors->has('password_confirmation')) is-invalid @endif"
+                                    name="password_confirmation" /></span>
                             <label><span class="required">*</span> Confirm Password</label>
                             @if ($errors->has('password_confirmation'))
                             <span class="invalid-feedback" role="alert">
@@ -168,7 +180,16 @@
                         </div>
                         <div class="checkbox"><input type="checkbox" id="update" name="subscribe_status"
                                 value="1" /><label for="update">I want to receive updates.</label></div>
-                        <div class="captcha"><img src="images/tempt/captcha.png" alt="captcha" /></div>
+                        <div class="form-group">
+                            <div class="google-recaptcha">
+                                <div class="g-recaptcha" data-callback="onSubmit"
+                                    data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                <input type="hidden" title="Please verify this" class="required" name="keycode"
+                                    id="keycode">
+                                <div id="cap-response" style="display:none; color:#F00;"></div>
+
+                            </div>
+                        </div>
                         <div class="row output break-480">
                             <div class="col-xs-6 col-xs-push-6 col">
                                 <button type="submit" class="btn-2">Register</button>

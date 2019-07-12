@@ -190,7 +190,7 @@ tinymce.init({
 
 tinymce.init({
     selector: "textarea.simple-text-editor ",  // change this value according to your HTML
-    plugins: "lists link code",
+    plugins: "lists link code textcolor colorpicker",
     toolbar: "forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify| fontsizeselect | code",
     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
     height: "100"

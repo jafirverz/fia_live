@@ -11,11 +11,14 @@
                     <a class="fas fa-angle-double-left lk-back" href="{{ url('regulatory-updates') }}">Back</a>
                 </div>
                 <div class="col">
-                    <a href="#" class="btn-4">EXPORT <i class="fas fa-file-export"></i></a>
+                    <a href="{{ url('regulatory-print', $regulatory->slug) }}" target="_blank" class="btn-4 export_link">EXPORT <i class="fas fa-file-export"></i></a>
                 </div>
             </div>
-            <div class="intro-2">
-                <h1 class="title-1 text-center space-2"><img src="{{ getFilterCountryImage($regulatory->country_id) }}" alt="{{ getFilterCountry($regulatory->country_id) }}" /> {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+
+            <div class="intro-2 ">
+                <h1 class="title-1 text-center space-2"><img src="{{ getFilterCountryImage($regulatory->country_id) }}"
+                        alt="{{ getFilterCountry($regulatory->country_id) }}" />
+                    {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
                 <table>
                     <tbody>
                         <tr>
@@ -28,21 +31,23 @@
                             </tr>-->
                         <tr>
                             <td><strong style="color: #fb7a10;">Date of Regulation in Force:</strong></td>
-                            <td><strong style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong></td>
+                            <td><strong
+                                    style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong>
+                            </td>
                         </tr>
                         <tr>
                             <td><strong>Topic(s):</strong></td>
                             <td>
                                 @php
-                                    $topics = getFilterTopic();
+                                $topics = getFilterTopic();
                                 @endphp
                                 @if ($topics)
-                                    @foreach ($topics as $value)
-                                        {{ $value->tag_name }}
-                                        @if (!$loop->first)
-                                            <br/>
-                                        @endif
-                                    @endforeach
+                                @foreach ($topics as $value)
+                                {{ $value->tag_name }}
+                                @if (!$loop->first)
+                                <br />
+                                @endif
+                                @endforeach
                                 @endif
                             </td>
                         </tr>
@@ -53,7 +58,7 @@
             <div class="mbox-wrap" data-num="5">
                 @if ($child_regulatory)
                 @foreach ($child_regulatory as $key => $value)
-                <div class="box-3 noheight mbox @if($loop->first) open @endif">
+                <div class="box-3 noheight mbox @if($loop->first) open @endif" data-id="{{ $value->id }}">
                     <a class="head-box head-tb" data-height="0" href="#update-{{ ($key+1) }}">
                         <span class="tb-col break-640">
                             <span class="col">{{ $value->title }}</span>
@@ -69,8 +74,7 @@
                 </div>
                 @endforeach
                 @endif
-                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
-                            class="fas fa-angle-double-down"></i></button></div>
+                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
             </div>
 
         </div>
@@ -78,4 +82,29 @@
     </div><!-- //main -->
 
 </div><!-- //page -->
+<script>
+
+
+    var slug = "{{ url('regulatory-print', $regulatory->slug) }}";
+
+    var array_list = [];
+    hasClassOpen();
+    $("div.box-3").on("click", function() {
+        if($(this).hasClass('open'))
+        {
+            array_list.push($(this).attr('data-id'));
+        }
+        else
+        {
+            array_list.pop($(this).attr('data-id'));
+        }
+        $("a.export_link").attr("href", slug+'?id='+array_list.reverse().join());
+    });
+
+    function hasClassOpen()
+    {
+        array_list.push($("div.box-3.open").attr('data-id'));
+        $("a.export_link").attr("href", slug+'?id='+array_list.join());
+    }
+</script>
 @endsection
