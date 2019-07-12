@@ -7,7 +7,11 @@ Breadcrumbs::for('dashboard', function ($trail) {
 Breadcrumbs::for('front_home', function ($trail) {
     $trail->push(__('constant.HOME'), url('/home'));
 });
-
+Breadcrumbs::
+for ('front_contact', function ($trail) {
+	$trail->parent('front_home');
+    $trail->push(__('constant.CONTACT'), url('/contact-us'));
+}) ;
 //COUNTRY
 Breadcrumbs::for('country_information', function ($trail) {
     $trail->parent('dashboard');
@@ -60,11 +64,7 @@ Breadcrumbs::for('contactenquiry', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('constant.CONTACTENQUIRY'), url('/admin/contact-enquiry'));
 });
-Breadcrumbs::
-for ('front_contact', function ($trail) {
-	$trail->parent('dashboard');
-    $trail->push(__('constant.CONTACT'), url('/contact-us'));
-}) ;
+
 //GROUP MANAGEMENT
 Breadcrumbs::for('groupmanagement', function ($trail) {
     $trail->parent('dashboard');
