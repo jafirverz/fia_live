@@ -35,7 +35,7 @@ class HomeController extends Controller
 		if (!$page) {
             return abort(404);
         }	
-		$banners = Banner::where('page_name', $page->id)->get();	
+		$banners = Banner::where('page_name', $page->id)->orderBy('order_by','ASC')->get();	
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }

@@ -42,7 +42,9 @@
                                 <div class="row">
                                     <div class="@if(isset($banner->banner_image) && ($banner->banner_image != ''))col-sm-10 @endif">
                                       <input type="file" name="banner_image" class="form-control" placeholder="" />
-                                        <p class="text-muted"><strong>Note:</strong> Image size should be 1400*635 for better display</p>
+                                        <p class="text-muted"><strong>Note:</strong> Image size (Home Page Banner) should be 1400*470 for better display<br />
+                                Image size (Inner Page Banner) should be 1400*150 for better display
+                                </p>
                                     </div>
                                     @if(isset($banner->banner_image) && ($banner->banner_image != ''))
                                         <div class=" col-sm-2">
