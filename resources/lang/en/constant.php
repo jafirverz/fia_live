@@ -37,8 +37,9 @@ return [
 	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
 	'TOPICAL_REPORTS' => 'Topical Reports',
-	'USER' => 'Users',
+	'USER' => 'Membership Management',
 	'MASTER_SETTING' => 'Master Setting',
+	'SUBSCRIBER' => 'Subscriber',
 	//PAGE SLUG NAME
 	'EVENTS_DETAIL_SLUG' => 'event-details',
 	'TOPICAL_REPORT_SLUG' => 'topical-reports',
@@ -53,6 +54,7 @@ return [
 	'EDITABLE' => ':Module only editable now.',
     'DELETED' => ':Module has been deleted.',
     'CREATED' => ':Module has been created.',
+	'EXIST' => ':Module has been already exist.',
     'UPDATED' => ':Module has been updated.',
     'GENERATED' => ':Module has been generated.',
     'MENULIMIT' => ':You can create or active 6 menu items.',

@@ -203,6 +203,7 @@ Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
+Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
@@ -227,4 +228,4 @@ Route::post('paypal/notify', 'PayPalController@notify');
 Route::get('recurring-profile/{id}', 'PayPalController@recurringPaymentProfileDetail');
 Route::get('recurring-profile-update/{id}', 'PayPalController@recurringPaymentProfileDetailUpdate');
 
-Route::get('/{slug}', 'PagesFrontController@index');
+//Route::get('/{slug}', 'PagesFrontController@index');

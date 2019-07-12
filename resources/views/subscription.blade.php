@@ -17,19 +17,36 @@
                     <span><input type="text" class="form-control @if ($errors->has('email')) is-invalid @endif" name="email" value="{{ old('email') }}" /></span>
                     <label>Email Address</label>
                     @if ($errors->has('email'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                        <span class="invalid-feedback text-danger" role="alert">
+                            <strong>&emsp;{{ $errors->first('email') }}</strong>
                         </span>
                     @endif
                 </div>
                 <div class="checkbox"><input type="checkbox" value="recurring" id="recurring" name="mode"
-                                             checked="checked"><label for="recurring" class="recurring">Recurring
+                                             @if(is_null(old('mode')) || old('mode')=='recurring')checked="checked" @endif><label for="recurring" class="recurring">Recurring
                         Subscription</label></div>
                 <div class="checkbox"><input type="checkbox" value="non-recurring" id="non-recurring"
+                                             @if(old('mode')=='non-recurring')checked="checked" @endif
                                              name="mode"><label for="non-recurring" class="non-recurring">Non
                         -
                         Recurring
-                        Subscription</label></div>
+                        Subscription</label><br/>
+                    @if ($errors->has('mode'))
+                        <span class="invalid-feedback text-danger" role="alert">
+                            <strong>{{ $errors->first('mode') }}</strong>
+                        </span>
+                    @endif
+                </div>
+
+                {{--<div class="captcha">
+                    <div class="google-recaptcha">
+                        <div class="g-recaptcha" data-callback="onSubmit"
+                             data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                        <input type="hidden" title="Please verify this" class="required" name="keycode" id="keycode">
+
+                        <div id="cap-response" style="display:none; color:#F00;"></div>
+                    </div>
+                </div>--}}
                 <button type="submit" class="btn-2">Subscribe</button>
             </form>
 
