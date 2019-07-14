@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Page;
+use App\User;
 use App\Banner;
 use App\Regulatory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -33,7 +35,7 @@ class HomeController extends Controller
 		if (!$page) {
             return abort(404);
         }	
-		$banners = Banner::where('page_name', $page->id)->get();	
+		$banners = Banner::where('page_name', $page->id)->orderBy('order_by','ASC')->get();	
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
@@ -205,7 +207,7 @@ class HomeController extends Controller
 		  foreach($regulatories_description as $regulatory)
 		  {
 		  $item['content']=$regulatory->description;
-		  $item['link']=url('search-results-regulatory?country='.$country_name);
+		  $item['link']=url('regulatory-details',$regulatory->slug);
 		  $regulatories[]=$item;
 		  }
 		}
@@ -311,4 +313,36 @@ class HomeController extends Controller
 		return $category;
         
     }
+	
+	public function subscribers(Request $request)
+	{
+		$emailid=$request->emailid;
+		$result = User::where('email', $emailid)->count();
+		$result1 = User::where('email', $emailid)->where('subscribe_status', 1)->count();
+		 if($result1==1)
+		 {
+		 return redirect(route('home'))->with('success', __('constant.EXIST', ['module' => __('constant.SUBSCRIBER')])); 
+		 }
+		 elseif($result==1)
+		 {
+		 $item = User::where('email', $emailid)->first();	
+		 $User = User::findorfail($item->id);
+		 $User->email = $request->emailid;
+		 $User->subscribe_status = 1;
+		 $User->status = 6;
+		 $User->updated_at = Carbon::now()->toDateTimeString();
+         $User->save();
+		 return redirect(route('home'))->with('success', __('constant.UPDATED', ['module' => __('constant.SUBSCRIBER')]));
+		 }
+		 else
+		 {
+		 $User = new User;	 
+		 $User->email = $request->emailid;
+		 $User->subscribe_status = 1;
+		 $User->status = 6;
+		 $User->created_at = Carbon::now()->toDateTimeString();
+		 $User->save();
+		 return redirect(route('home'))->with('success', __('constant.CREATED', ['module' => __('constant.SUBSCRIBER')]));
+		 }
+	}
 }
