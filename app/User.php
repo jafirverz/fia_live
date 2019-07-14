@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function invoice()
     {
-        return Invoice::where('user_id',233)->orderBy('created_at','desc')->first();
+        return Invoice::where('user_id',$this->id)->orderBy('created_at','desc')->first();
 
     }
 }
