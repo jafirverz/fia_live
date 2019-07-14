@@ -140,7 +140,7 @@
         @if(!Auth::check())
         <div class="intro">
 <h3>Get access to exclusive tools, regional insights and resources with FIA exclusive membership.</h3>
-<a class="btn-2" href="/fia/public/admin/page/edit/register.html">REGISTER NOW!</a></div>
+<a class="btn-2" href="{{ url('register')}}">REGISTER NOW!</a></div>
         @endif
     </div>
 </div>

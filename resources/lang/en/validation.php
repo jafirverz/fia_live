@@ -147,6 +147,8 @@ return [
     'attributes' => [
         'topic_id' => 'topic',
         'country_id'    =>  'country',
+        'payer_email'    =>  'email',
+        'mode'    =>  'subscription type',
     ],
 
 ];

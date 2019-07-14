@@ -569,4 +569,18 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+    function memberShipStatus($key = null)
+    {
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval','3'=>'Rejected','4'=>'Pending for Payment','5'=>'Active','6'=>'Inactive','7'=>'Lapsed','8'=>'Expired','9'=>'Deleted','10'=>'Subscriber Only'];
+
+        if (!is_null($key)) {
+            if (Arr::has($array_list, $key)) {
+                return $array_list[$key];
+            } else {
+                return null;
+            }
+
+        }
+        return $array_list;
+    }
 }

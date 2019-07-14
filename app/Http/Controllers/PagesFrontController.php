@@ -67,6 +67,11 @@ class PagesFrontController extends Controller
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
+    public function country_information_print()
+    {
+        return view('country_information.country-information-print');
+    }
+
     public function regulatory_details($slug)
     {
         $slug_page = __('constant.REGULATORY_DETAILS');
@@ -85,13 +90,6 @@ class PagesFrontController extends Controller
     public function regulatory_print($slug)
     {
 
-        $slug_page = __('constant.REGULATORY_DETAILS');
-        $page = Page::where('pages.slug', $slug_page)
-            ->where('pages.status', 1)
-            ->first();
-
-        $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page);
         $regulatory = Regulatory::where('slug', $slug)->first();
         $id = $_GET['id'] ?? '';
         if($id)
@@ -106,7 +104,7 @@ class PagesFrontController extends Controller
                 $child_regulatory = Regulatory::where('id', $id)->get();
             }
         }
-        return view('regulatory.regulatory-print', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
+        return view('regulatory.regulatory-print', compact('regulatory', 'child_regulatory'));
     }
 
     public function regulatory_details_search()

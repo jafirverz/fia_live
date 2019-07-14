@@ -5,8 +5,7 @@
 				@include('inc.banner');
 				<div class="container space-1">	
 					<div class="intro-1">
-						<h1 class="title-1 text-center">Get In Touch With Us</h1>
-						<p>You can get in touch with us at our hotline number <strong style="color: #303030;">(+65) 6235 3854</strong> or send us your enquiry here.</p>
+                    {!! $page->contents!!}
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-md-push-6">

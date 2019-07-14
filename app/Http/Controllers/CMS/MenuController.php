@@ -96,7 +96,7 @@ class MenuController extends Controller
 		$menu_count= Menu::where('parent', 0)->where('menu_type',$_GET['type'])->where('status',1)->where('parent',0)
             ->orderBy('view_order', 'ASC')
             ->count();
-		if($request->parent==0 && $menu_count>=6)
+		if($request->parent==0 && $request->type==1 && $menu_count>=6)
 		{
 		return redirect(url('/admin/menu-list/'.$_GET['type']))->with('error', __('constant.MENULIMIT'));	
 		}	
