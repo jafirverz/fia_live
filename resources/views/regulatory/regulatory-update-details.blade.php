@@ -6,6 +6,7 @@
     <div class="main-wrap">
         @include('inc.banner');
         <div class="container space-1">
+            @if(Auth::check())
             <div class="tb-col action-wrap-1">
                 <div class="col">
                     <a class="fas fa-angle-double-left lk-back" href="{{ url('regulatory-updates') }}">Back</a>
@@ -76,7 +77,9 @@
                 @endif
                 <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
             </div>
-
+        @else
+        @include('inc.signin')
+        @endif
         </div>
 
     </div><!-- //main -->
