@@ -62,7 +62,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 4)->where('status', 1)->latest()->get();
     }
 
     function getFilterYear($id = null)
@@ -74,7 +74,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 6)->where('status', 1)->latest()->get();
     }
 
     function getFilterTopic($id = null)
@@ -132,7 +132,7 @@ if (!function_exists('getTopics')) {
 	  else
 	  return "";
 	}
-	
+
 	function get_categry_by_country($country_id=null)
 	{
 	 $category=CountryInformation::where('country_id', $country_id)->first();
@@ -148,9 +148,9 @@ if (!function_exists('getTopics')) {
 	 {
 	 return "#";
 	 }
-	 
+
 	}
-	
+
 
 	function getCountryId($country=null)
 	{
