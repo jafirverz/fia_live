@@ -120,12 +120,16 @@
         $regulatory_highlight->other_highlight4,
         $regulatory_highlight->other_highlight5,
         ];
-		$rand_regulatory = array_rand($other_highlight_array, 3);
+        $other_highlight_array=array_filter($other_highlight_array);
         
-        for($i=0;$i<3;$i++ ){
-	
-        $regulatory = getRegulatoryById($rand_regulatory[$i]);
 
+       $i=0;
+        foreach($other_highlight_array as $key=>$value)
+        {
+	   $i++;
+        $regulatory = getRegulatoryById($value);      
+       if($i<=3)
+       {
         @endphp
                    
                     
@@ -141,7 +145,7 @@
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
                             </div>
                         </div>
-                   @php } @endphp
+                   @php }} @endphp
                     @endif    
                     </div>
                 </div>
@@ -204,8 +208,11 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+		   if(data=='#')		
+           content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
+           else 
            content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+country_name+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
-                   // $(".search-results").html(data);
+			       // $(".search-results").html(data);
                 }
             });
 			
