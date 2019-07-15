@@ -345,7 +345,7 @@ for ('topical_report_edit', function ($trail, $id) {
 
 Breadcrumbs::for('user', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push(__('constant.STUDENT'), url('/admin/user'));
+    $trail->push(__('constant.USER'), url('/admin/user'));
 });
 
 Breadcrumbs::for('user_create', function ($trail) {
@@ -354,7 +354,7 @@ Breadcrumbs::for('user_create', function ($trail) {
 });
 Breadcrumbs::for('user_edit', function ($trail, $id) {
     $trail->parent('user');
-    $trail->push(__('constant.EDIT'), url('/admin/student/edit'. $id));
+    $trail->push(__('constant.EDIT'), url('/admin/user/edit'. $id));
 });
 
 

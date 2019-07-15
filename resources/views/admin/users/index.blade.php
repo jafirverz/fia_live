@@ -18,6 +18,10 @@
             <div class="col-lg-12">
                 @include('admin.inc.message')
                 <div class="box">
+                    <div class="box-header with-border">
+                        <a href="{{ url('admin/user/create') }}" class="btn btn-primary pull-right">Create</a>
+                    </div>
+
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
                         <table id="users" class="table table-bordered table-hover">
