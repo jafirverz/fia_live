@@ -7,6 +7,7 @@ return [
 	'DASHBOARD' =>  'Dashboard',
     'COUNTRY_INFORMATION'   =>  'Country Information',
     'REGULATORY'    =>  'Regulatory',
+    'REGULATORY_LIST'    =>  'Regulatory List',
     'REGULATORY_HIGHLIGHT'  =>  'Regulatory Highlight',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
@@ -37,7 +38,7 @@ return [
 	'PROFILE' => 'Profile',
 	'TOPICAL_REPORT' => 'Topical Report',
 	'TOPICAL_REPORTS' => 'Topical Reports',
-	'USER' => 'Users',
+	'USER' => 'Membership Management',
 	'MASTER_SETTING' => 'Master Setting',
 	'SUBSCRIBER' => 'Subscriber',
 	//PAGE SLUG NAME

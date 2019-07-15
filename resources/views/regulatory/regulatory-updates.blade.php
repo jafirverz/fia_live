@@ -25,7 +25,7 @@
                             <select class="selectpicker" name="month">
                                 <option value="">-- Month --</option>
                                 @foreach (getFilterMonth() as $month)
-                                <option value="{{ $month->tag_name }}">{{ $month->tag_name }}</option>
+                                <option value="{{ $month->tag_name }}" @if($month->tag_name) @if($month->tag_name==date('F')) selected @endif @endif>{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,7 +33,7 @@
                             <select class="selectpicker" name="year">
                                 <option value="">-- Year --</option>
                                 @foreach (getFilterYear() as $year)
-                                <option value="{{ $year->tag_name }}">{{ $year->tag_name }}</option>
+                                <option value="{{ $year->tag_name }}" @if($year->tag_name) @if($year->tag_name==date('Y')) selected @endif @endif>{{ $year->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -116,7 +116,7 @@
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
                                                 | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
                                             {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
-                                            400) !!}
+                                            300) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                     </div>
@@ -161,7 +161,7 @@
         </div>
         <div class="container space-1 search-results">
             <h1 class="title-1 text-center">Latest Updates</h1>
-            <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
                 @php
                 $regulatory = getRegulatories();
                 @endphp
@@ -175,7 +175,7 @@
                                 <h3 class="title">{{ $value->title }}</h3>
                                 <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
                                     {{ $value->created_at->format('M d, Y') }}</p>
-                                {!! Illuminate\Support\Str::limit($value->description, 400) !!}
+                                {!! Illuminate\Support\Str::limit($value->description, 300) !!}
                             </div>
                         </div>
                         <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>

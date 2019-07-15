@@ -31,14 +31,18 @@
                                 </span>
                                 @endif
                             </div>
+                            <?php  $groupMembers = memberByGroupIds($group->id);
+                            $groupMembersArray = [];
+                            if(!is_null($groupMembers) && $groupMembers->count() ){
+                                $groupMembersArray = $groupMembers->pluck('user_id')->all();
+
+                            }
+                            ?>
                             <div class="form-group">
                                 <label>Select Member</label>
                                 <select class="form-control select2" name="group_members[]" multiple="multiple" data-placeholder="Select a member" style="width: 100%;">
-                                    @php
-                                        $group_members = json_decode($group->group_members);
-                                    @endphp
                                     @foreach (member() as $member)
-                                    <option value="{{ $member }}" @if(in_array($member, $group_members)) selected @endif>{{ $member }}</option>
+                                    <option value="{{ $member->id }}" @if(in_array($member->id, $groupMembersArray)) selected @endif>{{ $member->firstname.' '.$member->lastname }}</option>
                                     @endforeach
                                 </select>
                             </div>

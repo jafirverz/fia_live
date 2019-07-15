@@ -35,12 +35,12 @@
                                 <label>Select Member</label>
                                 <select class="form-control select2" name="group_members[]" multiple="multiple" data-placeholder="Select a member" style="width: 100%;">
                                     @foreach (member() as $member)
-                                    <option value="{{ $member }}">{{ $member }}</option>
+                                    <option value="{{ $member->id }}">{{ $member->firstname.' '.$member->lastname }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Select Member</label>
+                                <label>Select Status</label>
                                 <select class="form-control select2" name="status" data-placeholder="Select a State" style="width: 100%;">
                                     @foreach (inactiveActive() as $key => $value)
                                     <option value="{{ $key }}">{{ $value }}</option>

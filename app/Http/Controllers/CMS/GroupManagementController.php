@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\GroupManagement;
 use Carbon\Carbon;
+use App\GroupUserId;
 
 class GroupManagementController extends Controller
 {
@@ -14,6 +15,7 @@ class GroupManagementController extends Controller
         $this->middleware('auth:admin');
         $this->module_name = 'GROUPMANAGEMENT';
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,30 +46,37 @@ class GroupManagementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'group_name'  =>  'required|unique:group_managements,group_name',
-            'group_members'  =>  'required',
-            'status'  =>  'required',
+            'group_name' => 'required|unique:group_managements,group_name',
+            'group_members' => 'required',
+            'status' => 'required',
         ]);
-
         $groupmanagement = new GroupManagement();
         $groupmanagement->group_name = $request->group_name;
-        $groupmanagement->group_members = json_encode($request->group_members);
+        $groupmanagement->group_members = null;
         $groupmanagement->status = $request->status;
         $groupmanagement->save();
+        if (count($request->group_members)) {
+            foreach ($request->group_members as $member) {
+                $groupUserId = new GroupUserId();
+                $groupUserId->user_id = $member;
+                $groupUserId->group_id = $groupmanagement->id;
+                $groupUserId->save();
+            }
+        }
 
-        return redirect('admin/group-management')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.GROUPMANAGEMENT')]));
+        return redirect('admin/group-management')->with('success', __('constant.CREATED', ['module' => __('constant.GROUPMANAGEMENT')]));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -78,7 +87,7 @@ class GroupManagementController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -93,39 +102,48 @@ class GroupManagementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $request->validate([
-            'group_name'  =>  'required|unique:group_managements,group_name,'.$id.',id',
-            'group_members'  =>  'required',
-            'status'  =>  'required',
+            'group_name' => 'required|unique:group_managements,group_name,' . $id . ',id',
+            'group_members' => 'required',
+            'status' => 'required',
         ]);
 
         $groupmanagement = GroupManagement::findorfail($id);
         $groupmanagement->group_name = $request->group_name;
-        $groupmanagement->group_members = json_encode($request->group_members);
+        $groupmanagement->group_members = null;
         $groupmanagement->status = $request->status;
-        $groupmanagement->updated_at = Carbon::now();
         $groupmanagement->save();
 
-        return redirect('admin/group-management')->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.GROUPMANAGEMENT')]));
+        $members = GroupUserId::where('group_id', $id)->delete();
+        if (count($request->group_members)) {
+            foreach ($request->group_members as $member) {
+                $groupUserId = new GroupUserId();
+                $groupUserId->user_id = $member;
+                $groupUserId->group_id = $groupmanagement->id;
+                $groupUserId->save();
+            }
+        }
+
+        return redirect('admin/group-management')->with('success', __('constant.UPDATED', ['module' => __('constant.GROUPMANAGEMENT')]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
         $group = GroupManagement::findorfail($request->id);
         $group->delete();
-
-        return redirect('admin/group-management')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.GROUPMANAGEMENT')]));
+        $members = GroupUserId::where('group_id', $request->id)->delete();
+        return redirect('admin/group-management')->with('success', __('constant.DELETED', ['module' => __('constant.GROUPMANAGEMENT')]));
     }
 }

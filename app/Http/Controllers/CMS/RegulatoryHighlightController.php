@@ -20,7 +20,7 @@ class RegulatoryHighlightController extends Controller
         $title = __('constant.REGULATORY_HIGHLIGHT');
         $subtitle = 'Highlight';
 
-        $regulatories = Regulatory::all();
+        $regulatories = Regulatory::where('parent_id', null)->get();
         $regulatory_highlight = RegulatoryHighlight::first();
 
         return view('admin.regulatory.highlight.edit', compact('title', 'subtitle', 'regulatories', 'regulatory_highlight'));

@@ -58,6 +58,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/regulatory/update/{id}', 'CMS\RegulatoryController@update');
     Route::post('/regulatory/destroy', 'CMS\RegulatoryController@destroy');
 
+    Route::get('/regulatory/list/{parent_id}', 'CMS\RegulatoryListController@index');
+    Route::get('/regulatory/list/{parent_id}/create', 'CMS\RegulatoryListController@create');
+    Route::post('/regulatory/list/{parent_id}/store', 'CMS\RegulatoryListController@store');
+    Route::get('/regulatory/list/{parent_id}/edit/{id}', 'CMS\RegulatoryListController@edit');
+    Route::post('/regulatory/list/{parent_id}/update/{id}', 'CMS\RegulatoryListController@update');
+    Route::post('/regulatory/list/{parent_id}/destroy', 'CMS\RegulatoryListController@destroy');
+
     Route::get('/regulatory/highlight/edit', 'CMS\RegulatoryHighlightController@edit');
     Route::post('/regulatory/highlight/update', 'CMS\RegulatoryHighlightController@update');
 
@@ -199,8 +206,10 @@ Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::post('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
+Route::get('/country-information-print', 'PagesFrontController@country_information_print');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
+Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
