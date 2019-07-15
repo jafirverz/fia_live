@@ -21,6 +21,7 @@
 
                     <form name="user" method="post" action="{{ url('/admin/user/store')}}">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="salutation" class=" control-label">Salutation</label>
@@ -38,21 +39,25 @@
 
                             <div class="form-group">
                                 <label for="firstname" class=" control-label">First Name</label>
-                                <input class="form-control" placeholder="" value="{{ old('firstname') }}" name="firstname" type="text" id="">
+                                <input class="form-control" placeholder="" value="{{ old('firstname') }}"
+                                       name="firstname" type="text" id="">
                             </div>
 
                             <div class="form-group">
                                 <label for="lastname" class=" control-label">Last Name</label>
-                                <input class="form-control" placeholder="" value="{{ old('lastname') }}" name="lastname" type="text" id="">
+                                <input class="form-control" placeholder="" value="{{ old('lastname') }}" name="lastname"
+                                       type="text" id="">
                             </div>
 
                             <div class="form-group">
                                 <label for="status" class="control-label">Organisation</label>
-                                <input class="form-control" placeholder="" value="{{ old('organisation') }}" name="organisation" type="text" id="">
+                                <input class="form-control" placeholder="" value="{{ old('organisation') }}"
+                                       name="organisation" type="text" id="">
                             </div>
                             <div class="form-group">
                                 <label for="job_title" class=" control-label">Job Title</label>
-                                <input class="form-control " placeholder="" value="{{ old('job_title') }}" name="job_title" type="text" id="">
+                                <input class="form-control " placeholder="" value="{{ old('job_title') }}"
+                                       name="job_title" type="text" id="">
                             </div>
 
                             <div class="form-group">
@@ -68,21 +73,25 @@
                                     @endif
 
                                 </select>
-                                <input class="form-control" placeholder="" value="{{ old('payee_email_id') }}" name="payee_email_id" type="text" id="payee_email_id">
+                                <input class="form-control" placeholder="" value="{{ old('payee_email_id') }}"
+                                       name="payee_email_id" type="text" id="payee_email_id">
 
                             </div>
 
                             <div class="form-group">
                                 <label for="payee_name" class=" control-label">Payee Name</label>
-                                <input class="form-control" placeholder="" value="{{ old('payee_name') }}" name="payee_name" type="text" id="payee_name">
+                                <input class="form-control" placeholder="" value="{{ old('payee_name') }}"
+                                       name="payee_name" type="text" id="payee_name">
                             </div>
 
                             <div class="form-group">
                                 <label for="payment_mode" class="control-label">Payment Mode</label>
 
-                                <select  name="payment_mode" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
+                                <select name="payment_mode" class="form-control select2" id="selectpicker"
+                                        data-placeholder="Select Status">
                                     @foreach(get_payment_mode() as $k => $v)
-                                        <option value="{{$k}}"  @if(old('payment_mode')==$k) selected @endif>{{$v}}</option>
+                                        <option value="{{$k}}"
+                                                @if(old('payment_mode')==$k) selected @endif>{{$v}}</option>
                                     @endforeach
                                 </select>
 
@@ -91,9 +100,10 @@
                             <div class="form-group">
                                 <label for="status" class="control-label">Status</label>
 
-                                <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
+                                <select name="status" class="form-control select2" id="selectpicker"
+                                        data-placeholder="Select Status">
                                     @foreach(get_status() as $k => $v)
-                                        <option value="{{$k}}"  @if(old('status')==$k) selected @endif>{{$v}}</option>
+                                        <option value="{{$k}}" @if(old('status')==$k) selected @endif>{{$v}}</option>
                                     @endforeach
                                 </select>
 
