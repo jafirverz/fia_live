@@ -138,15 +138,20 @@ class PagesFrontController extends Controller
         {
             $query->where('stage_id', $stage);
         }
-        $result = $query->get();
 
+        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.*', 'filters.*')->get();
+
+        if(!$country && !$month && !$year && !$topic && !$stage)
+        {
+            $result = Regulatory::latestregulatory();
+        }
         if($option_type)
         {
-            $result = Regulatory::all();
+            $result = Regulatory::latestregulatory();
         }
         ?>
             <h1 class="title-1 text-center">Search Results</h1>
-            <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num=<?php echo setting()->pagination_limit ?? 8 ?>">
         <?php
         foreach($result as $value)
         {
@@ -160,7 +165,7 @@ class PagesFrontController extends Controller
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
                                     <?php echo $value->created_at->format('M d, Y'); ?></p>
-                                    <?php echo html_entity_decode(Str::limit($value->description, 400)); ?>
+                                    <?php echo html_entity_decode(Str::limit($value->description, 300)); ?>
                             </div>
                         </div>
                         <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>

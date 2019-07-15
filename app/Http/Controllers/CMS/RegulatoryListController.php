@@ -9,29 +9,29 @@ use App\Filter;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class RegulatoryController extends Controller
+class RegulatoryListController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->module_name = 'REGULATORY';
+        $this->module_name = 'REGULATORY_LIST';
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id)
     {
-        $title = __('constant.REGULATORY');
+        $title = __('constant.REGULATORY_LIST');
         $subtitle = 'Index';
 
-        $regulatories = Regulatory::where('parent_id', null)->get();
+        $regulatories = Regulatory::where('parent_id', $parent_id)->get();
         $countries = getFilterData(1);
         $topics = getFilterData(2);
         $stages = getFilterData(3);
 
-        return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
+        return view('admin.regulatory.list.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages', 'parent_id'));
     }
 
 
@@ -41,9 +41,9 @@ class RegulatoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($parent_id)
     {
-        $title = __('constant.REGULATORY');
+        $title = __('constant.REGULATORY_LIST');
         $subtitle = 'Create';
 
         $regulatories = Regulatory::all()->where('parent_id', 0);
@@ -51,7 +51,7 @@ class RegulatoryController extends Controller
         $topics = getFilterData(2);
         $stages = getFilterData(3);
 
-        return view('admin.regulatory.create', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
+        return view('admin.regulatory.list.create', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages', 'parent_id'));
     }
 
     /**
@@ -60,7 +60,7 @@ class RegulatoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $parent_id)
     {
         //dd($request->highlight);
         $request->validate([
@@ -78,13 +78,13 @@ class RegulatoryController extends Controller
         $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
-        $regulatory->parent_id = null;
+        $regulatory->parent_id = $parent_id;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;
         $regulatory->save();
 
-        return redirect('admin/regulatory')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.REGULATORY')]));
+        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.CREATED', ['module'    =>  __('constant.REGULATORY')]));
     }
 
     /**
@@ -104,9 +104,9 @@ class RegulatoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($parent_id, $id)
     {
-        $title = __('constant.REGULATORY');
+        $title = __('constant.REGULATORY_LIST');
         $subtitle = 'Edit';
 
         $regulatories = Regulatory::all()->where('parent_id', 0)->whereNotIn('id', $id);
@@ -115,7 +115,7 @@ class RegulatoryController extends Controller
         $topics = getFilterData(2);
         $stages = getFilterData(3);
 
-        return view('admin.regulatory.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'countries', 'topics', 'stages'));
+        return view('admin.regulatory.list.edit', compact('title', 'subtitle', 'regulatories', 'regulatory', 'countries', 'topics', 'stages', 'parent_id'));
     }
 
     /**
@@ -125,7 +125,7 @@ class RegulatoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $parent_id, $id)
     {
         $request->validate([
             'title'  =>  'required|unique:regulatories,title,'.$id.',id',
@@ -142,14 +142,14 @@ class RegulatoryController extends Controller
         $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
-        $regulatory->parent_id = null;
+        $regulatory->parent_id = $parent_id;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;
         $regulatory->updated_at = Carbon::now();
         $regulatory->save();
 
-        return redirect('admin/regulatory')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.REGULATORY')]));
+        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.REGULATORY')]));
     }
 
     /**
@@ -158,11 +158,11 @@ class RegulatoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $parent_id)
     {
         $regulatory = Regulatory::findorfail($request->id);
         $regulatory->delete();
 
-        return redirect('admin/regulatory')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
+        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
     }
 }

@@ -35,7 +35,7 @@
                             <div class="form-group{{ $errors->has('main_highlight') ? ' has-error' : '' }}">
                                 <label for="">Main Highlight</label>
                                 <select name="main_highlight" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Select --</option>
+                                    <option value=' '>-- Select --</option>
                                     @if($regulatories)
                                     @foreach ($regulatories as $regulatory)
                                     <option value="{{ $regulatory->id }}" @if($regulatory_highlight) @if($regulatory_highlight->main_highlight==$regulatory->id) selected @endif @endif>{{ $regulatory->title }}</option>
@@ -52,10 +52,10 @@
                             <div class="form-group{{ $errors->has('main_highlight'.$i) ? ' has-error' : '' }}">
                                     <label for="">Other Highlight {{ $i }}</label>
                                     <select name="other_highlight{{ $i }}" class="form-control select2" style="width: 100%;">
-                                        <option value="">-- Select --</option>
+                                        <option value=' '>-- Select --</option>
                                         @if($regulatories)
                                         @foreach ($regulatories as $regulatory)
-                                        <option value="{{ $regulatory->id }}" @if($regulatory_highlight) @if(in_array($regulatory->id, array_values($other_highlight_array)) && in_array($i, $other_highlight_array)) selected @endif @endif>{{ $regulatory->title }}</option>
+                                        <option value="{{ $regulatory->id }}" @if($regulatory_highlight) @if($regulatory->id==$other_highlight_array[$i-1]) selected @endif @endif>{{ $regulatory->title }}</option>
                                         @endforeach
                                         @endif
                                     </select>
