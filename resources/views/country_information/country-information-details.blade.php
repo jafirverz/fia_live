@@ -11,6 +11,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
             @if($contents)
             <div class="container">
                 <div class="clearfix">
+                    @if(Auth::check())
                     <div class="col-1">
                         <div class="sl-wrap">
                             <a class="btn-control" href="#nav">Select Country</a>
@@ -39,7 +40,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                         </div>
                     </div>
                     <div class="col-2">
-                        @if(Auth::check())
+
                         <div class="tb-col title-wrap-1 break-640">
                             <div class="col">
                                 <h1 class="title-1">{{ $_GET['country'] ?? '' }}</h1>

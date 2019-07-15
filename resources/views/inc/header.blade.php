@@ -9,7 +9,7 @@
                 </div>
                 <div class="col text-right">
                     <a class="btn-1" href="{{ url('profile') }}">Profile</a>
-                    <a class="btn-1" href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                    <a class="btn-2" href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                     <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>

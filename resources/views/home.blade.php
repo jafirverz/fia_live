@@ -108,31 +108,59 @@
                 </div>
                 <div class="col-sm-7">
                     <div class="grid-2 slick-1">
-                    @php 
-                    $regulatories=getRegulatories();
-                    @endphp
-                    @if($regulatories)
-                    @foreach($regulatories as $regulatory)
+                    @if(getRegulatoriesHighlight())
+        @php
+        $regulatory_highlight = getRegulatoriesHighlight();
+
+        $other_highlight_array = [
+        $regulatory_highlight->main_highlight,
+        $regulatory_highlight->other_highlight1,
+        $regulatory_highlight->other_highlight2,
+        $regulatory_highlight->other_highlight3,
+        $regulatory_highlight->other_highlight4,
+        $regulatory_highlight->other_highlight5,
+        ];
+		$rand_regulatory = array_rand($other_highlight_array, 3);
+        
+        for($i=0;$i<3;$i++ ){
+	
+        $regulatory = getRegulatoryById($rand_regulatory[$i]);
+
+        @endphp
+                   
+                    
                         <div class="item">
                             <div class="box-4">
                                 <figure><img src="{{getFilterCountryImage($regulatory->country_id)}}" alt="{{getFilterCountry($regulatory->country_id)}} flag" /></figure>
                                 <div class="content">
                                     <h3 class="title">{{$regulatory->title}}</h3>
                                     <p class="date"><span class="country">{{getFilterCountry($regulatory->country_id)}}</span> | {{ $regulatory->created_at->format('M d, Y') }}</p>
-                                    <p>{!! substr(strip_tags($regulatory->description),0,120) !!}</p>
+                                    <p>{!! Illuminate\Support\Str::limit($regulatory->description, 120) !!}</p>
                                     <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                 </div>
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
                             </div>
                         </div>
-                    @endforeach 
+                   @php } @endphp
                     @endif    
                     </div>
                 </div>
             </div>
         </div>
         <div class="intro-home-2 tb-col break-720">
-            {!!$page->other_contents2!!}
+         @if(!Auth::check())
+          @php 
+          $video='<video controls=""><source src="'.$page->video1.'" type="video/mp4"></video>';
+          echo $other_contents2=str_replace("{{VIDEO_HOME}}",$video,$page->other_contents2); 
+          
+          @endphp  
+         @else
+          @php 
+          $video='<video controls=""><source src="'.$page->video2.'" type="video/mp4"></video>';
+          echo $other_contents2=str_replace("{{VIDEO_HOME}}",$video,$page->other_contents2); 
+          
+          @endphp
+         @endif
         </div>
         <div class="intro-home-3">
     <div class="container">

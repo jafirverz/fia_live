@@ -7,6 +7,7 @@ return [
 	'DASHBOARD' =>  'Dashboard',
     'COUNTRY_INFORMATION'   =>  'Country Information',
     'REGULATORY'    =>  'Regulatory',
+    'REGULATORY_LIST'    =>  'Regulatory List',
     'REGULATORY_HIGHLIGHT'  =>  'Regulatory Highlight',
     'CONTACTENQUIRY'   =>  'Contact Enquiry',
     'GROUPMANAGEMENT'   =>  'Group Management',
