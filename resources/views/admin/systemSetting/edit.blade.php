@@ -116,6 +116,12 @@
                                  <textarea class="form-control tiny-editor " name="footer">{{ $systemSetting->footer }}</textarea>
                             </div>
                         </div>
+                        <div class="form-group">
+<label for="footer" class=" control-label">Footer</label>
+						<div class="">
+                                 <textarea class="form-control tiny-editor " name="footer_copyright">{{ $systemSetting->footer_copyright }}</textarea>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-body -->
 

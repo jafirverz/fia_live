@@ -44,7 +44,7 @@
     </div>
     <div class="copyright">
         <div class="container">
-            <p>Copyright &copy;2019 Food Industry Asia (FIA). All rights reserved. <!--<a href="webmaster.html">Web Excellence</a> by <span class="verz">Verz</span>--></p>
+            <p>{!! setting()->footer_copyright !!} <!--<a href="webmaster.html">Web Excellence</a> by <span class="verz">Verz</span>--></p>
         </div>
     </div>
 </footer><!-- //footer container -->

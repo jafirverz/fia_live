@@ -70,7 +70,7 @@
                             <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
                            
                             @foreach (inactiveActive() as $key => $value)
-                                    <option  @if($filter->status==$k) selected @endif value="{{ $key }}">{{ $value }}</option>
+                                    <option  @if($filter->status==$key) selected @endif value="{{ $key }}">{{ $value }}</option>
                             @endforeach                           
                             </select>                            
                             </div>
