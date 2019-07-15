@@ -54,11 +54,30 @@ Breadcrumbs::for('regulatory_highlight_edit', function ($trail) {
     $trail->push('Highlight', url('/admin/regulatory/highlight/edit'));
 });
 
+//REGULATORY LIST
+Breadcrumbs::for('regulatory_list', function ($trail, $parent_id) {
+    $trail->parent('regulatory');
+    $trail->push('List', url('/admin/regulatory/list/'.$parent_id));
+});
+
+Breadcrumbs::for('regulatory_list_create', function ($trail, $parent_id) {
+    $trail->parent('regulatory_list', $parent_id);
+    $trail->push('Create', url('/admin/regulatory/list/'.$parent_id.'/create'));
+});
+
+Breadcrumbs::for('regulatory_list_edit', function ($trail, $parent_id, $id) {
+    $trail->parent('regulatory_list', $parent_id);
+    $trail->push('Edit', url('/admin/regulatory/list/'.$parent_id.'/edit', $id));
+});
+
 Breadcrumbs::
 for ('admin_profile', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('constant.PROFILE'), url('/admin/profile/edit'));
 }) ;
+
+
+
 //CONTACT ENQUIRY
 Breadcrumbs::for('contactenquiry', function ($trail) {
     $trail->parent('dashboard');
@@ -345,7 +364,7 @@ for ('topical_report_edit', function ($trail, $id) {
 
 Breadcrumbs::for('user', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push(__('constant.STUDENT'), url('/admin/user'));
+    $trail->push(__('constant.USER'), url('/admin/user'));
 });
 
 Breadcrumbs::for('user_create', function ($trail) {
@@ -354,7 +373,7 @@ Breadcrumbs::for('user_create', function ($trail) {
 });
 Breadcrumbs::for('user_edit', function ($trail, $id) {
     $trail->parent('user');
-    $trail->push(__('constant.EDIT'), url('/admin/student/edit'. $id));
+    $trail->push(__('constant.EDIT'), url('/admin/user/edit'. $id));
 });
 
 

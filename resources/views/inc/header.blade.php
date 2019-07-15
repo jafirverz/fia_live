@@ -3,15 +3,17 @@
         <div class="container">
             <div class="tb-col">
                 @if(Auth::check())
-                    <div class="col">
-                        Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, Welcome to <strong>Food Industry Asia!</strong>
-                    </div>
-                    <div class="col text-right">
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn-1">Logout</button>
-                        </form>
-                    </div>
+                <div class="col">
+                    Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, Welcome to <strong>Food Industry
+                        Asia!</strong>
+                </div>
+                <div class="col text-right">
+                    <a class="btn-1" href="{{ url('profile') }}">Profile</a>
+                    <a class="btn-2" href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                    <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
                 @else
                 <div class="col">
                     Hi Guest, Welcome to <strong>Food Industry Asia!</strong>

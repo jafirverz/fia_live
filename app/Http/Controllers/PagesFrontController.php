@@ -67,19 +67,44 @@ class PagesFrontController extends Controller
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
+    public function country_information_print()
+    {
+        return view('country_information.country-information-print');
+    }
+
     public function regulatory_details($slug)
     {
         $slug_page = __('constant.REGULATORY_DETAILS');
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
             ->first();
-			
+
         $banner = get_page_banner($page->id);
         $breadcrumbs = getBreadcrumb($page);
 
         $regulatory = Regulatory::where('slug', $slug)->first();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
+    }
+
+    public function regulatory_print($slug)
+    {
+
+        $regulatory = Regulatory::where('slug', $slug)->first();
+        $id = $_GET['id'] ?? '';
+        if($id)
+        {
+            if(strpos($id, ',') !== false)
+            {
+                $id = explode(',', $id);
+                $child_regulatory = Regulatory::whereIn('id', $id)->latest()->get();
+            }
+            else
+            {
+                $child_regulatory = Regulatory::where('id', $id)->get();
+            }
+        }
+        return view('regulatory.regulatory-print', compact('regulatory', 'child_regulatory'));
     }
 
     public function regulatory_details_search()
@@ -113,15 +138,20 @@ class PagesFrontController extends Controller
         {
             $query->where('stage_id', $stage);
         }
-        $result = $query->get();
 
+        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.*', 'filters.*')->get();
+
+        if(!$country && !$month && !$year && !$topic && !$stage)
+        {
+            $result = Regulatory::latestregulatory();
+        }
         if($option_type)
         {
-            $result = Regulatory::all();
+            $result = Regulatory::latestregulatory();
         }
         ?>
             <h1 class="title-1 text-center">Search Results</h1>
-            <div class="grid-2 eheight clearfix mbox-wrap" data-num="8">
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num=<?php echo setting()->pagination_limit ?? 8 ?>">
         <?php
         foreach($result as $value)
         {
@@ -135,7 +165,7 @@ class PagesFrontController extends Controller
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
                                     <?php echo $value->created_at->format('M d, Y'); ?></p>
-                                    <?php echo html_entity_decode(Str::limit($value->description, 400)); ?>
+                                    <?php echo html_entity_decode(Str::limit($value->description, 300)); ?>
                             </div>
                         </div>
                         <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>

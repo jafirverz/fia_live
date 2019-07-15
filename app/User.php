@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'student_id', 'firstname', 'lastname', 'organization', 'country', 'email', 'password',
+        'user_id', 'salutation', 'student_id', 'firstname', 'lastname', 'organization', 'job_title', 'telephone_code', 'telephone_number', 'mobile_code', 'mobile_number', 'country', 'city', 'address1', 'address2', 'email', 'password', 'subscribe_status', 'status',
     ];
 
     /**
@@ -41,4 +41,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function invoice()
+    {
+        return Invoice::where('user_id',$this->id)->orderBy('created_at','desc')->first();
+
+    }
 }

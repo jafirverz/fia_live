@@ -63,22 +63,6 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('parent_id') ? ' has-error' : '' }}">
-                                <label for="">Parent</label>
-                                <select name="parent_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Select --</option>
-                                    @if($regulatories)
-                                    @foreach ($regulatories as $item)
-                                    <option value="{{ $item->id }}" @if($regulatory->parent_id==$item->id) selected @endif>{{ $item->title }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('parent_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('parent_id') }}</strong>
-                                </span>
-                                @endif
-                            </div>
                             <div class="form-group{{ $errors->has('topic_id') ? ' has-error' : '' }}">
                                 <label for="">Topics</label>
                                 <select name="topic_id[]" class="form-control select2" style="width: 100%;" multiple>

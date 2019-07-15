@@ -32,7 +32,6 @@
                                             <th>Title</th>
                                             <th>Agency Responsible</th>
                                             <th>Date of Regulation in Force</th>
-                                            <th>Parent</th>
                                             <th>Topic</th>
                                             <th>Stage</th>
                                             <th>Country</th>
@@ -48,7 +47,6 @@
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
                                             <td>{{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }}</td>
-                                            <td>{{ getParentRegulatory($regulatory->parent_id) ?? '-' }}</td>
                                             <td>
                                                 @if($topics)
                                                 @foreach($topics as $topic)
@@ -71,6 +69,7 @@
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                                     <input type="hidden" name="id" value="{{ $regulatory->id }}">
                                                 </form>
+                                                <a href="{{ url('admin/regulatory/list', $regulatory->id) }}" class="btn btn-info" title="List"><i class="fa fa-list" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

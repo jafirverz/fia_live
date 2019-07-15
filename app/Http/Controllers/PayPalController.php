@@ -11,7 +11,12 @@ use Srmklive\PayPal\Services\AdaptivePayments;
 use Srmklive\PayPal\Services\ExpressCheckout;
 use App\Page;
 use App\Banner;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade as PDF;
+use GuzzleHttp\Client;
+
 
 class PayPalController extends Controller
 {
@@ -40,6 +45,7 @@ class PayPalController extends Controller
             return abort(404);
 
         }
+
         $response = [];
         if (session()->has('code')) {
             $response['code'] = session()->get('code');
@@ -62,16 +68,58 @@ class PayPalController extends Controller
      */
     public function getExpressCheckout(Request $request)
     {
+        $fields = $request->all();
+        $validatorFields = [
+            'email' => 'required|email',
+            'mode' => 'required'
+        ];
+
+        $validator = Validator::make($fields, $validatorFields);
+        $user = User::where('email', $request->email)->first();
+        if(is_null($user))
+        {
+            $validator->getMessageBag()->add('email', 'Member does not exist with this email id.' );
+        }
+        elseif($user->status==1)
+        {
+            $validator->getMessageBag()->add('email', 'You can not subscribe because your email is still not verified.' );
+        }
+        elseif($user->status==2)
+        {
+            $validator->getMessageBag()->add('email', 'Your account still not approved by admin.' );
+        }
+        elseif($user->status==3)
+        {
+            $validator->getMessageBag()->add('email', 'Your account is rejected. Please contact to admin.' );
+        }
+        elseif($user->status==5)
+        {
+            $validator->getMessageBag()->add('email', 'Your subscription is already active.' );
+        }
+        elseif($user->status==7)
+        {
+            $validator->getMessageBag()->add('email', 'Your account is lapsed. Please contact to admin.' );
+        }
+        elseif($user->status==9)
+        {
+            $validator->getMessageBag()->add('email', 'Your account is deleted. Please contact to admin.' );
+        }
+        elseif($user->status==10)
+        {
+            $validator->getMessageBag()->add('email', 'Your are now newsletter subscriber only. First you need to register your account.' );
+        }
+
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
         Session(['payer_email' => $request->email]);
         $recurring = ($request->get('mode') === 'recurring') ? true : false;
         $cart = $this->getCheckoutData($recurring);
-
         try {
             $response = $this->provider->setExpressCheckout($cart, $recurring);
 
             return redirect($response['paypal_link']);
         } catch (\Exception $e) {
-            $user = User::where('email', $request->email)->first();
             $data['subscription_type'] = $request->mode;
             $data['period_type'] = masterSetting()->subscription_validity;
             $data['period_value'] = masterSetting()->subscription_validity_type;
@@ -113,6 +161,7 @@ class PayPalController extends Controller
                 if (!empty($response['PROFILESTATUS']) && in_array($response['PROFILESTATUS'], ['ActiveProfile', 'PendingProfile'])) {
                     $status = 'Processed';
                     $cart['profile_id'] = $response['PROFILEID'];
+                    $user->status = 5;
                 } else {
                     $status = 'Invalid';
                 }
@@ -121,8 +170,9 @@ class PayPalController extends Controller
                 $payment_status = $this->provider->doExpressCheckoutPayment($cart, $token, $PayerID);
                 $status = $payment_status['PAYMENTINFO_0_PAYMENTSTATUS'];
                 $cart['transaction_id'] = $payment_status['PAYMENTINFO_0_TRANSACTIONID'];
+                $user->status = 5;
             }
-
+            $user->save();
             $invoice = $this->createInvoice($cart, $status);
 
             if ($invoice->paid) {
@@ -201,14 +251,14 @@ class PayPalController extends Controller
     {
         $data = [];
         $constant = masterSetting()->invoice_constant;
-        $invoiceCount = Invoice::all()->count();
+        $invoiceCount = Invoice::where('order_id','like',masterSetting()->invoice_constant.'%')->count();
         $order_id = masterSetting()->invoice_constant . date("y") . str_pad((masterSetting()->invoice_series_no + $invoiceCount), 4, '0', STR_PAD_LEFT);
 
         if ($recurring === true) {
             $data['items'] = [
                 [
                     'name' => 'Subscription ' . ' #' . $order_id,
-                    'price' => masterSetting()->subscription_value,
+                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value*masterSetting()->gst_percentage/100),
                     'qty' => 1,
                 ],
             ];
@@ -220,7 +270,7 @@ class PayPalController extends Controller
             $data['items'] = [
                 [
                     'name' => 'Subscription ' . ' #' . $order_id,
-                    'price' => masterSetting()->subscription_value,
+                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value*masterSetting()->gst_percentage/100),
                     'qty' => 1,
                 ]
             ];
@@ -235,6 +285,7 @@ class PayPalController extends Controller
         $data['invoice_id'] = $order_id;
         $data['invoice_description'] = "Order #$order_id Invoice";
         $data['cancel_url'] = url('/');
+        $data['gst'] = masterSetting()->gst_percentage;
 
         $total = 0;
         foreach ($data['items'] as $item) {
@@ -264,7 +315,10 @@ class PayPalController extends Controller
         $invoice->user_id = $cart['user_id'];
         $invoice->user_email = $cart['email'];
         $invoice->title = $cart['invoice_description'];
-        $invoice->price = $cart['total'];
+        $invoice->price = $cart['total']-($cart['total']*$cart['gst']/100);
+        $invoice->total = $cart['total'];
+        $invoice->gst = $cart['gst'];
+        $invoice->currency = masterSetting()->currency;
         $invoice->transaction_id = $cart['transaction_id'];
         $invoice->profile_id = $cart['profile_id'];
         if (!strcasecmp($status, 'Completed') || !strcasecmp($status, 'Processed')) {
@@ -283,6 +337,21 @@ class PayPalController extends Controller
 
             $item->save();
         });
+        $user = User::where('email', $cart['email'])->first();
+        $data = $invoice->toArray();
+        $data['firstname']= $user->firstname;
+        $data['lastname']= $user->lastname;
+        $data['organization']= $user->organization;
+        $data['address1']= $user->address1;
+        $data['address2']= $user->address2;
+        $file_name =$cart['invoice_id']. '.pdf';
+        $pdf = PDF::loadView('invoice', compact('data'));
+        $content = $pdf->download()->getOriginalContent();
+
+        Storage::put('public/' . $file_name,$content) ;
+        //Storage::put('/public/' . $file_name, $pdf->output());
+        $invoice->path = $file_name ;
+        $invoice->save();
 
         return $invoice;
     }
