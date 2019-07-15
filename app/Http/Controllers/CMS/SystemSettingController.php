@@ -173,6 +173,7 @@ class SystemSettingController extends Controller
             'contact_email' => 'required | email ',
 			'pagination_limit' => 'required',
 			'social_link' => 'required',
+			'footer_copyright' => 'required',
 
         ];
         $validator = Validator::make($fields, $validatorFields);
@@ -194,6 +195,7 @@ class SystemSettingController extends Controller
         //$systemSetting->contact_address = $request->contact_address;
         $systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
+		$systemSetting->footer_copyright = $request->footer_copyright;
 		$systemSetting->pagination_limit = $request->pagination_limit;
 		$systemSetting->social_link = $request->social_link;
 

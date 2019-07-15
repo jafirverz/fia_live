@@ -75,6 +75,8 @@ class PageController extends Controller
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;
         $page->meta_description = $request->meta_description;*/
+		
+		
         $page->page_type = 0;
         if (empty($request->status)) {
             $page->status = 1;
@@ -129,6 +131,8 @@ class PageController extends Controller
             'title' => 'required|max:191',
             'slug' => 'required|max:191|unique:pages,slug,' . $id . ',id',
             'contents' => 'required',
+			'video1' => 'nullable|mimes:mp4',
+			'video2' => 'nullable|mimes:mp4',
         ];
         $validator = Validator::make($fields, $validatorFields);
         if ($validator->getMessageBag()->count()) {
@@ -142,6 +146,67 @@ class PageController extends Controller
 		$page->other_contents1 = isset($request->other_contents1)?$request->other_contents1:"";
 		$page->other_contents2 = isset($request->other_contents2)?$request->other_contents2:"";
 		$page->other_contents3 = isset($request->other_contents3)?$request->other_contents3:"";
+		
+		//Video Upload
+		if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }
+
+        if (!is_dir('uploads/video')) {
+            mkdir('uploads/video');
+        }
+        $destinationPath = 'uploads/video'; // upload path
+        $video1_url = '';
+		$video2_url = '';
+        $video1Path = null;
+		$video2Path = null;
+		
+		if ($request->hasFile('video1')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('video1')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('video1')->getClientOriginalExtension();
+            // Filename to store
+            $video1_url = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('video1')->move($destinationPath, $video1_url);
+            $video1Path = $destinationPath . "/" . $video1_url;;
+        }
+        if ($request->hasFile('video1')) {
+            if ($page->video1) {
+                File::delete($page->video1);
+            }
+            $video1Path = $destinationPath . '/' . $video1_url;
+            $page->video1 = $video1Path;
+        }
+		
+		if ($request->hasFile('video2')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('video2')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('video2')->getClientOriginalExtension();
+            // Filename to store
+            $video2_url = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('video2')->move($destinationPath, $video2_url);
+            $video2Path = $destinationPath . "/" . $video2_url;;
+        }
+        if ($request->hasFile('video2')) {
+            if ($page->video2) {
+                File::delete($page->video2);
+            }
+            $video2Path = $destinationPath . '/' . $video2_url;
+            $page->video2 = $video2Path;
+        }
+		
+		//End Video Upload
+		
         /*$page->meta_title = $request->meta_title;
         $page->meta_auther = $request->meta_auther;
         $page->meta_keyword = $request->meta_keyword;

@@ -450,8 +450,10 @@ if (!function_exists('getTopics')) {
 
     function inactiveActive($id = null)
     {
+
         $array_list = ['Active','Inactive'];
         if (!is_null($id)) {
+
             return $array_list[$id];
         }
         return $array_list;
