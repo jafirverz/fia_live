@@ -1,4 +1,5 @@
 <div class="space-1">
+        @include('admin.inc.message')
     <form action="{{ route('login') }}" method="POST" class="form-wrap-1 form-type form-ani">
         @csrf
         <h1 class="title-1 text-center">Sign in to your account</h1>
