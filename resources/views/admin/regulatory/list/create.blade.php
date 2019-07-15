@@ -9,12 +9,12 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('regulatory_create') }}
+        {{ Breadcrumbs::render('regulatory_list_create', $parent_id) }}
     </section>
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ url('admin/regulatory/store') }}" method="post">
+        <form action="{{ url('admin/regulatory/list/'.$parent_id.'/store') }}" method="post">
             @csrf
             <div class="box box-default">
                 <!-- /.box-header -->

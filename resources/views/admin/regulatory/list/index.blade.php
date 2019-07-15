@@ -9,7 +9,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('regulatory') }}
+        {{ Breadcrumbs::render('regulatory_list', $parent_id) }}
     </section>
 
     <!-- Main content -->
@@ -20,8 +20,7 @@
                 <div class="box box-default">
                     <!-- /.box-header -->
                     <div class="box-header">
-                        <a href="{{ url('admin/regulatory/create') }}" class="btn btn-primary pull-right">Create</a>
-                        <a href="{{ url('admin/regulatory/highlight/edit') }}" class="btn btn-primary pull-right">Highlight</a>
+                        <a href="{{ url('admin/regulatory/list/'.$parent_id.'/create') }}" class="btn btn-primary pull-right">Create</a>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -63,13 +62,12 @@
                                             <td>{{ $regulatory->created_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>{{ $regulatory->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
                                             <td>
-                                                <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <form action="{{ url('admin/regulatory/destroy') }}" method="post">
+                                                <a href="{{ url('admin/regulatory/list/'.$parent_id.'/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <form action="{{ url('admin/regulatory/list/'.$parent_id.'/destroy') }}" method="post">
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                                     <input type="hidden" name="id" value="{{ $regulatory->id }}">
                                                 </form>
-                                                <a href="{{ url('admin/regulatory/list', $regulatory->id) }}" class="btn btn-info" title="List"><i class="fa fa-list" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach

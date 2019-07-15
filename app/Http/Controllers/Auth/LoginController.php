@@ -86,7 +86,22 @@ class LoginController extends Controller
         if($error_message)
         {
             Auth::logout();
+            return redirect()->intended('login')->with('error', $error_message);
         }
-        return redirect()->intended('login')->with('error', $error_message);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $redirectTo = url('profile');
+        if($request->redirect)
+        {
+            $redirectTo = url($request->redirect);
+        }
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect($redirectTo);
     }
 }
