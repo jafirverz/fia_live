@@ -72,6 +72,9 @@
                 message: "required"
 
             },
+    errorElement : 'div',
+    errorLabelContainer: '.errorTxt',
+	messages: {name:"Please enter name.",emailid:'Please enter valid email.',enquiry_type:'Please select enquiry type.',message:'Please enter message'},
             submitHandler: function (form) {
 				
 				if (grecaptcha.getResponse()) {
