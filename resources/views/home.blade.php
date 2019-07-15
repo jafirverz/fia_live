@@ -168,7 +168,32 @@
         </div>
         <div class="intro-home-3">
     <div class="container">
-        {!!$page->other_contents3!!}
+
+         @if(!Auth::check())
+          @php 
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}","",$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}","",$other_contents3);
+           echo $other_contents3;
+          
+          @endphp  
+         @else
+          @php 
+            $REGULATORY_LINK='<a href="regulatory-updates"></a>';
+            $COUNTRY_LINK='<a href="country-information"></a>';
+            $RESOURCE_LINK='<a href="topical-reports"></a>';
+            $get_access='<p class="more">Get access <span class="fas fa-angle-double-right"></span></p>';
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}",$get_access,$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}",$REGULATORY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}",$COUNTRY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}",$RESOURCE_LINK,$other_contents3);
+           echo $other_contents3;
+          
+          @endphp
+         @endif
         @if(!Auth::check())
         <div class="intro">
 <h3>Get access to exclusive tools, regional insights and resources with FIA exclusive membership.</h3>
