@@ -574,7 +574,7 @@ if (!function_exists('getTopics')) {
 
     function memberShipStatus($key = null)
     {
-        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Subscriber Only'];
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only'];
 
         if (!is_null($key)) {
             if (Arr::has($array_list, $key)) {
@@ -600,8 +600,20 @@ if (!function_exists('getTopics')) {
 
     function memberGroup()
     {
-        $groups = GroupManagement::where('status', 0)->select('group_name', 'id')
+        $groups = GroupManagement::where('status', 1)
+            ->select('group_name', 'id')
+            ->orderBy('group_name','asc')
             ->get();
+        return $groups;
+    }
+    function memberGroupByUserIds($id = null)
+    {
+        $groups = GroupUserId::join('group_managements', 'group_managements.id', '=', 'group_user_ids.group_id')
+            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'group_managements.group_name','group_managements.status')
+            ->where('group_managements.status', 1)
+            ->where('group_user_ids.user_id', $id)
+            ->get();
+
         return $groups;
     }
 }

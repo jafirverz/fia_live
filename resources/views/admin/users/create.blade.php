@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="member_type" class=" control-label">Member Type</label>
-                                <select class="form-control select2" name="country">
+                                <select class="form-control select2" name="member_type">
                                     @if (memberType())
                                         @foreach (memberType() as $key=>$member)
                                             <option value="{{ $key }}"
@@ -66,9 +66,9 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="status" class="control-label">Organisation</label>
-                                <input class="form-control" placeholder="" value="{{ old('organisation') }}"
-                                       name="organisation" type="text" id="">
+                                <label for="organization" class="control-label">Organisation</label>
+                                <input class="form-control" placeholder="" value="{{ old('organization') }}"
+                                       name="organization" type="text" id="">
                             </div>
                             <div class="form-group">
                                 <label for="job_title" class=" control-label">Job Title</label>
@@ -148,12 +148,14 @@
                                        name="address2" type="text" id="">
                             </div>
                             <div class="form-group">
-                                <label for="member_type" class=" control-label">Group</label>
-                                <select class="form-control select2" name="country">
+                                <label for="group_ids" class=" control-label">Group</label>
+                                <select class="form-control select2" name="group_ids[]" multiple="multiple"
+                                        data-placeholder="-- Select a group --" style="width: 100%;">
                                     <option value="">-- Select Group --</option>
                                     @if (memberGroup())
                                         @foreach (memberGroup() as $key=>$group)
-                                            <option value="{{ $key }}">{{ $group->group_name }}</option>
+                                            <option value="{{ $group->id }}"
+                                                    @if(!is_null(old('group_ids')) && in_array($group->id,old('group_ids'))) selected="selected" @endif>{{ $group->group_name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -165,7 +167,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="password_confirmation" class=" control-label">Confirm Password</label>
-                                <input class="form-control " placeholder="" value="{{ old('password_confirmation') }}"
+                                <input class="form-control " placeholder="" value=""
                                        name="password_confirmation" type="password" id="">
                             </div>
                             <div class="form-group">
@@ -173,7 +175,7 @@
 
                                 <select name="status" class="form-control select2" id="selectpicker"
                                         data-placeholder="Select Status">
-                                    @foreach(get_status() as $k => $v)
+                                    @foreach(memberShipStatus() as $k => $v)
                                         <option value="{{$k}}" @if(old('status')==$k) selected @endif>{{$v}}</option>
                                     @endforeach
                                 </select>
