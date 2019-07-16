@@ -101,6 +101,7 @@ class PagesFrontController extends Controller
     {
 
         $regulatory = Regulatory::where('slug', $slug)->first();
+        $child_regulatory = null;
         $id = $_GET['id'] ?? '';
         if($id)
         {
@@ -179,7 +180,7 @@ class PagesFrontController extends Controller
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
                                     <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
-                                    <?php echo html_entity_decode(Str::limit($value->description, 300)); ?>
+                                    <p><?php echo html_entity_decode(Str::limit($value->description, 300)); ?></p>
                             </div>
                         </div>
                         <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>
