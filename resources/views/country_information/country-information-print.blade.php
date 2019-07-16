@@ -74,7 +74,7 @@ $id = $_GET['id'];
             {
                 $("[data-id='" + id + "']").removeClass("hide");
             }
-            //window.print();
+            window.print();
         });
 
     </script>
