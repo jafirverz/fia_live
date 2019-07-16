@@ -67,7 +67,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 4)->where('status', 1)->latest()->get();
+        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getFilterYear($id = null)
@@ -79,7 +79,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 6)->where('status', 1)->latest()->get();
+        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getFilterTopic($id = null)

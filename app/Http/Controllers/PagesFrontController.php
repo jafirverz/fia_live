@@ -58,12 +58,16 @@ class PagesFrontController extends Controller
 
     public function country_information_details()
     {
+        $title_breadcrumb = [
+            'slug'  =>  url()->full(),
+            'title' =>  $_GET['country'] . ' ' . $_GET['category'],
+        ];
         $slug = __('constant.COUNTRY_INFORMATION_DETAILS');
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
         $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page);
+        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
@@ -74,16 +78,22 @@ class PagesFrontController extends Controller
 
     public function regulatory_details($slug)
     {
+        $regulatory = Regulatory::where('slug', $slug)->first();
+        $child_regulatory = Regulatory::childregulatory($regulatory->id);
+
         $slug_page = __('constant.REGULATORY_DETAILS');
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
             ->first();
 
         $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page);
+        $title_breadcrumb = [
+            'slug'  =>  $regulatory->slug,
+            'title' =>  $regulatory->title,
+        ];
+        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
 
-        $regulatory = Regulatory::where('slug', $slug)->first();
-        $child_regulatory = Regulatory::childregulatory($regulatory->id);
+
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
     }
 
@@ -91,6 +101,7 @@ class PagesFrontController extends Controller
     {
 
         $regulatory = Regulatory::where('slug', $slug)->first();
+        $child_regulatory = null;
         $id = $_GET['id'] ?? '';
         if($id)
         {
@@ -169,21 +180,21 @@ class PagesFrontController extends Controller
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
                                     <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
-                                    <?php echo html_entity_decode(Str::limit($value->description, 300)); ?>
+                                    <p><?php echo html_entity_decode(Str::limit($value->description, 300)); ?></p>
                             </div>
                         </div>
                         <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>
                     </div>
                 </div>
 
+
         <?php
         }
         ?>
-        <!-- no loop this element -->
-        <div class="grid-sizer"></div> <!-- no loop this element -->
-            </div>
-            <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
+                <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
                     class="fas fa-angle-double-down"></i></button></div>
+            </div>
+
         <?php
             }
             else {
@@ -198,7 +209,7 @@ class PagesFrontController extends Controller
         $request->validate([
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
-            'organization' => 'required|alpha_num',
+            'organization' => 'required|string',
             'password' => 'required',
         ]);
 

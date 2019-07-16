@@ -205,6 +205,8 @@ background: linear-gradient(to right, #f1452d 0%,#ffa921 100%); color: #fff !imp
 .nav-list li a:before { content: "\f105"; font-family: 'Font Awesome 5 Free'; font-size: 15px; font-weight: 900; position: absolute; right: 10px; top: 5px; }
 .nav-list > li.open > a:before { content: "\f107"; font-weight: 900; }
 .nav-list li.active > a, .nav-list li > a:hover, .nav-list > li.active > a:before, .nav-list li > a:hover:before { color: #fb7a10; }
+.nav-list ul { display: none; }
+.nav-list li.active > ul { display: block; }
 .nav-list ul li a { border-bottom: none; color: #909090; font-size: 14px; font-weight: 400; padding: 4px 0 4px 20px; }
 .nav-list ul li a:before { content: "\f0a9"; font-size: 9px; left: 0; right: auto; top: 6px; }
 .nav-list ul li a:hover, .nav-list ul li.active a { text-decoration: underline; }
@@ -369,7 +371,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .form-wrap-1 .links a { color: #fb7a10; text-decoration: underline; }
 .form-wrap-1 .links a:hover { color: #000; }
 .form-wrap-1 .checkbox { margin-bottom: 30px; margin-top: 30px; }
-.error{color:#F00;}
+
 .contact-form { margin-top: 20px; }
 .contact-form .inrow { margin-bottom: 30px; }
 
