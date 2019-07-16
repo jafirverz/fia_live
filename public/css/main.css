@@ -497,7 +497,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .grid-4 .col-2 { width: 30%; }
 .grid-4 .box-4 { margin: 0 0 30px; }
 
-.more-wrap { margin: 20px 0; text-align: center; }
+.more-wrap { float: left; margin: 20px 0; text-align: center; width: 100%; }
 .more-wrap .fas { margin-left: 5px; }
 
 .filter-wrap { font-size: 0; }
