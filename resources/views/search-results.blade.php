@@ -6,7 +6,9 @@
 				<div class="container space-1">
 					<h1 class="title-1 text-center">Search Results</h1>
 					<div class="intro-1 space-3">
-						<p>Your search for X has brought back these results</p>
+                    @if(isset($_REQUEST['search_content']))
+						<p>Your search for {{$_REQUEST['search_content']}} has brought back these results</p>
+                    @endif
 					</div>
                     @if(count($informations)>0)
 					<div class="box-5 clearfix mlist-wrap">
