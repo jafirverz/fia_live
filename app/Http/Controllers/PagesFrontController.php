@@ -120,23 +120,23 @@ class PagesFrontController extends Controller
         $query = Regulatory::query();
         if($country)
         {
-            $query->whereIn('country_id', $country);
+            $query->whereIn('regulatories.country_id', $country);
         }
         if($month)
         {
-            $query->whereMonth('created_at', date('m', strtotime($month)));
+            $query->whereMonth('regulatories.created_at', date('m', strtotime($month)));
         }
         if($year)
         {
-            $query->whereYear('created_at', date('Y', strtotime($year)));
+            $query->whereYear('regulatories.created_at', date('Y', strtotime($year)));
         }
         if($topic)
         {
-            $query->where('topic_id', 'like', '%'.$topic.'%');
+            $query->where('regulatories.topic_id', 'like', '%'.$topic.'%');
         }
         if($stage)
         {
-            $query->where('stage_id', $stage);
+            $query->where('regulatories.stage_id', $stage);
         }
 
         $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.*', 'filters.*')->get();
@@ -151,6 +151,10 @@ class PagesFrontController extends Controller
         }
         ?>
             <h1 class="title-1 text-center">Search Results</h1>
+            <?php
+            if($result->count())
+            {
+            ?>
             <div class="grid-2 eheight clearfix mbox-wrap" data-num=<?php echo setting()->pagination_limit ?? 8 ?>">
         <?php
         foreach($result as $value)
@@ -164,7 +168,7 @@ class PagesFrontController extends Controller
                             <div class="ecol">
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
-                                    <?php echo $value->created_at->format('M d, Y'); ?></p>
+                                    <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
                                     <?php echo html_entity_decode(Str::limit($value->description, 300)); ?>
                             </div>
                         </div>
@@ -181,6 +185,12 @@ class PagesFrontController extends Controller
             <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
                     class="fas fa-angle-double-down"></i></button></div>
         <?php
+            }
+            else {
+                ?>
+                    <p class="text-center">No result found.</p>
+                <?php
+            }
     }
 
     public function profileUpdate(Request $request, $id)
