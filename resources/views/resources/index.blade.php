@@ -38,7 +38,7 @@
 				<div class="container space-1">
 					
 					<h1 class="title-1 text-center">Upcoming Events</h1>
-					<div id="events" class="masony" data-num="5" data-load="#btn-load">
+					<div id="events" class="masony" data-num="{{ setting()->pagination_limit }}" data-load="#btn-load">
 						@foreach($events as $event)
 						<div class="grid-1 item">
 							<div class="tb-col">
@@ -48,7 +48,7 @@
 								<div class="col content-col">
 									<div class="content">								
 										<h2>{{$event->event_title}}</h2>
-										<p class="date-post">{{date("D",strtotime($event->event_date))}}  |  {{ date("h:m A",strtotime($event->event_date)) }}</p>
+										<p class="date-post">{{date("D",strtotime($event->event_date))}}  |  {{ date("h:i A",strtotime($event->event_date)) }}</p>
 										<p>{{$event->event_address}}</p>
 										<span class="btn-4">See More <i class="fas fa-angle-double-right"></i></span>
 									</div>

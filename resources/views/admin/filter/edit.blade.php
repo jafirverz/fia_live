@@ -68,7 +68,7 @@
 							<label for="status" class=" control-label">Status</label>
                             <div class="">
                             <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
-                           
+                           <?php ?>
                             @foreach (inactiveActive() as $key => $value)
                                     <option  @if($filter->status==$key) selected @endif value="{{ $key }}">{{ $value }}</option>
                             @endforeach                           

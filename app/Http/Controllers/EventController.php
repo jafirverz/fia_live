@@ -61,14 +61,15 @@ class EventController extends Controller
         $data=array('topic'=>"");
         $title = __('constant.TOPICAL_REPORTS');
         $breadcrumbs = $breadcrumbs->generate('front_report_listing');
-		$reports =TopicalReport::all();
+		$reports =TopicalReport::orderBy('id','DESC')->get();
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
     }
 	
 	public function search_report(BreadcrumbsManager $breadcrumbs, Request $request)
     {
 
-        $page=Page::where('pages.slug', __('constant.TOPICAL_REPORT_SLUG'))
+        dd($request);
+		$page=Page::where('pages.slug', __('constant.TOPICAL_REPORT_SLUG'))
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
@@ -81,9 +82,13 @@ class EventController extends Controller
         //dd($request);
         $topic = $request->topic;
 		$data=array('topic'=>$topic);
-        if ($topic != "")
+        if (!is_null($request) && $topic != "")
         {
 		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%"');
+		}
+		else
+		{
+		$reports = DB::select('SELECT * FROM topical_reports');
 		}
         
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
@@ -136,9 +141,9 @@ class EventController extends Controller
         }
         $title = __('constant.EVENT_DETAIL');
 		$banner = get_page_banner($page->id);
-		$slug=str_replace("-"," ",$slug);
+		$url_name=str_replace("-"," ",$slug);
 		$breadcrumbs = $breadcrumbs->generate('front_event_detail',strtoupper($slug));
-		$event = Event::where('event_title', strtoupper($slug))->first();
+		$event = Event::where('event_title', strtoupper($url_name))->orWhere('event_title',$slug)->first();
 		if (!$event) {
            return abort(404);
         }
