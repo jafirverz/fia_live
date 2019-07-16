@@ -90,7 +90,7 @@
                                     <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
                                     <p class="date"><span
                                             class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span>
-                                        | {{ $regulatory_main_highlight->created_at->format('d m Y') }}</p>
+                                        | {{ $regulatory_main_highlight->created_at->format('d m, Y') }}</p>
                                     {!! Illuminate\Support\Str::limit($regulatory_main_highlight->description, 800) !!}
                                 </div>
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -114,7 +114,7 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
-                                                | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
+                                                | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
                                             {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
                                             300) !!}
                                         </div>
@@ -143,7 +143,7 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
-                                                | {{ $regulatory_other_highlight->created_at->format('d m Y') }}</p>
+                                                | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
                                             {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
                                             !!}
                                         </div>
@@ -161,11 +161,12 @@
         </div>
         <div class="container space-1 search-results">
             <h1 class="title-1 text-center">Latest Updates</h1>
+            @php
+            $regulatory = getRegulatories();
+            @endphp
+            @if($regulatory)
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
-                @php
-                $regulatory = getRegulatories();
-                @endphp
-                @if($regulatory)
+
                 @foreach ($regulatory as $value)
                 <div class="item mbox">
                     <div class="box-4">
@@ -182,10 +183,12 @@
                     </div>
                 </div>
                 @endforeach
-                @endif
-                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
-                            class="fas fa-angle-double-down"></i></button></div>
+                <div class="grid-sizer"></div> <!-- no loop this element -->
             </div>
+            <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
+                class="fas fa-angle-double-down"></i></button></div>
+                @endif
+
         </div>
         @endif
     </div><!-- //main -->
@@ -246,6 +249,7 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+
                     $(".search-results").html(data);
                     $(".bg-tempt").addClass("hide");
                 }
@@ -255,6 +259,10 @@
             year_array = [];
             topic_array = [];
             stage_array = [];
+            $('.eheight').each(function() {
+                //alert($(this).find('.ecol').html());
+                $(this).find('.ecol').matchHeight();
+            });
         }
     });
 

@@ -58,12 +58,16 @@ class PagesFrontController extends Controller
 
     public function country_information_details()
     {
+        $title_breadcrumb = [
+            'slug'  =>  url()->full(),
+            'title' =>  $_GET['country'] . ' ' . $_GET['category'],
+        ];
         $slug = __('constant.COUNTRY_INFORMATION_DETAILS');
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
         $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page);
+        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
@@ -74,16 +78,22 @@ class PagesFrontController extends Controller
 
     public function regulatory_details($slug)
     {
+        $regulatory = Regulatory::where('slug', $slug)->first();
+        $child_regulatory = Regulatory::childregulatory($regulatory->id);
+
         $slug_page = __('constant.REGULATORY_DETAILS');
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
             ->first();
 
         $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page);
+        $title_breadcrumb = [
+            'slug'  =>  $regulatory->slug,
+            'title' =>  $regulatory->title,
+        ];
+        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
 
-        $regulatory = Regulatory::where('slug', $slug)->first();
-        $child_regulatory = Regulatory::childregulatory($regulatory->id);
+
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
     }
 
