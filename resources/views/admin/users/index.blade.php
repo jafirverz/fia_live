@@ -59,11 +59,24 @@
                                         <td>{{ $user->country ?? '-' }}</td>
                                         <td>{{ $user->city ?? '-' }}</td>
                                         <td>{{ $user->email ?? '-' }}</td>
-                                        <td>Payment Status</td>
+                                        <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
+                                                Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
+                                                Unpaid @else - @endif</td>
                                         <td>Group Name</td>
-                                        <td data-order="<?php echo $user->created_at->format('d M, Y H:i:s') ?? '-' ?>">{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
-                                        <td>Subscription Status</td>
-                                        <td>Renewal Date</td>
+                                        <td data-order="<?php if(!is_null($user->invoice()) ) {echo $user->invoice()->created_at->format('d M, Y H:i:s');}?>">
+                                            @if(!is_null($user->invoice()) )
+                                                {{ $user->invoice()->created_at->format('d M, Y')}}
+                                            @else - @endif
+                                        </td>
+
+                                        <td>@if($user->status==5)Active @else Inactive @endif</td>
+                                        <td>
+                                            @if(!is_null($user->invoice()) && $user->invoice()->period_type=='Month' )
+                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." months", strtotime($user->invoice()->created_at)))}}
+                                            @elseif(!is_null($user->invoice()) && $user->invoice()->period_type=='Year')
+                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." years", strtotime($user->invoice()->created_at)))}}
+                                            @else - @endif
+                                        </td>
                                         <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
                                         <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
@@ -88,7 +101,9 @@
                                                             <i class="fa fa-trash btn btn-danger"> Delete</i>
                                                         </a>
                                                     </td>
-                                                </tr></table><table>
+                                                </tr>
+                                            </table>
+                                            <table>
                                                 <tr>
                                                     <td>
                                                         <a class="" title="Approve and send payment"
@@ -104,7 +119,8 @@
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            </table><table>
+                                            </table>
+                                            <table>
                                                 <tr>
                                                     <td>
                                                         <a class="" title="Reject"

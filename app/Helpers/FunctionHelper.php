@@ -7,6 +7,10 @@ use App\PermissionAccess;
 use App\CountryInformation;
 use App\RegulatoryHighlight;
 use Illuminate\Support\Arr;
+use App\User;
+use App\GroupUserId;
+use Illuminate\Support\Facades\DB;
+
 
 if (!function_exists('getTopics')) {
 
@@ -440,14 +444,14 @@ if (!function_exists('getTopics')) {
 
     function member($id = null)
     {
-        $array_list = ['Arvind', 'Nikunj', 'Jafir', 'Apoorva', 'Glenn', 'Henry'];
-        return $array_list;
+        $members = User::where('status',5)->select('id','firstname','lastname')->get();
+        return $members;
     }
 
     function inactiveActive($id = null)
     {
-        $array_list = ['Inactive', 'Active'];
-        if ($id) {
+        $array_list = ['Active','Inactive'];
+        if (!is_null($id)) {
             return $array_list[$id];
         }
         return $array_list;
@@ -582,5 +586,16 @@ if (!function_exists('getTopics')) {
 
         }
         return $array_list;
+    }
+
+    function memberByGroupIds($id = null)
+    {
+        $members = GroupUserId::join('users', 'users.id', '=', 'group_user_ids.user_id')
+            ->select('group_user_ids.group_id','group_user_ids.user_id', 'users.id','users.status',DB::raw('CONCAT(users.firstname, " ", users.lastname) AS full_name'))
+            ->where('users.status',5)
+            ->where('group_user_ids.group_id',$id)
+            ->get();
+
+        return $members;
     }
 }
