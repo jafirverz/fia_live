@@ -237,8 +237,9 @@ if (!function_exists('getTopics')) {
                     $target = 'target="_blank"';
                 else
                     $target = "";
+				$menu_id_by_page=get_menu_id_by_page_id($page_id,'1');
 
-                if ($page_id == $menu->page_id)
+                if ($page_id == $menu->page_id || $menu_id_by_page==$menu->id)
                     $sel = 'class="active"';
                 else
                     $sel = '';
@@ -332,6 +333,17 @@ if (!function_exists('getTopics')) {
         $menus = Menu::where('parent', $parent)->count();
         if ($menus > 0)
             return $menus;
+        else
+            return 0;
+
+    }
+	
+	function get_menu_id_by_page_id($page_id = null,$type=null)
+    {
+        $menu = Menu::where('page_id', $page_id)->where('menu_type', 1)->first();
+		
+        if ($menu)
+            return $menu->parent;
         else
             return 0;
 
