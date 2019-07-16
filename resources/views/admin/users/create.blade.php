@@ -63,13 +63,25 @@
                             <div class="form-group">
                                 <label for="" class=" control-label">Telephone Number</label>
 
-                                <select class="form-control" id="countries">
+                                <select class="form-control countries" >
                                     @if (CountryList())
                                         @foreach (CountryList() as $item)
-                                            <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"  @if($item->iso=='SG') selected @endif> +{{ $item->phonecode }}</option>
+                                            <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"  @if($item->iso=='SG') selected @endif>&nbsp;+{{ $item->phonecode }}</option>
                                         @endforeach
                                     @endif
                                     </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class=" control-label">Mobile Number</label>
+
+                                <select class="form-control countries" >
+                                    @if (CountryList())
+                                        @foreach (CountryList() as $item)
+                                            <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"  @if($item->iso=='SG') selected @endif>&nbsp;+{{ $item->phonecode }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
 
                             <div class="form-group">
@@ -129,12 +141,11 @@
         if (!item.id) {
             return item.text;
         }
-        var iso = $(item).attr('data-iso');
-        alert(item.element);
+        var iso = item.element.dataset.iso;
         var img = $("<img>", {
             class: "img-flag",
             width: 26,
-            src: APP_URL + '/flags_iso/'+iso.toLowerCase()+'.png'
+            src: APP_URL + '/flags_iso/24/'+iso.toLowerCase()+'.svg'
         });
         var span = $("<span>", {
             text: " " + item.text
@@ -144,7 +155,7 @@
     }
 
     $(document).ready(function () {
-        $("#countries").select2({
+        $(".countries").select2({
             templateResult: function (item) {
                 return format(item, false);
             }

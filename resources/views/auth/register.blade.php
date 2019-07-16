@@ -81,7 +81,7 @@
                                         @if (CountryList())
                                         @foreach (CountryList() as $item)
                                         <option value="{{ $item->phonecode }}"
-                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}'
+                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.svg') }}" alt="" /> +{{ $item->phonecode }}'
                                             @if($item->iso=='SG') selected @endif>
                                             +{{ $item->phonecode }}</option>
                                         @endforeach
@@ -101,7 +101,7 @@
                                         @if (CountryList())
                                         @foreach (CountryList() as $item)
                                         <option value="{{ $item->phonecode }}"
-                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}'
+                                            data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.svg') }}" alt="" /> +{{ $item->phonecode }}'
                                             @if($item->iso=='SG') selected @endif>
                                             +{{ $item->phonecode }}</option>
                                         @endforeach
