@@ -36,7 +36,7 @@
 							<label for="status" class=" control-label">Status</label>
                             <div class="">
                             <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
-                            @foreach(ActiveInActinve() as $k => $v)
+                            @foreach(inactiveActive() as $k => $v)
                             <option value="{{$k}}"  @if($menu_type->status==$k) selected @endif>{{$v}}</option>
                             @endforeach                            
                             </select>                            

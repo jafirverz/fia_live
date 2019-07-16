@@ -24,8 +24,13 @@
                     <select name="country" class="selectpicker">
                         <option value="" data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                         @foreach(getAllCountry() as $country)
-                            <option value="{{$country->id}}"
+                          @if($country=='Other')
+                            <option value="{{$country->id}}" >{{$country->tag_name}}</option>
+                          @else
+                           <option value="{{$country->id}}"
                                     data-content='<img src="{{$country->country_image}}" alt="{{$country->tag_name}}" /> {{$country->tag_name}}'>{{$country->tag_name}}</option>
+                          @endif
+                        
                         @endforeach
                         <option value="Other">Other</option>
                     </select>
