@@ -120,12 +120,16 @@
         $regulatory_highlight->other_highlight4,
         $regulatory_highlight->other_highlight5,
         ];
-		$rand_regulatory = array_rand($other_highlight_array, 3);
+        $other_highlight_array=array_filter($other_highlight_array);
         
-        for($i=0;$i<3;$i++ ){
-	
-        $regulatory = getRegulatoryById($rand_regulatory[$i]);
 
+       $i=0;
+        foreach($other_highlight_array as $key=>$value)
+        {
+	   $i++;
+        $regulatory = getRegulatoryById($value);      
+       if($i<=3)
+       {
         @endphp
                    
                     
@@ -141,7 +145,7 @@
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
                             </div>
                         </div>
-                   @php } @endphp
+                   @php }} @endphp
                     @endif    
                     </div>
                 </div>
@@ -164,7 +168,32 @@
         </div>
         <div class="intro-home-3">
     <div class="container">
-        {!!$page->other_contents3!!}
+
+         @if(!Auth::check())
+          @php 
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}","",$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}","",$other_contents3);
+           echo $other_contents3;
+          
+          @endphp  
+         @else
+          @php 
+            $REGULATORY_LINK='<a href="regulatory-updates"></a>';
+            $COUNTRY_LINK='<a href="country-information"></a>';
+            $RESOURCE_LINK='<a href="topical-reports"></a>';
+            $get_access='<p class="more">Get access <span class="fas fa-angle-double-right"></span></p>';
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}",$get_access,$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}",$REGULATORY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}",$COUNTRY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}",$RESOURCE_LINK,$other_contents3);
+           echo $other_contents3;
+          
+          @endphp
+         @endif
         @if(!Auth::check())
         <div class="intro">
 <h3>Get access to exclusive tools, regional insights and resources with FIA exclusive membership.</h3>
@@ -204,8 +233,11 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+		   if(data=='#')		
+           content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
+           else 
            content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+country_name+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
-                   // $(".search-results").html(data);
+			       // $(".search-results").html(data);
                 }
             });
 			

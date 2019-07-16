@@ -9,6 +9,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-md-push-6">
+                        <!--<div class="errorTxt"></div>-->
                             <form id="contact" name="contact" class="form-type form-ani contact-form" method="post" action="{{ url('/contact-store')}}">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 								<div class="inrow">

@@ -29,7 +29,7 @@ class BannerController extends Controller
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.BANNER');
-        $banners = Banner::all();
+        $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->get();
         return view('admin.banner.index', compact('title', 'banners'));
     }
 
