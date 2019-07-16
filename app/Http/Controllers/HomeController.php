@@ -59,7 +59,8 @@ class HomeController extends Controller
 	 public function search(Request $request)
     {
        
-        //dd($request);
+
+		$ActiveCountries = getFilterCountry()->pluck('id')->all();
 		$slug = __('constant.SEARCH_RESULTS');
 		$page=pageDetails($slug);
 		$breadcrumbs = getBreadcrumb($page);	
@@ -101,8 +102,15 @@ class HomeController extends Controller
 		//dd($events);
 		
 		//Topical Reports
-		
-		if($request->country!="" && $request->search_content!="")
+		if($request->country!="Other")
+		{
+			$report_description = DB::table('topical_reports')
+				->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
+				->where('topical_reports.description', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
+				->get();
+		}
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$report_description = DB::table('topical_reports')
 		 		->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
@@ -128,8 +136,14 @@ class HomeController extends Controller
 		  $reports[]=$item;
 		  }
 		}
-		
-		if($request->country!="" && $request->search_content!="")
+		if($request->country=="Other"){
+			$report_title = DB::table('topical_reports')
+				->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
+				->where('topical_reports.title', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
+				->get();
+		}
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$report_title = DB::table('topical_reports')
 		 		->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
@@ -185,8 +199,13 @@ class HomeController extends Controller
 		  }
 		}
 		//Regulatories
-		
-		if($request->country!="" && $request->search_content!="")
+		if($request->country=="Other"){
+			$regulatories_description = DB::table('regulatories')
+				->where('description', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('country_id',$ActiveCountries)
+				->get();
+		}
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%'.$request->search_content.'%')
@@ -211,8 +230,15 @@ class HomeController extends Controller
 		  $regulatories[]=$item;
 		  }
 		}
-		
-		if($request->country!="" && $request->search_content!="")
+		if($request->country=="Other"){
+
+			$regulatories_title = DB::table('regulatories')
+				->where('title', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('country_id',$ActiveCountries)
+				->get();
+		}
+
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%'.$request->search_content.'%')
@@ -241,7 +267,13 @@ class HomeController extends Controller
 		//dd($regulatories);
 		
 		//Country Information
-		if($request->country!="" && $request->search_content!="")
+		if($request->country=="Other"){
+			$information_title = DB::table('country_information')
+				->where('information_title', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('country_id',$ActiveCountries)
+				->get();
+		}
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$information_title = DB::table('country_information')
                 ->where('information_title', 'like', '%'.$request->search_content.'%')
@@ -266,9 +298,14 @@ class HomeController extends Controller
 		  $informations[]=$item;
 		  }
 		}
-		
-		
-		if($request->country!="" && $request->search_content!="")
+
+		if($request->country=="Other"){
+			$information_description = DB::table('country_information')
+				->where('information_content', 'like', '%'.$request->search_content.'%')
+				->whereNotIn('country_id',$ActiveCountries)
+				->get();
+		}
+		elseif($request->country!="" && $request->search_content!="")
 		{
 		$information_description = DB::table('country_information')
                 ->where('information_content', 'like', '%'.$request->search_content.'%')

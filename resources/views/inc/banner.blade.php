@@ -32,6 +32,7 @@
                           @endif
                         
                         @endforeach
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="col">
@@ -77,38 +78,38 @@
                                                 </button>
 											</span>
 
-										</div>
-									</div>
-								</div>
-                                </form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="breadcrumb-wrap">
-					<div class="container">
-                        @if (isset($breadcrumbs) && count($breadcrumbs))
-                            <ul class="breadcrumb">
-                                @foreach ($breadcrumbs as $breadcrumb)
-                                @if(is_array($breadcrumb))
-                                @if($loop->last)
-                                    <li><strong>{{ $breadcrumb['title'] }}</strong></li>
-                                @else
-                                    <li><a href="{{ url($breadcrumb['slug']) }}">{{ $breadcrumb['title'] }}</a></li>
-                                @endif
-                                @else
-                                @if ($breadcrumb->url && !$loop->last)
-                                    <li><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
-                                @else
-                                    <li><strong>{{ $breadcrumb->title }}</strong></li>
-                                @endif
-                                @endif
-                                @endforeach
-                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb-wrap">
+        <div class="container">
+            @if (isset($breadcrumbs) && count($breadcrumbs))
+                <ul class="breadcrumb">
+                    @foreach ($breadcrumbs as $breadcrumb)
+                        @if(is_array($breadcrumb))
+                            @if($loop->last)
+                                <li><strong>{{ $breadcrumb['title'] }}</strong></li>
+                            @else
+                                <li><a href="{{ url($breadcrumb['slug']) }}">{{ $breadcrumb['title'] }}</a></li>
+                            @endif
+                        @else
+                            @if ($breadcrumb->url && !$loop->last)
+                                <li><a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a></li>
+                            @else
+                                <li><strong>{{ $breadcrumb->title }}</strong></li>
+                            @endif
+                        @endif
+                    @endforeach
+                </ul>
 
-                    @endif
-					</div>
-				</div>
+            @endif
+        </div>
+    </div>
 
 @else
     @if($banner)

@@ -80,7 +80,7 @@ if (!function_exists('DummyFunction')) {
 
     }
 
-    function getBreadcrumb($page)
+    function getBreadcrumb($page, $title_breadcrumb=null)
     {
         $main_menu = [$page->id];
         $breadcrumbs = [];
@@ -91,7 +91,7 @@ if (!function_exists('DummyFunction')) {
                 $main_menu[] = $menu->page_id;
             }
         }
-		
+
         //return $main_menu;
 
         if ($main_menu) {
@@ -108,6 +108,13 @@ if (!function_exists('DummyFunction')) {
                         'title' => $page->title,
                     ];
                 }
+            }
+            if($title_breadcrumb)
+            {
+                $breadcrumbs[] = [
+                    'slug' => $title_breadcrumb['slug'],
+                    'title' => $title_breadcrumb['title'],
+                ];
             }
         }
 		//dd($breadcrumbs);
@@ -180,9 +187,9 @@ if (!function_exists('DummyFunction')) {
     }
 	function get_page_banner($page_id)
 	{
-	//dd($page_id);	
+	//dd($page_id);
 	$banner = Banner::where('page_name', $page_id)->first();
-	if(isset($banner))	
+	if(isset($banner))
 	return $banner;
 	else
 	return "";
@@ -190,7 +197,7 @@ if (!function_exists('DummyFunction')) {
     function pageDetails($slug)
 	{
 	$details = Page::where('slug', $slug)->where('status','1')->first();
-    return $details;	
+    return $details;
 	}
     function setOption($id, $pageParent = null, $parent = 0)
     {
