@@ -229,9 +229,11 @@ if (!function_exists('getTopics')) {
         if ($menus->count() > 0) {
             $string[] = '<ul>';
             $sel = '';
+			
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
-                if ($menu->page_id == NULL)
+                
+				if ($menu->page_id == NULL)
                     $target = 'target="_blank"';
                 else
                     $target = "";
@@ -240,8 +242,11 @@ if (!function_exists('getTopics')) {
                     $sel = 'class="active"';
                 else
                     $sel = '';
-                $string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
-
+				if ($menu->page_id == '30')
+                $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
+				else
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+				
                 if (has_child_menu($menu->id) > 0) {
 
                     $string[] = get_menu_has_child($menu->id, 1);
@@ -404,7 +409,9 @@ if (!function_exists('getTopics')) {
 
     function ActiveInActinve($value = null)
     {
-        $array_list = ["1" => 'Active', "0" => 'Inactive'];
+
+        $array_list = ["1" => 'Active', "0" => 'Deactive'];;
+
         if ($value) {
             return $array_list[$value - 1];
         }
@@ -447,8 +454,8 @@ if (!function_exists('getTopics')) {
     function inactiveActive($id = null)
     {
 
-        $array_list = ['Inactive', 'Active'];
-        if (!is_null($id)) {
+        $array_list = ['Deactive', 'Active'];
+        if ($id) {
 
             return $array_list[$id];
         }

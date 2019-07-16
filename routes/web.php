@@ -204,6 +204,7 @@ Route::post('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::post('/topical-reports/search', 'EventController@search_report');
+Route::get('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/country-information-print', 'PagesFrontController@country_information_print');

@@ -127,7 +127,8 @@
         foreach($other_highlight_array as $key=>$value)
         {
 	   $i++;
-        $regulatory = getRegulatoryById($value);      
+        $regulatory = getRegulatoryById($value); 
+       if( $regulatory)  {   
        if($i<=3)
        {
         @endphp
@@ -145,7 +146,7 @@
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
                             </div>
                         </div>
-                   @php }} @endphp
+                   @php }}} @endphp
                     @endif    
                     </div>
                 </div>
@@ -171,11 +172,13 @@
 
          @if(!Auth::check())
           @php 
+           $LOGIN_LINK='<a href="login"></a>';
+           $get_access='<p class="more">Get access <span class="fas fa-angle-double-right"></span></p>';
            $other_contents3=$page->other_contents3;
-           $other_contents3=str_replace("{{GET_ACCESS}}","",$other_contents3); 
-           $other_contents3=str_replace("{{REGULATORY_LINK}}","",$other_contents3);
-           $other_contents3=str_replace("{{COUNTRY_LINK}}","",$other_contents3);
-           $other_contents3=str_replace("{{RESOURCE_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{GET_ACCESS}}",$get_access,$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}",$LOGIN_LINK,$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}",$LOGIN_LINK,$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}",$LOGIN_LINK,$other_contents3);
            echo $other_contents3;
           
           @endphp  
@@ -184,7 +187,7 @@
             $REGULATORY_LINK='<a href="regulatory-updates"></a>';
             $COUNTRY_LINK='<a href="country-information"></a>';
             $RESOURCE_LINK='<a href="topical-reports"></a>';
-            $get_access='<p class="more">Get access <span class="fas fa-angle-double-right"></span></p>';
+            $get_access='<p class="more">Enter <span class="fas fa-angle-double-right"></span></p>';
            $other_contents3=$page->other_contents3;
            $other_contents3=str_replace("{{GET_ACCESS}}",$get_access,$other_contents3); 
            $other_contents3=str_replace("{{REGULATORY_LINK}}",$REGULATORY_LINK,$other_contents3);
@@ -244,8 +247,19 @@
 			content+='</div></div></div></div>';
            //alert(content);
 		   $( "#map_country_detail" ).html(content); 
+		   
+		   $('.map-wrap .fa-times').each(function(){
+		    $(this).click(function(e){
+	        e.preventDefault();
+			 $('.map-wrap .pin').removeClass('open');
+			 $('.map-wrap .pin-pp').removeClass('openpp');
+		});	
+	});
+		   
+		   
         });
-
+			
+			
     });    
  </script>   
 <!-- //main -->
