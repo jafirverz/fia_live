@@ -187,14 +187,14 @@ class PagesFrontController extends Controller
                     </div>
                 </div>
 
+
         <?php
         }
         ?>
-        <!-- no loop this element -->
-        <div class="grid-sizer"></div> <!-- no loop this element -->
-            </div>
-            <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
+                <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
                     class="fas fa-angle-double-down"></i></button></div>
+            </div>
+
         <?php
             }
             else {
@@ -209,7 +209,7 @@ class PagesFrontController extends Controller
         $request->validate([
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
-            'organization' => 'required|alpha_num',
+            'organization' => 'required|string',
             'password' => 'required',
         ]);
 

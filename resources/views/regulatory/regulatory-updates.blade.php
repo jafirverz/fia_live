@@ -176,17 +176,17 @@
                                 <h3 class="title">{{ $value->title }}</h3>
                                 <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
                                     {{ $value->created_at->format('M d, Y') }}</p>
-                                {!! Illuminate\Support\Str::limit($value->description, 300) !!}
+                                    {!! Illuminate\Support\Str::limit($value->description, 300) !!}
                             </div>
                         </div>
                         <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
                     </div>
                 </div>
                 @endforeach
-                <div class="grid-sizer"></div> <!-- no loop this element -->
+                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
+                    class="fas fa-angle-double-down"></i></button></div>
             </div>
-            <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
-                class="fas fa-angle-double-down"></i></button></div>
+
                 @endif
 
         </div>
@@ -252,6 +252,7 @@
 
                     $(".search-results").html(data);
                     $(".bg-tempt").addClass("hide");
+                    showMore();
                 }
             });
             country_array = [];
@@ -263,7 +264,7 @@
                 //alert($(this).find('.ecol').html());
                 $(this).find('.ecol').matchHeight();
             });
-            showMore();
+
         }
     });
 
