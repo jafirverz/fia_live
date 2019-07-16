@@ -210,6 +210,8 @@ background: linear-gradient(to right, #f1452d 0%,#ffa921 100%); color: #fff !imp
 .nav-list ul li a { border-bottom: none; color: #909090; font-size: 14px; font-weight: 400; padding: 4px 0 4px 20px; }
 .nav-list ul li a:before { content: "\f0a9"; font-size: 9px; left: 0; right: auto; top: 6px; }
 .nav-list ul li a:hover, .nav-list ul li.active a { text-decoration: underline; }
+.nav-list ul { display: none; }
+.nav-list li.active > ul { display: block; }
 
 .footer-container { background: #303030; color: #fff; font-size: 14px; line-height: 1.8; padding-top: 50px; }
 .footer-container a:link, .footer-container a:visited { color: #fff; }

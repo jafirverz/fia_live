@@ -62,20 +62,26 @@
 
                             <div class="form-group">
                                 <label for="" class=" control-label">Telephone Number</label>
-                                <select class="select2 form-control" name="telephone_code">
+
+                                <select class="form-control countries" >
                                     @if (CountryList())
                                         @foreach (CountryList() as $item)
-                                            <option value="{{ $item->phonecode }}"
-                                                    data-content='<img src="{{ asset('flags_iso/24/'.strtolower($item->iso).'.png') }}" alt="" /> +{{ $item->phonecode }}'
-                                                    @if($item->iso=='SG') selected @endif>
-                                                +{{ $item->phonecode }}</option>
+                                            <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"  @if($item->iso=='SG') selected @endif>&nbsp;+{{ $item->phonecode }}</option>
                                         @endforeach
                                     @endif
+                                    </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="" class=" control-label">Mobile Number</label>
+
+                                <select class="form-control countries" >
+                                    @if (CountryList())
+                                        @foreach (CountryList() as $item)
+                                            <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"  @if($item->iso=='SG') selected @endif>&nbsp;+{{ $item->phonecode }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
-                                <input class="form-control" placeholder="" value="{{ old('payee_email_id') }}"
-                                       name="payee_email_id" type="text" id="payee_email_id">
-
                             </div>
 
                             <div class="form-group">
@@ -125,4 +131,36 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+@push('header-script')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+@endpush
+@push('scripts')
+<script id="script_e4">
+    function format(item, state) {
+        if (!item.id) {
+            return item.text;
+        }
+        var iso = item.element.dataset.iso;
+        var img = $("<img>", {
+            class: "img-flag",
+            width: 26,
+            src: APP_URL + '/flags_iso/24/'+iso.toLowerCase()+'.svg'
+        });
+        var span = $("<span>", {
+            text: " " + item.text
+        });
+        span.prepend(img);
+        return span;
+    }
 
+    $(document).ready(function () {
+        $(".countries").select2({
+            templateResult: function (item) {
+                return format(item, false);
+            }
+        });
+    });
+
+</script>
+@endpush
