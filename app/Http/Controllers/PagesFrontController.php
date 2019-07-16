@@ -210,6 +210,7 @@ class PagesFrontController extends Controller
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
             'organization' => 'required|string',
+            'country'   =>  'required',
             'password' => 'required',
         ]);
 
