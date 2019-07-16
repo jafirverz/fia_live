@@ -42,7 +42,6 @@ function respon() {
 	});	
 		
 	$('.map-wrap .fa-times').each(function(){
-		var currentid = $(this).attr('href');
 		$(this).click(function(e){
 	        e.preventDefault();
 			 $('.map-wrap .pin').removeClass('open');
@@ -336,27 +335,7 @@ $(window).load(function() {
 	$(".scroll").mCustomScrollbar();
 	
 
-	$('.mbox-wrap').each(function(){
-		var numshow = $(this).attr('data-num'),
-			item = $(this).find('.mbox'),
-			btn = $(this).find('.mbox-load');	
-		$(item).hide();
-		$(item).slice(0, numshow).show();
-		var itemhide = $(this).find(".mbox:hidden");
-		if ($(itemhide).length == 0) {
-			$(btn).hide();
-		}
-		$(btn).on('click', function (e) {
-			e.preventDefault();	
-			$(".mbox:hidden").slice(0, numshow).fadeIn('slow');
-			if ($(".mbox:hidden").length == 0) {
-				$(btn).hide();
-			}
-			 //$('html,body').animate({
-				//scrollTop: $(this).offset().top
-			//}, 1500);
-		});
-	});	
+	
 	
 	
 	/*$('.mlist-wrap').each(function(){
@@ -395,8 +374,34 @@ $(window).load(function() {
 
 
 
+function showMore() {
+	$('.mbox-wrap').each(function(){
+		var numshow = $(this).attr('data-num'),
+			item = $(this).find('.mbox'),
+			btn = $(this).find('.mbox-load');	
+		$(item).hide();
+		$(item).slice(0, numshow).show();
+		var itemhide = $(this).find(".mbox:hidden");
+		if ($(itemhide).length == 0) {
+			$(btn).hide();
+		}
+		$(btn).on('click', function (e) {
+			e.preventDefault();	
+			$(".mbox:hidden").slice(0, numshow).fadeIn('slow');
+			if ($(".mbox:hidden").length == 0) {
+				$(btn).hide();
+			}
+			 //$('html,body').animate({
+				//scrollTop: $(this).offset().top
+			//}, 1500);
+		});
+	});	
+
+}	
+
+
 $(window).load(function() {
-	$('.masony').each(function(){
+	/*$('.masony').each(function(){
 	  var maid = "#" + $(this).attr("id"),
 		  btnid = $(this).attr("data-load");
 			
@@ -414,42 +419,11 @@ $(window).load(function() {
 		});
 
 
-
-	  var initShow = $(maid).attr('data-num'); //number of items loaded on init & onclick load more button
-	  var counter = initShow; //counter for load more button
-	  var iso = $container.data('isotope'); // get Isotope instance
-
-	  loadMore(initShow); //execute function onload
-
-	  function loadMore(toShow) {
-		$container.find(".hidden").removeClass("hidden");
-
-		var hiddenElems = iso.filteredItems.slice(toShow, iso.filteredItems.length).map(function(item) {
-		  return item.element;
-		});
-		$(hiddenElems).addClass('hidden');
-		$container.isotope('layout');
-
-		//when no more to load, hide show more button
-		if (hiddenElems.length == 0) {
-		  jQuery(btnid).hide();
-		} else {
-		  jQuery(btnid).show();
-		};
-
-	  }
-
-
-	  //when load more button clicked
-	  $(btnid).click(function() {
-
-		counter = counter + initShow;
-
-		loadMore(counter);
-	  });
+	  
 		
-  });
+  });*/
 
+		showMore();
 	
   
 });

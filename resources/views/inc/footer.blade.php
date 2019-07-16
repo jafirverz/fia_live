@@ -52,8 +52,7 @@
 <a href="#toppage" class="smoothscroll gotop fas fa-angle-up">Go top</a>
 
 
-<script src="{{ asset('js/plugin.js') }}"></script>
-<script src="{{ asset('js/main.js') }}"></script>
+
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
 <script type="text/javascript">
 
@@ -76,7 +75,7 @@
     errorLabelContainer: '.errorTxt',
 	messages: {name:"Please enter name.",emailid:'Please enter valid email.',enquiry_type:'Please select enquiry type.',message:'Please enter message'},
             submitHandler: function (form) {
-				
+
 				if (grecaptcha.getResponse()) {
 				// 2) finally sending form data
 				form.submit();
@@ -84,10 +83,10 @@
 				// 1) Before sending we must validate captcha
 				grecaptcha.reset();
 				grecaptcha.execute();
-				}  
-				
-				
-				
+				}
+
+
+
             }
         });
     });
