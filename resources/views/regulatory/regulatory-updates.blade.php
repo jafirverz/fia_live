@@ -263,6 +263,7 @@
                 //alert($(this).find('.ecol').html());
                 $(this).find('.ecol').matchHeight();
             });
+            showMore();
         }
     });
 

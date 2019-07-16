@@ -42,7 +42,6 @@ function respon() {
 	});	
 		
 	$('.map-wrap .fa-times').each(function(){
-		var currentid = $(this).attr('href');
 		$(this).click(function(e){
 	        e.preventDefault();
 			 $('.map-wrap .pin').removeClass('open');
@@ -394,6 +393,38 @@ $(window).load(function() {
 });
 
 
+function loadMore(toShow) {
+		$container.find(".hidden").removeClass("hidden");
+
+		var hiddenElems = iso.filteredItems.slice(toShow, iso.filteredItems.length).map(function(item) {
+		  return item.element;
+		});
+		$(hiddenElems).addClass('hidden');
+		$container.isotope('layout');		
+		if (hiddenElems.length == 0) {
+		  jQuery(btnid).hide();
+		} else {
+		  jQuery(btnid).show();
+		};
+
+	  }
+
+function showMore() {
+
+  var initShow = $(maid).attr('data-num'); 
+  var counter = initShow; 
+  var iso = $container.data('isotope'); 
+
+  loadMore(initShow); 
+  $(btnid).click(function() {
+
+	counter = counter + initShow;
+
+	loadMore(counter);
+  });
+
+}	
+
 
 $(window).load(function() {
 	$('.masony').each(function(){
@@ -413,40 +444,9 @@ $(window).load(function() {
 		  $container.isotope('layout');
 		});
 
+		showMore();
 
-
-	  var initShow = $(maid).attr('data-num'); //number of items loaded on init & onclick load more button
-	  var counter = initShow; //counter for load more button
-	  var iso = $container.data('isotope'); // get Isotope instance
-
-	  loadMore(initShow); //execute function onload
-
-	  function loadMore(toShow) {
-		$container.find(".hidden").removeClass("hidden");
-
-		var hiddenElems = iso.filteredItems.slice(toShow, iso.filteredItems.length).map(function(item) {
-		  return item.element;
-		});
-		$(hiddenElems).addClass('hidden');
-		$container.isotope('layout');
-
-		//when no more to load, hide show more button
-		if (hiddenElems.length == 0) {
-		  jQuery(btnid).hide();
-		} else {
-		  jQuery(btnid).show();
-		};
-
-	  }
-
-
-	  //when load more button clicked
-	  $(btnid).click(function() {
-
-		counter = counter + initShow;
-
-		loadMore(counter);
-	  });
+	  
 		
   });
 
