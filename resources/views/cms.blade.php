@@ -5,7 +5,7 @@
 				@include('inc.banner')
 				<div class="container @if($page->slug!='thank-you') space-1 @else thanks-wrap @endif">
 					
-						<a class="fas fa-angle-double-left lk-back"  onclick="window.history.back()">Back</a>
+						<div class="document" style="margin:0px;"><a class="fas fa-angle-double-left lk-back" href=""  onclick="window.history.back()">Back</a></div>
 						{!! $page->contents!!}
 					
 				</div>

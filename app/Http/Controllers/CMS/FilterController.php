@@ -59,6 +59,8 @@ class FilterController extends Controller
     public function store(Request $request)
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+		if($request->filter_name==1 && $request->tag_name!='Other')
+		{
         $request->validate([
             'filter_name' => 'required|max:255|unique:filters,filter_name,NULL,id,tag_name,'.$request->tag_name,
             'tag_name' => 'required',
@@ -66,7 +68,16 @@ class FilterController extends Controller
         ],
     [
         'country_image.required_if' => 'The :attribute field is required.'
-    ]);
+    ]); 
+		}
+		else
+		{
+			
+		$request->validate([
+            'filter_name' => 'required|max:255|unique:filters,filter_name,NULL,id,tag_name,'.$request->tag_name,
+            'tag_name' => 'required'
+        ]);
+		}
 
         $filter = new Filter;
         $filter->filter_name = $request->filter_name;
@@ -125,7 +136,7 @@ class FilterController extends Controller
             'tag_name' => 'required'
         ]);
 
-
+//dd($id);
         $filter->filter_name = $request->filter_name;
         $filter->tag_name = $request->tag_name;
 		if(isset($request->country_image))

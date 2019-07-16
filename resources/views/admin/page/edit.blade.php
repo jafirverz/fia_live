@@ -74,6 +74,28 @@
                                           name="other_contents3">{{ $page->other_contents3 }}</textarea>
                                 </div>
                             </div>
+                            <div class="form-group">
+                            <label for="video1" class=" control-label">Video(Before Login)</label>                            
+                            <div class="">
+                                <input type="file" name="video1" class="form-control" placeholder="" />
+                               
+                            </div>
+                            
+  @if($page->video1!="")                         
+  <a target="_blank" href="{{ url($page->video1) }}">View Here</a>
+  @endif
+                        </div>
+                            <div class="form-group">
+                            <label for="video2" class=" control-label">Video (After Login)</label>                            
+                            <div class="">
+                                <input type="file" name="video2" class="form-control" placeholder="" />
+                               
+                            </div>
+                            
+ @if($page->video2!="")                         
+  <a target="_blank" href="{{ url($page->video1) }}">View Here</a>
+  @endif
+                        </div>
                         @endif
                         <?php /*?><div class="form-group">
                             <label for="meta_title" class=" control-label">Meta Title</label>

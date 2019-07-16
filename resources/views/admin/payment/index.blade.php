@@ -20,25 +20,26 @@
                         <a href="{{ url('admin/payment/create') }}" class="btn btn-primary pull-right">Create</a>
                     </div>
                     <form id="payment_search" action="{{ url('admin/payment/date-range-search') }}" method="post">
-        @csrf
-                    <div class="box-header with-border">
+                        @csrf
+                        <div class="box-header with-border">
                             <div class="input-group pull-right">
                                 <label for="inputEmail3" class="col-sm-4 control-label">Date Range</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="daterange" value="@if(isset($daterange_old)) {{ $daterange_old }} @endif"/>
+                                    <input type="text" class="form-control" name="daterange"
+                                           value="@if(isset($daterange_old)) {{ $daterange_old }} @endif"/>
                                 </div>
                             </div>
                         </div>
-                        </form>
+                    </form>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
                         <table id="datatable_payment" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Payment Id	</th>
-                                <th>Payment Date	</th>
+                                <th>Payment Id</th>
+                                <th>Payment Date</th>
                                 <th>Subscription Date</th>
                                 <th>Subscription Status</th>
                                 <th>Renewal Date</th>
@@ -77,55 +78,55 @@
                                                 {{NONE}}
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->subscription_date)
                                                 {{ $payment->subscription_date}}
                                             @else
                                                 {{NONE}}
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->subscription_status==1)
                                                 Active
                                             @else
                                                 DeActive
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->renewal_date)
                                                 {{ $payment->renewal_date}}
                                             @else
                                                 {{NONE}}
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->payee_email_id)
                                                 {{ $payment->payee_email_id}}
                                             @else
                                                 {{NONE}}
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->payee_name)
                                                 {{ $payment->payee_name}}
                                             @else
                                                 {{NONE}}
                                             @endif
                                         </td>
-                                        
-                                         <td>
+
+                                        <td>
                                             @if($payment->payment_mode==1)
                                                 Online
                                             @else
                                                 Offline
                                             @endif
                                         </td>
-                                       <td>
+                                        <td>
                                             @if($payment->status==1)
                                                 Paid
                                             @else
@@ -163,8 +164,8 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Payment Id	</th>
-                                <th>Payment Date	</th>
+                                <th>Payment Id</th>
+                                <th>Payment Date</th>
                                 <th>Subscription Date</th>
                                 <th>Subscription Status</th>
                                 <th>Renewal Date</th>
@@ -202,7 +203,7 @@
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
                 },
-				{
+                {
                     extend: 'pdfHtml5',
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -213,7 +214,7 @@
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                     }
-					
+
                 }
             ]
         });
@@ -250,14 +251,14 @@
                 }
             });
         });
-		
-		 $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+
+        $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
             $("#payment_search").submit();
         });
         /*$('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
-            $("#orders").submit();
-        });
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');*/
+         $("#orders").submit();
+         });
+         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');*/
 
     });
 </script>

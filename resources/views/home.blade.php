@@ -108,35 +108,92 @@
                 </div>
                 <div class="col-sm-7">
                     <div class="grid-2 slick-1">
-                    @php 
-                    $regulatories=getRegulatories();
-                    @endphp
-                    @if($regulatories)
-                    @foreach($regulatories as $regulatory)
+                    @if(getRegulatoriesHighlight())
+        @php
+        $regulatory_highlight = getRegulatoriesHighlight();
+
+        $other_highlight_array = [
+        $regulatory_highlight->main_highlight,
+        $regulatory_highlight->other_highlight1,
+        $regulatory_highlight->other_highlight2,
+        $regulatory_highlight->other_highlight3,
+        $regulatory_highlight->other_highlight4,
+        $regulatory_highlight->other_highlight5,
+        ];
+        $other_highlight_array=array_filter($other_highlight_array);
+        
+
+       $i=0;
+        foreach($other_highlight_array as $key=>$value)
+        {
+	   $i++;
+        $regulatory = getRegulatoryById($value);      
+       if($i<=3)
+       {
+        @endphp
+                   
+                    
                         <div class="item">
                             <div class="box-4">
                                 <figure><img src="{{getFilterCountryImage($regulatory->country_id)}}" alt="{{getFilterCountry($regulatory->country_id)}} flag" /></figure>
                                 <div class="content">
                                     <h3 class="title">{{$regulatory->title}}</h3>
                                     <p class="date"><span class="country">{{getFilterCountry($regulatory->country_id)}}</span> | {{ $regulatory->created_at->format('M d, Y') }}</p>
-                                    <p>{!! substr(strip_tags($regulatory->description),0,120) !!}</p>
+                                    <p>{!! Illuminate\Support\Str::limit($regulatory->description, 120) !!}</p>
                                     <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                 </div>
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
                             </div>
                         </div>
-                    @endforeach 
+                   @php }} @endphp
                     @endif    
                     </div>
                 </div>
             </div>
         </div>
         <div class="intro-home-2 tb-col break-720">
-            {!!$page->other_contents2!!}
+         @if(!Auth::check())
+          @php 
+          $video='<video controls=""><source src="'.$page->video1.'" type="video/mp4"></video>';
+          echo $other_contents2=str_replace("{{VIDEO_HOME}}",$video,$page->other_contents2); 
+          
+          @endphp  
+         @else
+          @php 
+          $video='<video controls=""><source src="'.$page->video2.'" type="video/mp4"></video>';
+          echo $other_contents2=str_replace("{{VIDEO_HOME}}",$video,$page->other_contents2); 
+          
+          @endphp
+         @endif
         </div>
         <div class="intro-home-3">
     <div class="container">
-        {!!$page->other_contents3!!}
+
+         @if(!Auth::check())
+          @php 
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}","",$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}","",$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}","",$other_contents3);
+           echo $other_contents3;
+          
+          @endphp  
+         @else
+          @php 
+            $REGULATORY_LINK='<a href="regulatory-updates"></a>';
+            $COUNTRY_LINK='<a href="country-information"></a>';
+            $RESOURCE_LINK='<a href="topical-reports"></a>';
+            $get_access='<p class="more">Get access <span class="fas fa-angle-double-right"></span></p>';
+           $other_contents3=$page->other_contents3;
+           $other_contents3=str_replace("{{GET_ACCESS}}",$get_access,$other_contents3); 
+           $other_contents3=str_replace("{{REGULATORY_LINK}}",$REGULATORY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{COUNTRY_LINK}}",$COUNTRY_LINK,$other_contents3);
+           $other_contents3=str_replace("{{RESOURCE_LINK}}",$RESOURCE_LINK,$other_contents3);
+           echo $other_contents3;
+          
+          @endphp
+         @endif
         @if(!Auth::check())
         <div class="intro">
 <h3>Get access to exclusive tools, regional insights and resources with FIA exclusive membership.</h3>
@@ -176,8 +233,11 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+		   if(data=='#')		
+           content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
+           else 
            content+='<a class="fas fa-angle-double-right link" href="country-information-details?country='+country_name+'&category='+data+'"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
-                   // $(".search-results").html(data);
+			       // $(".search-results").html(data);
                 }
             });
 			

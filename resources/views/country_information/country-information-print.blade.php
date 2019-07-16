@@ -45,7 +45,7 @@ $id = $_GET['id'];
                 </div>
                 @if($contents)
                 @foreach ($contents as $key => $content)
-                <div class="intro-2" data-id="{{ $content->id }}">
+                <div class="intro-2 box-content" data-id="{{ $content->id }}">
                     <h4>{{ $content->information_title }}</h4>
                     <p>{!! $content->information_content !!}</p>
                 </div>
@@ -61,13 +61,20 @@ $id = $_GET['id'];
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $("div.box-3").addClass("hide");
+            $("div.box-content").addClass("hide");
             var id = '{{ $id }}';
             var array_id = id.split(',');
-            jQuery.each(array_id, function (i, val) {
-                $("[data-id='" + val + "']").removeClass("hide");
-            });
-            window.print();
+            if(array_id)
+            {
+                jQuery.each(array_id, function (i, val) {
+                    $("[data-id='" + val + "']").removeClass("hide");
+                });
+            }
+            else
+            {
+                $("[data-id='" + id + "']").removeClass("hide");
+            }
+            //window.print();
         });
 
     </script>

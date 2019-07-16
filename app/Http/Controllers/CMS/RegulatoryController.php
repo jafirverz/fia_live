@@ -26,7 +26,7 @@ class RegulatoryController extends Controller
         $title = __('constant.REGULATORY');
         $subtitle = 'Index';
 
-        $regulatories = Regulatory::all();
+        $regulatories = Regulatory::where('parent_id', null)->get();
         $countries = getFilterData(1);
         $topics = getFilterData(2);
         $stages = getFilterData(3);
@@ -78,7 +78,7 @@ class RegulatoryController extends Controller
         $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
-        $regulatory->parent_id = $request->parent_id;
+        $regulatory->parent_id = null;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;
@@ -142,7 +142,7 @@ class RegulatoryController extends Controller
         $regulatory->agency_responsible = $request->agency_responsible;
         $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
         $regulatory->description = $request->description;
-        $regulatory->parent_id = $request->parent_id;
+        $regulatory->parent_id = null;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
         $regulatory->country_id = $request->country_id;

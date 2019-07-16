@@ -55,6 +55,7 @@
 
 
     </script>
+    @stack('header-scripts')
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">

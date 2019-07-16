@@ -58,6 +58,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/regulatory/update/{id}', 'CMS\RegulatoryController@update');
     Route::post('/regulatory/destroy', 'CMS\RegulatoryController@destroy');
 
+    Route::get('/regulatory/list/{parent_id}', 'CMS\RegulatoryListController@index');
+    Route::get('/regulatory/list/{parent_id}/create', 'CMS\RegulatoryListController@create');
+    Route::post('/regulatory/list/{parent_id}/store', 'CMS\RegulatoryListController@store');
+    Route::get('/regulatory/list/{parent_id}/edit/{id}', 'CMS\RegulatoryListController@edit');
+    Route::post('/regulatory/list/{parent_id}/update/{id}', 'CMS\RegulatoryListController@update');
+    Route::post('/regulatory/list/{parent_id}/destroy', 'CMS\RegulatoryListController@destroy');
+
     Route::get('/regulatory/highlight/edit', 'CMS\RegulatoryHighlightController@edit');
     Route::post('/regulatory/highlight/update', 'CMS\RegulatoryHighlightController@update');
 
