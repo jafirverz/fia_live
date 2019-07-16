@@ -18,6 +18,9 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print.css') }}" media="screen, print" />
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('js/plugin.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </head>
 
 <body>
