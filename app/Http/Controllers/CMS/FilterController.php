@@ -33,7 +33,7 @@ class FilterController extends Controller
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.FILTER');
-        $filters = Filter::orderBy('filter_name','ASC')->get();
+        $filters = Filter::orderBy('filter_name','ASC')->orderBy('tag_name','ASC')->get();
         return view("admin.filter.index", compact("filters", "title"));
     }
 
