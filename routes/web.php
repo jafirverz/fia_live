@@ -183,6 +183,7 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
   Route::get('/user/create', 'CMS\UserController@create');
   Route::post('/user/store', 'CMS\UserController@store');
   Route::get('/user/edit/{id}', 'CMS\UserController@edit');
+  Route::get('/user/view/{id}', 'CMS\UserController@view');
   Route::post('/user/update/{id}', 'CMS\UserController@update');
   Route::post('/user/update-status', 'CMS\UserController@updateStatus');
   Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');

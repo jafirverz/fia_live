@@ -125,9 +125,9 @@
                                 @endforeach
                                 @endif
                             </select>
-                            @if ($errors->has('password'))
+                            @if ($errors->has('country'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('password') }}</strong>
+                                <strong>{{ $errors->first('country') }}</strong>
                             </span>
                             @endif
                         </div>

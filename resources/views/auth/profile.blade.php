@@ -4,7 +4,7 @@
 <div id="toppage" class="page">
     <div class="main-wrap">
         @include('inc.banner')
-        <form method="POST" action="{{ url('profile-update', $user->student_id) }}">
+        <form method="POST" action="{{ url('profile-update', $user->user_id) }}">
             @csrf
             <div class="container space-1">
                 @include('admin.inc.message')
@@ -117,9 +117,9 @@
                                 @endforeach
                                 @endif
                             </select>
-                            @if ($errors->has('password'))
+                            @if ($errors->has('country'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('password') }}</strong>
+                                <strong>{{ $errors->first('country') }}</strong>
                             </span>
                             @endif
                         </div>
