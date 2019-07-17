@@ -12,6 +12,12 @@ use App\GroupUserId;
 use Illuminate\Support\Facades\DB;
 use App\GroupManagement;
 use App\Invoice;
+use App\Traits\DynamicRoute;
+use App\Traits\GetEmailTemplate;
+use Illuminate\Support\Facades\Mail;
+use Exception;
+use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 
 
 if (!function_exists('getTopics')) {
@@ -231,21 +237,23 @@ if (!function_exists('getTopics')) {
             $string[] = '<ul>';
             $sel = '';
 
-			
+
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
-                
-				if ($menu->page_id == NULL)
+
+                if ($menu->page_id == NULL)
 
                     $target = 'target="_blank"';
                 else
                     $target = "";
-				$menu_id_by_page=get_menu_id_by_page_id($page_id,'1');
+                $menu_id_by_page = get_menu_id_by_page_id($page_id, '1');
+
 
 				if ($page_id == $menu->page_id || $menu_id_by_page==$menu->id)
                     $sel = 'class="active"';
                 else
                     $sel = '';
+
 
 				if ($menu->id == '30')
          $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
@@ -342,11 +350,11 @@ if (!function_exists('getTopics')) {
             return 0;
 
     }
-	
-	function get_menu_id_by_page_id($page_id = null,$type=null)
+
+    function get_menu_id_by_page_id($page_id = null, $type = null)
     {
         $menu = Menu::where('page_id', $page_id)->where('menu_type', 1)->first();
-		
+
         if ($menu)
             return $menu->parent;
         else
@@ -598,7 +606,7 @@ if (!function_exists('getTopics')) {
 
     function memberShipStatus($key = null)
     {
-        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only'];
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only', '11' => 'Unsubscribed'];
 
         if (!is_null($key)) {
             if (Arr::has($array_list, $key)) {
@@ -650,5 +658,83 @@ if (!function_exists('getTopics')) {
             $invoices = Invoice::all();
         }
         return $invoices;
+    }
+
+    function userUpdateStatus($id, $status)
+    {
+        $response = [];
+        $user = User::findorfail($id);
+        if ($status == __('constant.PENDING_EMAIL_VERIFICATION')) {
+            $user->status = __('constant.PENDING_EMAIL_VERIFICATION');
+            $response['msg'] = "Status updated and verification mail send to user.";
+
+        } elseif ($status == __('constant.PENDING_ADMIN_APPROVAL')) {
+            $user->status = __('constant.PENDING_ADMIN_APPROVAL');
+            $response['msg'] = "Status updated successfully.";
+
+
+        } elseif ($status == __('constant.REJECTED')) {
+            $user->status = __('constant.REJECTED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.PENDING_FOR_PAYMENT')) {
+
+            $emailTemplate_user = $this->emailTemplate(__('constant.CONTACT_US_USER_EMAIL_TEMP_ID'));
+            if ($emailTemplate_user) {
+                
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{name}}'];
+                $value_user = [$request->name];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail = Mail::to($toEmail)->send(new AdminSideMail($data));
+                $mail_user = Mail::to($request->emailid)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                dd($exception);
+                return redirect(url('/contact-us'))->with('error', __('constant.OPPS'));
+            }
+
+            $user->status = __('constant.PENDING_FOR_PAYMENT');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.ACCOUNT_ACTIVE')) {
+            $user->status = __('constant.ACCOUNT_ACTIVE');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.ACCOUNT_INACTIVE')) {
+            $user->status = __('constant.ACCOUNT_INACTIVE');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.ACCOUNT_LAPSED')) {
+            $user->status = __('constant.ACCOUNT_LAPSED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.ACCOUNT_EXPIRED')) {
+            $user->status = __('constant.ACCOUNT_EXPIRED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.ACCOUNT_DELETED')) {
+            $user->status = __('constant.ACCOUNT_DELETED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.NEWSLATTER_SUBSCRIBER')) {
+            $user->status = __('constant.NEWSLATTER_SUBSCRIBER');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($status == __('constant.UNSUBSCRIBE')) {
+            $user->status = __('constant.UNSUBSCRIBE');
+            $response['msg'] = "Status updated successfully.";
+
+        }
+        $user->save();
+        return $response;
     }
 }

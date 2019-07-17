@@ -346,7 +346,7 @@ class PayPalController extends Controller
         $data['address2']= $user->address2;
         $file_name =$cart['invoice_id']. '.pdf';
         $pdf = PDF::loadView('invoice', compact('data'));
-        $content = $pdf->download()->getOriginalContent();
+        $content = $pdf->output();
 
         Storage::put('public/' . $file_name,$content) ;
         //Storage::put('/public/' . $file_name, $pdf->output());

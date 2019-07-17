@@ -5,6 +5,8 @@
       <w>paypal</w>
       <w>profileid</w>
       <w>profilestatus</w>
+      <w>unsubscribe</w>
+      <w>unsubscribed</w>
     </words>
   </dictionary>
 </component>
