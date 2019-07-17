@@ -175,7 +175,7 @@
 
                                 <select name="status" class="form-control select2" id="selectpicker"
                                         data-placeholder="Select Status">
-                                    @foreach(memberShipStatus() as $k => $v)
+                                    @foreach(memberShipStatusForCreateMemberBackend() as $k => $v)
                                         <option value="{{$k}}" @if(old('status')==$k) selected @endif>{{$v}}</option>
                                     @endforeach
                                 </select>

@@ -614,6 +614,20 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+    function memberShipStatusForCreateMemberBackend($key = null)
+    {
+        $array_list = ['4' => 'Approve and send payment link', '5' => 'Approve', '6' => 'Inactive'];
+
+        if (!is_null($key)) {
+            if (Arr::has($array_list, $key)) {
+                return $array_list[$key];
+            } else {
+                return null;
+            }
+
+        }
+        return $array_list;
+    }
 
     function memberByGroupIds($id = null)
     {

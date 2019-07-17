@@ -111,7 +111,7 @@ return [
 	'SUBSCRIPTION_USER_EMAIL_TEMP_ID' => '4',
 	
 	'FEEDBACK_ADMIN_EMAIL_TEMP_ID' => '9',
-	
+
     'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',	
 
 

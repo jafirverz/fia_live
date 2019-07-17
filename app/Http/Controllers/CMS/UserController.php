@@ -12,6 +12,7 @@ use Exception;
 use App\Mail\UserSideMail;
 use Auth;
 use App\GroupUserId;
+use Carbon\Carbon;
 
 
 class UserController extends Controller
@@ -29,7 +30,7 @@ class UserController extends Controller
     {
         $title = __('constant.USER');
         $subtitle = 'Index';
-        $users = User::orderBy('created_at','desc')->get();
+        $users = User::orderBy('created_at', 'desc')->get();
         return view('admin.users.index', compact('title', 'users', 'subtitle'));
     }
 
@@ -82,12 +83,9 @@ class UserController extends Controller
         $user->city = $request->city;
         $user->address1 = $request->address1;
         $user->address2 = $request->address2;
+        $user->email_verified_at = Carbon::now()->toDateTimeString();
         $user->password = Hash::make($request->password);
-        if (isset($request->status) && !is_null($request->status)) {
-            $user->status = $request->status;
-        } else {
-            $user->status = 1;
-        }
+        $user->status = $request->status;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -96,6 +94,30 @@ class UserController extends Controller
                 $groupUserId->user_id = $user->id;
                 $groupUserId->group_id = $groupId;
                 $groupUserId->save();
+            }
+        }
+
+        if ($user->status == __('constant.PENDING_FOR_PAYMENT')) {
+
+            $emailTemplate_user = $this->emailTemplate(__('constant.SEND_PAYMENT_LINK'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{firstname}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                //dd($exception);
             }
         }
 
@@ -122,7 +144,7 @@ class UserController extends Controller
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'required|unique:users,email,'. $id,
+            'email' => 'required|unique:users,email,' . $id,
             'member_type' => 'required',
             'organization' => 'required|string',
             'password' => 'confirmed',
@@ -161,8 +183,11 @@ class UserController extends Controller
             }
         }
 
+        $response = $this->userUpdateStatus($request);
+
         return redirect('admin/user')->with('success', __('constant.UPDATED', ['module' => __('constant.USER')]));
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -177,6 +202,7 @@ class UserController extends Controller
 
         return view('admin.users.view', compact('title', 'subtitle', 'user'));
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -186,7 +212,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findorfail($id);
-        $user->status = 9 ;
+        $user->status = 9;
         $user->save();
         return redirect('admin/user')->with('success', __('constant.DELETED', ['module' => __('constant.USER')]));
     }
@@ -207,7 +233,7 @@ class UserController extends Controller
     public function userUpdateStatus($request)
     {
         $response = [];
-        $user = User::findorfail($request->user_id);
+        $user = User::findorfail($request->id);
         if ($request->status == __('constant.PENDING_EMAIL_VERIFICATION')) {
             $user->status = __('constant.PENDING_EMAIL_VERIFICATION');
             $response['msg'] = "Status updated and verification mail send to user.";
@@ -218,6 +244,29 @@ class UserController extends Controller
 
 
         } elseif ($request->status == __('constant.REJECTED')) {
+            $emailTemplate_user = $this->emailTemplate(__('constant.USER_REGISTRATION_REJECTED'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{firstname}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                //dd($exception);
+                $response['msg'] = "Status updated successfully.";
+                $response['status'] = "error";
+                return $response;
+            }
             $user->status = __('constant.REJECTED');
             $response['msg'] = "Status updated successfully.";
 
@@ -248,12 +297,18 @@ class UserController extends Controller
             }
 
             $user->member_type = $request->member_type;
+            if (empty($user->email_verified_at)) {
+                $user->email_verified_at = Carbon::now()->toDateTimeString();
+            }
             $user->status = __('constant.PENDING_FOR_PAYMENT');
             $response['msg'] = "Status updated successfully.";
 
         } elseif ($request->status == __('constant.ACCOUNT_ACTIVE')) {
             $user->member_type = $request->member_type;
             $user->status = __('constant.ACCOUNT_ACTIVE');
+            if (empty($user->email_verified_at)) {
+                $user->email_verified_at = Carbon::now()->toDateTimeString();
+            }
             $response['msg'] = "Status updated successfully.";
 
         } elseif ($request->status == __('constant.ACCOUNT_INACTIVE')) {
