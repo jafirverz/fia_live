@@ -394,7 +394,8 @@ class HomeController extends Controller
         }
 		 if($result1==1)
 		 {
-		 return redirect(route('home'))->with('success', __('constant.EXIST', ['module' => __('constant.SUBSCRIBER')])); 
+		  echo '<div class="error">'.__('constant.SUBSCRIBE_EXIST').'</div>';
+		 //return redirect(route('home'))->with('success', __('constant.EXIST', ['module' => __('constant.SUBSCRIBER')])); 
 		 }
 		 elseif($result==1)
 		 {
@@ -412,7 +413,8 @@ class HomeController extends Controller
                 dd($exception);
                 return redirect(url('/home'))->with('error', __('constant.OPPS'));
  		   }
-		 return redirect(route('home'))->with('success', __('constant.UPDATED', ['module' => __('constant.SUBSCRIBER')]));
+		 echo '<div class="success">'.__('constant.SUBSCRIBE_UPDATE').'</div>';
+		 //return redirect(route('home'))->with('success', __('constant.UPDATED', ['module' => __('constant.SUBSCRIBER')]));
 		 }
 		 else
 		 {
@@ -429,7 +431,8 @@ class HomeController extends Controller
                 dd($exception);
                 return redirect(url('/home'))->with('error', __('constant.OPPS'));
  		   }
-		 return redirect(route('home'))->with('success', __('constant.CREATED', ['module' => __('constant.SUBSCRIBER')]));
+		 //return redirect(route('home'))->with('success', __('constant.CREATED', ['module' => __('constant.SUBSCRIBER')]));
+		 echo '<div class="success">'.__('constant.SUBSCRIBE_CREATE').'</div>';
 		 }
 	}
 }
