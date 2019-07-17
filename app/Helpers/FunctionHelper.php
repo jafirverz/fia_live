@@ -243,8 +243,8 @@ if (!function_exists('getTopics')) {
                     $sel = 'class="active"';
                 else
                     $sel = '';
-				if ($menu->page_id == '30')
-                $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
+				if ($menu->id == '30')
+                $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
 				else
 				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
 				
