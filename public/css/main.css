@@ -451,7 +451,7 @@ background: linear-gradient(to bottom, #f9f9f9 0%,#ffffff 50%); padding: 30px 0;
 .box-6 { padding: 50px 0; }
 .box-6 h3 { font-size: 30px; font-weight: 700; margin: 0 0 20px; text-align: center; }
 .box-6 .input-group { margin: 0 auto; max-width: 650px; }
-.box-6 .form-control { border: none; border-radius: 30px 0 0 30px; height: 50px; padding-left: 25px; }
+.box-6 .form-control { border: none; border-radius: 30px 0 0 30px; height: 50px; line-height: 50px; padding-left: 25px; }
 .box-6 .btn-3 { border: #fff 4px solid; border-radius: 0 30px 30px 0; height: 50px; padding: 5px 25px; }
 
 .captcha { position: fixed; right: 0; bottom: 0; z-index: 99; }
@@ -479,6 +479,7 @@ background: linear-gradient(to right, #f1452d 0%,#ffa921 100%); }
 .grid-2 .item { float: left; padding: 15px; width: 25%; }
 .grid-2 .grid-sizer { width: 25%; }
 .grid-2 .text { height: 200px; overflow: hidden; }
+.grid-2 .item .ecol { min-height: 250px; }
 
 .grid-3 { margin-top: 40px; text-align: left; }
 .grid-3 .item { position: relative; }
@@ -496,6 +497,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .grid-4 .col-1, .grid-4 .col-2 { float: left; width: 70%; }
 .grid-4 .col-2 { width: 30%; }
 .grid-4 .box-4 { margin: 0 0 30px; }
+.grid-4 .text-1, .grid-4 .ecol { min-height: 250px; }
 
 .more-wrap { float: left; margin: 20px 0; text-align: center; width: 100%; }
 .more-wrap .fas { margin-left: 5px; }
@@ -545,6 +547,10 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .search-wrap-2 .sl-country .bootstrap-select.btn-group .dropdown-menu { left: 0; right: auto; width: 200px; }
 .search-wrap-2 .sl-country .bootstrap-select.open.dropup > .dropdown-toggle { border-radius: 0 0 0 30px !important; }
 .search-wrap-2 .form-control { border: none; font-weight: 400; height: 50px; line-height: 50px; }
+.search-wrap-2 .form-control::-webkit-input-placeholder { line-height: 50px; }
+.search-wrap-2 .form-control:-moz-placeholder { line-height: 50px; }
+.search-wrap-2 .form-control::-moz-placeholder { line-height: 50px; }
+.search-wrap-2 .form-control:-ms-input-placeholder { line-height: 50px; }
 .search-wrap-2 .input-group-btn { background: #fff; border-radius: 0 30px 30px 0; padding: 3px; }
 .search-wrap-2 .btn-5 { border-radius: 0 30px 30px 0; height: 44px; padding: 0; text-align: center; width: 45px; }
 
