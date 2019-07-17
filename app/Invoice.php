@@ -11,4 +11,9 @@ class Invoice extends Model
     {
         return $this->hasMany(Item::class, 'invoice_id');
     }
+    public function user()
+    {
+        return User::find($this->user_id);
+
+    }
 }

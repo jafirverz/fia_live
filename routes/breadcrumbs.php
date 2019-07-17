@@ -376,6 +376,10 @@ Breadcrumbs::for('user_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/user/edit'. $id));
 });
 
+Breadcrumbs::for('user_view', function ($trail, $id) {
+    $trail->parent('user');
+    $trail->push(__('constant.VIEW'), url('/admin/user/view'. $id));
+});
 
 //Master Setting
 Breadcrumbs::for('master-setting-create', function ($trail) {

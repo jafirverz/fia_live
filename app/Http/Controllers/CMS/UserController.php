@@ -163,4 +163,18 @@ class UserController extends Controller
 
         return redirect('admin/user')->with('success', __('constant.UPDATED', ['module' => __('constant.USER')]));
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id)
+    {
+        $title = __('constant.USER');
+        $subtitle = 'View';
+        $user = User::findorfail($id);
+
+        return view('admin.users.view', compact('title', 'subtitle', 'user'));
+    }
 }

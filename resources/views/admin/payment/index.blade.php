@@ -54,68 +54,45 @@
                             </thead>
                             <tbody>
                             @if($payments->count())
-                                @foreach($payments as $payment)
+                                @foreach($payments as $key=>$payment)
                                     <tr>
                                         <td>
-                                            @if($payment->id)
-                                                {{ $payment->id   }}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                            {{$key+1}}
                                         </td>
                                         <td>
-                                            @if($payment->payment_id	)
-                                                {{ $payment->payment_id}}
+                                            @if($payment->order_id)
+                                                {{ $payment->order_id}}
                                             @else
-                                                {{NONE}}
+                                                -
                                             @endif
                                         </td>
 
-                                        <td>
-                                            @if($payment->payment_date)
-                                                {{ $payment->payment_date}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                        <td data-order="<?php if (!is_null($payment->created_at)) {
+                                            echo $payment->created_at->format('d M, Y H:i:s');
+                                        }?>">@if(!is_null($payment->created_at) )
+                                                {{ $payment->created_at->format('d M, Y')}}
+                                            @else - @endif
                                         </td>
-
-                                        <td>
-                                            @if($payment->subscription_date)
-                                                {{ $payment->subscription_date}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                        <td>@if(!is_null($payment->created_at) )
+                                                {{ $payment->created_at->format('d M, Y')}}
+                                            @else - @endif
                                         </td>
-
+                                        <td>@if($payment->user()->status==5)Active @else Inactive @endif</td>
                                         <td>
-                                            @if($payment->subscription_status==1)
-                                                Active
-                                            @else
-                                                DeActive
-                                            @endif
+                                            @if(!is_null($payment->period_type) && $payment->period_type=='Month' )
+                                                {{date('d M, Y', strtotime("+".$payment->period_value." months", strtotime($payment->created_at)))}}
+                                            @elseif(!is_null($payment->period_type) && $payment->period_type=='Year')
+                                                {{date('d M, Y', strtotime("+".$payment->period_value." years", strtotime($payment->created_at)))}}
+                                            @else - @endif
                                         </td>
-
+                                        <td>{{ $payment->user_email ?? '-' }}</td>
+                                        <td>{{ $payment->user()->firstname.' '$payment->user()->lastname }}</td>
+                                        <td>{{ $payment->user_email ?? '-' }}</td>
                                         <td>
-                                            @if($payment->renewal_date)
-                                                {{ $payment->renewal_date}}
+                                            @if($payment->subscription_type)
+                                                {{ $payment->subscription_type}}
                                             @else
-                                                {{NONE}}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payee_email_id)
-                                                {{ $payment->payee_email_id}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payee_name)
-                                                {{ $payment->payee_name}}
-                                            @else
-                                                {{NONE}}
+                                                -
                                             @endif
                                         </td>
 
