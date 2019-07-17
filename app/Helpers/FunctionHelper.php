@@ -11,6 +11,7 @@ use App\User;
 use App\GroupUserId;
 use Illuminate\Support\Facades\DB;
 use App\GroupManagement;
+use App\Invoice;
 
 
 if (!function_exists('getTopics')) {
@@ -229,11 +230,13 @@ if (!function_exists('getTopics')) {
         if ($menus->count() > 0) {
             $string[] = '<ul>';
             $sel = '';
+
 			
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
                 
 				if ($menu->page_id == NULL)
+
                     $target = 'target="_blank"';
                 else
                     $target = "";
@@ -243,11 +246,12 @@ if (!function_exists('getTopics')) {
                     $sel = 'class="active"';
                 else
                     $sel = '';
+
 				if ($menu->page_id == '30')
                 $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
 				else
 				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
-				
+
                 if (has_child_menu($menu->id) > 0) {
 
                     $string[] = get_menu_has_child($menu->id, 1);
@@ -621,18 +625,29 @@ if (!function_exists('getTopics')) {
     {
         $groups = GroupManagement::where('status', 1)
             ->select('group_name', 'id')
-            ->orderBy('group_name','asc')
+            ->orderBy('group_name', 'asc')
             ->get();
         return $groups;
     }
+
     function memberGroupByUserIds($id = null)
     {
         $groups = GroupUserId::join('group_managements', 'group_managements.id', '=', 'group_user_ids.group_id')
-            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'group_managements.group_name','group_managements.status')
+            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'group_managements.group_name', 'group_managements.status')
             ->where('group_managements.status', 1)
             ->where('group_user_ids.user_id', $id)
             ->get();
 
         return $groups;
+    }
+
+    function userPayments($userId = null)
+    {
+        if (!is_null($userId)) {
+            $invoices = Invoice::where('user_id', $userId)->get();
+        } else {
+            $invoices = Invoice::all();
+        }
+        return $invoices;
     }
 }

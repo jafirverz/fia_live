@@ -107,7 +107,7 @@
                                             @if (CountryList())
                                                 @foreach (CountryList() as $item)
                                                     <option value="{{ $item->phonecode }}" data-iso="{{$item->iso}}"
-                                                            @if($item->phonecode==$user->telephone_code) selected @endif>
+                                                            @if($item->phonecode==$user->mobile_code) selected @endif>
                                                         &nbsp;+{{ $item->phonecode }}</option>
                                                 @endforeach
                                             @endif
