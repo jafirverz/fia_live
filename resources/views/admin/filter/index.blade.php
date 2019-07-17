@@ -102,7 +102,7 @@
 <script>
     $(document).ready(function() {
             $('#datatable_filter').dataTable( {
-                'order': [3, 'asc'],
+                'order': [],
             });
         });
 
