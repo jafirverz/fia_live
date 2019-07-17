@@ -4,7 +4,7 @@
 <div id="toppage" class="page">
 
     <div class="main-wrap">
-        @include('inc.banner');
+        @include('inc.banner')
         <div class="container space-1">
             @if(Auth::check())
             <div class="tb-col action-wrap-1">

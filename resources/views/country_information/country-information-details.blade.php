@@ -6,7 +6,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 @section('content')
 <div id="toppage" class="page">
     <div class="main-wrap">
-        @include('inc.banner');
+        @include('inc.banner')
         <div class="@if(Auth::check()) tempt-1 @endif">
             @if($contents)
             <div class="container">
