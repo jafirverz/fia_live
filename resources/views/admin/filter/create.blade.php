@@ -60,6 +60,13 @@
                            
              </div>
                     </div>
+                    
+                    <div class="form-group">
+                            <label for="order_by" class=" control-label">View Order</label>                            
+                           
+                                <input type="number" name="order_by" class="form-control" />
+                           
+                        </div>
                         <div class="form-group">
 <label for="status" class="control-label">Status:</label>
                            
@@ -70,6 +77,7 @@
 </select>                            
                            
                     </div>
+                    
                     <!-- /.box-body -->
 
                     <div class="box-footer">
