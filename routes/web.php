@@ -197,6 +197,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
+Route::post('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
 Route::post('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
@@ -210,6 +211,7 @@ Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::post('/subscribers', 'HomeController@subscribers');
+Route::get('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');

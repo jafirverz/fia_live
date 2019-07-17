@@ -54,6 +54,8 @@ return [
 	'SITEMAP' => 'Sitemap',
 
 	'CONTACT' => 'Contact Us',
+	
+	'FEEDBACK' => 'Feedback',
 
 	'OTHERS' => 'Others',
 
@@ -102,6 +104,13 @@ return [
     'USER_REGISTER_ON_SITE'  =>  '6',
     'USER_REGISTRATION_REJECTED'  =>  '7',
 
+	'SUBSCRIPTION_USER_EMAIL_TEMP_ID' => '4',
+	
+	'FEEDBACK_ADMIN_EMAIL_TEMP_ID' => '9',
+
+    'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',	
+
+
 
 
     //CRUD
@@ -123,6 +132,9 @@ return [
     'GENERATED' => ':Module has been generated.',
 
     'MENULIMIT' => ':You can create or active 6 menu items.',
+	'SUBSCRIBE_CREATE' => 'User subscribed successfully.',
+	'SUBSCRIBE_UPDATE' => 'Subscriber updated successfully.',
+	'SUBSCRIBE_EXIST' => 'This email id is already subscribed. Please try another email id.',
 
 
 
