@@ -231,22 +231,26 @@ if (!function_exists('getTopics')) {
             $string[] = '<ul>';
             $sel = '';
 
+			
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
+                
+				if ($menu->page_id == NULL)
 
-                if ($menu->page_id == NULL)
                     $target = 'target="_blank"';
                 else
                     $target = "";
+				$menu_id_by_page=get_menu_id_by_page_id($page_id,'1');
 
-                if ($page_id == $menu->page_id)
+                if ($page_id == $menu->page_id || $menu_id_by_page==$menu->id)
                     $sel = 'class="active"';
                 else
                     $sel = '';
-                if ($menu->page_id == '30')
-                    $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
-                else
-                    $string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+
+				if ($menu->page_id == '30')
+                $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
+				else
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
 
                 if (has_child_menu($menu->id) > 0) {
 
@@ -333,6 +337,17 @@ if (!function_exists('getTopics')) {
         $menus = Menu::where('parent', $parent)->count();
         if ($menus > 0)
             return $menus;
+        else
+            return 0;
+
+    }
+	
+	function get_menu_id_by_page_id($page_id = null,$type=null)
+    {
+        $menu = Menu::where('page_id', $page_id)->where('menu_type', 1)->first();
+		
+        if ($menu)
+            return $menu->parent;
         else
             return 0;
 

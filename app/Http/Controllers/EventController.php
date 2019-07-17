@@ -68,7 +68,6 @@ class EventController extends Controller
 	public function search_report(BreadcrumbsManager $breadcrumbs, Request $request)
     {
 
-        dd($request);
 		$page=Page::where('pages.slug', __('constant.TOPICAL_REPORT_SLUG'))
             ->where('pages.status', 1)
             ->first();
