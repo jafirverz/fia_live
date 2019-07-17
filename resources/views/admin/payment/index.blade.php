@@ -47,8 +47,6 @@
                                 <th>Payee Name</th>
                                 <th>Payment Mode</th>
                                 <th>Status</th>
-                                <th>Created</th>
-                                <th>Updated on</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -86,53 +84,43 @@
                                             @else - @endif
                                         </td>
                                         <td>{{ $payment->user_email ?? '-' }}</td>
-                                        <td>{{ $payment->user()->firstname.' '$payment->user()->lastname }}</td>
-                                        <td>{{ $payment->user_email ?? '-' }}</td>
+                                        <td>{{ $payment->user()->firstname.' '.$payment->user()->lastname }}</td>
+                                        <td>{{ $payment->subscription_type ?? '-' }}</td>
                                         <td>
-                                            @if($payment->subscription_type)
-                                                {{ $payment->subscription_type}}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payment_mode==1)
-                                                Online
-                                            @else
-                                                Offline
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($payment->status==1)
+                                            @if($payment->paid==1)
                                                 Paid
                                             @else
                                                 Unpaid
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($payment->created_at == null)
-                                                {{$payment->created_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($payment->created_at))   !!}
 
-                                        </td>
-                                        <td>@if ($payment->updated_at == null)
-                                                {{$payment->updated_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($payment->updated_at))   !!}
-
-                                        </td>
                                         <td>
-                                            <a href="{{ url('admin/payment/edit/' . $payment->id) }}"
-                                               title="Edit Filter">
-                                                <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ url('admin/payment/destroy/' . $payment->id) }}"
-                                               title="Destroy Filter"
-                                               onclick="return confirm('Are you sure you want to delete this payment?');">
-                                                <i class="fa fa-trash btn btn-danger" aria-hidden="true"></i>
-                                            </a>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <a class="" title="View Payment detail"
+                                                           href="{{ url('admin/payment/view/' . $payment->id) }}">
+                                                            <i class="fa fa-eye btn btn-success"> View</i>
+                                                        </a>
+                                                    </td>
+                                                    @if(!is_null($payment->path))
+                                                        <td>
+                                                            <a class="" title="Download Invoice"
+                                                               href="{{ url('admin/payment/download/' . $payment->id) }}">
+                                                                <i class="fa fa-download btn btn-primary"> Download</i>
+                                                            </a>
+                                                        </td>
+                                                    @endif
+                                                    {{--<td>
+                                                        <a class="" title="Delete User"
+                                                           onclick="return confirm('Are you sure to delete this user?')"
+                                                           href="{{ url('admin/user/destroy/' . $user->id) }}">
+                                                            <i class="fa fa-trash btn btn-danger"> Delete</i>
+                                                        </a>
+                                                    </td>--}}
+                                                </tr>
+                                            </table>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -150,8 +138,6 @@
                                 <th>Payee Name</th>
                                 <th>Payment Mode</th>
                                 <th>Status</th>
-                                <th>Created</th>
-                                <th>Updated on</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -177,19 +163,19 @@
                 {
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 {
                     extend: 'csvHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
 
                 }

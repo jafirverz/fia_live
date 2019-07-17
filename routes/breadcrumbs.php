@@ -296,7 +296,10 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
     $trail->parent('payment');
     $trail->push(__('constant.EDIT'), url('/admin/payment/edit'. $id));
 });
-
+Breadcrumbs::for('payment_view', function ($trail, $id) {
+    $trail->parent('payment');
+    $trail->push(__('constant.VIEW'), url('/admin/payment/view'. $id));
+});
 //EVENT
 Breadcrumbs::
 for ('front_resource', function ($trail) {

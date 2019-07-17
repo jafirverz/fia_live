@@ -292,12 +292,9 @@
                             </tbody>
 
                         </table>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer" style="">
 
                     </div>
-                    <!-- /.box-footer-->
+
                 </div>
             </div>
             <!-- /.row -->

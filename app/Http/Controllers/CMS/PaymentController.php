@@ -54,15 +54,18 @@ class PaymentController extends Controller
 
 
     /**
-     * Display the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public
-    function show($id)
+    public function view($id)
     {
-        //
+
+        $title = __('constant.PAYMENT');
+        $subtitle = 'View';
+        $payment = Invoice::findorfail($id);
+        return view('admin.payment.view', compact('title', 'subtitle', 'payment'));
     }
 
 
