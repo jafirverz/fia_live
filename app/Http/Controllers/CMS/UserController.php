@@ -199,9 +199,90 @@ class UserController extends Controller
      */
     public function updateStatus(Request $request)
     {
-        $response = userUpdateStatus($request->user_id,$request->status);
+        $response = $this->userUpdateStatus($request);
 
-        return redirect('admin/user')->with('success', $response['msg']);
+        return redirect('admin/user')->with($response['status'], $response['msg']);
     }
 
+    public function userUpdateStatus($request)
+    {
+        $response = [];
+        $user = User::findorfail($request->user_id);
+        if ($request->status == __('constant.PENDING_EMAIL_VERIFICATION')) {
+            $user->status = __('constant.PENDING_EMAIL_VERIFICATION');
+            $response['msg'] = "Status updated and verification mail send to user.";
+
+        } elseif ($request->status == __('constant.PENDING_ADMIN_APPROVAL')) {
+            $user->status = __('constant.PENDING_ADMIN_APPROVAL');
+            $response['msg'] = "Status updated successfully.";
+
+
+        } elseif ($request->status == __('constant.REJECTED')) {
+            $user->status = __('constant.REJECTED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.PENDING_FOR_PAYMENT')) {
+
+            $emailTemplate_user = $this->emailTemplate(__('constant.SEND_PAYMENT_LINK'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{firstname}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                //dd($exception);
+                $response['msg'] = "Status updated successfully.";
+                $response['status'] = "error";
+                return $response;
+            }
+
+            $user->member_type = $request->member_type;
+            $user->status = __('constant.PENDING_FOR_PAYMENT');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.ACCOUNT_ACTIVE')) {
+            $user->member_type = $request->member_type;
+            $user->status = __('constant.ACCOUNT_ACTIVE');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.ACCOUNT_INACTIVE')) {
+            $user->status = __('constant.ACCOUNT_INACTIVE');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.ACCOUNT_LAPSED')) {
+            $user->status = __('constant.ACCOUNT_LAPSED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.ACCOUNT_EXPIRED')) {
+            $user->status = __('constant.ACCOUNT_EXPIRED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.ACCOUNT_DELETED')) {
+            $user->status = __('constant.ACCOUNT_DELETED');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.NEWSLATTER_SUBSCRIBER')) {
+            $user->status = __('constant.NEWSLATTER_SUBSCRIBER');
+            $response['msg'] = "Status updated successfully.";
+
+        } elseif ($request->status == __('constant.UNSUBSCRIBE')) {
+            $user->status = __('constant.UNSUBSCRIBE');
+            $response['msg'] = "Status updated successfully.";
+
+        }
+        $response['status'] = "success";
+        $user->save();
+        return $response;
+    }
 }
