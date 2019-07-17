@@ -248,19 +248,22 @@ if (!function_exists('getTopics')) {
                     $target = "";
                 $menu_id_by_page = get_menu_id_by_page_id($page_id, '1');
 
-                if ($page_id == $menu->page_id || $menu_id_by_page == $menu->id)
+
+				if ($page_id == $menu->page_id || $menu_id_by_page==$menu->id)
                     $sel = 'class="active"';
                 else
                     $sel = '';
 
-                if ($menu->page_id == '30')
-                    $string[] = '<li ' . $sel . '><a ' . $target . '>' . $menu->title . '</a>';
-                else
-                    $string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+
+				if ($menu->id == '30')
+         $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
+
+				else
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
 
                 if (has_child_menu($menu->id) > 0) {
 
-                    $string[] = get_menu_has_child($menu->id, 1);
+                    $string[] = get_menu_has_child($menu->id, 1,$page_id);
                 }
                 $string[] = '</li>';
 

@@ -57,7 +57,9 @@
 							</div>
 						</div>	
                     @endforeach
+                    @if($reports->count()>setting()->pagination_limit)
 						<div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+                     @endif
 					</div>
 					
 				</div>
