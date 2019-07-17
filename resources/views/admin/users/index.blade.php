@@ -112,7 +112,7 @@
                                                     </td>
                                                     <td>
                                                         <a class="" title="Delete User"
-                                                           onclick="return confirm('Are you sure to delete this user?')"
+                                                           onclick="return confirm('Are you sure you want to delete this member?')"
                                                            href="{{ url('admin/user/destroy/' . $user->id) }}">
                                                             <i class="fa fa-trash btn btn-danger"> Delete</i>
                                                         </a>
@@ -125,15 +125,18 @@
 
                                                         <a class="update-status" title="Approve and send payment"
                                                            href="#" data-member-type="{{$user->member_type}}"
-                                                           data-user-id="{{$user->id}}"
+                                                           data-user-id="{{$user->id}}" data-title="Approve and Send
+                                                                Payment"
                                                            data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
                                                             <i class="fa fa-send btn btn-success"> Approve and Send
                                                                 Payment</i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="" title="Approve"
-                                                           href="#">
+                                                        <a class="update-status" title="Approve"
+                                                           href="#" data-member-type="{{$user->member_type}}"
+                                                           data-user-id="{{$user->id}}" data-title="Approve"
+                                                           data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
                                                             <i class="fa fa-check btn btn-success"> Approve</i>
                                                         </a>
                                                     </td>
@@ -183,7 +186,7 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Approve and Send Payment</h4>
+                            <h4 class="modal-title button-title">Approve and Send Payment</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -207,7 +210,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Approve and send payment link</button>
+                            <button type="submit" class="btn btn-primary button-title">Approve and send payment link</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -228,6 +231,7 @@
         memberType.change();
         $('#status').val($(this).data('status'));
         $('#user-id').val($(this).data('user-id'));
+        $( ".button-title" ).html($(this).data('title'));
         $('#payment-approve-modal').modal('show');
     });
 
