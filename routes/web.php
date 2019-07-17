@@ -215,6 +215,7 @@ Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::post('/subscribers', 'HomeController@subscribers');
+Route::get('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');

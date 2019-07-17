@@ -127,6 +127,9 @@ return [
     'GENERATED' => ':Module has been generated.',
 
     'MENULIMIT' => ':You can create or active 6 menu items.',
+	'SUBSCRIBE_CREATE' => 'User subscribed successfully.',
+	'SUBSCRIBE_UPDATE' => 'Subscriber updated successfully.',
+	'SUBSCRIBE_EXIST' => 'This email id is already subscribed. Please try another email id.',
 
 
 
