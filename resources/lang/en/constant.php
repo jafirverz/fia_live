@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -95,8 +96,6 @@ return [
 	'CONTACT_US_USER_EMAIL_TEMP_ID' => '1',
 
     'CONTACT_US_ADMIN_EMAIL_TEMP_ID' => '2',
-	
-	'SUBSCRIPTION_USER_EMAIL_TEMP_ID' => '4',
 
     'STUDENT_VERIFICATION'  =>  3,
 
@@ -138,9 +137,20 @@ return [
 
     'LOGIN' =>  'login',
 
-
-
+	//User status constants
+	'PENDING_EMAIL_VERIFICATION' => '1',
+	'PENDING_ADMIN_APPROVAL' => '2',
+	'REJECTED' => '3',
+	'PENDING_FOR_PAYMENT' => '4',
+	'ACCOUNT_ACTIVE' => '5',
+	'ACCOUNT_INACTIVE' => '6',
+	'ACCOUNT_LAPSED' => '7',
+	'ACCOUNT_EXPIRED' => '8',
+	'ACCOUNT_DELETED' => '9',
+	'NEWSLATTER_SUBSCRIBER' => '10',
+	'UNSUBSCRIBE' => '11',
 
 
 ];
+
 
