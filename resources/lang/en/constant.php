@@ -99,10 +99,14 @@ return [
 
     'CONTACT_US_ADMIN_EMAIL_TEMP_ID' => '2',
 
+
+
     'STUDENT_VERIFICATION'  =>  '3',
     'SEND_PAYMENT_LINK'  =>  '5',
     'USER_REGISTER_ON_SITE'  =>  '6',
     'USER_REGISTRATION_REJECTED'  =>  '7',
+
+
 
 	'SUBSCRIPTION_USER_EMAIL_TEMP_ID' => '4',
 	

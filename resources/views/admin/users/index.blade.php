@@ -119,29 +119,32 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <table>
-                                                <tr>
-                                                    <td>
+                                            @if(!in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
 
-                                                        <a class="update-status" title="Approve and send payment"
-                                                           href="#" data-member-type="{{$user->member_type}}"
-                                                           data-user-id="{{$user->id}}" data-title="Approve and Send
+                                                <table>
+                                                    <tr>
+                                                        <td>
+
+                                                            <a class="update-status" title="Approve and send payment"
+                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               data-user-id="{{$user->id}}" data-title="Approve and Send
                                                                 Payment"
-                                                           data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
-                                                            <i class="fa fa-send btn btn-success"> Approve and Send
-                                                                Payment</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="update-status" title="Approve"
-                                                           href="#" data-member-type="{{$user->member_type}}"
-                                                           data-user-id="{{$user->id}}" data-title="Approve"
-                                                           data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
-                                                            <i class="fa fa-check btn btn-success"> Approve</i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                               data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
+                                                                <i class="fa fa-send btn btn-success"> Approve and Send
+                                                                    Payment</i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="update-status" title="Approve"
+                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               data-user-id="{{$user->id}}" data-title="Approve"
+                                                               data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
+                                                                <i class="fa fa-check btn btn-success"> Approve</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            @endif
                                             <table>
                                                 <tr>
                                                     <td>
@@ -152,11 +155,14 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="" title="Unsubscribe"
-                                                           onclick="return confirm('Are you sure to unsubscribe this user?')"
-                                                           href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
-                                                            <i class="fa fa-bell-slash btn btn-danger"> Unsubscribe</i>
-                                                        </a>
+                                                        @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+                                                            <a class="" title="Unsubscribe"
+                                                               onclick="return confirm('Are you sure to unsubscribe this user?')"
+                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
+                                                                <i class="fa fa-bell-slash btn btn-danger">
+                                                                    Unsubscribe</i>
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </table>
@@ -179,7 +185,7 @@
         </div>
         <!-- /.row -->
         <div class="modal fade" id="payment-approve-modal" style="display: none;">
-            <form action="{{ route('update-status') }}" method="POST">
+            <form action="{{ route('update-status') }}" method="GET">
                 @csrf
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -193,7 +199,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="member_type" class=" control-label">Member Type</label>
-                                        <select class="form-control select2" name="member_type" id="member-type" style="width: 100%">
+                                        <select class="form-control select2" name="member_type" id="member-type"
+                                                style="width: 100%">
                                             @if (memberType())
                                                 @foreach (memberType() as $key=>$member)
                                                     <option value="{{ $key }}">{{ $member }}</option>
@@ -201,7 +208,7 @@
                                             @endif
                                         </select>
                                         <input type="hidden" name="status" value="" id="status">
-                                        <input type="hidden" name="user_id" value="" id="user-id">
+                                        <input type="hidden" name="id" value="" id="user-id">
                                     </div>
                                 </div>
                                 <!-- /.col -->
@@ -210,7 +217,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary button-title">Approve and send payment link</button>
+                            <button type="submit" class="btn btn-primary button-title">Approve and send payment link
+                            </button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -225,13 +233,13 @@
 @endsection
 @push('scripts')
 <script>
-    $('.update-status').click(function() {
+    $('.update-status').click(function () {
         var memberType = $('#member-type');
         memberType.val($(this).data('member-type'));
         memberType.change();
         $('#status').val($(this).data('status'));
         $('#user-id').val($(this).data('user-id'));
-        $( ".button-title" ).html($(this).data('title'));
+        $(".button-title").html($(this).data('title'));
         $('#payment-approve-modal').modal('show');
     });
 
