@@ -12,6 +12,7 @@
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
                         <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
+                                <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
                             <option
