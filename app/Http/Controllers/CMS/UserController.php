@@ -11,6 +11,7 @@ use App\Traits\GetEmailTemplate;
 use Exception;
 use App\Mail\UserSideMail;
 use Auth;
+use App\GroupUserId;
 
 
 class UserController extends Controller
@@ -28,8 +29,8 @@ class UserController extends Controller
     {
         $title = __('constant.USER');
         $subtitle = 'Index';
-        $users = User::all();
-        return view('admin.users.index', compact('title', 'users','subtitle'));
+        $users = User::orderBy('created_at','desc')->get();
+        return view('admin.users.index', compact('title', 'users', 'subtitle'));
     }
 
     /**
@@ -44,6 +45,7 @@ class UserController extends Controller
 
         return view('admin.users.create', compact('title', 'subtitle'));
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -53,24 +55,126 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'group_name' => 'required|unique:group_managements,group_name',
-            'group_members' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email|unique:users',
+            'member_type' => 'required',
+            'organization' => 'required|string',
+            'password' => 'required|confirmed',
+            'country' => 'required',
             'status' => 'required',
         ]);
-        $groupmanagement = new GroupManagement();
-        $groupmanagement->group_name = $request->group_name;
-        $groupmanagement->group_members = null;
-        $groupmanagement->status = $request->status;
-        $groupmanagement->save();
-        if (count($request->group_members)) {
-            foreach ($request->group_members as $member) {
+        $user_id = guid();
+        $user = New User();
+        $user->user_id = $user_id;
+        $user->salutation = $request->salutation;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->member_type = $request->member_type;
+        $user->country = $request->country;
+        $user->organization = $request->organization;
+        $user->job_title = $request->job_title;
+        $user->telephone_code = $request->telephone_code;
+        $user->telephone_number = $request->telephone_number;
+        $user->mobile_code = $request->mobile_code;
+        $user->mobile_number = $request->mobile_number;
+        $user->city = $request->city;
+        $user->address1 = $request->address1;
+        $user->address2 = $request->address2;
+        $user->password = Hash::make($request->password);
+        if (isset($request->status) && !is_null($request->status)) {
+            $user->status = $request->status;
+        } else {
+            $user->status = 1;
+        }
+        $user->save();
+
+        if (isset($request->group_ids) && count($request->group_ids)) {
+            foreach ($request->group_ids as $groupId) {
                 $groupUserId = new GroupUserId();
-                $groupUserId->user_id = $member;
-                $groupUserId->group_id = $groupmanagement->id;
+                $groupUserId->user_id = $user->id;
+                $groupUserId->group_id = $groupId;
                 $groupUserId->save();
             }
         }
 
-        return redirect('admin/group-management')->with('success', __('constant.CREATED', ['module' => __('constant.GROUPMANAGEMENT')]));
+        return redirect('admin/user')->with('success', __('constant.CREATED', ['module' => __('constant.USER')]));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $title = __('constant.USER');
+        $subtitle = 'Edit';
+        $user = User::findorfail($id);
+
+        return view('admin.users.edit', compact('title', 'subtitle', 'user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|unique:users,email,'. $id,
+            'member_type' => 'required',
+            'organization' => 'required|string',
+            'password' => 'confirmed',
+            'country' => 'required',
+            'status' => 'required',
+        ]);
+        $user = User::findorfail($id);
+        $user->salutation = $request->salutation;
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->member_type = $request->member_type;
+        $user->country = $request->country;
+        $user->organization = $request->organization;
+        $user->job_title = $request->job_title;
+        $user->telephone_code = $request->telephone_code;
+        $user->telephone_number = $request->telephone_number;
+        $user->mobile_code = $request->mobile_code;
+        $user->mobile_number = $request->mobile_number;
+        $user->city = $request->city;
+        $user->address1 = $request->address1;
+        $user->address2 = $request->address2;
+        $user->password = Hash::make($request->password);
+        if (isset($request->status) && !is_null($request->status)) {
+            $user->status = $request->status;
+        }
+        $user->save();
+
+        if (isset($request->group_ids) && count($request->group_ids)) {
+            $groups = GroupUserId::where('user_id', $id)->delete();
+            foreach ($request->group_ids as $groupId) {
+                $groupUserId = new GroupUserId();
+                $groupUserId->user_id = $user->id;
+                $groupUserId->group_id = $groupId;
+                $groupUserId->save();
+            }
+        }
+
+        return redirect('admin/user')->with('success', __('constant.UPDATED', ['module' => __('constant.USER')]));
+    }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id)
+    {
+        $title = __('constant.USER');
+        $subtitle = 'View';
+        $user = User::findorfail($id);
+
+        return view('admin.users.view', compact('title', 'subtitle', 'user'));
     }
 }

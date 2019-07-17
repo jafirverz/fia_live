@@ -11,6 +11,7 @@ use App\User;
 use App\GroupUserId;
 use Illuminate\Support\Facades\DB;
 use App\GroupManagement;
+use App\Invoice;
 
 
 if (!function_exists('getTopics')) {
@@ -229,11 +230,13 @@ if (!function_exists('getTopics')) {
         if ($menus->count() > 0) {
             $string[] = '<ul>';
             $sel = '';
+
 			
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
                 
 				if ($menu->page_id == NULL)
+
                     $target = 'target="_blank"';
                 else
                     $target = "";
@@ -243,11 +246,13 @@ if (!function_exists('getTopics')) {
                     $sel = 'class="active"';
                 else
                     $sel = '';
+
 				if ($menu->id == '30')
-                $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
+         $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
+
 				else
 				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
-				
+
                 if (has_child_menu($menu->id) > 0) {
 
                     $string[] = get_menu_has_child($menu->id, 1);
@@ -593,7 +598,7 @@ if (!function_exists('getTopics')) {
 
     function memberShipStatus($key = null)
     {
-        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Subscriber Only'];
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only'];
 
         if (!is_null($key)) {
             if (Arr::has($array_list, $key)) {
@@ -619,8 +624,31 @@ if (!function_exists('getTopics')) {
 
     function memberGroup()
     {
-        $groups = GroupManagement::where('status', 0)->select('group_name', 'id')
+        $groups = GroupManagement::where('status', 1)
+            ->select('group_name', 'id')
+            ->orderBy('group_name', 'asc')
             ->get();
         return $groups;
+    }
+
+    function memberGroupByUserIds($id = null)
+    {
+        $groups = GroupUserId::join('group_managements', 'group_managements.id', '=', 'group_user_ids.group_id')
+            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'group_managements.group_name', 'group_managements.status')
+            ->where('group_managements.status', 1)
+            ->where('group_user_ids.user_id', $id)
+            ->get();
+
+        return $groups;
+    }
+
+    function userPayments($userId = null)
+    {
+        if (!is_null($userId)) {
+            $invoices = Invoice::where('user_id', $userId)->get();
+        } else {
+            $invoices = Invoice::all();
+        }
+        return $invoices;
     }
 }

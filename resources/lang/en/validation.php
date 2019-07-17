@@ -146,9 +146,11 @@ return [
 
     'attributes' => [
         'topic_id' => 'topic',
-        'country_id'    =>  'country',
-        'payer_email'    =>  'email',
-        'mode'    =>  'subscription type',
+        'country_id' => 'country',
+        'payer_email' => 'email',
+        'mode' => 'subscription type',
+        'firstname ' => 'first name ',
+        'lastname  ' => 'last name ',
     ],
 
 ];

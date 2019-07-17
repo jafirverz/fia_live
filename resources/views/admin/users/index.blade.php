@@ -50,6 +50,7 @@
                             <tbody>
                             @if($users->count())
                                 @foreach($users as $user)
+                                    <?php  $groupNames = memberGroupByUserIds($user->id); ?>
                                     <tr>
                                         <td>{{ $user->firstname ?? '-' }}</td>
                                         <td>{{ $user->lastname ?? '-' }}</td>
@@ -66,8 +67,19 @@
                                         <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
                                                 Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
                                                 Unpaid @else - @endif</td>
-                                        <td>Group Name</td>
-                                        <td data-order="<?php if(!is_null($user->invoice()) ) {echo $user->invoice()->created_at->format('d M, Y H:i:s');}?>">
+                                        <td>
+                                            <?php
+                                            $groupNames = $groupNames->pluck('group_name')->all();
+                                            ?>
+                                            @if(count($groupNames))
+                                                {{implode(',',$groupNames)}}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td data-order="<?php if (!is_null($user->invoice())) {
+                                            echo $user->invoice()->created_at->format('d M, Y H:i:s');
+                                        }?>">
                                             @if(!is_null($user->invoice()) )
                                                 {{ $user->invoice()->created_at->format('d M, Y')}}
                                             @else - @endif
@@ -169,9 +181,9 @@
             {
                 "pageLength": 10,
                 'ordering': true,
-                'order': [[12, 'desc']],
+                'order': [[15, 'desc']],
                 "aoColumnDefs": [{
-                    "aTargets": [2, 6],
+                    "aTargets": [17],
                     "bSortable": false
                 },
                     {width: 100, targets: 0},
