@@ -61,7 +61,9 @@
 						
 						<!-- no loop this element --> <div class="grid-sizer"></div> <!-- no loop this element -->					
 					</div>
+                    @if($events->count()>setting()->pagination_limit)
 					<div class="more-wrap"><button id="btn-load" class="btn-4 load-more"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+                    @endif
 				</div>
                 
             </div>
