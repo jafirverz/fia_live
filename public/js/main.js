@@ -375,30 +375,48 @@ $(window).load(function() {
 
 
 function showMore() {
-	$('.mbox-wrap').each(function(){
-		var numshow = $(this).attr('data-num'),
-			item = $(this).find('.mbox'),
-			btn = $(this).find('.mbox-load');	
-		$(item).hide();
-		$(item).slice(0, numshow).show();
-		var itemhide = $(this).find(".mbox:hidden");
-		if ($(itemhide).length == 0) {
-			$(btn).hide();
-		}
-		$(btn).on('click', function (e) {
-			e.preventDefault();	
-			$(".mbox:hidden").slice(0, numshow).fadeIn('slow');
-			if ($(".mbox:hidden").length == 0) {
-				$(btn).hide();
-			}
-			 //$('html,body').animate({
-				//scrollTop: $(this).offset().top
-			//}, 1500);
-		});
-	});	
+      setTimeout(function(){
+        $('.mbox-wrap').each(function(){
+            var numshow = parseInt($(this).attr('data-num')),
+                item = $(this).find('.mbox'),
+                btn = $(this).find('.load-more, .mbox-load'),
+                countItem = item.length,
+                indexShow = 1;
+                item.hide();	
+                if(countItem < numshow){
+                    btn.hide();
+                    item.show();
+                }else{
+                    item.filter(":lt(" + numshow + ")").show();
+                }
+                console.log(countItem);
+                console.log(indexShow);
+                console.log(numshow);
+                console.log(item);
+                console.log(btn);
+                
+                btn.on('click', function (e) {
+                    e.preventDefault();	
+                    indexShow++;
+                    if(numshow*indexShow < countItem){
+                        item.filter(":lt(" + numshow*indexShow + ")").fadeIn('slow');
+                        //item.slice(0, numshow*indexShow).fadeIn('slow');
+                    }else{
+                        item.filter(":lt(" + countItem + ")").fadeIn('slow');
+                        //item.slice(0, countItem).fadeIn('slow');
+                        btn.hide();
+                    }
+                    console.log(countItem);
+                    console.log(indexShow);
+                    //$('html,body').animate({
+                        //scrollTop: $(this).offset().top
+                    //}, 1500);
+                });
+        });	
 
-}	
+      }, 100);
 
+}
 
 $(window).load(function() {
 	/*$('.masony').each(function(){

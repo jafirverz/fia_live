@@ -177,4 +177,31 @@ class UserController extends Controller
 
         return view('admin.users.view', compact('title', 'subtitle', 'user'));
     }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::findorfail($id);
+        $user->status = 9 ;
+        $user->save();
+        return redirect('admin/user')->with('success', __('constant.DELETED', ['module' => __('constant.USER')]));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(Request $request)
+    {
+        $response = userUpdateStatus($request->user_id,$request->status);
+
+        return redirect('admin/user')->with('success', $response['msg']);
+    }
+
 }

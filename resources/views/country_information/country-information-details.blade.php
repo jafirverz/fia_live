@@ -15,9 +15,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
     <div class="main-wrap">
 
         @include('inc.banner')
-
         <div class="@if(Auth::check()) tempt-1 @endif">
-
             @if($contents)
 
             <div class="container">
@@ -35,45 +33,25 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                             <div id="nav" class="nav-content">
 
                                 <ul class="btn-sort clearfix">
-
                                     <li class="active"><a data-toggle="tab" href="#tab-1">A - Z</a></li>
-
                                     <li><a data-toggle="tab" href="#tab-2">Z - A</a></li>
-
                                 </ul>
-
                                 <div class="tab-content">
-
                                     <div id="tab-1" class="tab-pane active">
-
                                         <ul class="nav-list">
-
                                             @foreach (getFilterCountry() as $country)
-
                                             <li @if($country->tag_name==$_GET['country']) class="active" @endif>
-
                                                 <a href="{{ url('country-information-details') }}?country={{
-
                                                     $country->tag_name }}&category={{ $_GET['category'] ?? '' }}">{{ $country->tag_name }}</a>
-
                                                 <ul>
-
                                                     @foreach (getFilterCategory() as $category)
-
                                                     <li @if($category->tag_name==$_GET['category'] &&
-
                                                         $country->tag_name==$_GET['country']) class="active" @endif>
-
                                                         <a href="{{ url('country-information-details') }}?country={{
-
                                                                 $country->tag_name }}&category={{ $category->tag_name }}">{{ $category->tag_name }}</a>
-
                                                     </li>
-
                                                     @endforeach
-
                                                 </ul>
-
                                             </li>
 
                                             @endforeach
@@ -81,47 +59,26 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                                         </ul>
 
                                     </div>
-
                                     <div id="tab-2" class="tab-pane">
-
                                         <ul class="nav-list">
-
                                             @foreach (getFilterCountry()->reverse() as $country)
-
                                             <li @if($country->tag_name==$_GET['country']) class="active" @endif>
-
                                                 <a href="{{ url('country-information-details') }}?country={{
-
                                                     $country->tag_name }}&category={{ $_GET['category'] ?? '' }}">{{ $country->tag_name }}</a>
-
                                                 <ul>
-
                                                     @foreach (getFilterCategory() as $category)
-
                                                     <li @if($category->tag_name==$_GET['category'] &&
-
                                                         $country->tag_name==$_GET['country']) class="active" @endif>
-
                                                         <a href="{{ url('country-information-details') }}?country={{
-
                                                                 $country->tag_name }}&category={{ $category->tag_name }}">{{ $category->tag_name }}</a>
-
                                                     </li>
-
                                                     @endforeach
-
                                                 </ul>
-
                                             </li>
-
                                             @endforeach
-
                                         </ul>
-
                                     </div>
-
                                 </div>
-
                             </div>
 
                         </div>
@@ -207,66 +164,35 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 </div><!-- //page -->
 
 <a href="#find-pp" class="btn-find" data-toggle="modal"><span>?</span>Send Us Your Enquiry / Feedback</a>
-
 <div id="find-pp" class="modal fade">
-
     <div class="modal-dialog">
-
         <div class="modal-content">
-
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-
             <h3 class="md-title">Send Us Your Enquiry / Feedback</h3>
-
-            <form id="feedback" name="feedback"  class="form-type form-ani" method="post" action="{{ url('/feedback-store')}}">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
+            <form action="thanks.html" class="form-type form-ani">
                 <div class="inrow">
-
-                    <span><input name="name" type="text" class="form-control" /></span>
-
+                    <span><input type="text" class="form-control" /></span>
                     <label><span class="required">*</span> Name</label>
-
                 </div>
-
                 <div class="inrow">
-
-                    <span><input name="emailid" type="text" class="form-control" /></span>
-
+                    <span><input type="text" class="form-control" /></span>
                     <label><span class="required">*</span> Email Address</label>
-
                 </div>
-
                 <div class="inrow">
-
-                    <span><textarea name="message" cols="30" rows="7" class="form-control"></textarea></span>
-
+                    <span><textarea cols="30" rows="7" class="form-control"></textarea></span>
                     <label><span class="required">*</span> Message</label>
-
                 </div>
-
                 <div class="row output break-480">
-
                     <div class="col-xs-6 col-xs-push-6 col">
-
                         <button type="submit" class="btn-2">Send</button>
-
                     </div>
-
                     <div class="col-xs-6 col-xs-pull-6 col">
-
                         <a class="btn-4" data-dismiss="modal" href="#">Cancel</a>
-
                     </div>
-
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
 </div><!-- /.modal -->
 
 <script>
