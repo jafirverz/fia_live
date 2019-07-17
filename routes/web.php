@@ -22,6 +22,19 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
+Route::get('/clear', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
+    $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
+    return '<h1>CLEAR All </h1>';
+
+});
+Route::get('/storage-link', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('storage:link');
+
+    return $exitCode2;
+
+});
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
