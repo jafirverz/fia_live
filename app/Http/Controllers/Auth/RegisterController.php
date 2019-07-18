@@ -10,11 +10,16 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Banner;
 use App\Page;
 use App\Mail\UserSideMail;
+use App\Traits\GetEmailTemplate;
+use App\Traits\DynamicRoute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
+    use DynamicRoute;
+    use GetEmailTemplate;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -83,7 +88,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user_id = guid();
-        return User::create([
+        $user_data =  User::create([
             'user_id'    =>  $user_id,
             'salutation' => $data['salutation'],
             'firstname' => $data['firstname'],
@@ -100,6 +105,7 @@ class RegisterController extends Controller
             'address2' => $data['address2'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'member_type'   =>  2,
             'subscribe_status'  => $data['subscribe_status'] ?? null,
             'status'    =>  1,
         ]);
@@ -132,6 +138,8 @@ class RegisterController extends Controller
 
             }
         }
+        //dd($emailTemplate);
+        return $user_data;
     }
 
     public function register(Request $request)
@@ -145,5 +153,18 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath())->with('success', 'An email is sent to your mail box with a link, please click on the link for verification. If you did not receive the email, please check your SPAM folder.');
+    }
+
+    public function verification($user_id)
+    {
+        $user = User::where('user_id', $user_id)->first();
+        if($user->email_verified_at)
+        {
+            return abort(404);
+        }
+        $user->email_verified_at = now();
+        $user->status = 2;
+        $user->save();
+        return redirect(url('verified-thank-you'));
     }
 }

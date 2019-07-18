@@ -16,29 +16,30 @@
 		.clearfix:before, .clearfix:after { content:" "; display: table; }
 		.clearfix:after { clear: both; }
 		.invoice-wrap { margin: 0 auto; width: 700px; }
-		.header h1 { color: #f05a22; font-size: 30px; margin: 0; padding: 30px 0 15px ; text-transform: uppercase; }
-		.header .logo { float: left; width: 50%; }
-		.header .logo img { width: 220px; }
+		.header h1 { color: #f05a22; font-size: 30px; margin: 0; padding: 22px 0 15px ; text-transform: uppercase; }
+		.header .logo { float: left; width: 180px; }
+		.header .logo img { width: 160px; }
 		.header .last { text-align: right; }
 		.header .last p { margin: 0; }
 		.info-1 { margin-bottom: 50px; margin-top: 30px; }
-		.info-1 .col-1 {float: left;width: 360px;}
-		.info-1 .col-2 {float: right;width: 222px;}
-		.info-2 { margin-bottom: 50px; margin-top: 30px; text-align: center; }
-		.lb, .gr { float: left; }
-		.lb { padding-right: 5px; }
+		.info-1 .col-1 { float: left; width: 450px; }
+		.info-1 .col-2 { float: right; width: 250px }
+		.info-2 {margin-bottom: 15px; margin-top: 80px;text-align: center;}
+		.lb { float: left; }
+		.lb { padding-right: 5%; }
 		.gr-1 { margin-bottom: 20px; }
-		.gr-1 .lb { width: 40%; }
-		.gr-1 .gr { width: 50%; }
-		.gr-2 .lb {padding-right: 10px;width: 110px;}
+		.gr-1 .lb { width: 100px; }
+		.gr-1 .gr { margin-left: 120px; }
+		.gr-2 .lb { padding-right: 20px; width: 125px; }
 		.gr-2 .lb span { float: right; }
-		.gr-2 .gr {width: 100px;}
-		.gr-3 .lb { width: 50px; }
-		.gr-3 .gr { width: 50%; }
+		.gr-2 .gr { margin-left: 140px; }
+		.gr-3 .lb { width: 100px; }
+		.gr-3 .gr { margin-left: 120px; }
 		.tb-1 { margin: 50px 0; width: 100%; }
+		.tb-2 { margin: 50px 0; width: 100%; }
 		.tb-1 th, .tb-1 td { border: none; padding: 15px 20px; vertical-align: top; }
-		.tb-1 th { background: #f48120; color: #fff; font-weight: normal; text-align: left; }
-		.tb-1 th:last-child { border-left: #fff solid 2px; border-radius: 0 10px 0 0; text-align: right; }
+		.tb-1 th { background: #f48120; border-left: #f48120 solid 2px; color: #fff; font-weight: normal; text-align: left; }
+		.tb-1 th:last-child { border-left: #f48120 solid 2px; border-right: #f48120 solid 2px; border-radius: 0 10px 0 0; text-align: right; }
 		.tb-1 th:first-child { border-radius: 10px 0 0 0; }
 		.tb-1 tbody td { border-bottom: #f48120 solid 2px; border-left: #f48120 solid 2px; }
 		.tb-1 tbody td:last-child { border-right: #f48120 solid 2px; border-left: none; }
@@ -50,10 +51,10 @@
 		.tb-1 tfoot .type td { padding-right: 0; }
 		.tb-1 tfoot hr { border-top: #f48120 solid 1px; float: right; width: 380px; }
 		.tb-1 p { margin: 0 0 10px; }
-		footer { bottom: 10px; font-size: .9em; left: 0; margin: 0 auto; position: fixed; right: 0; text-align: right; width: 700px; z-index: 2; }
-		footer .content { background: #fff; position: relative; }
-		footer .line-1, footer .line-2 { background: #017cba; height: 10px; left: 0; position: fixed; bottom: 15px; width: 50%; z-index: -1; }
-		footer .line-2 { border-radius: 0 10px 0 0; bottom: 5px; position: absolute; width: 23%; z-index: 3; }
+		footer { bottom: 10px; font-size: .9em; left: 0; margin: 0 50px; position: fixed; right: 0; text-align: right; width: 700px; z-index: 2; }
+		footer { font-size: .8em; left: 0; margin: 0 auto 20px; position: relative; text-align: right; width: 700px; z-index: 2; }
+		footer .content { background: #fff; }
+		footer .line-2 {background: #017cba;bottom: 15px;height: 10px;float: left; border-radius: 0 10px 0 0;bottom: 5px; width: 120px;z-index: 3;}
 	</style>
 
 
@@ -75,51 +76,52 @@
             </div>
         @endif
     </div>
-    <div class="info-1 clearfix">
-        <div class="col-1">
-            @if($data['organization'])
-                <div class="gr-1 clearfix">
-                    <div>Bill To:</div>
-                    <div></div>
-                </div>
-                <div class="gr-3 clearfix">
-                    <div><strong>Company:</strong></div>
-                    <div>{{$data['organization']}}</div>
-                </div>
-                <div class="gr-3 clearfix">
-                    <div>Address:</div>
-                    <div>{{$data['address1'].' '.$data['address2']}}</div>
-                </div>
-            @endif
-        </div>
-        <div class="col-2">
-            <div class="gr-2 clearfix">
-                <div class="lb">GST Reg. No <span>:</span></div>
-                <div class="gr">{{masterSetting()->gst_no}}</div>
-            </div>
-            <div class="gr-2 clearfix">
-                <div class="lb">Invoice No <span>:</span></div>
-                <div class="gr">{{$data['order_id']}}</div>
-            </div>
-            <div class="gr-2 clearfix">
-                <div class="lb">Invoice Date <span>:</span></div>
-                <div class="gr">{{date('d M Y', strtotime($data['created_at']))}}</div>
-            </div>
-            <div class="gr-2 clearfix">
-                <div class="lb">Currency <span>:</span></div>
-                <div class="gr">{{$data['currency']}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="gr-3 clearfix">
-        <div><strong>Attention:</strong></div>
-        <div></div>
-    </div>
-
-    <div class="gr-3 clearfix">
-        <div>Name:</div>
-        <div>{{$data['firstname'].' '.$data['lastname']}}</div>
-    </div>
+    <table class="tb-2">
+        <tbody>
+            <tr>
+                <td style="width: 65%;">
+                    <div class="gr-3 clearfix">
+                        Bill To:
+                    </div>
+                    <div class="gr-3 clearfix">
+                        <strong>Company:</strong> {{$data['organization']}}
+                    </div>
+                    <div class="gr-3 clearfix">
+                        Address: {{$data['address1'].' '.$data['address2']}}
+                    </div>
+                </td>
+                <td>
+                    <div class="gr-2 clearfix">
+                        <div class="lb">GST Reg. No <span>:</span></div>
+                        <div class="gr">{{masterSetting()->gst_no}}</div>
+                    </div>
+                    <div class="gr-2 clearfix">
+                        <div class="lb">Invoice No <span>:</span></div>
+                        <div class="gr">{{$data['order_id']}}</div>
+                    </div>
+                    <div class="gr-2 clearfix">
+                        <div class="lb">Invoice Date <span>:</span></div>
+                        <div class="gr">{{date('d M Y', strtotime($data['created_at']))}}</div>
+                    </div>
+                    <div class="gr-2 clearfix">
+                        <div class="lb">Currency <span>:</span></div>
+                        <div class="gr">{{$data['currency']}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="gr-3 clearfix">
+                        <strong>Attention:</strong>
+                    </div>
+                    <div class="gr-3 clearfix">
+                        Name: {{$data['firstname'].' '.$data['lastname']}}
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
     <table cellpadding="0" cellspacing="0" class="tb-1">
         <thead>
         <tr>
@@ -129,7 +131,7 @@
         </thead>
         <tbody>
         <tr>
-            <td style="height: 300px;">
+            <td style="height: 150px;">
                 <p>Membership Signup</p>
                 <ul>
                     <li>Consectetuer Adipiscing</li>
@@ -149,17 +151,17 @@
             <td style="width: 120px;">{{$data['price']}}</td>
         </tr>
         <tr>
-            <td>GST:</td>
+            <td style="text-align: right;">GST:</td>
             <td style="width: 20px;">$</td>
             <td style="width: 120px;">{{$data['gst']}}</td>
         </tr>
         <tr class="type">
             <td colspan="3">
-                <hr/>
+                <p style="border-top: 1px solid #f48120;width: 380px; float: right;"></p>
             </td>
         </tr>
         <tr>
-            <td><strong>Total Inc GST:</strong></td>
+            <td style="text-align: right;"><strong>Total Inc GST:</strong></td>
             <td style="width: 20px;"><strong>$</strong></td>
             <td style="width: 120px;"><strong>{{$data['total']}}</strong></td>
         </tr>
@@ -171,7 +173,6 @@
 </div>
 
 <footer>
-    <div class="line-1"></div>
     <div class="line-2"></div>
     <div class="content">{{masterSetting()->invoice_footer_address}}</div>
 </footer>
