@@ -147,13 +147,15 @@
                                             @endif
                                             <table>
                                                 <tr>
-                                                    <td>
-                                                        <a class="" title="Reject"
-                                                           onclick="return confirm('Are you sure to reject this user?')"
-                                                           href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
-                                                            <i class="fa fa-ban btn btn-danger"> Reject</i>
-                                                        </a>
-                                                    </td>
+                                                    @if(in_array($user->status,[__('constant.PENDING_EMAIL_VERIFICATION'),__('constant.PENDING_ADMIN_APPROVAL')]))
+                                                        <td>
+                                                            <a class="" title="Reject"
+                                                               onclick="return confirm('Are you sure to reject this user?')"
+                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
+                                                                <i class="fa fa-ban btn btn-danger"> Reject</i>
+                                                            </a>
+                                                        </td>
+                                                    @endif
                                                     <td>
                                                         @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
                                                             <a class="" title="Unsubscribe"
