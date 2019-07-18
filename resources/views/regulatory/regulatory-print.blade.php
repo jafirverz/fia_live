@@ -24,7 +24,7 @@
 
         <div class="main-wrap">
             <div class="container">
-                <div class="col-md-12" style="background-color: #333;padding: 15px;">
+                <div class="col-md-12" style="background-color: #333 !important; -webkit-print-color-adjust: exact;padding: 15px;">
                     <img src="{{ asset('uploads/systemSettings/fia-logo_1560875093.png') }}" width="120px">
                 </div>
                 <div class="intro-2 ">

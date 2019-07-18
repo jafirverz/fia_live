@@ -16,8 +16,10 @@
 
     <link href="{{ asset('css/plugin.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/print.css') }}" media="screen, print" />
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="{{ asset('js/plugin.js') }}"></script>
