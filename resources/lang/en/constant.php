@@ -113,6 +113,7 @@ return [
 	'FEEDBACK_ADMIN_EMAIL_TEMP_ID' => '9',
 
     'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',	
+    'REMINDER_EMAIL_TEMP_ID' => '10',
 
 
 

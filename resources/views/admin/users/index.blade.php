@@ -163,43 +163,45 @@
                                                         data-member-type="{{$user->member_type}}"
                                                         data-user-id="{{$user->id}}" data-title="Approve and Send
                                                                 Payment"
-                                                        data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
-                                                        <i class="fa fa-send btn btn-success"> Approve and Send
-                                                            Payment</i>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a class="update-status" title="Approve" href="#"
-                                                        data-member-type="{{$user->member_type}}"
-                                                        data-user-id="{{$user->id}}" data-title="Approve"
-                                                        data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
-                                                        <i class="fa fa-check btn btn-success"> Approve</i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        @endif
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <a class="" title="Reject"
-                                                        onclick="return confirm('Are you sure to reject this user?')"
-                                                        href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
-                                                        <i class="fa fa-ban btn btn-danger"> Reject</i>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
-                                                    <a class="" title="Unsubscribe"
-                                                        onclick="return confirm('Are you sure to unsubscribe this user?')"
-                                                        href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
-                                                        <i class="fa fa-bell-slash btn btn-danger">
-                                                            Unsubscribe</i>
-                                                    </a>
+                                                               data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
+                                                                <i class="fa fa-send btn btn-success"> Approve and Send
+                                                                    Payment</i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="update-status" title="Approve"
+                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               data-user-id="{{$user->id}}" data-title="Approve"
+                                                               data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
+                                                                <i class="fa fa-check btn btn-success"> Approve</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            @endif
+                                            <table>
+                                                <tr>
+                                                    @if(in_array($user->status,[__('constant.PENDING_EMAIL_VERIFICATION'),__('constant.PENDING_ADMIN_APPROVAL')]))
+                                                        <td>
+                                                            <a class="" title="Reject"
+                                                               onclick="return confirm('Are you sure to reject this user?')"
+                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
+                                                                <i class="fa fa-ban btn btn-danger"> Reject</i>
+                                                            </a>
+                                                        </td>
                                                     @endif
-                                                </td>
-                                            </tr>
-                                        </table>
+                                                    <td>
+                                                        @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+                                                            <a class="" title="Unsubscribe"
+                                                               onclick="return confirm('Are you sure to unsubscribe this user?')"
+                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
+                                                                <i class="fa fa-bell-slash btn btn-danger">
+                                                                    Unsubscribe</i>
+                                                            </a>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            </table>
 
 
                                     </td>

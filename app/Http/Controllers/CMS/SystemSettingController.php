@@ -171,6 +171,7 @@ class SystemSettingController extends Controller
 			'regulatory_emailid' => 'required | email',
             'contact_phone' => 'required ',
             'contact_email' => 'required | email ',
+			'feedback_emailid' => 'required | email ',
 			'pagination_limit' => 'required',
 			'social_link' => 'required',
 			'footer_copyright' => 'required',
@@ -191,9 +192,10 @@ class SystemSettingController extends Controller
 		$systemSetting->regulatory_emailid = $request->regulatory_emailid;
         $systemSetting->contact_phone = $request->contact_phone;
         $systemSetting->contact_email = $request->contact_email;
-        $systemSetting->contact_fax = $request->contact_fax;
+		 $systemSetting->feedback_emailid = $request->feedback_emailid;
+        //$systemSetting->contact_fax = $request->contact_fax;
         //$systemSetting->contact_address = $request->contact_address;
-        $systemSetting->company_map = $request->company_map;
+        //$systemSetting->company_map = $request->company_map;
         $systemSetting->footer = $request->footer;
 		$systemSetting->footer_copyright = $request->footer_copyright;
 		$systemSetting->pagination_limit = $request->pagination_limit;

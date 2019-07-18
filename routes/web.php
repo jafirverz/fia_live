@@ -24,9 +24,12 @@ Route::get('/register/verification/{user_id}', 'Auth\RegisterController@verifica
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 Route::get('/clear', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('cache:clear');
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode1 = \Illuminate\Support\Facades\Artisan::call('config:cache');
     $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
+    //$exitCode3 = \Illuminate\Support\Facades\Artisan::call('vendor:publish');
     return '<h1>CLEARED All </h1>';
 
 });
@@ -198,6 +201,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/user/update-status', 'CMS\UserController@updateStatus');
     Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
     Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
+    Route::get('/user/payment-reminder', 'CMS\UserController@PaymentReminderToRegisterUser')->name('payment-reminder');
     /*end user module backend*/
 
     /*Master Setting Start*/
@@ -213,6 +217,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
 Route::post('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
+Route::get('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
 Route::post('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
