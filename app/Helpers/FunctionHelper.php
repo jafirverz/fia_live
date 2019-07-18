@@ -669,5 +669,17 @@ if (!function_exists('getTopics')) {
         }
         return $invoices;
     }
+	
+	function latestUserPayments($userId = null)
+    {
+        if (!is_null($userId)) {
+            $invoice = Invoice::where('user_id', $userId)->orderBy('id','desc')->first();
+			return $invoice;
+        } 
+		else
+		{
+        return NULL;
+		}
+    }
 
 }
