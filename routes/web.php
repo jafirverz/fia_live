@@ -196,6 +196,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/user/update-status', 'CMS\UserController@updateStatus');
     Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
     Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
+    Route::get('/user/payment-reminder', 'CMS\UserController@PaymentReminderToRegisterUser')->name('payment-reminder');
     /*end user module backend*/
 
     /*Master Setting Start*/
