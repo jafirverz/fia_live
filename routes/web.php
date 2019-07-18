@@ -24,9 +24,12 @@ Route::get('/register/verification/{user_id}', 'Auth\RegisterController@verifica
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 Route::get('/clear', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('cache:clear');
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode1 = \Illuminate\Support\Facades\Artisan::call('config:cache');
     $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
+    //$exitCode3 = \Illuminate\Support\Facades\Artisan::call('vendor:publish');
     return '<h1>CLEARED All </h1>';
 
 });
