@@ -16,7 +16,9 @@ var editor_config = {
     valid_elements: "*[*]",
     valid_children: "+body[a],+a[div|h1|h2|h3|h4|h5|h6|p|#text]",
     forced_root_block: false,
-    relative_urls: false,
+    convert_urls:true,
+    relative_urls:false,
+    remove_script_host:false,
     table_default_attributes: {
         border: '1'
     },
@@ -89,7 +91,9 @@ tinymce.init({
     valid_elements: "*[*]",
     valid_children: "+body[a],+a[div|h1|h2|h3|h4|h5|h6|p|#text]",
     forced_root_block: false,
-    relative_urls: false,
+    convert_urls:true,
+    relative_urls:false,
+    remove_script_host:false,
     table_default_attributes: {
         border: '1'
     },
