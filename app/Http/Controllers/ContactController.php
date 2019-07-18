@@ -128,7 +128,6 @@ class ContactController extends Controller
 
 
 
-        //Jafir code.. comment by Nikunj
 
         if($request->enquiry_type=='Membership Enquiry')
 
@@ -211,7 +210,7 @@ class ContactController extends Controller
         }
 
 
-
+//dd($toEmail);
 
 
 		try {
@@ -232,7 +231,7 @@ class ContactController extends Controller
 
             }
 
-        redirect(url('/thank-you'))->with('success', __('constant.CREATED', ['module' => __('constant.CONTACT')]));
+       return redirect(url('/thank-you'))->with('success', __('constant.CREATED', ['module' => __('constant.CONTACT')]));
 
 
 
@@ -355,7 +354,7 @@ class ContactController extends Controller
 
             }
 
-        return redirect(url('/thank-you'))->with('success', __('constant.CREATED', ['module' => __('constant.FEEDBACK')]));
+        return redirect(url('/thank-you'));
 
 
 
