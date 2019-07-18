@@ -4,7 +4,7 @@
 <div id="toppage" class="page">
     <div class="main-wrap">
         <h1 class="hidden">Food Industry Asia</h1>
-        @include('inc.banner');
+        @include('inc.banner')
         <div class="map-wrap">
             <div class="map-pins">
                 <img src="images/map.jpg" alt="map" />
