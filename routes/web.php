@@ -22,10 +22,23 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
+Route::get('/clear', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
+    $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
+    $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
+    return '<h1>CLEAR All </h1>';
+
+});
+Route::get('/storage-link', function () {
+    $exitCode2 = \Illuminate\Support\Facades\Artisan::call('storage:link');
+
+    return $exitCode2;
+
+});
 Route::group(['prefix' => 'admin'], function () {
 
-	  Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
-  Route::post('/profile/update', 'AdminAuth\ProfileController@update');
+    Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
+    Route::post('/profile/update', 'AdminAuth\ProfileController@update');
     Route::get('/', 'AdminAuth\LoginController@showLoginForm');
     Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
     Route::post('/login', 'AdminAuth\LoginController@login');
@@ -88,61 +101,56 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/group-management/destroy', 'CMS\GroupManagementController@destroy');
 
 
+    Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
+    Route::get('/filter/create', 'CMS\FilterController@create');
+    Route::post('/filter/store', 'CMS\FilterController@store');
+    Route::get('/filter/edit/{id}', 'CMS\FilterController@edit');
+    Route::post('/filter/update/{id}', 'CMS\FilterController@update');
+    Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
+    //BANNER
+    Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
+    Route::get('/banner/create', 'CMS\BannerController@create');
+    Route::post('/banner/store', 'CMS\BannerController@store');
+    Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
+    Route::post('/banner/update/{id}', 'CMS\BannerController@update');
+    Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
+    //PAGE
+    Route::get('/page', 'CMS\PageController@index')->name('page.index');
+    Route::get('/page/create', 'CMS\PageController@create');
+    Route::post('/page/store', 'CMS\PageController@store');
+    Route::post('/page/search', 'CMS\PageController@search');
+    Route::get('/page/edit/{id}', 'CMS\PageController@edit');
+    Route::post('/page/update/{id}', 'CMS\PageController@update');
+    Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
 
-  Route::get('/filter', 'CMS\FilterController@index')->name('filter.index');
-  Route::get('/filter/create', 'CMS\FilterController@create');
-  Route::post('/filter/store', 'CMS\FilterController@store');
-  Route::get('/filter/edit/{id}', 'CMS\FilterController@edit');
-  Route::post('/filter/update/{id}', 'CMS\FilterController@update');
-  Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
-  //BANNER
-  Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
-  Route::get('/banner/create', 'CMS\BannerController@create');
-  Route::post('/banner/store', 'CMS\BannerController@store');
-  Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
-  Route::post('/banner/update/{id}', 'CMS\BannerController@update');
-  Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
-  //PAGE
-  Route::get('/page', 'CMS\PageController@index')->name('page.index');
-  Route::get('/page/create', 'CMS\PageController@create');
-  Route::post('/page/store', 'CMS\PageController@store');
-  Route::post('/page/search', 'CMS\PageController@search');
-  Route::get('/page/edit/{id}', 'CMS\PageController@edit');
-  Route::post('/page/update/{id}', 'CMS\PageController@update');
-  Route::get('/page/destroy/{id}', 'CMS\PageController@destroy');
-
-  //PAYMENT
-  Route::get('/payment', 'CMS\PaymentController@index')->name('payment.index');
-  Route::get('/payment/create', 'CMS\PaymentController@create');
-  Route::post('/payment/store', 'CMS\PaymentController@store');
-  Route::get('/payment/edit/{id}', 'CMS\PaymentController@edit');
-  Route::post('/payment/update/{id}', 'CMS\PaymentController@update');
-  Route::get('/payment/destroy/{id}', 'CMS\PaymentController@destroy');
+    //PAYMENT
+    Route::get('/payment', 'CMS\PaymentController@index')->name('payment.index');
+    Route::get('/payment/view/{id}', 'CMS\PaymentController@view');
+    Route::get('/payment/destroy/{id}', 'CMS\PaymentController@destroy');
     Route::post('/payment/date-range-search', 'CMS\PaymentController@date_range_search');
 
 
+    //Menu
+    Route::get('/menu', 'CMS\MenuController@index')->name('menu');
+    Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
+    Route::post('/menu/type-update/{id}', 'CMS\MenuController@type_update');
+    Route::get('/menu-list/{id}', 'CMS\MenuController@menu_list')->name('menu-list');
+    Route::get('/get-sub-menu/{id}', 'CMS\MenuController@getSubMenus')->name('get-sub-menu');
+    Route::get('/menu/create', 'CMS\MenuController@create')->name('menu-create');
+    Route::post('/menu/store', 'CMS\MenuController@store');
+    Route::get('/menu/edit/{id}', 'CMS\MenuController@edit')->name('menu-edit');
+    Route::post('/menu/update/{id}', 'CMS\MenuController@update');
+    Route::get('/menu/destroy/{id}', 'CMS\MenuController@destroy')->name('menu-destroy');
 
-   //Menu
-  Route::get('/menu', 'CMS\MenuController@index')->name('menu');
-  Route::get('/menu/type-edit/{id}', 'CMS\MenuController@type_edit')->name('type-edit');
-  Route::post('/menu/type-update/{id}', 'CMS\MenuController@type_update');
-  Route::get('/menu-list/{id}', 'CMS\MenuController@menu_list')->name('menu-list');
-  Route::get('/get-sub-menu/{id}', 'CMS\MenuController@getSubMenus')->name('get-sub-menu');
-  Route::get('/menu/create', 'CMS\MenuController@create')->name('menu-create');
-  Route::post('/menu/store', 'CMS\MenuController@store');
-  Route::get('/menu/edit/{id}', 'CMS\MenuController@edit')->name('menu-edit');
-  Route::post('/menu/update/{id}', 'CMS\MenuController@update');
-  Route::get('/menu/destroy/{id}', 'CMS\MenuController@destroy')->name('menu-destroy');
 
-
- Route::get('/system-setting', 'CMS\SystemSettingController@index')->name('system-setting.index');
-  Route::get('/system-setting/create', 'CMS\SystemSettingController@create');
-  Route::post('/system-setting/store', 'CMS\SystemSettingController@store');
-  Route::get('/system-setting/edit/{id}', 'CMS\SystemSettingController@edit');
-  Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
-  Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
-  /*end filter module backend*/
-Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
+    Route::get('/system-setting', 'CMS\SystemSettingController@index')->name('system-setting.index');
+    Route::get('/system-setting/create', 'CMS\SystemSettingController@create');
+    Route::post('/system-setting/store', 'CMS\SystemSettingController@store');
+    Route::get('/system-setting/edit/{id}', 'CMS\SystemSettingController@edit');
+    Route::post('/system-setting/update/{id}', 'CMS\SystemSettingController@update');
+    Route::get('/system-setting/destroy/{id}', 'CMS\SystemSettingController@destroy');
+    /*end filter module backend*/
+    Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access_not_allowed');
     Route::get('/roles-and-permission', 'AdminAuth\Account\PermissionController@index');
     Route::get('/roles-and-permission/create', 'AdminAuth\Account\PermissionController@create');
     Route::post('/roles-and-permission/store', 'AdminAuth\Account\PermissionController@store');
@@ -156,54 +164,58 @@ Route::get('/access-not-allowed', 'AdminAuth\Account\PermissionController@access
     Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
     Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
 
-	 /*Email Templates route start*/
-  Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
-  Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');
-  Route::post('/email-template/store', 'CMS\EmailTemplateController@store');
-  Route::get('/email-template/edit/{id}', 'CMS\EmailTemplateController@edit');
-  Route::post('/email-template/update/{id}', 'CMS\EmailTemplateController@update');
-  //Route::get('/email-template/destroy/{id}', 'CMS\EmailTemplateController@destroy');
-  /*Email Templates route end*/
-  Route::get('/events', 'CMS\EventsController@index')->name('events.index');
-  Route::get('/events/create', 'CMS\EventsController@create');
-  Route::post('/events/store', 'CMS\EventsController@store');
-  Route::get('/events/edit/{id}', 'CMS\EventsController@edit');
-  Route::post('/events/update/{id}', 'CMS\EventsController@update');
-  Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
+    /*Email Templates route start*/
+    Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
+    Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');
+    Route::post('/email-template/store', 'CMS\EmailTemplateController@store');
+    Route::get('/email-template/edit/{id}', 'CMS\EmailTemplateController@edit');
+    Route::post('/email-template/update/{id}', 'CMS\EmailTemplateController@update');
+    //Route::get('/email-template/destroy/{id}', 'CMS\EmailTemplateController@destroy');
+    /*Email Templates route end*/
+    Route::get('/events', 'CMS\EventsController@index')->name('events.index');
+    Route::get('/events/create', 'CMS\EventsController@create');
+    Route::post('/events/store', 'CMS\EventsController@store');
+    Route::get('/events/edit/{id}', 'CMS\EventsController@edit');
+    Route::post('/events/update/{id}', 'CMS\EventsController@update');
+    Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
 
-  Route::get('/topical-report', 'CMS\TopicalReportController@index')->name('topical_report.index');
-  Route::get('/topical-report/create', 'CMS\TopicalReportController@create');
-  Route::post('/topical-report/store', 'CMS\TopicalReportController@store');
-  Route::get('/topical-report/edit/{id}', 'CMS\TopicalReportController@edit');
-  Route::post('/topical-report/update/{id}', 'CMS\TopicalReportController@update');
-  Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
+    Route::get('/topical-report', 'CMS\TopicalReportController@index')->name('topical_report.index');
+    Route::get('/topical-report/create', 'CMS\TopicalReportController@create');
+    Route::post('/topical-report/store', 'CMS\TopicalReportController@store');
+    Route::get('/topical-report/edit/{id}', 'CMS\TopicalReportController@edit');
+    Route::post('/topical-report/update/{id}', 'CMS\TopicalReportController@update');
+    Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
 
-  /*start User Module backend*/
-  Route::get('/user', 'CMS\UserController@index')->name('user.index');
-  Route::get('/user/create', 'CMS\UserController@create');
-  Route::post('/user/store', 'CMS\UserController@store');
-  Route::get('/user/edit/{id}', 'CMS\UserController@edit');
-  Route::post('/user/update/{id}', 'CMS\UserController@update');
-  Route::post('/user/update-status', 'CMS\UserController@updateStatus');
-  Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
-  /*end user module backend*/
+    /*start User Module backend*/
+    Route::get('/user', 'CMS\UserController@index')->name('user.index');
+    Route::get('/user/create', 'CMS\UserController@create');
+    Route::post('/user/store', 'CMS\UserController@store');
+    Route::get('/user/edit/{id}', 'CMS\UserController@edit');
+    Route::get('/user/view/{id}', 'CMS\UserController@view');
+    Route::post('/user/update/{id}', 'CMS\UserController@update');
+    Route::post('/user/update-status', 'CMS\UserController@updateStatus');
+    Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
+    Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
+    /*end user module backend*/
 
-  /*Master Setting Start*/
-  Route::get('/master-setting', 'CMS\MasterSettingController@index')->name('master-setting.index');
-  Route::get('/master-setting/create', 'CMS\MasterSettingController@create');
-  Route::post('/master-setting/store', 'CMS\MasterSettingController@store');
-  Route::get('/master-setting/edit/{id}', 'CMS\MasterSettingController@edit');
-  Route::post('/master-setting/update/{id}', 'CMS\MasterSettingController@update');
-  Route::get('/master-setting/destroy/{id}', 'CMS\MasterSettingController@destroy');
-  /*Master Setting End*/
+    /*Master Setting Start*/
+    Route::get('/master-setting', 'CMS\MasterSettingController@index')->name('master-setting.index');
+    Route::get('/master-setting/create', 'CMS\MasterSettingController@create');
+    Route::post('/master-setting/store', 'CMS\MasterSettingController@store');
+    Route::get('/master-setting/edit/{id}', 'CMS\MasterSettingController@edit');
+    Route::post('/master-setting/update/{id}', 'CMS\MasterSettingController@update');
+    Route::get('/master-setting/destroy/{id}', 'CMS\MasterSettingController@destroy');
+    /*Master Setting End*/
 
 });
 Route::get('/contact-us', 'ContactController@index');
 Route::post('/contact-store', 'ContactController@store')->name('contacts');
+Route::post('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
 Route::post('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::post('/topical-reports/search', 'EventController@search_report');
+Route::get('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/country-information-print', 'PagesFrontController@country_information_print');
@@ -212,6 +224,7 @@ Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
 Route::post('/subscribers', 'HomeController@subscribers');
+Route::get('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');

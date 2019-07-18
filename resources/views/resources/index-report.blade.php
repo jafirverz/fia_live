@@ -31,7 +31,7 @@
 					<div class="intro-1">
 						{!!$page->contents!!}
 					</div>
-					<div class="mbox-wrap" data-num="5">
+					<div class="mbox-wrap" data-num="{{ setting()->pagination_limit }}">
                     @php $i=0; @endphp
                     @foreach($reports as $report)	
                     @php $i++; @endphp					
@@ -48,16 +48,18 @@
 										<h4>Countries which have regulations or draft regulations:</h4>
 										<div class="flag-wrap">{!!getCountryImages($report->id)!!}</div>
 									</div>
-                                    @if($report->pdf!="")
+                                    
 									<div class="col">
-										<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>
+										@if($report->pdf!="")<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>@endif
 									</div>
-                                    @endif
+                                    
 								</div>
 							</div>
 						</div>	
                     @endforeach
+                    @if($reports->count()>setting()->pagination_limit)
 						<div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+                     @endif
 					</div>
 					
 				</div>

@@ -27,6 +27,7 @@
                                 <th>ID</th>
                                 <th>Filter Name</th>
                                 <th>Tag Name</th>
+                                <th>View Order</th>
                                 <th>Created</th>
                                 <th>Updated on</th>
                                 <th>Action</th>
@@ -57,6 +58,12 @@
                                             @else
                                                 {{NONE}}
                                             @endif
+                                        </td>
+                                        
+                                        <td>
+                                           
+                                                {{ $filter->order_by}}
+                                           
                                         </td>
                                        
                                         <td>
@@ -102,7 +109,7 @@
 <script>
     $(document).ready(function() {
             $('#datatable_filter').dataTable( {
-                'order': [3, 'asc'],
+                'order': [],
             });
         });
 

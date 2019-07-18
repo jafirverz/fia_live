@@ -296,7 +296,10 @@ Breadcrumbs::for('payment_edit', function ($trail, $id) {
     $trail->parent('payment');
     $trail->push(__('constant.EDIT'), url('/admin/payment/edit'. $id));
 });
-
+Breadcrumbs::for('payment_view', function ($trail, $id) {
+    $trail->parent('payment');
+    $trail->push(__('constant.VIEW'), url('/admin/payment/view'. $id));
+});
 //EVENT
 Breadcrumbs::
 for ('front_resource', function ($trail) {
@@ -376,6 +379,10 @@ Breadcrumbs::for('user_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/user/edit'. $id));
 });
 
+Breadcrumbs::for('user_view', function ($trail, $id) {
+    $trail->parent('user');
+    $trail->push(__('constant.VIEW'), url('/admin/user/view'. $id));
+});
 
 //Master Setting
 Breadcrumbs::for('master-setting-create', function ($trail) {

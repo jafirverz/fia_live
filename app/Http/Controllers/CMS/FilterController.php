@@ -33,7 +33,7 @@ class FilterController extends Controller
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.FILTER');
-        $filters = Filter::all();
+        $filters = Filter::orderBy('filter_name','ASC')->orderBy('order_by','ASC')->get();
         return view("admin.filter.index", compact("filters", "title"));
     }
 
@@ -86,6 +86,7 @@ class FilterController extends Controller
 		$filter->country_image = $request->country_image;
 		$filter->status = $request->status;
 		$filter->home_status = ($request->home_status?$request->home_status:0);
+		$filter->order_by =($request->order_by?$request->order_by:0);
         $filter->created_at = Carbon::now()->toDateTimeString();
         $filter->save();
         return redirect(route('filter.index'))->with('success', __('constant.CREATED', ['module' => __('constant.FILTER')]));
@@ -143,6 +144,7 @@ class FilterController extends Controller
 		$filter->country_image = $request->country_image;
 		$filter->status = $request->status;
 		$filter->home_status = ($request->home_status?$request->home_status:0);
+		$filter->order_by =($request->order_by?$request->order_by:0);
         $filter->updated_at = Carbon::now()->toDateTimeString();
         $filter->save();
         return redirect(route('filter.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.FILTER')]));

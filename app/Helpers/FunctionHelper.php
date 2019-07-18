@@ -10,6 +10,9 @@ use Illuminate\Support\Arr;
 use App\User;
 use App\GroupUserId;
 use Illuminate\Support\Facades\DB;
+use App\GroupManagement;
+use App\Invoice;
+
 
 
 if (!function_exists('getTopics')) {
@@ -20,6 +23,7 @@ if (!function_exists('getTopics')) {
      * @param
      * @return
      */
+
 
     function CountryList($value = null)
     {
@@ -93,79 +97,74 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-	function getTopics($topics)
-	{
-	$topics = Filter::whereIn('id',$topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
-	  $names=[];
-	  foreach($topics as $topic)
-	  {
-	  $names[]=$topic->tag_name;
-	  }
-	 // dd($names);
-	  if(isset($topics) && $topics->count()>0)
-	  return implode(',',$names);
-	  else
-	  return "";
-	}
+    function getTopics($topics)
+    {
+        $topics = Filter::whereIn('id', $topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        $names = [];
+        foreach ($topics as $topic) {
+            $names[] = $topic->tag_name;
+        }
+        // dd($names);
+        if (isset($topics) && $topics->count() > 0)
+            return implode(',', $names);
+        else
+            return "";
+    }
 
-	function getCountryImages($id)
-	{
-	$topics = Filter::join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')->where('topical_report_countries.topical_report_id',$id)->where('status', 1)->orderBy('tag_name', 'asc')->get();
-	$names=[];
-	//dd($topics);
-	  foreach($topics as $topic)
-	  {
-	  if($topic->country_image!="")
-	  $names[]='<span class="show-tooltip" title="'.$topic->tag_name.'"><img src="'.asset($topic->country_image).'" alt="'.$topic->tag_name.' flag" /></span>';
-	  }
+    function getCountryImages($id)
+    {
+        $topics = Filter::join('topical_report_countries', 'filters.id', '=', 'topical_report_countries.filter_id')->where('topical_report_countries.topical_report_id', $id)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        $names = [];
+        //dd($topics);
+        foreach ($topics as $topic) {
+            if ($topic->country_image != "")
+                $names[] = '<span class="show-tooltip" title="' . $topic->tag_name . '"><img src="' . asset($topic->country_image) . '" alt="' . $topic->tag_name . ' flag" /></span>';
+        }
 
-	  if(isset($names) && count($names)>0)
-	  return join('',$names);
-	  else
-	  return "";
-	}
+        if (isset($names) && count($names) > 0)
+            return join('', $names);
+        else
+            return "";
+    }
 
 
-	function getAllCountry()
-	{
+    function getAllCountry()
+    {
 
-	  $country = Filter::where('filters.filter_name',1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        $country = Filter::where('filters.filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
 
-	  if(isset($country) && $country->count()>0)
-	  return $country;
-	  else
-	  return "";
-	}
+        if (isset($country) && $country->count() > 0)
+            return $country;
+        else
+            return "";
+    }
 
-	function get_categry_by_country($country_id=null)
-	{
-	 $category=CountryInformation::where('country_id', $country_id)->first();
-	 if($category)
-	 {
-	 $filter = Filter::where('filters.filter_name',5)->where('id', $category->information_filter_id)->first();
-	 if($filter)
-	 return $filter->tag_name;
-	 else
-	 return '#';
-	 }
-	 else
-	 {
-	 return "#";
-	 }
+    function get_categry_by_country($country_id = null)
+    {
+        $category = CountryInformation::where('country_id', $country_id)->first();
+        if ($category) {
+            $filter = Filter::where('filters.filter_name', 5)->where('id', $category->information_filter_id)->first();
+            if ($filter)
+                return $filter->tag_name;
+            else
+                return '#';
+        } else {
+            return "#";
+        }
 
-	}
+    }
 
 
-	function getCountryId($country=null)
-	{
+    function getCountryId($country = null)
+    {
 
-	  $country = Filter::where('filters.filter_name',1)->where('tag_name', $country)->first();
+        $country = Filter::where('filters.filter_name', 1)->where('tag_name', $country)->first();
 
-	  if(isset($country) && $country->count()>0)
-	  return $country->id;
-	  else
-	  return "";
-	}
+        if (isset($country) && $country->count() > 0)
+            return $country->id;
+        else
+            return "";
+    }
 
     function getFilterStage($id = null)
     {
@@ -179,7 +178,7 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
-	function replaceStrByValue($key, $value, $contents)
+    function replaceStrByValue($key, $value, $contents)
     {
         $newContents = str_replace($key, $value, $contents);
         return $newContents;
@@ -202,7 +201,7 @@ if (!function_exists('getTopics')) {
     function get_modules()
     {
         $modules_array = [
-            'DASHBOARD','FILTER',  'MENU', 'BANNER',  'PAGE','EVENT','TOPICAL_REPORT','PAYMENT','COUNTRY_INFORMATION','REGULATORY','CONTACTENQUIRY','GROUPMANAGEMENT','EMAIL_TEMPLATE','ROLES_AND_PERMISSION','SYSTEM_SETTING'
+            'DASHBOARD', 'FILTER', 'MENU', 'BANNER', 'PAGE', 'EVENT', 'TOPICAL_REPORT', 'PAYMENT', 'COUNTRY_INFORMATION', 'REGULATORY', 'CONTACTENQUIRY', 'GROUPMANAGEMENT', 'EMAIL_TEMPLATE', 'ROLES_AND_PERMISSION', 'SYSTEM_SETTING'
 
         ];
 
@@ -233,22 +232,34 @@ if (!function_exists('getTopics')) {
         if ($menus->count() > 0) {
             $string[] = '<ul>';
             $sel = '';
+
+
             foreach ($menus as $menu) {
                 $link = create_menu_link($menu);
+
                 if ($menu->page_id == NULL)
+
                     $target = 'target="_blank"';
                 else
                     $target = "";
+                $menu_id_by_page = get_menu_id_by_page_id($page_id, '1');
 
-                if ($page_id == $menu->page_id)
+
+				if ($page_id == $menu->page_id || $menu_id_by_page==$menu->id)
                     $sel = 'class="active"';
                 else
                     $sel = '';
-                $string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+
+
+				if ($menu->id == '30')
+         $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
+
+				else
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
 
                 if (has_child_menu($menu->id) > 0) {
 
-                    $string[] = get_menu_has_child($menu->id, 1);
+                    $string[] = get_menu_has_child($menu->id, 1,$page_id);
                 }
                 $string[] = '</li>';
 
@@ -336,6 +347,17 @@ if (!function_exists('getTopics')) {
 
     }
 
+    function get_menu_id_by_page_id($page_id = null, $type = null)
+    {
+        $menu = Menu::where('page_id', $page_id)->where('menu_type', 1)->first();
+
+        if ($menu)
+            return $menu->parent;
+        else
+            return 0;
+
+    }
+
     function getAllTopics()
     {
         $topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
@@ -408,7 +430,9 @@ if (!function_exists('getTopics')) {
 
     function ActiveInActinve($value = null)
     {
-        $array_list = ["1" => 'Active', "0" => 'De-Active'];;
+
+        $array_list = ["1" => 'Active', "0" => 'Deactive'];;
+
         if ($value) {
             return $array_list[$value - 1];
         }
@@ -444,15 +468,15 @@ if (!function_exists('getTopics')) {
 
     function member($id = null)
     {
-        $members = User::where('status',5)->select('id','firstname','lastname')->get();
+        $members = User::where('status', 5)->select('id', 'firstname', 'lastname')->get();
         return $members;
     }
 
     function inactiveActive($id = null)
     {
 
-        $array_list = ['Active','Inactive'];
-        if (!is_null($id)) {
+        $array_list = ['Deactive', 'Active'];
+        if ($id) {
 
             return $array_list[$id];
         }
@@ -484,8 +508,7 @@ if (!function_exists('getTopics')) {
     function getFilterId($tag_name)
     {
         $result = Filter::where('tag_name', $tag_name)->first();
-        if($result)
-        {
+        if ($result) {
             return $result->id;
         }
     }
@@ -561,6 +584,7 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+
     function subscriptionPeriodType($key = null)
     {
         $array_list = ["1" => 'Month', "2" => 'Year'];
@@ -575,9 +599,24 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+
     function memberShipStatus($key = null)
     {
-        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval','3'=>'Rejected','4'=>'Pending for Payment','5'=>'Active','6'=>'Inactive','7'=>'Lapsed','8'=>'Expired','9'=>'Deleted','10'=>'Subscriber Only'];
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only', '11' => 'Unsubscribed'];
+
+        if (!is_null($key)) {
+            if (Arr::has($array_list, $key)) {
+                return $array_list[$key];
+            } else {
+                return null;
+            }
+
+        }
+        return $array_list;
+    }
+    function memberShipStatusForCreateMemberBackend($key = null)
+    {
+        $array_list = ['4' => 'Approve and send payment link', '5' => 'Approve', '6' => 'Inactive'];
 
         if (!is_null($key)) {
             if (Arr::has($array_list, $key)) {
@@ -593,11 +632,42 @@ if (!function_exists('getTopics')) {
     function memberByGroupIds($id = null)
     {
         $members = GroupUserId::join('users', 'users.id', '=', 'group_user_ids.user_id')
-            ->select('group_user_ids.group_id','group_user_ids.user_id', 'users.id','users.status',DB::raw('CONCAT(users.firstname, " ", users.lastname) AS full_name'))
-            ->where('users.status',5)
-            ->where('group_user_ids.group_id',$id)
+            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'users.id', 'users.status', DB::raw('CONCAT(users.firstname, " ", users.lastname) AS full_name'))
+            ->where('users.status', 5)
+            ->where('group_user_ids.group_id', $id)
             ->get();
 
         return $members;
     }
+
+    function memberGroup()
+    {
+        $groups = GroupManagement::where('status', 1)
+            ->select('group_name', 'id')
+            ->orderBy('group_name', 'asc')
+            ->get();
+        return $groups;
+    }
+
+    function memberGroupByUserIds($id = null)
+    {
+        $groups = GroupUserId::join('group_managements', 'group_managements.id', '=', 'group_user_ids.group_id')
+            ->select('group_user_ids.group_id', 'group_user_ids.user_id', 'group_managements.group_name', 'group_managements.status')
+            ->where('group_managements.status', 1)
+            ->where('group_user_ids.user_id', $id)
+            ->get();
+
+        return $groups;
+    }
+
+    function userPayments($userId = null)
+    {
+        if (!is_null($userId)) {
+            $invoices = Invoice::where('user_id', $userId)->get();
+        } else {
+            $invoices = Invoice::all();
+        }
+        return $invoices;
+    }
+
 }

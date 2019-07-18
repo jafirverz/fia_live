@@ -51,17 +51,16 @@ class GroupManagementController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'group_name' => 'required|unique:group_managements,group_name',
-            'group_members' => 'required',
             'status' => 'required',
         ]);
         $groupmanagement = new GroupManagement();
         $groupmanagement->group_name = $request->group_name;
-        $groupmanagement->group_members = null;
         $groupmanagement->status = $request->status;
         $groupmanagement->save();
-        if (count($request->group_members)) {
+        if (isset($request->group_members) && count($request->group_members)) {
             foreach ($request->group_members as $member) {
                 $groupUserId = new GroupUserId();
                 $groupUserId->user_id = $member;
@@ -110,18 +109,16 @@ class GroupManagementController extends Controller
     {
         $request->validate([
             'group_name' => 'required|unique:group_managements,group_name,' . $id . ',id',
-            'group_members' => 'required',
             'status' => 'required',
         ]);
 
         $groupmanagement = GroupManagement::findorfail($id);
         $groupmanagement->group_name = $request->group_name;
-        $groupmanagement->group_members = null;
         $groupmanagement->status = $request->status;
         $groupmanagement->save();
 
         $members = GroupUserId::where('group_id', $id)->delete();
-        if (count($request->group_members)) {
+        if (isset($request->group_members) && count($request->group_members)) {
             foreach ($request->group_members as $member) {
                 $groupUserId = new GroupUserId();
                 $groupUserId->user_id = $member;

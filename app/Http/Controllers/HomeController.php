@@ -8,10 +8,20 @@ use App\Regulatory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\DynamicRoute;
+use App\Traits\GetEmailTemplate;
+use Illuminate\Support\Facades\Mail;
+use Exception;
+use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 use Auth;
 class HomeController extends Controller
 {
-    /**
+    use DynamicRoute;
+    use GetEmailTemplate;
+
+	
+	/**
      * Create a new controller instance.
      *
      * @return void
@@ -356,9 +366,36 @@ class HomeController extends Controller
 		$emailid=$request->emailid;
 		$result = User::where('email', $emailid)->count();
 		$result1 = User::where('email', $emailid)->where('subscribe_status', 1)->count();
+		$emailTemplate_user = $this->emailTemplate(__('constant.SUBSCRIPTION_USER_EMAIL_TEMP_ID'));
+		if ($emailTemplate_user) {
+
+
+
+            $data_user = [];
+
+            $data_user['subject'] = $emailTemplate_user->subject;
+
+            $data_user['email_sender_name'] = setting()->email_sender_name;
+
+            $data_user['from_email'] = setting()->from_email;
+
+            $data_user['subject'] = $emailTemplate_user->subject;
+
+            /*$key_user = ['{{name}}'];
+
+            $value_user = [$request->name];
+
+            $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);*/
+
+            $data_user['contents'] = $emailTemplate_user->contents;
+
+
+
+        }
 		 if($result1==1)
 		 {
-		 return redirect(route('home'))->with('success', __('constant.EXIST', ['module' => __('constant.SUBSCRIBER')])); 
+		  echo '<div class="error">'.__('constant.SUBSCRIBE_EXIST').'</div>';
+		 //return redirect(route('home'))->with('success', __('constant.EXIST', ['module' => __('constant.SUBSCRIBER')])); 
 		 }
 		 elseif($result==1)
 		 {
@@ -369,7 +406,15 @@ class HomeController extends Controller
 		 $User->status = 6;
 		 $User->updated_at = Carbon::now()->toDateTimeString();
          $User->save();
-		 return redirect(route('home'))->with('success', __('constant.UPDATED', ['module' => __('constant.SUBSCRIBER')]));
+		 try {
+				$mail_user = Mail::to($emailid)->send(new UserSideMail($data_user));
+
+            } catch (Exception $exception) {
+                dd($exception);
+                return redirect(url('/home'))->with('error', __('constant.OPPS'));
+ 		   }
+		 echo '<div class="success">'.__('constant.SUBSCRIBE_UPDATE').'</div>';
+		 //return redirect(route('home'))->with('success', __('constant.UPDATED', ['module' => __('constant.SUBSCRIBER')]));
 		 }
 		 else
 		 {
@@ -379,7 +424,15 @@ class HomeController extends Controller
 		 $User->status = 6;
 		 $User->created_at = Carbon::now()->toDateTimeString();
 		 $User->save();
-		 return redirect(route('home'))->with('success', __('constant.CREATED', ['module' => __('constant.SUBSCRIBER')]));
+		 try {
+				$mail_user = Mail::to($emailid)->send(new UserSideMail($data_user));
+
+            } catch (Exception $exception) {
+                dd($exception);
+                return redirect(url('/home'))->with('error', __('constant.OPPS'));
+ 		   }
+		 //return redirect(route('home'))->with('success', __('constant.CREATED', ['module' => __('constant.SUBSCRIBER')]));
+		 echo '<div class="success">'.__('constant.SUBSCRIBE_CREATE').'</div>';
 		 }
 	}
 }

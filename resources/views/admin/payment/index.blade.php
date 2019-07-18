@@ -47,115 +47,80 @@
                                 <th>Payee Name</th>
                                 <th>Payment Mode</th>
                                 <th>Status</th>
-                                <th>Created</th>
-                                <th>Updated on</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if($payments->count())
-                                @foreach($payments as $payment)
+                                @foreach($payments as $key=>$payment)
                                     <tr>
                                         <td>
-                                            @if($payment->id)
-                                                {{ $payment->id   }}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                            {{$key+1}}
                                         </td>
                                         <td>
-                                            @if($payment->payment_id	)
-                                                {{ $payment->payment_id}}
+                                            @if($payment->order_id)
+                                                {{ $payment->order_id}}
                                             @else
-                                                {{NONE}}
+                                                -
                                             @endif
                                         </td>
 
-                                        <td>
-                                            @if($payment->payment_date)
-                                                {{ $payment->payment_date}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                        <td data-order="<?php if (!is_null($payment->created_at)) {
+                                            echo $payment->created_at->format('d M, Y H:i:s');
+                                        }?>">@if(!is_null($payment->created_at) )
+                                                {{ $payment->created_at->format('d M, Y')}}
+                                            @else - @endif
                                         </td>
-
-                                        <td>
-                                            @if($payment->subscription_date)
-                                                {{ $payment->subscription_date}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
+                                        <td>@if(!is_null($payment->created_at) )
+                                                {{ $payment->created_at->format('d M, Y')}}
+                                            @else - @endif
                                         </td>
-
+                                        <td>@if($payment->user()->status==5)Active @else Inactive @endif</td>
                                         <td>
-                                            @if($payment->subscription_status==1)
-                                                Active
-                                            @else
-                                                DeActive
-                                            @endif
+                                            @if(!is_null($payment->period_type) && $payment->period_type=='Month' )
+                                                {{date('d M, Y', strtotime("+".$payment->period_value." months", strtotime($payment->created_at)))}}
+                                            @elseif(!is_null($payment->period_type) && $payment->period_type=='Year')
+                                                {{date('d M, Y', strtotime("+".$payment->period_value." years", strtotime($payment->created_at)))}}
+                                            @else - @endif
                                         </td>
-
+                                        <td>{{ $payment->user_email ?? '-' }}</td>
+                                        <td>{{ $payment->user()->firstname.' '.$payment->user()->lastname }}</td>
+                                        <td>{{ $payment->subscription_type ?? '-' }}</td>
                                         <td>
-                                            @if($payment->renewal_date)
-                                                {{ $payment->renewal_date}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payee_email_id)
-                                                {{ $payment->payee_email_id}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payee_name)
-                                                {{ $payment->payee_name}}
-                                            @else
-                                                {{NONE}}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if($payment->payment_mode==1)
-                                                Online
-                                            @else
-                                                Offline
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($payment->status==1)
+                                            @if($payment->paid==1)
                                                 Paid
                                             @else
                                                 Unpaid
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($payment->created_at == null)
-                                                {{$payment->created_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($payment->created_at))   !!}
 
-                                        </td>
-                                        <td>@if ($payment->updated_at == null)
-                                                {{$payment->updated_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($payment->updated_at))   !!}
-
-                                        </td>
                                         <td>
-                                            <a href="{{ url('admin/payment/edit/' . $payment->id) }}"
-                                               title="Edit Filter">
-                                                <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ url('admin/payment/destroy/' . $payment->id) }}"
-                                               title="Destroy Filter"
-                                               onclick="return confirm('Are you sure you want to delete this payment?');">
-                                                <i class="fa fa-trash btn btn-danger" aria-hidden="true"></i>
-                                            </a>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <a class="" title="View Payment detail"
+                                                           href="{{ url('admin/payment/view/' . $payment->id) }}">
+                                                            <i class="fa fa-eye btn btn-success"> View</i>
+                                                        </a>
+                                                    </td>
+                                                    @if(!is_null($payment->path))
+                                                        <td>
+                                                            <a class="" title="Download Invoice"
+                                                               href="{{ url('admin/payment/download/' . $payment->id) }}">
+                                                                <i class="fa fa-download btn btn-primary"> Download</i>
+                                                            </a>
+                                                        </td>
+                                                    @endif
+                                                    {{--<td>
+                                                        <a class="" title="Delete User"
+                                                           onclick="return confirm('Are you sure to delete this user?')"
+                                                           href="{{ url('admin/user/destroy/' . $user->id) }}">
+                                                            <i class="fa fa-trash btn btn-danger"> Delete</i>
+                                                        </a>
+                                                    </td>--}}
+                                                </tr>
+                                            </table>
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -173,8 +138,6 @@
                                 <th>Payee Name</th>
                                 <th>Payment Mode</th>
                                 <th>Status</th>
-                                <th>Created</th>
-                                <th>Updated on</th>
                                 <th>Action</th>
                             </tr>
                             </tfoot>
@@ -200,19 +163,19 @@
                 {
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
                 {
                     extend: 'csvHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
 
                 }

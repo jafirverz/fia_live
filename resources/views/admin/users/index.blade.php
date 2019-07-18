@@ -50,6 +50,7 @@
                             <tbody>
                             @if($users->count())
                                 @foreach($users as $user)
+                                    <?php  $groupNames = memberGroupByUserIds($user->id); ?>
                                     <tr>
                                         <td>{{ $user->firstname ?? '-' }}</td>
                                         <td>{{ $user->lastname ?? '-' }}</td>
@@ -66,8 +67,19 @@
                                         <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
                                                 Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
                                                 Unpaid @else - @endif</td>
-                                        <td>Group Name</td>
-                                        <td data-order="<?php if(!is_null($user->invoice()) ) {echo $user->invoice()->created_at->format('d M, Y H:i:s');}?>">
+                                        <td>
+                                            <?php
+                                            $groupNames = $groupNames->pluck('group_name')->all();
+                                            ?>
+                                            @if(count($groupNames))
+                                                {{implode(',',$groupNames)}}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td data-order="<?php if (!is_null($user->invoice())) {
+                                            echo $user->invoice()->created_at->format('d M, Y H:i:s');
+                                        }?>">
                                             @if(!is_null($user->invoice()) )
                                                 {{ $user->invoice()->created_at->format('d M, Y')}}
                                             @else - @endif
@@ -100,43 +112,57 @@
                                                     </td>
                                                     <td>
                                                         <a class="" title="Delete User"
-                                                           onclick="return confirm('Are you sure to delete this user?')"
+                                                           onclick="return confirm('Are you sure you want to delete this member?')"
                                                            href="{{ url('admin/user/destroy/' . $user->id) }}">
                                                             <i class="fa fa-trash btn btn-danger"> Delete</i>
                                                         </a>
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <a class="" title="Approve and send payment"
-                                                           href="#">
-                                                            <i class="fa fa-send btn btn-success"> Approve and Send
-                                                                Payment</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="" title="Approve"
-                                                           href="#">
-                                                            <i class="fa fa-check btn btn-success"> Approve</i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                            @if(!in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+
+                                                <table>
+                                                    <tr>
+                                                        <td>
+
+                                                            <a class="update-status" title="Approve and send payment"
+                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               data-user-id="{{$user->id}}" data-title="Approve and Send
+                                                                Payment"
+                                                               data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
+                                                                <i class="fa fa-send btn btn-success"> Approve and Send
+                                                                    Payment</i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="update-status" title="Approve"
+                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               data-user-id="{{$user->id}}" data-title="Approve"
+                                                               data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
+                                                                <i class="fa fa-check btn btn-success"> Approve</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            @endif
                                             <table>
                                                 <tr>
                                                     <td>
                                                         <a class="" title="Reject"
-                                                           href="#">
+                                                           onclick="return confirm('Are you sure to reject this user?')"
+                                                           href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
                                                             <i class="fa fa-ban btn btn-danger"> Reject</i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a class="" title="Un-subscribe"
-                                                           href="#">
-                                                            <i class="fa fa-bell-slash btn btn-danger"> Unsubscribe</i>
-                                                        </a>
+                                                        @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+                                                            <a class="" title="Unsubscribe"
+                                                               onclick="return confirm('Are you sure to unsubscribe this user?')"
+                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
+                                                                <i class="fa fa-bell-slash btn btn-danger">
+                                                                    Unsubscribe</i>
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </table>
@@ -158,6 +184,48 @@
             </div>
         </div>
         <!-- /.row -->
+        <div class="modal fade" id="payment-approve-modal" style="display: none;">
+            <form action="{{ route('update-status') }}" method="GET">
+                @csrf
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title button-title">Approve and Send Payment</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="member_type" class=" control-label">Member Type</label>
+                                        <select class="form-control select2" name="member_type" id="member-type"
+                                                style="width: 100%">
+                                            @if (memberType())
+                                                @foreach (memberType() as $key=>$member)
+                                                    <option value="{{ $key }}">{{ $member }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        <input type="hidden" name="status" value="" id="status">
+                                        <input type="hidden" name="id" value="" id="user-id">
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary button-title">Approve and send payment link
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+            </form>
+            <!-- /.modal-dialog -->
+        </div>
     </section>
     <!-- /.content -->
 </div>
@@ -165,13 +233,23 @@
 @endsection
 @push('scripts')
 <script>
+    $('.update-status').click(function () {
+        var memberType = $('#member-type');
+        memberType.val($(this).data('member-type'));
+        memberType.change();
+        $('#status').val($(this).data('status'));
+        $('#user-id').val($(this).data('user-id'));
+        $(".button-title").html($(this).data('title'));
+        $('#payment-approve-modal').modal('show');
+    });
+
     $('#users').DataTable(
             {
                 "pageLength": 10,
                 'ordering': true,
-                'order': [[12, 'desc']],
+                'order': [[15, 'desc']],
                 "aoColumnDefs": [{
-                    "aTargets": [2, 6],
+                    "aTargets": [17],
                     "bSortable": false
                 },
                     {width: 100, targets: 0},

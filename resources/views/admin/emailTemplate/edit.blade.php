@@ -50,7 +50,7 @@
                                         data-placeholder="" name="status"
                                         style="width: 100%;">
                                     <option value="">{{__('constant.NONE')}}</option>
-                            @foreach(ActiveInActinve() as $k => $v)
+                            @foreach(inactiveActive() as $k => $v)
                             <option value="{{$k}}"  @if($emailTemplate->status==$k) selected @endif>{{$v}}</option>
                             @endforeach 
                                 </select>
