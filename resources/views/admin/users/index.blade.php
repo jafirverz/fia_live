@@ -1,6 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('content')
-        <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -17,6 +17,40 @@
         <div class="row">
             <div class="col-lg-12">
                 @include('admin.inc.message')
+                <!-- SELECT2 EXAMPLE -->
+                <div class="box box-default ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Charts</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="" data-original-title="Collapse">
+                                <i class="fa fa-plus"></i></button>
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <script src="{{ asset('js/Chart.min.js') }}" charset="utf-8"></script>
+                    <script src="{{ asset('js/utils.js') }}"></script>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="width:100%;">
+                                    {!! $chart1->render() !!}
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                    <div style="width:100%;">
+                                            {!! $chart2->render() !!}
+                                        </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.box -->
                 <div class="box">
                     <div class="box-header with-border">
                         <a href="{{ url('admin/user/create') }}" class="btn btn-primary pull-right">Create</a>
@@ -26,154 +60,154 @@
                     <div class="box-body table-responsive">
                         <table id="users" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Member Type</th>
-                                <th>Organization</th>
-                                <th>Job Title</th>
-                                <th>Mobile Number</th>
-                                <th>Telephone Number</th>
-                                <th>Country</th>
-                                <th>City</th>
-                                <th>Email</th>
-                                <th>Payment Status</th>
-                                <th>Group Name</th>
-                                <th>Subscription Date</th>
-                                <th>Subscription Status</th>
-                                <th>Renewal Date</th>
-                                <th>Registration Date</th>
-                                <th>Overall Status</th>
-                                <th>Action</th>
-                            </tr>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Member Type</th>
+                                    <th>Organization</th>
+                                    <th>Job Title</th>
+                                    <th>Mobile Number</th>
+                                    <th>Telephone Number</th>
+                                    <th>Country</th>
+                                    <th>City</th>
+                                    <th>Email</th>
+                                    <th>Payment Status</th>
+                                    <th>Group Name</th>
+                                    <th>Subscription Date</th>
+                                    <th>Subscription Status</th>
+                                    <th>Renewal Date</th>
+                                    <th>Registration Date</th>
+                                    <th>Overall Status</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @if($users->count())
+                                @if($users->count())
                                 @foreach($users as $user)
-                                    <?php  $groupNames = memberGroupByUserIds($user->id); ?>
-                                    <tr>
-                                        <td>{{ $user->firstname ?? '-' }}</td>
-                                        <td>{{ $user->lastname ?? '-' }}</td>
-                                        <td>
-                                            {{memberType($user->member_type)}}
-                                        </td>
-                                        <td>{{ $user->organization ?? '-' }}</td>
-                                        <td>{{ $user->job_title ?? '-' }}</td>
-                                        <td>{{ '+'.$user->mobile_code}}&nbsp;{{$user->mobile_number ?? '-' }}</td>
-                                        <td>{{ '+'.$user->telephone_code}}&nbsp;{{$user->telephone_number ?? '-' }}</td>
-                                        <td>{{ $user->country ?? '-' }}</td>
-                                        <td>{{ $user->city ?? '-' }}</td>
-                                        <td>{{ $user->email ?? '-' }}</td>
-                                        <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
-                                                Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
-                                                Unpaid @else - @endif</td>
-                                        <td>
-                                            <?php
+                                <?php  $groupNames = memberGroupByUserIds($user->id); ?>
+                                <tr>
+                                    <td>{{ $user->firstname ?? '-' }}</td>
+                                    <td>{{ $user->lastname ?? '-' }}</td>
+                                    <td>
+                                        {{memberType($user->member_type)}}
+                                    </td>
+                                    <td>{{ $user->organization ?? '-' }}</td>
+                                    <td>{{ $user->job_title ?? '-' }}</td>
+                                    <td>{{ '+'.$user->mobile_code}}&nbsp;{{$user->mobile_number ?? '-' }}</td>
+                                    <td>{{ '+'.$user->telephone_code}}&nbsp;{{$user->telephone_number ?? '-' }}</td>
+                                    <td>{{ $user->country ?? '-' }}</td>
+                                    <td>{{ $user->city ?? '-' }}</td>
+                                    <td>{{ $user->email ?? '-' }}</td>
+                                    <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
+                                        Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
+                                        Unpaid @else - @endif</td>
+                                    <td>
+                                        <?php
                                             $groupNames = $groupNames->pluck('group_name')->all();
                                             ?>
-                                            @if(count($groupNames))
-                                                {{implode(',',$groupNames)}}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        <td data-order="<?php if (!is_null($user->invoice())) {
+                                        @if(count($groupNames))
+                                        {{implode(',',$groupNames)}}
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
+                                    <td data-order="<?php if (!is_null($user->invoice())) {
                                             echo $user->invoice()->created_at->format('d M, Y H:i:s');
                                         }?>">
-                                            @if(!is_null($user->invoice()) )
-                                                {{ $user->invoice()->created_at->format('d M, Y')}}
-                                            @else - @endif
-                                        </td>
+                                        @if(!is_null($user->invoice()) )
+                                        {{ $user->invoice()->created_at->format('d M, Y')}}
+                                        @else - @endif
+                                    </td>
 
-                                        <td>@if($user->status==5)Active @else Inactive @endif</td>
-                                        <td>
-                                            @if(!is_null($user->invoice()) && $user->invoice()->period_type=='Month' )
-                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." months", strtotime($user->invoice()->created_at)))}}
-                                            @elseif(!is_null($user->invoice()) && $user->invoice()->period_type=='Year')
-                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." years", strtotime($user->invoice()->created_at)))}}
-                                            @else - @endif
-                                        </td>
-                                        <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
-                                        <td>{{memberShipStatus($user->status)}}</td>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <a class="" title="View User"
-                                                           href="{{ url('admin/user/view/' . $user->id) }}">
-                                                            <i class="fa fa-eye btn btn-success"> View</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="" title="Edit User"
-                                                           href="{{ url('admin/user/edit/' . $user->id) }}">
-                                                            <i class="fa fa-pencil btn btn-primary"> Edit</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a class="" title="Delete User"
-                                                           onclick="return confirm('Are you sure you want to delete this member?')"
-                                                           href="{{ url('admin/user/destroy/' . $user->id) }}">
-                                                            <i class="fa fa-trash btn btn-danger"> Delete</i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            @if(!in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+                                    <td>@if($user->status==5)Active @else Inactive @endif</td>
+                                    <td>
+                                        @if(!is_null($user->invoice()) && $user->invoice()->period_type=='Month' )
+                                        {{date('d M, Y', strtotime("+".$user->invoice()->period_value." months", strtotime($user->invoice()->created_at)))}}
+                                        @elseif(!is_null($user->invoice()) && $user->invoice()->period_type=='Year')
+                                        {{date('d M, Y', strtotime("+".$user->invoice()->period_value." years", strtotime($user->invoice()->created_at)))}}
+                                        @else - @endif
+                                    </td>
+                                    <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                    <td>{{memberShipStatus($user->status)}}</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a class="" title="View User"
+                                                        href="{{ url('admin/user/view/' . $user->id) }}">
+                                                        <i class="fa fa-eye btn btn-success"> View</i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="" title="Edit User"
+                                                        href="{{ url('admin/user/edit/' . $user->id) }}">
+                                                        <i class="fa fa-pencil btn btn-primary"> Edit</i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="" title="Delete User"
+                                                        onclick="return confirm('Are you sure you want to delete this member?')"
+                                                        href="{{ url('admin/user/destroy/' . $user->id) }}">
+                                                        <i class="fa fa-trash btn btn-danger"> Delete</i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        @if(!in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
 
-                                                <table>
-                                                    <tr>
-                                                        <td>
+                                        <table>
+                                            <tr>
+                                                <td>
 
-                                                            <a class="update-status" title="Approve and send payment"
-                                                               href="#" data-member-type="{{$user->member_type}}"
-                                                               data-user-id="{{$user->id}}" data-title="Approve and Send
+                                                    <a class="update-status" title="Approve and send payment" href="#"
+                                                        data-member-type="{{$user->member_type}}"
+                                                        data-user-id="{{$user->id}}" data-title="Approve and Send
                                                                 Payment"
-                                                               data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
-                                                                <i class="fa fa-send btn btn-success"> Approve and Send
-                                                                    Payment</i>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a class="update-status" title="Approve"
-                                                               href="#" data-member-type="{{$user->member_type}}"
-                                                               data-user-id="{{$user->id}}" data-title="Approve"
-                                                               data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
-                                                                <i class="fa fa-check btn btn-success"> Approve</i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            @endif
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <a class="" title="Reject"
-                                                           onclick="return confirm('Are you sure to reject this user?')"
-                                                           href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
-                                                            <i class="fa fa-ban btn btn-danger"> Reject</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
-                                                            <a class="" title="Unsubscribe"
-                                                               onclick="return confirm('Are you sure to unsubscribe this user?')"
-                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
-                                                                <i class="fa fa-bell-slash btn btn-danger">
-                                                                    Unsubscribe</i>
-                                                            </a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                                        data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
+                                                        <i class="fa fa-send btn btn-success"> Approve and Send
+                                                            Payment</i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="update-status" title="Approve" href="#"
+                                                        data-member-type="{{$user->member_type}}"
+                                                        data-user-id="{{$user->id}}" data-title="Approve"
+                                                        data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
+                                                        <i class="fa fa-check btn btn-success"> Approve</i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        @endif
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <a class="" title="Reject"
+                                                        onclick="return confirm('Are you sure to reject this user?')"
+                                                        href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
+                                                        <i class="fa fa-ban btn btn-danger"> Reject</i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
+                                                    <a class="" title="Unsubscribe"
+                                                        onclick="return confirm('Are you sure to unsubscribe this user?')"
+                                                        href="{{ route('update-status',['id'=>$user->id,'status'=>11]) }}">
+                                                        <i class="fa fa-bell-slash btn btn-danger">
+                                                            Unsubscribe</i>
+                                                    </a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        </table>
 
 
-                                        </td>
+                                    </td>
 
 
-                                    </tr>
+                                </tr>
                                 @endforeach
-                            @endif
+                                @endif
                             </tbody>
 
                         </table>
@@ -200,11 +234,11 @@
                                     <div class="form-group">
                                         <label for="member_type" class=" control-label">Member Type</label>
                                         <select class="form-control select2" name="member_type" id="member-type"
-                                                style="width: 100%">
+                                            style="width: 100%">
                                             @if (memberType())
-                                                @foreach (memberType() as $key=>$member)
-                                                    <option value="{{ $key }}">{{ $member }}</option>
-                                                @endforeach
+                                            @foreach (memberType() as $key=>$member)
+                                            <option value="{{ $key }}">{{ $member }}</option>
+                                            @endforeach
                                             @endif
                                         </select>
                                         <input type="hidden" name="status" value="" id="status">
@@ -243,23 +277,43 @@
         $('#payment-approve-modal').modal('show');
     });
 
-    $('#users').DataTable(
+    $('#users').DataTable({
+        "pageLength": 10,
+        'ordering': true,
+        'order': [
+            [15, 'desc']
+        ],
+        "aoColumnDefs": [{
+                "aTargets": [17],
+                "bSortable": false
+            },
             {
-                "pageLength": 10,
-                'ordering': true,
-                'order': [[15, 'desc']],
-                "aoColumnDefs": [{
-                    "aTargets": [17],
-                    "bSortable": false
-                },
-                    {width: 100, targets: 0},
-                    {width: 150, targets: 1},
-                    {width: 300, targets: 2},
-                    {width: 150, targets: 3},
-                    {width: 150, targets: 4},
-                    {width: 150, targets: 6}
+                width: 100,
+                targets: 0
+            },
+            {
+                width: 150,
+                targets: 1
+            },
+            {
+                width: 300,
+                targets: 2
+            },
+            {
+                width: 150,
+                targets: 3
+            },
+            {
+                width: 150,
+                targets: 4
+            },
+            {
+                width: 150,
+                targets: 6
+            }
 
-                ]
-            });
+        ]
+    });
+
 </script>
 @endpush

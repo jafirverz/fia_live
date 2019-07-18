@@ -31,7 +31,116 @@ class UserController extends Controller
         $title = __('constant.USER');
         $subtitle = 'Index';
         $users = User::orderBy('created_at', 'desc')->get();
-        return view('admin.users.index', compact('title', 'users', 'subtitle'));
+
+        $memberbycountry = User::get();
+        $country_array = $memberbycountry->groupBy('country')->toArray();
+        $fia_member_dataset = [];
+        $member_dataset = [];
+        $complimentary_dataset = [];
+        foreach(array_keys($country_array) as $value)
+        {
+            $fia_member_dataset[] = $memberbycountry->where('member_type', 1)->where('country', $value)->count();
+            $member_dataset[] = $memberbycountry->where('member_type', 2)->where('country', $value)->count();
+            $complimentary_dataset[] = $memberbycountry->where('member_type', 3)->where('country', $value)->count();
+        }
+        //dd($member_dataset);
+        $chart1 = app()->chartjs
+         ->name('memberbycountry')
+         ->type('bar')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels(array_keys($country_array))
+         ->datasets([
+             [
+                 "label" => "FIA Member",
+                 'backgroundColor' => ['rgb(128,128,128)'],
+                 'data' => $fia_member_dataset
+             ],
+             [
+                 "label" => "Member",
+                 'backgroundColor' => ['rgb(255,165,0)'],
+                 'data' => $member_dataset
+             ],
+             [
+                "label" => "Complimentary",
+                'backgroundColor' => ['rgb(0,0,255)'],
+                'data' => $complimentary_dataset
+            ]
+         ])
+         ->optionsRaw([
+            'responsive'    => true,
+            'legend' => [
+                'display' => true,
+                'labels' => [
+                    'fontColor' => '#000'
+                ]
+            ],
+            'scales' => [
+                'xAxes' => [
+                    [
+                        'stacked' => true,
+                        'gridLines' => [
+                            'display' => true
+                        ]
+                    ]
+                        ],
+                'yAxes' => [
+                    [
+                        'stacked' => true,
+                        'gridLines' => [
+                            'display' => true
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $chart2 = app()->chartjs
+         ->name('membershipgrowth')
+         ->type('line')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels(array_keys($country_array))
+         ->datasets([
+             [
+                 "label" => "New",
+                 'borderColor' => ['rgb(128,128,128)'],
+                 'data' => $fia_member_dataset
+             ],
+             [
+                 "label" => "Expired",
+                 'borderColor' => ['rgb(128,128,128)'],
+                 'data' => $member_dataset
+             ],
+             [
+                "label" => "Renewed",
+                'borderColor' => ['rgb(128,128,128)'],
+                'data' => $complimentary_dataset
+            ]
+         ])
+         ->optionsRaw([
+            'maintainAspectRatio'   => false,
+			'spanGaps'  => false,
+			'elements'  => [
+                'line'  =>  [
+                    'tension'   =>  0.000001
+                ],
+            ],
+			'scales'    =>  [
+                'yAxes' =>  [
+                    [
+                        'stacked' => true,
+                    ]
+                ]
+            ],
+			'plugins'   => [
+                'filler'    =>  [
+                    'propagate' => false
+                ],
+                'samples-filler-analyser'   => [
+                    'target'    =>  'chart-analyser'
+                ],
+            ],
+        ]);
+        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2'));
     }
 
     /**

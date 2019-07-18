@@ -21,6 +21,7 @@
 
     <script src="{{ asset('js/plugin.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
 </head>
 
 <body>
@@ -30,6 +31,7 @@
 </div>
 @include('inc.footer')
 @stack('scripts')
+
 </body>
 
 </html>
