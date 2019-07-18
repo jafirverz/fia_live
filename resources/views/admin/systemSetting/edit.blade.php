@@ -92,6 +92,14 @@
                             </div>
                         </div>
                         
+                        <div class="form-group">
+                            <label for="contact_email" class=" control-label">Feedback Email</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->feedback_emailid }}" name="feedback_emailid" type="text">
+
+                            </div>
+                        </div>
+                        
                         <!--<div class="form-group">
                             <label for="contact_address" class=" control-label">Company Addresses</label>
                             <div class="">
@@ -117,7 +125,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-<label for="footer" class=" control-label">Footer</label>
+<label for="footer" class=" control-label">Footer Copyright</label>
 						<div class="">
                                  <textarea class="form-control tiny-editor " name="footer_copyright">{{ $systemSetting->footer_copyright }}</textarea>
                             </div>

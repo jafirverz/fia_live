@@ -47,6 +47,6 @@
     });    
  </script>
  <style type="text/css">
-.error { color: #F00; }
-.success { color: #096; }
+.error { color: ##440808; text-align:center; font-weight:bold; margin-top:10px; }
+.success { color: #096;text-align:center; font-weight:bold;  margin-top:10px;}
  </style>
