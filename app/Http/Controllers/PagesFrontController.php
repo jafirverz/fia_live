@@ -9,11 +9,18 @@ use App\Banner;
 use App\Regulatory;
 use Auth;
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use App\Traits\GetEmailTemplate;
+use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 
 class PagesFrontController extends Controller
 {
-    public function __construct()
+    use GetEmailTemplate;
+	
+	public function __construct()
     {
         $this->module_name = 'COUNTRY_INFORMATION';
     }
@@ -235,4 +242,82 @@ class PagesFrontController extends Controller
         }
         return redirect('profile')->with('error',  'Sorry! Password does not match.');
     }
+	
+	 public function profileDetail($slug="")
+    {
+        if(Auth::check())
+		{
+		$slug=__('constant.PROFILE_DETAIL');
+		$title = __('constant.PROFILE');
+		$page=Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+
+		$banner = get_page_banner($page->id);
+
+		if (!$page) {
+		return abort(404);
+		}
+		$breadcrumbs = getBreadcrumb($page);
+        $id = Auth::user()->id;
+		$user = User::find($id);
+		$paid_user = userPayments($id);
+		$last_user_paid = latestUserPayments($id);
+		
+		//dd($last_user_paid);
+        return view('profile-detail', compact('title', 'user','last_user_paid','paid_user','page','banner','breadcrumbs'));
+		}else{
+			return redirect('/login');
+		}
+    }
+	
+	public function updateStatus(Request $request)
+    {
+        	
+            
+			$response = [];
+            $user = User::findorfail($request->id);
+			$user->status =$request->status;
+            $response['msg'] = "Status updated successfully.";
+            $response['status'] = "success";
+            $res=$user->save();
+		    if($res)
+			{
+		    Auth::logout();
+			$emailTemplate = $this->emailTemplate(__('constant.UNSUBSCRIBE_ADMIN_EMAIL_TEMP_ID'));
+					 if ($emailTemplate) {
+		
+					$data = [];
+		
+					$data['subject'] = $emailTemplate->subject;
+		
+					$data['email_sender_name'] = setting()->email_sender_name;
+		
+					$data['from_email'] = setting()->from_email;
+		
+					$data['subject'] = $emailTemplate->subject;
+		
+					$key = ['{{name}}',  '{{user_id}}'];
+
+					$name=$user->firstname.' '.$user->lastname;
+					$value = [$name,$user->user_id];
+		
+					$newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
+		
+					$data['contents'] = $newContents;
+					$toEmail = setting()->to_email;
+					try {
+						$mail = Mail::to($toEmail)->send(new AdminSideMail($data));
+					} catch (Exception $exception) {
+						dd($exception);
+					}
+		
+		
+		
+				}
+            return redirect('/thank-you')->with($response['status'], $response['msg']);
+			}
+    }
+
+    
 }
