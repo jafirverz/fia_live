@@ -20,13 +20,14 @@
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('/register/verification/{user_id}', 'Auth\RegisterController@verification');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
 Auth::routes();
 Route::get('/clear', function () {
     $exitCode2 = \Illuminate\Support\Facades\Artisan::call('config:clear');
     $exitCode1 = \Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode3 = \Illuminate\Support\Facades\Artisan::call('view:clear');
-    return '<h1>CLEAR All </h1>';
+    return '<h1>CLEARED All </h1>';
 
 });
 Route::get('/storage-link', function () {
@@ -46,6 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm');
     Route::post('/register', 'AdminAuth\RegisterController@register');
+
 
     Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset');
