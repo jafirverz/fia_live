@@ -98,7 +98,7 @@ class LoginController extends Controller
 
         if($user->status==5)
         {
-            return $user;
+
         }
         else
         {

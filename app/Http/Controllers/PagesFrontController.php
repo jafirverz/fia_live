@@ -225,7 +225,7 @@ class PagesFrontController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('student_id', $id)->first();
+        $user = User::where('user_id', $id)->first();
         if(password_verify($request->password, $user->password))
         {
             $user->salutation = $request->salutation;
