@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 @include('admin.inc.message')
                 <!-- SELECT2 EXAMPLE -->
-                <div class="box box-default ">
+                <div class="box box-default chart">
                     <div class="box-header with-border">
                         <h3 class="box-title">Charts</h3>
 
@@ -34,13 +34,15 @@
                     <script src="{{ asset('js/utils.js') }}"></script>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+                                <h2>Member Type By Country</h2>
                                 <div style="width:100%;">
                                     {!! $chart1->render() !!}
                                 </div>
                             </div>
                             <!-- /.col -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+                                <h2>Membership Growth</h2>
                                 <div style="width:100%;">
                                     {!! $chart2->render() !!}
                                 </div>
@@ -314,6 +316,10 @@
 
         ]
     });
+    $(document).ready(function() {
+        $("div.chart").addClass("collapsed-box");
+    });
+
 
 </script>
 @endpush
