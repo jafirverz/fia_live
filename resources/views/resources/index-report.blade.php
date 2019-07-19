@@ -6,7 +6,7 @@
 				<div class="filter-wrap fw-type">
 					<div class="container">						
 						<div class="tb-col break-480">
-				<form name="filter" method="post" action="{{ url('/topical-reports/search')}}" enctype="multipart/form-data">
+				<form name="filter" method="get" action="{{ url('/topical-reports/search')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 	<div class="col">
 								<label>Filter by</label>
@@ -57,7 +57,7 @@
 							</div>
 						</div>	
                     @endforeach
-                    @if($reports->count()>setting()->pagination_limit)
+                    @if(count($reports)>setting()->pagination_limit)
 						<div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
                      @endif
 					</div>

@@ -6,7 +6,7 @@
 				<div class="filter-wrap fw-type">
 					<div class="container">						
 						<div class="tb-col break-480">
-                <form name="filter" method="post" action="{{ url('/events/search')}}" enctype="multipart/form-data">
+                <form name="filter" method="get" action="{{ url('/events/search')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 							<div class="col">
 								<label>Filter by</label>

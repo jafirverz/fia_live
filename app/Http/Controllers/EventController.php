@@ -83,11 +83,11 @@ class EventController extends Controller
 		$data=array('topic'=>$topic);
         if (!is_null($request) && $topic != "")
         {
-		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%"');
+		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%" ORDER BY id DESC');
 		}
 		else
 		{
-		$reports = DB::select('SELECT * FROM topical_reports');
+		$reports = DB::select('SELECT * FROM topical_reports ORDER BY id DESC');
 		}
         
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
