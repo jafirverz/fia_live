@@ -16,7 +16,10 @@
 
     <link href="{{ asset('css/plugin.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/print.css') }}" media="screen, print"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/print.css') }}" media="screen, print" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="{{ asset('js/plugin.js') }}"></script>
@@ -30,6 +33,18 @@
     @yield('content')
 </div>
 @include('inc.footer')
+<!-- DataTables -->
+<script src="{{ asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables.net-bs/buttons.colVis.min.js') }}"></script>
+
 @stack('scripts')
 
 </body>

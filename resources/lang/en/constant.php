@@ -64,6 +64,8 @@ return [
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
 
     'ROLE' => 'Role',
+	
+	'PROFILE' => 'My Profile',
 
 	'PAYMENT' => 'Payment',
 
@@ -92,6 +94,8 @@ return [
 	'EVENTS_DETAIL_SLUG' => 'event-details',
 
 	'TOPICAL_REPORT_SLUG' => 'topical-reports',
+	
+	'PROFILE_DETAIL' => 'profile-detail',
 
 	//	EMAIL TEMPLATE ID
 
@@ -112,8 +116,11 @@ return [
 	
 	'FEEDBACK_ADMIN_EMAIL_TEMP_ID' => '9',
 
-    'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',	
-    'REMINDER_EMAIL_TEMP_ID' => '10',
+  'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',
+	'UNSUBSCRIBE_ADMIN_EMAIL_TEMP_ID' => '11',	
+
+  'REMINDER_EMAIL_TEMP_ID' => '10',
+
 
 
 

@@ -230,6 +230,9 @@ Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_detail
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
+Route::get('/profile-detail', 'PagesFrontController@profileDetail');
+Route::post('/update-profile-status', 'PagesFrontController@updateStatus');
+Route::get('/update-profile-status', 'PagesFrontController@updateStatus')->name('update-profile-status');
 Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
