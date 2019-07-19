@@ -24,6 +24,7 @@
 
     <script src="{{ asset('js/plugin.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
 </head>
 
 <body>
@@ -45,6 +46,7 @@
 <script src="{{ asset('assets/plugins/datatables.net-bs/buttons.colVis.min.js') }}"></script>
 
 @stack('scripts')
+
 </body>
 
 </html>
