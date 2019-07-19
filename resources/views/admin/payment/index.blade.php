@@ -17,7 +17,7 @@
                 @include('admin.inc.message')
                 <div class="box">
                     <div class="box-header with-border">
-                        <a href="{{ url('admin/payment/create') }}" class="btn btn-primary pull-right">Create</a>
+                        
                     </div>
                     <form id="payment_search" action="{{ url('admin/payment/date-range-search') }}" method="post">
                         @csrf
