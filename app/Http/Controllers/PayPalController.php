@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade as PDF;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
 
 
 class PayPalController extends Controller
@@ -56,7 +57,7 @@ class PayPalController extends Controller
             $response['message'] = session()->get('message');
             session()->forget('message');
         }
-        return view("subscription", compact("page", "banner", "breadcrumbs","response"));
+        return view("subscription", compact("page", "banner", "breadcrumbs", "response"));
 
 
     }
@@ -76,37 +77,22 @@ class PayPalController extends Controller
 
         $validator = Validator::make($fields, $validatorFields);
         $user = User::where('email', $request->email)->first();
-        if(is_null($user))
-        {
-            $validator->getMessageBag()->add('email', 'Member does not exist with this email id.' );
-        }
-        elseif($user->status==1)
-        {
-            $validator->getMessageBag()->add('email', 'You can not subscribe because your email is still not verified.' );
-        }
-        elseif($user->status==2)
-        {
-            $validator->getMessageBag()->add('email', 'Your account still not approved by admin.' );
-        }
-        elseif($user->status==3)
-        {
-            $validator->getMessageBag()->add('email', 'Your account is rejected. Please contact to admin.' );
-        }
-        elseif($user->status==5)
-        {
-            $validator->getMessageBag()->add('email', 'Your subscription is already active.' );
-        }
-        elseif($user->status==7)
-        {
-            $validator->getMessageBag()->add('email', 'Your account is lapsed. Please contact to admin.' );
-        }
-        elseif($user->status==9)
-        {
-            $validator->getMessageBag()->add('email', 'Your account is deleted. Please contact to admin.' );
-        }
-        elseif($user->status==10)
-        {
-            $validator->getMessageBag()->add('email', 'Your are now newsletter subscriber only. First you need to register your account.' );
+        if (is_null($user)) {
+            $validator->getMessageBag()->add('email', 'Member does not exist with this email id.');
+        } elseif ($user->status == 1) {
+            $validator->getMessageBag()->add('email', 'You can not subscribe because your email is still not verified.');
+        } elseif ($user->status == 2) {
+            $validator->getMessageBag()->add('email', 'Your account still not approved by admin.');
+        } elseif ($user->status == 3) {
+            $validator->getMessageBag()->add('email', 'Your account is rejected. Please contact to admin.');
+        } elseif ($user->status == 5) {
+            $validator->getMessageBag()->add('email', 'Your subscription is already active.');
+        } elseif ($user->status == 7) {
+            $validator->getMessageBag()->add('email', 'Your account is lapsed. Please contact to admin.');
+        } elseif ($user->status == 9) {
+            $validator->getMessageBag()->add('email', 'Your account is deleted. Please contact to admin.');
+        } elseif ($user->status == 10) {
+            $validator->getMessageBag()->add('email', 'Your are now newsletter subscriber only. First you need to register your account.');
         }
 
         if ($validator->getMessageBag()->count()) {
@@ -251,14 +237,14 @@ class PayPalController extends Controller
     {
         $data = [];
         $constant = masterSetting()->invoice_constant;
-        $invoiceCount = Invoice::where('order_id','like',masterSetting()->invoice_constant.'%')->count();
+        $invoiceCount = Invoice::where('order_id', 'like', masterSetting()->invoice_constant . '%')->count();
         $order_id = masterSetting()->invoice_constant . date("y") . str_pad((masterSetting()->invoice_series_no + $invoiceCount), 4, '0', STR_PAD_LEFT);
 
         if ($recurring === true) {
             $data['items'] = [
                 [
                     'name' => 'Subscription ' . ' #' . $order_id,
-                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value*masterSetting()->gst_percentage/100),
+                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value * masterSetting()->gst_percentage / 100),
                     'qty' => 1,
                 ],
             ];
@@ -270,7 +256,7 @@ class PayPalController extends Controller
             $data['items'] = [
                 [
                     'name' => 'Subscription ' . ' #' . $order_id,
-                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value*masterSetting()->gst_percentage/100),
+                    'price' => masterSetting()->subscription_value + (masterSetting()->subscription_value * masterSetting()->gst_percentage / 100),
                     'qty' => 1,
                 ]
             ];
@@ -315,7 +301,7 @@ class PayPalController extends Controller
         $invoice->user_id = $cart['user_id'];
         $invoice->user_email = $cart['email'];
         $invoice->title = $cart['invoice_description'];
-        $invoice->price = $cart['total']-($cart['total']*$cart['gst']/100);
+        $invoice->price = $cart['total'] - ($cart['total'] * $cart['gst'] / 100);
         $invoice->total = $cart['total'];
         $invoice->gst = $cart['gst'];
         $invoice->currency = masterSetting()->currency;
@@ -338,19 +324,33 @@ class PayPalController extends Controller
             $item->save();
         });
         $user = User::where('email', $cart['email'])->first();
+
+        $expiryDate = null;
+        if (!is_null($invoice->period_type) && $invoice->period_type == 'Month') {
+            $expiryDate = Carbon::now()->add($invoice->period_value, strtolower($invoice->period_type))->toDateTimeString();
+        }
+        $user->expired_at = $expiryDate;
+        if ($user->renew_status == 0) {
+            $user->renew_status = 1;
+        } elseif ($user->renew_status == 1) {
+            $user->renew_status = 2;
+        }
+        $user->renew_at = Carbon::now()->toDateTimeString();
+        $user->save();
+
         $data = $invoice->toArray();
-        $data['firstname']= $user->firstname;
-        $data['lastname']= $user->lastname;
-        $data['organization']= $user->organization;
-        $data['address1']= $user->address1;
-        $data['address2']= $user->address2;
-        $file_name =$cart['invoice_id']. '.pdf';
+        $data['firstname'] = $user->firstname;
+        $data['lastname'] = $user->lastname;
+        $data['organization'] = $user->organization;
+        $data['address1'] = $user->address1;
+        $data['address2'] = $user->address2;
+        $file_name = $cart['invoice_id'] . '.pdf';
         $pdf = PDF::loadView('invoice', compact('data'));
         $content = $pdf->output();
 
-        Storage::put('public/' . $file_name,$content) ;
+        Storage::put('public/' . $file_name, $content);
         //Storage::put('/public/' . $file_name, $pdf->output());
-        $invoice->path = $file_name ;
+        $invoice->path = $file_name;
         $invoice->save();
 
         return $invoice;
