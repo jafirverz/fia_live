@@ -73,12 +73,18 @@ class PagesFrontController extends Controller
             'slug'  =>  url()->full(),
             'title' =>  $_GET['country'] . ' ' . $_GET['category'],
         ];
+        $slug = 'country-information';
+        $page = Page::where('pages.slug', $slug)
+            ->where('pages.status', 1)
+            ->first();
+
+        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
         $slug = __('constant.COUNTRY_INFORMATION_DETAILS');
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
         $banner = get_page_banner($page->id);
-        $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
+
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
     }
 
@@ -92,18 +98,22 @@ class PagesFrontController extends Controller
         $regulatory = Regulatory::where('slug', $slug)->first();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
 
-        $slug_page = __('constant.REGULATORY_DETAILS');
+        $slug_page = 'regulatory-updates';
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
             ->first();
 
-        $banner = get_page_banner($page->id);
+
         $title_breadcrumb = [
             'slug'  =>  $regulatory->slug,
             'title' =>  $regulatory->title,
         ];
         $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
-
+        $slug_page = __('constant.REGULATORY_DETAILS');
+        $page = Page::where('pages.slug', $slug_page)
+            ->where('pages.status', 1)
+            ->first();
+        $banner = get_page_banner($page->id);
 
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
     }
@@ -138,7 +148,6 @@ class PagesFrontController extends Controller
         $stage = isset($_GET['stage']) ? $_GET['stage'][0] : '';
         $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
 
-
         $query = Regulatory::query();
         if($country)
         {
@@ -150,7 +159,7 @@ class PagesFrontController extends Controller
         }
         if($year)
         {
-            $query->whereYear('regulatories.created_at', date('Y', strtotime($year)));
+            $query->whereYear('regulatories.created_at', $year);
         }
         if($topic)
         {

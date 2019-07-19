@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'lastname' => 'required|alpha',
             'organization' => 'required|string',
             'country'   =>  'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email,6,status',
             'password' => 'required|confirmed',
         ]);
     }
@@ -87,28 +87,55 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         $user_id = guid();
-        $user_data =  User::create([
-            'user_id'    =>  $user_id,
-            'salutation' => $data['salutation'],
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'organization' => $data['organization'],
-            'job_title' => $data['job_title'],
-            'telephone_code' => $data['telephone_code'],
-            'telephone_number' => $data['telephone_number'],
-            'mobile_code' => $data['mobile_code'],
-            'mobile_number' => $data['mobile_number'],
-            'country' => $data['country'],
-            'city' => $data['city'],
-            'address1' => $data['address1'],
-            'address2' => $data['address2'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'member_type'   =>  2,
-            'subscribe_status'  => $data['subscribe_status'] ?? null,
-            'status'    =>  1,
-        ]);
+        $user_subscribed = User::where('email', $data['email'])->where('status', 6)->first();
+        if($user_subscribed->count())
+        {
+            $user_subscribed->user_id   =  $user_id;
+            $user_subscribed->salutation = $data['salutation'];
+            $user_subscribed->firstname = $data['firstname'];
+            $user_subscribed->lastname = $data['lastname'];
+            $user_subscribed->organization = $data['organization'];
+            $user_subscribed->job_title = $data['job_title'];
+            $user_subscribed->telephone_code = $data['telephone_code'];
+            $user_subscribed->telephone_number = $data['telephone_number'];
+            $user_subscribed->mobile_code = $data['mobile_code'];
+            $user_subscribed->mobile_number = $data['mobile_number'];
+            $user_subscribed->country = $data['country'];
+            $user_subscribed->city = $data['city'];
+            $user_subscribed->address1 = $data['address1'];
+            $user_subscribed->address2 = $data['address2'];
+            $user_subscribed->password = Hash::make($data['password']);
+            $user_subscribed->member_type   =  2;
+            $user_subscribed->status    =  1;
+            $user_subscribed->save();
+        }
+        else
+        {
+
+            $user_data =  User::create([
+                'user_id'    =>  $user_id,
+                'salutation' => $data['salutation'],
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'organization' => $data['organization'],
+                'job_title' => $data['job_title'],
+                'telephone_code' => $data['telephone_code'],
+                'telephone_number' => $data['telephone_number'],
+                'mobile_code' => $data['mobile_code'],
+                'mobile_number' => $data['mobile_number'],
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'address1' => $data['address1'],
+                'address2' => $data['address2'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'member_type'   =>  2,
+                'subscribe_status'  => $data['subscribe_status'] ?? null,
+                'status'    =>  1,
+            ]);
+        }
 
         $student = [
             'button_url' => url('/register/verification/' . $user_id),
