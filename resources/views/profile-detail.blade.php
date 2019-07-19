@@ -6,6 +6,7 @@
 				<div class="container space-1">
 					<div class="profile-wrap">
 						<h1 class="title-1 text-center">{{$title}}</h1>
+                        @if($last_user_paid)
 						<div class="row break-480">
 							<div class="col-xs-6 col">								
 								<div class="lb">Subscription Type:</div>
@@ -16,11 +17,14 @@
 								<div class="group">{{$last_user_paid->transaction_id}}</div>
 							</div>
 						</div>
+                        @endif
 						<div class="row break-480">
+                        @if($last_user_paid)
 							<div class="col-xs-6 col">								
 								<div class="lb">Subscription Duration:</div>
 								<div class="group">{{$last_user_paid->period_value.' '.$last_user_paid->period_type}}</div>
 							</div>
+                        @endif
 							<div class="col-xs-6 col">		
 								<div class="lb">Payment Status:</div>
 								<div class="group">@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
@@ -32,7 +36,7 @@
 							<div class="col-xs-6 col">								
 								<div class="lb">Subscription Date:</div>
 								<div class="group">@if(!is_null($user->invoice()) )
-                                               {{ date('j, F Y H:i A',strtotime($user->invoice()->created_at)) }}
+                                               {{ date('j, F Y',strtotime($user->invoice()->created_at)) }}
                                                @else - @endif</div>
 							</div>
 							<div class="col-xs-6 col">		
@@ -43,7 +47,7 @@
 						<div class="row break-480">
 							<div class="col-xs-6 col">								
 								<div class="lb">Renewal Date:</div>
-								<div class="group">{{ date('j, F Y H:i A',strtotime($user->expired_at)) }}</div>
+								<div class="group">{{ date('j, F Y',strtotime($user->expired_at)) }}</div>
 							</div>
 							<div class="col-xs-6 col">		
 								<div class="lb">PayPal Account Details:</div>
@@ -95,10 +99,7 @@
 						<div class="output text-center">
 							<a href="#pp" class="btn-2" data-toggle="modal">Unsubscribe</a>
 						</div>
-                        @else
-                        <div class="output text-center">
-							<a href="#pp" class="btn-2" data-toggle="modal">Subscribe</a>
-						</div>
+                        
                         @endif	
 						
 						<div id="pp" class="modal fade">
