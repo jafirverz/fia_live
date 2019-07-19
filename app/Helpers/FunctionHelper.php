@@ -225,6 +225,7 @@ if (!function_exists('getTopics')) {
         $string = [];
         $menus = Menu::where('menus.parent', $parent)
             ->where('menus.menu_type', $type)
+			->where('menus.status', 1)
             ->select('menus.*')
             ->orderBy('view_order', 'asc')
             ->get();
@@ -251,7 +252,7 @@ if (!function_exists('getTopics')) {
                     $sel = '';
 
 
-				if ($menu->id == '30')
+				if ($menu->title == 'Resources')
          $string[] = '<li ' . $sel . '><a>' . $menu->title . '</a>';
 
 				else
@@ -296,6 +297,7 @@ if (!function_exists('getTopics')) {
         $string = [];
         $menus = Menu::where('menus.parent', $parent)
             ->where('menus.menu_type', $type)
+			->where('menus.status', 1)
             ->select('menus.*')
             ->orderBy('view_order', 'asc')
             ->get();
@@ -314,8 +316,12 @@ if (!function_exists('getTopics')) {
                     $sel = 'class="active"';
                 else
                     $sel = '';
-
-                $string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+				if ($menu->title == 'Resources')
+                $string[] = '<li ' . $sel . '><a href="#">' . $menu->title . '</a>';
+				else
+				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
+				
+				
                 $string[] = '</li>';
 
 
