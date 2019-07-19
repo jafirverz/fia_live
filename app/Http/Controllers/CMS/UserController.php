@@ -51,11 +51,11 @@ class UserController extends Controller
         foreach(array_keys($country_array) as $value)
         {
             $fia_member_dataset[] = $memberbycountry->where('member_type', 1)->where('country', $value)->count();
-            $fia_member_dataset_color[] = 'rgb(128,128,128)';
+            $fia_member_dataset_color[] = 'rgb(55, 106, 195)';
             $member_dataset[] = $memberbycountry->where('member_type', 2)->where('country', $value)->count();
-            $member_dataset_color[] = 'rgb(255,165,0)';
+            $member_dataset_color[] = 'rgb(241, 119, 35)';
             $complimentary_dataset[] = $memberbycountry->where('member_type', 3)->where('country', $value)->count();
-            $complimentary_dataset_color[] = 'rgb(0,0,255)';
+            $complimentary_dataset_color[] = 'rgb(171, 171, 171)';
         }
 
         //CHART2
@@ -126,17 +126,17 @@ class UserController extends Controller
          ->datasets([
              [
                  "label" => "New",
-                 'borderColor' => ['rgb(128,128,128)'],
+                 'borderColor' => ['rgb(55, 106, 195)'],
                  'data' => $new_dataset
              ],
              [
                  "label" => "Expired",
-                 'borderColor' => ['rgb(255,165,0)'],
+                 'borderColor' => ['rgb(241, 119, 35)'],
                  'data' => $expired_dataset
              ],
              [
                 "label" => "Renewed",
-                'borderColor' => ['rgb(0,0,255)'],
+                'borderColor' => ['rgb(171, 171, 171)'],
                 'data' => $renewed_dataset
             ]
          ])
