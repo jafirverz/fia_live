@@ -54,7 +54,7 @@ return [
 	'SITEMAP' => 'Sitemap',
 
 	'CONTACT' => 'Contact Us',
-	
+
 	'FEEDBACK' => 'Feedback',
 
 	'OTHERS' => 'Others',
@@ -64,7 +64,7 @@ return [
 	'ROLES_AND_PERMISSION' => 'Roles and Permission',
 
     'ROLE' => 'Role',
-	
+
 	'PROFILE' => 'My Profile',
 
 	'PAYMENT' => 'Payment',
@@ -94,7 +94,7 @@ return [
 	'EVENTS_DETAIL_SLUG' => 'event-details',
 
 	'TOPICAL_REPORT_SLUG' => 'topical-reports',
-	
+
 	'PROFILE_DETAIL' => 'profile-detail',
 
 	//	EMAIL TEMPLATE ID
@@ -113,13 +113,15 @@ return [
 
 
 	'SUBSCRIPTION_USER_EMAIL_TEMP_ID' => '4',
-	
+
 	'FEEDBACK_ADMIN_EMAIL_TEMP_ID' => '9',
 
   'FEEDBACK_USER_EMAIL_TEMP_ID' => '8',
-	'UNSUBSCRIBE_ADMIN_EMAIL_TEMP_ID' => '11',	
+	'UNSUBSCRIBE_ADMIN_EMAIL_TEMP_ID' => '11',
 
   'REMINDER_EMAIL_TEMP_ID' => '10',
+
+  'END_DAY_REPORT'  =>  '12',
 
 
 

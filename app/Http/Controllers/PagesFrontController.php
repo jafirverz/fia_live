@@ -19,7 +19,7 @@ use App\Mail\AdminSideMail;
 class PagesFrontController extends Controller
 {
     use GetEmailTemplate;
-	
+
 	public function __construct()
     {
         $this->module_name = 'COUNTRY_INFORMATION';
@@ -51,6 +51,10 @@ class PagesFrontController extends Controller
         }
         if($page->slug=='profile')
         {
+            if(!Auth::check())
+            {
+                return redirect(url('login'));
+            }
             $user = User::find(Auth::user()->id);
             return view('auth.profile', compact("page", "banner", "breadcrumbs", 'user'));
         }
@@ -221,7 +225,7 @@ class PagesFrontController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('student_id', $id)->first();
+        $user = User::where('user_id', $id)->first();
         if(password_verify($request->password, $user->password))
         {
             $user->salutation = $request->salutation;
@@ -242,7 +246,7 @@ class PagesFrontController extends Controller
         }
         return redirect('profile')->with('error',  'Sorry! Password does not match.');
     }
-	
+
 	 public function profileDetail($slug="")
     {
         if(Auth::check())
@@ -263,18 +267,18 @@ class PagesFrontController extends Controller
 		$user = User::find($id);
 		$paid_user = userPayments($id);
 		$last_user_paid = latestUserPayments($id);
-		
+
 		//dd($last_user_paid);
         return view('profile-detail', compact('title', 'user','last_user_paid','paid_user','page','banner','breadcrumbs'));
 		}else{
 			return redirect('/login');
 		}
     }
-	
+
 	public function updateStatus(Request $request)
     {
-        	
-            
+
+
 			$response = [];
             $user = User::findorfail($request->id);
 			$user->status =$request->status;
@@ -286,24 +290,24 @@ class PagesFrontController extends Controller
 		    Auth::logout();
 			$emailTemplate = $this->emailTemplate(__('constant.UNSUBSCRIBE_ADMIN_EMAIL_TEMP_ID'));
 					 if ($emailTemplate) {
-		
+
 					$data = [];
-		
+
 					$data['subject'] = $emailTemplate->subject;
-		
+
 					$data['email_sender_name'] = setting()->email_sender_name;
-		
+
 					$data['from_email'] = setting()->from_email;
-		
+
 					$data['subject'] = $emailTemplate->subject;
-		
+
 					$key = ['{{name}}',  '{{user_id}}'];
 
 					$name=$user->firstname.' '.$user->lastname;
 					$value = [$name,$user->user_id];
-		
+
 					$newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
-		
+
 					$data['contents'] = $newContents;
 					$toEmail = setting()->to_email;
 					try {
@@ -311,13 +315,13 @@ class PagesFrontController extends Controller
 					} catch (Exception $exception) {
 						dd($exception);
 					}
-		
-		
-		
+
+
+
 				}
             return redirect('/thank-you')->with($response['status'], $response['msg']);
 			}
     }
 
-    
+
 }
