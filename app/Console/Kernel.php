@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\NewUsers::class,
         Commands\RegisteredUsers::class,
+        Commands\EndDayReport::class,
         //'App\Console\Commands\RegisteredUsers',
         //'App\Console\Commands\NewUsers',
 
@@ -32,6 +33,10 @@ class Kernel extends ConsoleKernel
             ->daily();
         $schedule->command('new:users')
             ->daily();
+        $schedule->command('enddayreport:users')
+            ->weekly()
+            ->timezone('Asia/Singapore')
+            ->at('15:00');
     }
 
     /**

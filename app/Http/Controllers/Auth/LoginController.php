@@ -54,7 +54,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $error_message = "";
+        $error_message = "Error! Something went wrong.";
         if($user->status==1)
         {
             $error_message = "Oops! Please verify your email.";
@@ -83,7 +83,24 @@ class LoginController extends Controller
         {
             $error_message = "Sorry! Your account has been expired. Please contact admin.";
         }
-        if($error_message)
+        else if($user->status==9)
+        {
+            $error_message = "Account does not exist.";
+        }
+        else if($user->status==10)
+        {
+            $error_message = "Account does not exist.";
+        }
+        else if($user->status==11)
+        {
+            $error_message = "Sorry! Your account is currenly inactive. Please contact admin.";
+        }
+
+        if($user->status==5)
+        {
+            return $user;
+        }
+        else
         {
             Auth::logout();
             return redirect()->intended('login')->with('error', $error_message);
