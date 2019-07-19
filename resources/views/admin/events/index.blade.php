@@ -45,7 +45,7 @@
                                                         </td>
 
 
-                                                        
+
                                                         <td>
                                                             @if($event->event_date)
                                                                 {{ date('j,F Y H:i A',strtotime($event->event_date)) }}
@@ -60,19 +60,19 @@
                                                                      alt="Event Image">
                                                             </div>
                                                         </td>
-                                                        
-                                                        
+
+
                                                         <td>
                                                             @if ($event->created_at == null)
                                                                 {{$event->created_at}}
                                                             @endif
-                                                            {{  $event->created_at->format('d M, Y H:i A')   }}
+                                                            {{  $event->created_at->format('d M, Y h:i A')   }}
 
                                                         </td>
                                                         <td data-order="{{ $event->updated_at }}">@if ($event->updated_at == null)
                                                                 {{$event->updated_at}}
                                                             @endif
-                                                            {{  $event->updated_at->format('d M, Y H:i A')   }}
+                                                            {{  $event->updated_at->format('d M, Y h:i A')   }}
 
                                                         </td>
                                                         <td class="text-center">

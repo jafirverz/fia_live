@@ -179,7 +179,7 @@
                                     <div class="form-group">
                                         <label for="" class=" control-label">Registration Date</label>
                                         <input class="form-control " placeholder=""
-                                               value="{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}"
+                                               value="{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}"
                                                name="" type="text" id="" readonly>
 
                                     </div>
