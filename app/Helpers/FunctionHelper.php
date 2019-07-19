@@ -46,7 +46,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('order_by', 'asc')->get();
+        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getFilterCountryImage($id = null)
@@ -70,7 +70,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterYear($id = null)
