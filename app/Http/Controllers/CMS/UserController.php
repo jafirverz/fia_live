@@ -44,12 +44,18 @@ class UserController extends Controller
         $fia_member_dataset = [];
         $member_dataset = [];
         $complimentary_dataset = [];
+        $fia_member_dataset_color = [];
+        $member_dataset_color = [];
+        $complimentary_dataset_color = [];
 
         foreach(array_keys($country_array) as $value)
         {
             $fia_member_dataset[] = $memberbycountry->where('member_type', 1)->where('country', $value)->count();
+            $fia_member_dataset_color[] = 'rgb(128,128,128)';
             $member_dataset[] = $memberbycountry->where('member_type', 2)->where('country', $value)->count();
+            $member_dataset_color[] = 'rgb(255,165,0)';
             $complimentary_dataset[] = $memberbycountry->where('member_type', 3)->where('country', $value)->count();
+            $complimentary_dataset_color[] = 'rgb(0,0,255)';
         }
 
         //CHART2
@@ -70,17 +76,17 @@ class UserController extends Controller
          ->datasets([
              [
                  "label" => "FIA Member",
-                 'backgroundColor' => ['rgb(128,128,128)'],
+                 'backgroundColor' => $fia_member_dataset_color,
                  'data' => $fia_member_dataset
              ],
              [
                  "label" => "Member",
-                 'backgroundColor' => ['rgb(255,165,0)'],
+                 'backgroundColor' => $member_dataset_color,
                  'data' => $member_dataset
              ],
              [
                 "label" => "Complimentary",
-                'backgroundColor' => ['rgb(0,0,255)'],
+                'backgroundColor' => $complimentary_dataset_color,
                 'data' => $complimentary_dataset
             ]
          ])
