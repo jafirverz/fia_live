@@ -111,6 +111,8 @@
         });
 		
 		 $('.pick_date_time').datetimepicker({
+			 format: 'yyyy-mm-dd hh:ii',
+            language: 'pt-BR' ,
            autoclose: true
     	});
     });
