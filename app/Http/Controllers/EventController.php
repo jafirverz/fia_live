@@ -61,7 +61,7 @@ class EventController extends Controller
         $data=array('topic'=>"");
         $title = __('constant.TOPICAL_REPORTS');
         $breadcrumbs = $breadcrumbs->generate('front_report_listing');
-		$reports =TopicalReport::orderBy('id','DESC')->get();
+		$reports =TopicalReport::orderBy('id','ASC')->get();
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
     }
 	
@@ -83,11 +83,11 @@ class EventController extends Controller
 		$data=array('topic'=>$topic);
         if (!is_null($request) && $topic != "")
         {
-		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%"');
+		$reports = DB::select('SELECT * FROM topical_reports WHERE topical_id LIKE "%'.$topic.'%" ORDER BY id ASC');
 		}
 		else
 		{
-		$reports = DB::select('SELECT * FROM topical_reports');
+		$reports = DB::select('SELECT * FROM topical_reports ORDER BY id ASC');
 		}
         
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));

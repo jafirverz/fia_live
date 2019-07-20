@@ -219,6 +219,7 @@ Route::post('/contact-store', 'ContactController@store')->name('contacts');
 Route::post('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
 Route::get('/feedback-store', 'ContactController@feedback_store')->name('feedbacks');
 Route::post('/events/search', 'EventController@search');
+Route::get('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::post('/topical-reports/search', 'EventController@search_report');

@@ -6,7 +6,7 @@
 				<div class="filter-wrap fw-type">
 					<div class="container">						
 						<div class="tb-col break-480">
-                <form name="filter" method="post" action="{{ url('/events/search')}}" enctype="multipart/form-data">
+                <form name="filter" method="get" action="{{ url('/events/search')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 							<div class="col">
 								<label>Filter by</label>
@@ -61,7 +61,7 @@
 						
 						<!-- no loop this element --> <div class="grid-sizer"></div> <!-- no loop this element -->					
 					</div>
-                    @if($events->count()>setting()->pagination_limit)
+                    @if(count($events)>setting()->pagination_limit)
 					<div class="more-wrap"><button id="btn-load" class="btn-4 load-more"> Load more <i class="fas fa-angle-double-down"></i></button></div>
                     @endif
 				</div>

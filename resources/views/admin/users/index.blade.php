@@ -129,7 +129,7 @@
                                         {{date('d M, Y', strtotime("+".$user->invoice()->period_value." years", strtotime($user->invoice()->created_at)))}}
                                         @else - @endif
                                     </td>
-                                    <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                    <td>{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                     <td>{{memberShipStatus($user->status)}}</td>
                                     <td>
                                         <table>

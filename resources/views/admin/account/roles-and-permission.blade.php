@@ -93,13 +93,13 @@
                                         {{ isset($admin->role_name) ? $admin->role_name : '-' }}
                                     </td>
                                     <td>
-                                        {{ isset($admin->admin_created_at) ? date('d M, Y H:i A', strtotime($admin->admin_created_at)) : '-' }}
+                                        {{ isset($admin->admin_created_at) ? date('d M, Y h:i A', strtotime($admin->admin_created_at)) : '-' }}
                                     </td>
                                     <td>
                                         {{ admin_last_login($admin->admins_id) ?? '-' }}
                                     </td>
                                     <td data-order="{{ $admin->admin_updated_at }}">
-                                        {{ isset($admin->admin_updated_at) ? date('d M, Y H:i A', strtotime($admin->admin_updated_at)) : '-' }}
+                                        {{ isset($admin->admin_updated_at) ? date('d M, Y h:i A', strtotime($admin->admin_updated_at)) : '-' }}
                                     </td>
                                     <td>
                                         <a href="{{ url('admin/roles/edit/' . $admin->admins_id) }}"

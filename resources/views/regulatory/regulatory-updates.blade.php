@@ -198,9 +198,16 @@
 <script>
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $("a.lk-back").on("click", function (e) {
-            e.preventDefault();
-            window.location.reload();
+        $("a.lk-back").on("click", function () {
+            var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            var d = new Date();
+            $("select[name='country[]']").val('');
+            $("select[name='month']").val(months[d.getMonth()]);
+            $("select[name='year']").val(d.getFullYear());
+            $("select[name='topic']").val('');
+            $("select[name='stage']").val('');
+            $('.selectpicker').selectpicker('refresh');
+            getSearchResult();
         });
 
         var country_array = [];
@@ -210,31 +217,32 @@
         var stage_array = [];
 
         $("select[name='country[]']").on("change", function () {
-            country_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='month']").on("change", function () {
-            month_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='year']").on("change", function () {
-            year_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='topic']").on("change", function () {
-            topic_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='stage']").on("change", function () {
-            stage_array.push($(this).val());
             getSearchResult();
         });
 
         function getSearchResult(option_type) {
+            country_array.push($("select[name='country[]']").val());
+            month_array.push($("select[name='month']").val());
+            year_array.push($("select[name='year']").val());
+            topic_array.push($("select[name='topic']").val());
+            stage_array.push($("select[name='stage']").val());
+
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/regulatory-details-search') }}",

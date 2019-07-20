@@ -70,7 +70,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 4)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterYear($id = null)
@@ -423,7 +423,7 @@ if (!function_exists('getTopics')) {
     {
         $authentication_log = DB::table('authentication_log')->where('authenticatable_id', $id)->orderby('id', 'desc')->first();
         if ($authentication_log) {
-            return date('d M, Y H:i A', strtotime($authentication_log->login_at));
+            return date('d M, Y h:i A', strtotime($authentication_log->login_at));
         }
         return "-";
     }
@@ -675,13 +675,13 @@ if (!function_exists('getTopics')) {
         }
         return $invoices;
     }
-	
+
 	function latestUserPayments($userId = null)
     {
         if (!is_null($userId)) {
             $invoice = Invoice::where('user_id', $userId)->orderBy('id','desc')->first();
 			return $invoice;
-        } 
+        }
 		else
 		{
         return NULL;
