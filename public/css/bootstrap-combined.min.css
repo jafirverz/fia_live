@@ -21,11 +21,10 @@ line-height:14px;
 vertical-align:text-top;
 background-image:url("../images/glyphicons-halflings.png");
 background-position:14px 14px;
-position:absolute;
 top:10px;
-right:20px;
 background-repeat:no-repeat;
 }
+
 .icon-white, .nav-pills>.active>a>[class^="icon-"], .nav-pills>.active>a>[class*=" icon-"], .nav-list>.active>a>[class^="icon-"], .nav-list>.active>a>[class*=" icon-"], .navbar-inverse .nav>.active>a>[class^="icon-"], .navbar-inverse .nav>.active>a>[class*=" icon-"], .dropdown-menu>li>a:hover>[class^="icon-"], .dropdown-menu>li>a:hover>[class*=" icon-"], .dropdown-menu>.active>a>[class^="icon-"], .dropdown-menu>.active>a>[class*=" icon-"], .dropdown-submenu:hover>a>[class^="icon-"], .dropdown-submenu:hover>a>[class*=" icon-"] {
 background-image:url("../images/glyphicons-halflings-white.png")
 }
@@ -60,7 +59,9 @@ background-image:url("../images/glyphicons-halflings-white.png")
 	background-position: -216px 0
 }
 .icon-th {
-	background-position: -240px 0
+	background-position: -240px 0;
+	position:absolute;
+	right:20px;
 }
 .icon-th-list {
 	background-position: -264px 0
