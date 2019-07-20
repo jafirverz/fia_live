@@ -35,7 +35,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <h2>Member Type By Country</h2>
+                                <h2>Member Type Country</h2>
                                 <div style="width:100%;">
                                     {!! $chart1->render() !!}
                                 </div>
