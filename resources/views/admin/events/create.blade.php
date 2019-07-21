@@ -30,7 +30,7 @@
                 
                 <div class="form-group"><div class="row">                
                     <label class='col-sm-2 control-label'>Event Date:</label>
-<div class="col-sm-10 date  pick_date_time"><input readonly="readonly" type="text" class="form-control pick_date_time" name="event_date" id="event_date" value="{{ old('event_date') }}">
+<div class="col-sm-10 date  pick_date_time"><input readonly="readonly" type="text" class="form-control" name="event_date" id="event_date" value="{{ old('event_date') }}">
                 <span class="add-on"><i class="icon-th"></i></span></div></div></div>
                 <div class="form-group">
                 <div class="row">
