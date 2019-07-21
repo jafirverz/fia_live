@@ -608,7 +608,7 @@ if (!function_exists('getTopics')) {
 
     function memberShipStatus($key = null)
     {
-        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '9' => 'Deleted', '10' => 'Newslatter Subscriber Only', '11' => 'Unsubscribed'];
+        $array_list = ["1" => 'Pending email verification', "2" => 'Pending admin approval', '3' => 'Rejected', '4' => 'Pending for Payment', '5' => 'Active', '6' => 'Inactive', '7' => 'Lapsed', '8' => 'Expired', '10' => 'Newslatter Subscriber Only', '11' => 'Unsubscribed'];
 
         if (!is_null($key)) {
             if (Arr::has($array_list, $key)) {
