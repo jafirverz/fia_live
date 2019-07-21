@@ -31,12 +31,66 @@ class UserController extends Controller
     {
         $title = __('constant.USER');
         $subtitle = 'Index';
-        $users = User::orderBy('created_at', 'desc')->get();
+
+
+        $search = [];
+        $search['name'] = null;
+        $search['organization'] = null;
+        $search['email'] = null;
+        $search['member_type'] = null;
+        $search['status'] = null;
+        $result = $this->members($search);
+        $chart1 = $result['chart1'];
+        $chart2 = $result['chart2'];
+        $users = $result['users'];
+        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2', 'search'));
+    }
+
+    /**
+     *
+     */
+    public function search(Request $request)
+    {
+        $title = __('constant.USER');
+        $subtitle = 'Index';
+        $search = $request->all();
+        $result = $this->members($search);
+        $chart1 = $result['chart1'];
+        $chart2 = $result['chart2'];
+        $users = $result['users'];
+
+
+        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2', 'search'));
+    }
+
+    public function members($search)
+    {
+        $result = [];
+        $query = User::query();
+        if ($search['name']) {
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'like', '%' . $search['name'] . '%')
+                    ->orWhere('lastname', 'like', '%' . $search['name'] . '%');
+            });
+        }
+        if ($search['organization']) {
+            $query->where('organization', 'like', '%' . $search['organization'] . '%');
+        }
+        if ($search['email']) {
+            $query->where('email', 'like', '%' . $search['email'] . '%');
+        }
+        if ($search['member_type']) {
+            $query->where('member_type', $search['member_type']);
+        }
+        if ($search['status']) {
+            $query->where('status', $search['status']);
+        }
+        $result['users'] = $query->orderBy('created_at', 'desc')->get();
 
         $memberbycountry = User::get();
 
-        $membership_growth_date = User::whereYear('created_at', date('Y'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->groupby('new_date')->get();
-        $membership_growth = User::whereYear('created_at', date('Y'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->get();
+        $membership_growth_date = User::whereYear('created_at', date('Y'))->where('status', '!=', __('constant.NEWSLATTER_SUBSCRIBER'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->groupby('new_date')->get();
+        $membership_growth = User::whereYear('created_at', date('Y'))->where('status', '!=', __('constant.NEWSLATTER_SUBSCRIBER'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->get();
         //dd($membership_growth->where('renew_status', 1)->where('new_date', '2019-07')->count());
         // CHART1
         $country_array = $memberbycountry->groupBy('country')->toArray();
@@ -48,8 +102,7 @@ class UserController extends Controller
         $member_dataset_color = [];
         $complimentary_dataset_color = [];
 
-        foreach(array_keys($country_array) as $value)
-        {
+        foreach (array_keys($country_array) as $value) {
             $fia_member_dataset[] = $memberbycountry->where('member_type', 1)->where('country', $value)->count();
             $fia_member_dataset_color[] = 'rgb(0,192,239)';
             $member_dataset[] = $memberbycountry->where('member_type', 2)->where('country', $value)->count();
@@ -62,109 +115,108 @@ class UserController extends Controller
         $new_dataset = [];
         $expired_dataset = [];
         $renewed_dataset = [];
-        foreach($membership_growth_date as $value)
-        {
+        foreach ($membership_growth_date as $value) {
             $new_dataset[] = $membership_growth->where('renew_status', 1)->where('new_date', $value->new_date)->count();
             $expired_dataset[] = $membership_growth->where('renew_status', 3)->where('new_date', $value->new_date)->count();
             $renewed_dataset[] = $membership_growth->where('renew_status', 2)->where('new_date', $value->new_date)->count();
         }
-        $chart1 = app()->chartjs
-         ->name('memberbycountry')
-         ->type('bar')
-         ->size(['width' => 400, 'height' => 100])
-         ->labels(array_keys($country_array))
-         ->datasets([
-             [
-                 "label" => "FIA Member",
-                 'backgroundColor' => $fia_member_dataset_color,
-                 'data' => $fia_member_dataset
-             ],
-             [
-                 "label" => "Member",
-                 'backgroundColor' => $member_dataset_color,
-                 'data' => $member_dataset
-             ],
-             [
-                "label" => "Complimentary",
-                'backgroundColor' => $complimentary_dataset_color,
-                'data' => $complimentary_dataset
-            ]
-         ])
-         ->optionsRaw([
-            'responsive'    => true,
-            'legend' => [
-                'display' => true,
-                'labels' => [
-                    'fontColor' => '#000'
+        $result['chart1'] = app()->chartjs
+            ->name('memberbycountry')
+            ->type('bar')
+            ->size(['width' => 400, 'height' => 100])
+            ->labels(array_keys($country_array))
+            ->datasets([
+                [
+                    "label" => "FIA Member",
+                    'backgroundColor' => $fia_member_dataset_color,
+                    'data' => $fia_member_dataset
+                ],
+                [
+                    "label" => "Member",
+                    'backgroundColor' => $member_dataset_color,
+                    'data' => $member_dataset
+                ],
+                [
+                    "label" => "Complimentary",
+                    'backgroundColor' => $complimentary_dataset_color,
+                    'data' => $complimentary_dataset
                 ]
-            ],
-            'scales' => [
-                'xAxes' => [
-                    [
-                        'stacked' => true,
-                        'gridLines' => [
-                            'display' => true
+            ])
+            ->optionsRaw([
+                'responsive' => true,
+                'legend' => [
+                    'display' => true,
+                    'labels' => [
+                        'fontColor' => '#000'
+                    ]
+                ],
+                'scales' => [
+                    'xAxes' => [
+                        [
+                            'stacked' => true,
+                            'gridLines' => [
+                                'display' => true
+                            ]
+                        ]
+                    ],
+                    'yAxes' => [
+                        [
+                            'stacked' => true,
+                            'gridLines' => [
+                                'display' => true
+                            ]
                         ]
                     ]
-                        ],
-                'yAxes' => [
-                    [
-                        'stacked' => true,
-                        'gridLines' => [
-                            'display' => true
-                        ]
-                    ]
                 ]
-            ]
-        ]);
+            ]);
 
-        $chart2 = app()->chartjs
-         ->name('membershipgrowth')
-         ->type('line')
-         ->size(['width' => 400, 'height' => 200])
-         ->labels($membership_growth_date->pluck('new_date')->toArray())
-         ->datasets([
-             [
-                 "label" => "New",
-                 'borderColor' => ['rgb(251,189,11)'],
-                 'data' => $new_dataset
-             ],
-             [
-                 "label" => "Expired",
-                 'borderColor' => ['rgb(234,67,53)'],
-                 'data' => $expired_dataset
-             ],
-             [
-                "label" => "Renewed",
-                'borderColor' => ['rgb(0,192,239)'],
-                'data' => $renewed_dataset
-            ]
-         ])
-         ->optionsRaw([
-            'maintainAspectRatio'   => false,
-			'spanGaps'  => false,
-			'elements'  => [
-                'line'  =>  [
-                    'tension'   =>  0.000001
+        $result['chart2'] = app()->chartjs
+            ->name('membershipgrowth')
+            ->type('line')
+            ->size(['width' => 400, 'height' => 100])
+            ->labels($membership_growth_date->pluck('new_date')->toArray())
+            ->datasets([
+                [
+                    "label" => "New",
+                    'borderColor' => ['rgb(251,189,11)'],
+                    'data' => $new_dataset
                 ],
-            ],
-			'scales'    =>  [
-                'yAxes' =>  [
-                    [
-                        'stacked' => true,
-                    ]
+                [
+                    "label" => "Expired",
+                    'borderColor' => ['rgb(234,67,53)'],
+                    'data' => $expired_dataset
+                ],
+                [
+                    "label" => "Renewed",
+                    'borderColor' => ['rgb(0,192,239)'],
+                    'data' => $renewed_dataset
                 ]
-            ],
-			'plugins'   => [
-                'filler'    =>  [
-                    'propagate' => false
+            ])
+            ->optionsRaw([
+                'maintainAspectRatio' => false,
+                'spanGaps' => false,
+                'elements' => [
+                    'line' => [
+                        'tension' => 0.000001
+                    ],
                 ],
-                'samples-filler-analyser'   => [
-                    'target'    =>  'chart-analyser'
+                'scales' => [
+                    'yAxes' => [
+                        [
+                            'stacked' => true,
+                        ]
+                    ]
                 ],
-            ],
-        ]);
-        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2'));
+                'plugins' => [
+                    'filler' => [
+                        'propagate' => false
+                    ],
+                    'samples-filler-analyser' => [
+                        'target' => 'chart-analyser'
+                    ],
+                ],
+            ]);
+        return $result;
     }
 
     /**
@@ -439,6 +491,7 @@ class UserController extends Controller
         } elseif ($request->status == __('constant.ACCOUNT_ACTIVE')) {
             $user->member_type = $request->member_type;
             $user->status = __('constant.ACCOUNT_ACTIVE');
+            $user->expired_at = null;
             if (empty($user->email_verified_at)) {
                 $user->email_verified_at = Carbon::now()->toDateTimeString();
             }
@@ -473,4 +526,6 @@ class UserController extends Controller
         $user->save();
         return $response;
     }
+
+
 }

@@ -10,7 +10,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ setting()->title }}</title>
-
+    <style>
+        /* Paste this css to your style sheet file or under head tag */
+        /* This only works with JavaScript,
+        if it's not present, don't show loader */
+        .no-js #loader { display: none;  }
+        .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+        .se-pre-con {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url(/assets/dist/img/Preloader_2.gif) center no-repeat #fff;
+        }
+    </style>
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
@@ -37,9 +52,18 @@
     <!-- Scripts -->
     <!-- jQuery 3 -->
     <script src="{{ asset('assets/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script>
+        //paste this code under head tag or in a seperate js file.
+        // Wait for window load
+        $(document).ready(function() {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");
+        });
+    </script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('assets/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
-    
+
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
 	 var APP_URL = {!! json_encode(url('/')) !!} ;
@@ -57,9 +81,11 @@
 
     </script>
     @stack('header-scripts')
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
+<div class="se-pre-con"></div>
 <div class="wrapper">
     @include('admin.inc.main-header')
     @include('admin.inc.main-sidebar')
@@ -109,15 +135,15 @@
         $('.select2').select2({
             placeholder: '-- Select --',
         });
-		
+
 		 $('.pick_date_time').datetimepicker({
 			 format: 'yyyy-mm-dd hh:ii',
             language: 'pt-BR' ,
            autoclose: true
     	});
     });
-	
-	 
+
+
 
 </script>
 @stack('scripts')
