@@ -78,5 +78,5 @@
                 
             </div><!-- //main -->
             
-
+@include('inc.feedback-form')
 @endsection
