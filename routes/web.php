@@ -48,8 +48,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
-    Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm');
-    Route::post('/register', 'AdminAuth\RegisterController@register');
+    // Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm');
+    // Route::post('/register', 'AdminAuth\RegisterController@register');
 
 
     Route::post('/password/email', 'AdminAuth\ForgotPasswordController@sendResetLinkEmail');
@@ -203,7 +203,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/user/update-status', 'CMS\UserController@updateStatus');
     Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
     Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
-    Route::get('/user/payment-reminder', 'CMS\UserController@PaymentReminderToRegisterUser')->name('payment-reminder');
+    Route::get('/user/cron', 'CMS\UserController@userStatusExpired')->name('cron');
     /*end user module backend*/
 
     /*Master Setting Start*/
