@@ -45,114 +45,23 @@ class NewUsers extends Command
      */
     public function handle()
     {
-        $users = User::where('renew_status', 0)
-            ->where('status', __('constant.PENDING_FOR_PAYMENT'))
-            ->select(DB::raw('DATE(created_at) as date'), 'renew_status', 'status', 'firstname', 'lastname', 'email')
-            ->get();
-        $before30Day = Carbon::now()->add(-30, 'day')->format('Y-m-d');
-        $before60Day = Carbon::now()->add(-60, 'day')->format('Y-m-d');
-        $before75Day = Carbon::now()->add(-75, 'day')->format('Y-m-d');
-        $before3month = Carbon::now()->add(-1, 'day')->add(-3, 'month')->format('Y-m-d');
-
-        $thirtyDayUsers = $users->where('date', $before30Day);
-        $sixtyDayUsers = $users->where('date', $before60Day);
-        $seventyFiveDayUsers = $users->where('date', $before75Day);
-        $threeMonthUsers = $users->where('date', $before3month);
-        //dd($thirtyDayUsers,$sixtyDayUsers,$seventyFiveDayUsers,$threeMonthUsers);
-        if ($thirtyDayUsers->count()) {
-            $emailTemplate_user = $this->emailTemplate(__('constant.REMINDER_EMAIL_TEMP_ID'));
-
-            foreach ($thirtyDayUsers as $user) {
-                if ($emailTemplate_user) {
-
-                    $data_user = [];
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $data_user['email_sender_name'] = setting()->email_sender_name;
-                    $data_user['from_email'] = setting()->from_email;
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{firstname}}'];
-                    $value_user = [$user->firstname];
-                    $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
-                    $data_user['contents'] = $newContents_user;
-                    try {
-                        $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-                    } catch (Exception $exception) {
-                        //dd($exception);
-                    }
-                }
-
-
+        $users = User::whereDate('expired_at', '<', date('Y-m-d'))->where('status', [__('constant.ACCOUNT_ACTIVE')])->get();
+        $newUsers = User::whereDate('renew_at', '<', Carbon::now()->add(-3, 'month')->format('Y-m-d'))->where('renew_status', 0)->where('status', __('constant.PENDING_FOR_PAYMENT'))->get();
+        if ($users->count()) {
+            foreach ($users as $user) {
+                $user->status = __('constant.ACCOUNT_EXPIRED');
+                $user->renew_status = 3;
+                $user->renew_at = Carbon::now()->toDateTimeString();
+                $user->save();
             }
         }
-        if ($sixtyDayUsers->count()) {
-            $emailTemplate_user = $this->emailTemplate(__('constant.REMINDER_EMAIL_TEMP_ID'));
 
-            foreach ($sixtyDayUsers as $user) {
-                if ($emailTemplate_user) {
-
-                    $data_user = [];
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $data_user['email_sender_name'] = setting()->email_sender_name;
-                    $data_user['from_email'] = setting()->from_email;
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{firstname}}'];
-                    $value_user = [$user->firstname];
-                    $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
-                    $data_user['contents'] = $newContents_user;
-                    try {
-                        $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-                    } catch (Exception $exception) {
-                        //dd($exception);
-                    }
-                }
-
-
-            }
-        }
-        if ($threeMonthUsers->count()) {
-            $emailTemplate_user = $this->emailTemplate(__('constant.REMINDER_EMAIL_TEMP_ID'));
-
-            foreach ($threeMonthUsers as $user) {
-                if ($emailTemplate_user) {
-
-                    $data_user = [];
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $data_user['email_sender_name'] = setting()->email_sender_name;
-                    $data_user['from_email'] = setting()->from_email;
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{firstname}}'];
-                    $value_user = [$user->firstname];
-                    $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
-                    $data_user['contents'] = $newContents_user;
-                    try {
-                        $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-                    } catch (Exception $exception) {
-                        //dd($exception);
-                    }
-                }
-            }
-        }
-        if ($seventyFiveDayUsers->count()) {
-            $emailTemplate_user = $this->emailTemplate(__('constant.REMINDER_EMAIL_TEMP_ID'));
-
-            foreach ($seventyFiveDayUsers as $user) {
-                if ($emailTemplate_user) {
-
-                    $data_user = [];
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $data_user['email_sender_name'] = setting()->email_sender_name;
-                    $data_user['from_email'] = setting()->from_email;
-                    $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{firstname}}'];
-                    $value_user = [$user->firstname];
-                    $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
-                    $data_user['contents'] = $newContents_user;
-                    try {
-                        $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-                    } catch (Exception $exception) {
-                        //dd($exception);
-                    }
-                }
+        if ($newUsers->count()) {
+            foreach ($newUsers as $user) {
+                $user->status = __('constant.ACCOUNT_LAPSED');
+                $user->renew_status = 0;
+                $user->renew_at = Carbon::now()->toDateTimeString();
+                $user->save();
             }
         }
     }

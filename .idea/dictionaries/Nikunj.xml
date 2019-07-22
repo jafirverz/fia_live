@@ -2,11 +2,13 @@
   <dictionary name="Nikunj">
     <words>
       <w>deactive</w>
+      <w>enddayreport</w>
       <w>paypal</w>
       <w>profileid</w>
       <w>profilestatus</w>
       <w>unsubscribe</w>
       <w>unsubscribed</w>
+      <w>updateuserstatus</w>
     </words>
   </dictionary>
 </component>
