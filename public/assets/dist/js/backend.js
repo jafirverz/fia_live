@@ -12,7 +12,7 @@ var editor_config = {
     ],
     toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
-    menubar: "tools",
+    //menubar: "tools",
     valid_elements: "*[*]",
     valid_children: "+body[a],+a[div|h1|h2|h3|h4|h5|h6|p|#text]",
     forced_root_block: false,
@@ -175,10 +175,12 @@ tinymce.init({
     height: "100"
 });
 
-tinymce.init({
+tinymce.init(
+    {
     selector: "textarea.simple-text-editor ",  // change this value according to your HTML
     plugins: "lists link code textcolor colorpicker",
     toolbar: "forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify| fontsizeselect | code",
     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
     height: "100"
 });
+
