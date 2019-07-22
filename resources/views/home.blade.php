@@ -27,7 +27,7 @@
                @endif
                 <!--<a class="pin p-afg" href="#afghanistan"><span class="flag"><img src="images/tempt/flag-afghanistan.jpg" alt="Afghanistan flag" /></span><span class="text">Afghanistan</span></a>-->
                @if(checkCountryExist('Hongkong SAR')==1)
-                <a class="pin p-hon open" href="#hongkong_sar"><span class="flag"><img src="images/tempt/flag-hongkong.jpg"
+                <a class="pin p-hon" href="#hongkong_sar"><span class="flag"><img src="images/tempt/flag-hongkong.jpg"
                             alt="Hongkong flag" /></span><span class="text">Hongkong SAR</span></a>
                @endif
                 <!--<a class="pin p-ban" href="#bangladesh"><span class="flag"><img src="images/tempt/flag-bangladesh.jpg" alt="Bangladesh flag" /></span><span class="text">Bangladesh</span></a>-->
@@ -75,9 +75,11 @@
                 @if(checkCountryExist('Brunei')==1)
                 <a class="pin p-bru" href="#brunei"><span class="flag"><img src="images/tempt/flag-brunei.jpg"
                             alt="brunei flag" /></span><span class="text">brunei</span></a>
-                @endif
-                @if(checkCountryExist('Singapore')==1)
-                <a class="pin p-sin" href="#singapore"><span class="flag"><img src="images/tempt/flag-singapore.jpg"
+
+                @endif            
+                @if(checkCountryExist('Singapore')==1)            
+                <a class="pin p-sin open" href="#singapore"><span class="flag"><img src="images/tempt/flag-singapore.jpg"
+
                             alt="singapore flag" /></span><span class="text">singapore</span></a>
                 @endif
                 @if(checkCountryExist('Indonesia')==1)
@@ -95,6 +97,27 @@
                  @endif
             </div>
            <div id="map_country_detail">
+
+           @php
+            $country ='Singapore';
+            $country_id=getCountryId($country);
+            $category=get_categry_by_country($country_id);
+           @endphp
+            <div id="singapore" class="pin-pp openpp"><div class="tb-col">
+            <div class="col">
+            <div class="content">
+            <a href="#new" class="fas fa-times">Close</a>
+            <h2>singapore</h2>
+            <a class="fas fa-angle-double-right link" href="{{url('search-results-regulatory?country=singapore')}}"><span class="ico"><img src="{{url(asset('images/tempt/ico-5.png'))}}" alt=""></span> Regulatory Updates</a>
+            @if($category=='#')
+            <a style="background:#CCC;" class="fas fa-angle-double-right link"><span class="ico"><img src="{{url(asset('tempt/ico-6.png'))}}" alt=""></span> Country Information</a>
+            @else
+            <a class="fas fa-angle-double-right link" href="{{url('country-information-details?country=singapore&amp;category='.$category)}}"><span class="ico"><img src="{{url(asset('images/tempt/ico-6.png'))}}" alt=""></span> Country Information</a>
+            @endif
+            </div>
+            </div>
+            </div>
+            </div>
 
             </div>
 

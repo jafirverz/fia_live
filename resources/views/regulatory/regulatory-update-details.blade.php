@@ -93,17 +93,18 @@
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
             <h3 class="md-title">Send Us Your Enquiry / Feedback</h3>
-            <form action="thanks.html" class="form-type form-ani">
+             <form id="feedback" name="feedback" class="form-type form-ani" method="post" action="{{ url('/feedback-store')}}">
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <div class="inrow">
-                    <span><input type="text" class="form-control" /></span>
+                    <span><input name="name" type="text" class="form-control" /></span>
                     <label><span class="required">*</span> Name</label>
                 </div>
                 <div class="inrow">
-                    <span><input type="text" class="form-control" /></span>
+                    <span><input name="emailid" type="text" class="form-control" /></span>
                     <label><span class="required">*</span> Email Address</label>
                 </div>
                 <div class="inrow">
-                    <span><textarea cols="30" rows="7" class="form-control"></textarea></span>
+                    <span><textarea name="message" cols="30" rows="7" class="form-control"></textarea></span>
                     <label><span class="required">*</span> Message</label>
                 </div>
                 <div class="row output break-480">
