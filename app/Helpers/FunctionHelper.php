@@ -109,6 +109,11 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 3)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
+    function getFilterCategory()
+    {
+        return Filter::where('filter_name', 5)->where('status', 1)->orderBy('order_by', 'asc')->get();
+    }
+
     function getTopics($topics)
     {
         $topics = Filter::whereIn('id', $topics)->where('status', 1)->orderBy('tag_name', 'asc')->get();
@@ -182,11 +187,6 @@ if (!function_exists('getTopics')) {
     {
         $newContents = str_replace($key, $value, $contents);
         return $newContents;
-    }
-
-    function getFilterCategory()
-    {
-        return Filter::where('filter_name', 5)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getParentRegulatory($id)
