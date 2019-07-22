@@ -20,7 +20,7 @@
             <div class="intro-2 ">
                 <h1 class="title-1 text-center space-2"><img src="{{ getFilterCountryImage($regulatory->country_id) }}"
                         alt="{{ getFilterCountry($regulatory->country_id) }}" />
-                    {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                    {{ $regulatory->title }}</h1>
                 <table>
                     <tbody>
                         <tr>
