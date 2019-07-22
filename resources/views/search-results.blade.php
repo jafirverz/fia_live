@@ -19,7 +19,10 @@
 							<h2>Country information</h2>
 							<ul class="mlist" data-num="5">
                             @foreach($informations as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                             @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!! preg_replace("/\w*?$keyword\w*/i", "<b>$0</b>", $info['content']) !!}</a></li>
                             @endforeach
 														</ul>
 						</div>
@@ -35,7 +38,10 @@
 							<h2>Regulatory updates</h2>
 							<ul class="mlist" data-num="5">
                             @foreach($regulatories as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                             @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!! preg_replace("/\w*?$keyword\w*/i", "<b>$0</b>", $info['content']) !!}</a></li>
                             @endforeach
 							</ul>
 						</div>
@@ -50,8 +56,11 @@
 						<div class="content">
 							<h2>resources</h2>
 							<ul class="mlist" data-num="5">
-                            @foreach($resources as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                            @foreach($others as $info)
+                            @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!! preg_replace("/\w*?$keyword\w*/i", "<b>$0</b>", $info['content']) !!}</a></li>
                             @endforeach
 							</ul>
 						</div>
@@ -67,7 +76,10 @@
 							<h2>others</h2>
                             <ul class="mlist" data-num="5">
 							@foreach($others as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                            @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!! preg_replace("/\w*?$keyword\w*/i", "<b>$0</b>", $info['content']) !!}</a></li>
                             @endforeach
                             </ul>
 						</div>
