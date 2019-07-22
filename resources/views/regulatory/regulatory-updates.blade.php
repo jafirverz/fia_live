@@ -92,7 +92,7 @@
                                     <p class="date"><span
                                             class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span>
                                         | {{ $regulatory_main_highlight->created_at->format('d m, Y') }}</p>
-                                    {!! Illuminate\Support\Str::limit($regulatory_main_highlight->description, 800) !!}
+                                    {!! Illuminate\Support\Str::limit(strip_tags($regulatory_main_highlight->description), 800) !!}
                                 </div>
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                             </div>
@@ -116,8 +116,8 @@
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
                                                 | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
-                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
-                                            300) !!}
+                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description),
+                                            250) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                     </div>
@@ -145,7 +145,7 @@
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
                                                 | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
-                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
+                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description), 200)
                                             !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -177,8 +177,9 @@
                                 <h3 class="title">{{ $value->title }}</h3>
                                 <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
                                     {{ $value->created_at->format('M d, Y') }}</p>
-                                    {!! Illuminate\Support\Str::limit($value->description, 300) !!}
+                                    {!! Illuminate\Support\Str::limit(strip_tags($value->description), 250) !!}
                             </div>
+                            <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
                         <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
                     </div>
