@@ -99,7 +99,7 @@
            <div id="map_country_detail">
 
            @php
-            $country = isset($_GET['country']) ? $_GET['country'] : '';
+            $country ='Singapore';
             $country_id=getCountryId($country);
             $category=get_categry_by_country($country_id);
            @endphp
