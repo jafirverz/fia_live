@@ -30,7 +30,7 @@
                            <option @if(isset($_REQUEST['country']) && $_REQUEST['country']==$country->id) selected="selected" @endif value="{{$country->id}}"
                                     data-content='<img src="{{$country->country_image}}" alt="{{$country->tag_name}}" /> {{$country->tag_name}}'>{{$country->tag_name}}</option>
                           @endif
-                        
+
                         @endforeach
                         <option value="Other">Other</option>
                     </select>

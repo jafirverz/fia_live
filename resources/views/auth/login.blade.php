@@ -27,6 +27,7 @@
                         </span>
                         @endif
                     </div>
+                    <input type="hidden" name="redirect" value="@if(isset($_GET['type'])) @if($_GET['type']=='login') {{ url($_GET['page']) }} @endif @endif">
                     <div class="form-group">
                             <div class="google-recaptcha">
                                 <div class="g-recaptcha" data-callback="onSubmit"

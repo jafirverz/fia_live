@@ -36,8 +36,8 @@
                                         @foreach($country_information as $country)
                                         <tr>
                                             <td>{{ $country->information_title }}</td>
-                                            <td>{{ $country->created_at->format('d M, Y H:i A') ?? '-' }}</td>
-                                            <td>{{ $country->updated_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                            <td>{{ $country->created_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                            <td>{{ $country->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/country-information/edit', $country->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/country-information/destroy') }}" method="post">

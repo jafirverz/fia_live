@@ -13,10 +13,10 @@
                 </div>
                 <div class="col-2 sl-country hideico">
                     <select name="country" class="selectpicker">
-                        <option value="">-- Select --</option>
+                        <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                         <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                         @foreach (getFilterCountry() as $country)
-                        <option value="{{ $country->tag_name }}" @if($country->tag_name=='Singapore' || $country->tag_name=='SG') selected @endif>{{ $country->tag_name }}</option>
+                        <option data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}' value="{{ $country->tag_name }}" @if($country->tag_name=='Singapore' || $country->tag_name=='SG') selected @endif>{{ $country->tag_name }}</option>
                         @endforeach
                     </select>
                     <span class="sp-text">’s information</span>

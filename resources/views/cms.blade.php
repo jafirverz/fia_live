@@ -1,14 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="main-wrap">   
-				@include('inc.banner')
+            <div class="main-wrap">
+                @include('inc.banner')
+                @if(!$page->slug!='verified-thank-you')
 				<div class="container @if($page->slug!='thank-you') space-1 @else thanks-wrap @endif">
-					
+
 						<div class="document" style="margin:0px;"><a class="fas fa-angle-double-left lk-back" onclick="window.history.back(1)">Back</a></div>
 						{!! $page->contents!!}
-					
-				</div>
+
+                </div>
+                @endif
                 @if($page->slug=='about-us' && !Auth::check())
 				<div class="box-1">
 					<div class="container">
@@ -24,6 +26,6 @@
 				</div>
                 @endif
             </div><!-- //main -->
-            
+
 
 @endsection
