@@ -161,9 +161,11 @@
                             <div class="box-4">
                                 <figure><img src="{{getFilterCountryImage($regulatory->country_id)}}" alt="{{getFilterCountry($regulatory->country_id)}} flag" /></figure>
                                 <div class="content">
+                                  <div class="ecol">
                                     <h3 class="title">{{$regulatory->title}}</h3>
                                     <p class="date"><span class="country">{{getFilterCountry($regulatory->country_id)}}</span> | {{ $regulatory->created_at->format('M d, Y') }}</p>
                                     <p>{!! Illuminate\Support\Str::limit($regulatory->description, 120) !!}</p>
+                                  </div>
                                     <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                 </div>
                                 <a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
