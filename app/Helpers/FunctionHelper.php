@@ -46,7 +46,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterCountryImage($id = null)
@@ -82,7 +82,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterTopic($id = null)
@@ -94,7 +94,19 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 2)->where('status', 1)->orderBy('order_by', 'asc')->get();
+    }
+
+    function getFilterStage($id = null)
+    {
+        if ($id) {
+            $stage = Filter::find($id);
+            if ($stage) {
+                return $stage->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 3)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getTopics($topics)
@@ -164,18 +176,6 @@ if (!function_exists('getTopics')) {
             return $country->id;
         else
             return "";
-    }
-
-    function getFilterStage($id = null)
-    {
-        if ($id) {
-            $stage = Filter::find($id);
-            if ($stage) {
-                return $stage->tag_name;
-            }
-            return '-';
-        }
-        return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function replaceStrByValue($key, $value, $contents)
@@ -320,8 +320,8 @@ if (!function_exists('getTopics')) {
                 $string[] = '<li ' . $sel . '><a href="#">' . $menu->title . '</a>';
 				else
 				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
-				
-				
+
+
                 $string[] = '</li>';
 
 
