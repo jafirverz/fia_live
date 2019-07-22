@@ -17,6 +17,125 @@
         <div class="row">
             <div class="col-lg-12">
                 @include('admin.inc.message')
+                        <!-- SELECT2 EXAMPLE -->
+                <div class="box box-default chart">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Charts</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                    title="" data-original-title="Collapse">
+                                <i class="fa fa-plus"></i></button>
+
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <script src="{{ asset('js/Chart.min.js') }}" charset="utf-8"></script>
+                    <script src="{{ asset('js/utils.js') }}"></script>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>Member Type Country</h2>
+
+                                <div style="width:100%;">
+                                    {!! $chart1->render() !!}
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-12">
+                                <h2>Membership Growth</h2>
+
+                                <div style="width:100%;">
+                                    {!! $chart2->render() !!}
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.box -->
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Find Member</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                    title="" data-original-title="Collapse">
+                                <i class="fa fa-minus"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive">
+                        <form name="user" method="post" action="{{ url('/admin/user/search')}}">
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name" class=" control-label">Name</label>
+                                        <input class="form-control" placeholder="" value="{{ $search['name'] }}"
+                                               name="name" type="text" id="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="organisation" class=" control-label">Organisation</label>
+                                        <input class="form-control" placeholder="" value="{{ $search['organization'] }}"
+                                               name="organization" type="text" id="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="email" class=" control-label">Email</label>
+                                        <input class="form-control" placeholder="" value="{{ $search['email'] }}"
+                                               name="email" type="text" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="salutation" class=" control-label">Member Type</label>
+                                        <select class="select2 form-control" name="member_type">
+                                            <option value="">Select member type</option>
+                                            @if (memberType())
+                                                @foreach (memberType() as $key=>$item)
+                                                    <option value="{{ $key }}"
+                                                            @if($key==$search['member_type']) selected @endif>
+                                                        {{ $item }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="salutation" class=" control-label">Member Overall Status</label>
+                                        <select class="select2 form-control" name="status">
+                                            <option value=''>Select status</option>
+                                            @if (memberShipStatus())
+                                                @foreach (memberShipStatus() as $key=>$item)
+                                                    <option value="{{ $key }}"
+                                                            @if($key==$search['status']) selected @endif>
+                                                        {{ $item }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary">&emsp;&emsp;Find
+                                    Member &emsp;&emsp;</button>
+                                <a href="{{route('user.index')}}" class="btn btn-primary">&emsp;&emsp;Clear
+                                    All &emsp;&emsp;</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="box">
                     <div class="box-header with-border">
                         <a href="{{ url('admin/user/create') }}" class="btn btn-primary pull-right">Create</a>
@@ -59,14 +178,32 @@
                                         </td>
                                         <td>{{ $user->organization ?? '-' }}</td>
                                         <td>{{ $user->job_title ?? '-' }}</td>
-                                        <td>{{ '+'.$user->mobile_code}}&nbsp;{{$user->mobile_number ?? '-' }}</td>
-                                        <td>{{ '+'.$user->telephone_code}}&nbsp;{{$user->telephone_number ?? '-' }}</td>
+                                        <td>
+                                            @if($user->mobile_number)
+                                                @if($user->mobile_code)
+                                                    {{ '+'.$user->mobile_code}}
+                                                @endif
+                                                &nbsp;{{$user->mobile_number ?? '-' }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($user->telephone_number)
+                                                @if($user->telephone_code)
+                                                    {{ '+'.$user->telephone_code}}
+                                                @endif
+                                                &nbsp;{{$user->telephone_number ?? '-' }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
                                         <td>{{ $user->country ?? '-' }}</td>
                                         <td>{{ $user->city ?? '-' }}</td>
                                         <td>{{ $user->email ?? '-' }}</td>
-                                        <td>@if(!is_null($user->invoice()) && $user->invoice()->paid==1 )
-                                                Paid @elseif(!is_null($user->invoice()) && $user->invoice()->paid==0)
-                                                Unpaid @else - @endif</td>
+                                        <td>@if((!is_null($user->invoice()) && $user->invoice()->paid==1 && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at)))) || (is_null($user->invoice()) && $user->status==5) )
+                                                Paid @else Unpaid @endif
+                                        </td>
                                         <td>
                                             <?php
                                             $groupNames = $groupNames->pluck('group_name')->all();
@@ -74,26 +211,30 @@
                                             @if(count($groupNames))
                                                 {{implode(',',$groupNames)}}
                                             @else
-                                                -
+                                                None
                                             @endif
                                         </td>
                                         <td data-order="<?php if (!is_null($user->invoice())) {
                                             echo $user->invoice()->created_at->format('d M, Y H:i:s');
                                         }?>">
-                                            @if(!is_null($user->invoice()) )
+                                            @if(!is_null($user->invoice()) && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at))) )
                                                 {{ $user->invoice()->created_at->format('d M, Y')}}
-                                            @else - @endif
+                                            @elseif(is_null($user->invoice()) && $user->status==5)
+                                                {{ date('d M, Y',strtotime($user->renew_at))}}
+                                            @else
+                                                -
+                                            @endif
                                         </td>
 
                                         <td>@if($user->status==5)Active @else Inactive @endif</td>
                                         <td>
-                                            @if(!is_null($user->invoice()) && $user->invoice()->period_type=='Month' )
-                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." months", strtotime($user->invoice()->created_at)))}}
-                                            @elseif(!is_null($user->invoice()) && $user->invoice()->period_type=='Year')
-                                                {{date('d M, Y', strtotime("+".$user->invoice()->period_value." years", strtotime($user->invoice()->created_at)))}}
+                                            @if(!is_null($user->expired_at) )
+                                                {{date('d M, Y', strtotime($user->expired_at))}}
+                                            @elseif(is_null($user->expired_at) && $user->status==5)
+                                                Lifetime Validity
                                             @else - @endif
                                         </td>
-                                        <td>{{ $user->created_at->format('d M, Y H:i A') ?? '-' }}</td>
+                                        <td>{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                         <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
                                             <table>
@@ -126,7 +267,8 @@
                                                         <td>
 
                                                             <a class="update-status" title="Approve and send payment"
-                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                               href="#"
+                                                               data-member-type="{{$user->member_type}}"
                                                                data-user-id="{{$user->id}}" data-title="Approve and Send
                                                                 Payment"
                                                                data-status="{{__('constant.PENDING_FOR_PAYMENT')}}">
@@ -135,8 +277,8 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="update-status" title="Approve"
-                                                               href="#" data-member-type="{{$user->member_type}}"
+                                                            <a class="update-status" title="Approve" href="#"
+                                                               data-member-type="{{$user->member_type}}"
                                                                data-user-id="{{$user->id}}" data-title="Approve"
                                                                data-status="{{__('constant.ACCOUNT_ACTIVE')}}">
                                                                 <i class="fa fa-check btn btn-success"> Approve</i>
@@ -147,15 +289,13 @@
                                             @endif
                                             <table>
                                                 <tr>
-                                                    @if(in_array($user->status,[__('constant.PENDING_EMAIL_VERIFICATION'),__('constant.PENDING_ADMIN_APPROVAL')]))
-                                                        <td>
-                                                            <a class="" title="Reject"
-                                                               onclick="return confirm('Are you sure to reject this user?')"
-                                                               href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
-                                                                <i class="fa fa-ban btn btn-danger"> Reject</i>
-                                                            </a>
-                                                        </td>
-                                                    @endif
+                                                    <td>
+                                                        <a class="" title="Reject"
+                                                           onclick="return confirm('Are you sure to reject this user?')"
+                                                           href="{{ route('update-status',['id'=>$user->id,'status'=>3]) }}">
+                                                            <i class="fa fa-ban btn btn-danger"> Reject</i>
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         @if(in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
                                                             <a class="" title="Unsubscribe"
@@ -245,23 +385,47 @@
         $('#payment-approve-modal').modal('show');
     });
 
-    $('#users').DataTable(
+    $('#users').DataTable({
+        "pageLength": 10,
+        'ordering': true,
+        'order': [
+            [15, 'desc']
+        ],
+        "aoColumnDefs": [{
+            "aTargets": [17],
+            "bSortable": false
+        },
             {
-                "pageLength": 10,
-                'ordering': true,
-                'order': [[15, 'desc']],
-                "aoColumnDefs": [{
-                    "aTargets": [17],
-                    "bSortable": false
-                },
-                    {width: 100, targets: 0},
-                    {width: 150, targets: 1},
-                    {width: 300, targets: 2},
-                    {width: 150, targets: 3},
-                    {width: 150, targets: 4},
-                    {width: 150, targets: 6}
+                width: 100,
+                targets: 0
+            },
+            {
+                width: 150,
+                targets: 1
+            },
+            {
+                width: 300,
+                targets: 2
+            },
+            {
+                width: 150,
+                targets: 3
+            },
+            {
+                width: 150,
+                targets: 4
+            },
+            {
+                width: 150,
+                targets: 6
+            }
 
-                ]
-            });
+        ]
+    });
+    $(document).ready(function () {
+        $("div.chart").addClass("collapsed-box");
+    });
+
+
 </script>
 @endpush
