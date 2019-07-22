@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c2c3e66-5f78-46bf-97ed-2621719e65d3" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\xampp\htdocs\fia\app\Console\Commands\RegisterUserPaymentReminder.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="fia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,7 +38,7 @@
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.80987656">
-              <caret line="530" column="120" selection-start-line="530" selection-start-column="120" selection-end-line="530" selection-end-column="120" />
+              <caret line="530" column="121" selection-start-line="530" selection-start-column="121" selection-end-line="530" selection-end-column="121" />
               <folding>
                 <element signature="e#44#72#0#PHP" expanded="true" />
               </folding>
@@ -1185,7 +1182,7 @@
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.80987656">
-          <caret line="530" column="120" selection-start-line="530" selection-start-column="120" selection-end-line="530" selection-end-column="120" />
+          <caret line="530" column="121" selection-start-line="530" selection-start-column="121" selection-end-line="530" selection-end-column="121" />
           <folding>
             <element signature="e#44#72#0#PHP" expanded="true" />
           </folding>

@@ -528,7 +528,7 @@ class UserController extends Controller
 
     public function userStatusExpired(Request $request){
         $users = User::whereDate('expired_at', '<', date('Y-m-d'))->where('status',[__('constant.ACCOUNT_ACTIVE')])->get();
-        $newUsers = User::whereDate('renew_at', '<', date('Y-m-d','+3 month'))->where('renew_status',0)->where('status',)->get();
+        $newUsers = User::whereDate('renew_at', '<', date('Y-m-d','+3 month'))->where('renew_status',0)->where('status',0)->get();
     }
 
 
