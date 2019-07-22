@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <div class="col-sm-7">
-                    <div class="grid-2 slick-1">
+                   <div class="grid-2 slick-1 eheight">
                     @if(getRegulatoriesHighlight())
         @php
         $regulatory_highlight = getRegulatoriesHighlight();
