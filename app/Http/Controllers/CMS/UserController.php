@@ -469,17 +469,16 @@ class UserController extends Controller
                 $value_user = [$user->firstname];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
-
+                try {
+                    $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    $response['msg'] = "Status updated successfully.";
+                    $response['status'] = "error";
+                    return $response;
+                }
             }
 
-            try {
-                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-            } catch (Exception $exception) {
-                //dd($exception);
-                $response['msg'] = "Status updated successfully.";
-                $response['status'] = "error";
-                return $response;
-            }
 
             $user->member_type = $request->member_type;
             if (empty($user->email_verified_at)) {
@@ -525,6 +524,11 @@ class UserController extends Controller
         $response['status'] = "success";
         $user->save();
         return $response;
+    }
+
+    public function userStatusExpired(Request $request){
+        $users = User::whereDate('expired_at', '<', date('Y-m-d'))->where('status',[__('constant.ACCOUNT_ACTIVE')])->get();
+        $newUsers = User::whereDate('renew_at', '<', date('Y-m-d','+3 month'))->where('renew_status',0)->where('status',)->get();
     }
 
 
