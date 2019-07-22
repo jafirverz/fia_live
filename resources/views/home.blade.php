@@ -102,6 +102,7 @@
             $country ='Singapore';
             $country_id=getCountryId($country);
             $category=get_categry_by_country($country_id);
+            $category=str_replace(" ","+",$category);
            @endphp
             <div id="singapore" class="pin-pp openpp"><div class="tb-col">
             <div class="col">
@@ -112,7 +113,7 @@
             @if($category=='#')
             <a style="background:#CCC;" class="fas fa-angle-double-right link"><span class="ico"><img src="{{url(asset('tempt/ico-6.png'))}}" alt=""></span> Country Information</a>
             @else
-            <a class="fas fa-angle-double-right link" href="{{url('country-information-details?country=singapore&amp;category='.$category)}}"><span class="ico"><img src="{{url(asset('images/tempt/ico-6.png'))}}" alt=""></span> Country Information</a>
+            <a class="fas fa-angle-double-right link" href="{{url('country-information-details?country=singapore&category='.$category)}}"><span class="ico"><img src="{{url(asset('images/tempt/ico-6.png'))}}" alt=""></span> Country Information</a>
             @endif
             </div>
             </div>
