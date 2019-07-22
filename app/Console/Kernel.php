@@ -37,6 +37,14 @@ class Kernel extends ConsoleKernel
             ->weekly()
             ->timezone('Asia/Singapore')
             ->at('15:00');
+        $schedule->command('updateuserstatus:users')
+            ->daily()
+            ->timezone('Asia/Singapore')
+            ->at('00:10');
+        $schedule->command('generaterecurringinvoice:users')
+            ->daily()
+            ->timezone('Asia/Singapore')
+            ->at('00:20');
     }
 
     /**

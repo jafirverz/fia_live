@@ -469,23 +469,24 @@ class UserController extends Controller
                 $value_user = [$user->firstname];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
-
+                try {
+                    $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    $response['msg'] = "Status updated successfully.";
+                    $response['status'] = "error";
+                    return $response;
+                }
             }
 
-            try {
-                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
-            } catch (Exception $exception) {
-                //dd($exception);
-                $response['msg'] = "Status updated successfully.";
-                $response['status'] = "error";
-                return $response;
-            }
 
             $user->member_type = $request->member_type;
             if (empty($user->email_verified_at)) {
                 $user->email_verified_at = Carbon::now()->toDateTimeString();
             }
             $user->status = __('constant.PENDING_FOR_PAYMENT');
+            $user->renew_status = 0;
+            $user->renew_at = Carbon::now()->toDateTimeString();
             $response['msg'] = "Status updated successfully.";
 
         } elseif ($request->status == __('constant.ACCOUNT_ACTIVE')) {
@@ -525,6 +526,31 @@ class UserController extends Controller
         $response['status'] = "success";
         $user->save();
         return $response;
+    }
+
+    public function userStatusExpired(Request $request)
+    {
+
+        $users = User::whereDate('expired_at', '<', date('Y-m-d'))->where('status', [__('constant.ACCOUNT_ACTIVE')])->get();
+        $newUsers = User::whereDate('renew_at', '<', Carbon::now()->add(-3, 'month')->format('Y-m-d'))->where('renew_status', 0)->where('status', __('constant.PENDING_FOR_PAYMENT'))->get();
+        if ($users->count()) {
+            foreach ($users as $user) {
+                $user->status = __('constant.ACCOUNT_EXPIRED');
+                $user->renew_status = 3;
+                $user->renew_at = Carbon::now()->toDateTimeString();
+                $user->save();
+            }
+        }
+
+        if ($newUsers->count()) {
+            foreach ($newUsers as $user) {
+                $user->status = __('constant.ACCOUNT_LAPSED');
+                $user->renew_status = 0;
+                $user->renew_at = Carbon::now()->toDateTimeString();
+                $user->save();
+            }
+        }
+
     }
 
 
