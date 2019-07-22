@@ -87,7 +87,7 @@ class EventController extends Controller
 		}
 		else
 		{
-		$reports = DB::select('SELECT * FROM topical_reports ORDER BY id ASC');
+		$reports =TopicalReport::orderBy('id','ASC')->get();
 		}
         
         return view('resources/index-report', compact('title', 'reports', 'page', 'banner','breadcrumbs','data'));
@@ -120,9 +120,13 @@ class EventController extends Controller
         {
 		$events = DB::select('SELECT * FROM events WHERE YEAR(event_date)='.$year);
 		}
-        else
+        else if ($month != "" && $year != "")
         {
 		$events = DB::select('SELECT * FROM events WHERE MONTH(event_date)='.$month.' AND YEAR(event_date)='.$year);		
+		}
+		else
+		{
+		$events =Event::all();	
 		}
         //print_r($events);die;
 
