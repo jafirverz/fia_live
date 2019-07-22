@@ -65,7 +65,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('information_content') ? ' has-error' : '' }}">
                                 <label for="">Content</label>
-                                <textarea name="information_content" class="form-control simple-text-editor" cols="30" rows="10"
+                                <textarea name="information_content" class="form-control tiny-editor" cols="30" rows="10"
                                     placeholder="Enter content">{!! $country_information->information_content !!}</textarea>
                                 @if ($errors->has('information_content'))
                                 <span class="help-block">
