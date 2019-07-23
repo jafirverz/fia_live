@@ -64,24 +64,18 @@ class RegulatoryListController extends Controller
     {
         //dd($request->highlight);
         $request->validate([
-            'title'  =>  'required|unique:regulatories,title',
-            'agency_responsible' =>  'required',
-            'date_of_regulation_in_force'   =>  'required',
-            'topic_id'  =>  'required',
+            'title'  =>  'required',
+            'regulatory_date'  =>  'required',
             'stage_id'  =>  'required',
-            'country_id'    =>  'required',
         ]);
 
         $regulatory = new Regulatory();
         $regulatory->title = $request->title;
-        $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->agency_responsible = $request->agency_responsible;
-        $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
+        $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
+        $regulatory->regulatory_date = $request->regulatory_date;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $parent_id;
-        $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
-        $regulatory->country_id = $request->country_id;
         $regulatory->save();
 
         return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.CREATED', ['module'    =>  __('constant.REGULATORY')]));
@@ -128,24 +122,18 @@ class RegulatoryListController extends Controller
     public function update(Request $request, $parent_id, $id)
     {
         $request->validate([
-            'title'  =>  'required|unique:regulatories,title,'.$id.',id',
-            'agency_responsible' =>  'required',
-            'date_of_regulation_in_force'   =>  'required',
-            'topic_id'  =>  'required',
+            'title'  =>  'required',
+            'regulatory_date'  =>  'required',
             'stage_id'  =>  'required',
-            'country_id'    =>  'required',
         ]);
 
         $regulatory = Regulatory::findorfail($id);
         $regulatory->title = $request->title;
-        $regulatory->slug = Str::slug($request->title, '-');
-        $regulatory->agency_responsible = $request->agency_responsible;
-        $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force;
+        $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
+        $regulatory->regulatory_date = $request->regulatory_date;
         $regulatory->description = $request->description;
         $regulatory->parent_id = $parent_id;
-        $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->stage_id = $request->stage_id;
-        $regulatory->country_id = $request->country_id;
         $regulatory->updated_at = Carbon::now();
         $regulatory->save();
 

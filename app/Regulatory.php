@@ -18,7 +18,7 @@ class Regulatory extends Model
 
     public function scopeLatestRegulatory($query)
     {
-        return $query->latest()->get();
+        return $query->where('parent_id', '!=', null)->latest()->get();
     }
 
     public function scopeChildRegulatory($query, $id)
