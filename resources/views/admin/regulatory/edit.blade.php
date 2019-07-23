@@ -46,20 +46,10 @@
                                 <label for="">Date of Regulation</label>
                                 <input type="text" name="date_of_regulation_in_force" class="form-control datepicker"
                                     placeholder="Enter date of regulation"
-                                    value="{{ $regulatory->date_of_regulation_in_force->format('Y-m-d') }}">
+                                    value="@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @endif">
                                 @if ($errors->has('date_of_regulation_in_force'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('date_of_regulation_in_force') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                                <label for="">Description</label>
-                                <textarea name="description" class="form-control tiny-editor" cols="30" rows="10"
-                                    placeholder="Enter description">{!! $regulatory->description !!}</textarea>
-                                @if ($errors->has('description'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('description') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -76,22 +66,6 @@
                                 @if ($errors->has('topic_id'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('topic_id') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('stage_id') ? ' has-error' : '' }}">
-                                <label for="">Stage</label>
-                                <select name="stage_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Select --</option>
-                                    @if($stages)
-                                    @foreach ($stages as $stage)
-                                    <option value="{{ $stage->id }}" @if($stage->id==$regulatory->stage_id) selected @endif>{{ $stage->tag_name }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('stage_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('stage_id') }}</strong>
                                 </span>
                                 @endif
                             </div>

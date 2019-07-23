@@ -688,4 +688,29 @@ if (!function_exists('getTopics')) {
 		}
     }
 
+    function getRegulatoryDescription($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('id', 'desc')->first();
+            if($regulatory)
+            {
+                return $regulatory->description;
+            }
+        }
+        return '-';
+    }
+
+    function getRegulatorySlug($parent_id)
+    {
+        if($parent_id)
+        {
+            $regulatory = Regulatory::where('id', $parent_id)->first();
+            if($regulatory)
+            {
+                return $regulatory->slug;
+            }
+        }
+        return false;
+    }
 }

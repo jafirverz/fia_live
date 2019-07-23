@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+$id = $_GET['id'] ?? '';
+@endphp
 <div id="toppage" class="page">
 
     <div class="main-wrap">
@@ -34,7 +37,7 @@
                         <tr>
                             <td><strong style="color: #fb7a10;">Date of Regulation in Force:</strong></td>
                             <td><strong
-                                    style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong>
+                                    style="color: #fb7a10;">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M Y') }} @endif</strong>
                             </td>
                         </tr>
                         <tr>
@@ -95,7 +98,20 @@
     var slug = "{{ url('regulatory-print', $regulatory->slug) }}";
 
     var array_list = [];
-    hasClassOpen();
+
+    var id = '{{ $id }}';
+
+    if(id)
+    {
+        array_list.push(id);
+        $('div.box-3').removeClass("open");
+        $('div.box-3[data-id="'+id+'"]').addClass("open");
+        $("a.export_link").attr("href", slug + '?id=' + array_list.join());
+    }
+    else
+    {
+        hasClassOpen();
+    }
     $("div.box-3").on("click", function () {
         if ($(this).hasClass('open')) {
             array_list.push($(this).attr('data-id'));

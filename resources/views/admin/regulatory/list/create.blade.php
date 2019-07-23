@@ -31,25 +31,15 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('agency_responsible') ? ' has-error' : '' }}">
-                                <label for="">Agency Responsible</label>
-                                <input type="text" name="agency_responsible" class="form-control"
-                                    placeholder="Enter agency responsible" value="{{ old('agency_responsible') }}">
-                                @if ($errors->has('agency_responsible'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('agency_responsible') }}</strong>
-                                </span>
-                                @endif
-                            </div>
                             <div
-                                class="form-group{{ $errors->has('date_of_regulation_in_force') ? ' has-error' : '' }}">
-                                <label for="">Date of Regulation</label>
-                                <input type="text" name="date_of_regulation_in_force" class="form-control datepicker"
-                                    placeholder="Enter date of regulation"
-                                    value="{{ old('date_of_regulation_in_force') }}">
-                                @if ($errors->has('date_of_regulation_in_force'))
+                                class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                                <label for="">Date</label>
+                                <input type="text" name="regulatory_date" class="form-control datepicker"
+                                    placeholder="Enter date"
+                                    value="{{ old('date') }}">
+                                @if ($errors->has('date'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('date_of_regulation_in_force') }}</strong>
+                                    <strong>{{ $errors->first('date') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -60,22 +50,6 @@
                                 @if ($errors->has('description'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('description') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('topic_id') ? ' has-error' : '' }}">
-                                <label for="">Topics</label>
-                                <select name="topic_id[]" class="form-control select2" style="width: 100%;" multiple>
-                                    <option value="">-- Select --</option>
-                                    @if($topics)
-                                    @foreach ($topics as $topic)
-                                    <option value="{{ $topic->id }}">{{ $topic->tag_name }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('topic_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('topic_id') }}</strong>
                                 </span>
                                 @endif
                             </div>
@@ -92,22 +66,6 @@
                                 @if ($errors->has('stage_id'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('stage_id') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
-                                <label for="">Country</label>
-                                <select name="country_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Select --</option>
-                                    @if($countries)
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->tag_name }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('country_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('country_id') }}</strong>
                                 </span>
                                 @endif
                             </div>
