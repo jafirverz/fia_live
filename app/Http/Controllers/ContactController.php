@@ -118,7 +118,7 @@ class ContactController extends Controller
 
         $contact->enquiry_type = $request->enquiry_type;
 		
-		$contact->type = 'feebback';
+		$contact->type = 'contact';
 
         $contact->message =  ($request->message ? $request->message : '');
 
@@ -260,7 +260,7 @@ class ContactController extends Controller
 
         $contact->emailid = $request->emailid;
 		
-		$contact->type = 'feebback';
+		$contact->type = 'feedback';
 
         $contact->message =  ($request->message ? $request->message : '');
 
