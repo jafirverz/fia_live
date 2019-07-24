@@ -52,13 +52,16 @@
                                 <td><strong>Topic(s):</strong></td>
                                 <td>
                                     @php
+                                    $db_topics = json_decode($regulatory->topic_id);
                                     $topics = getFilterTopic();
                                     @endphp
                                     @if ($topics)
                                     @foreach ($topics as $value)
+                                    @if(in_array($value->id, $db_topics))
                                     {{ $value->tag_name }}
                                     @if (!$loop->first)
                                     <br />
+                                    @endif
                                     @endif
                                     @endforeach
                                     @endif

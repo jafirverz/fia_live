@@ -62,6 +62,19 @@
 <input class="form-control" placeholder="" value="{{ $banner->caption }}" name="caption" type="text" id="caption">                            
                            
                         </div>
+                        <div class="form-group @if($banner->page_name==1) show @else hide @endif" id="banner_link">
+                            <label for="caption" class=" control-label">Banner Link</label>
+                            <input class="form-control" placeholder="" value="{{ $banner->banner_link }}" name="banner_link" type="text" id="banner_link">                            
+                        </div>
+                        <div class="form-group @if($banner->page_name==1) show @else hide @endif" id="target">
+                            <label for="target" class=" control-label">Open Link</label>
+ 								<select class="form-control select2" name="target"
+                                        style="width: 100%;">
+                                    <option @if($banner->target == 1) selected="selected" @endif value="2">Same Tab</option>    
+                                    <option @if($banner->target == 2) selected="selected" @endif value="1">New Tab</option>
+                                    
+                                </select>
+                         </div>
                             <div class="form-group">
                             <label for="order_by" class="control-label">Order By</label>                            
                                 <div class="">
@@ -86,4 +99,24 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+$(document).ready(function() {
+    //set initial state.
+    $("#page_name").change(function() {
+	   
+	   if($(this).val()==1)
+	   {
+		$("#banner_link").removeClass('hide');  
+		$("#target").removeClass('hide'); 
+	   }
+	   else
+	   {
+		$("#banner_link").addClass('hide');  
+		$("#target").addClass('hide');   
+	   }
+	   
+    });
+});
+</script>
+
 @endsection

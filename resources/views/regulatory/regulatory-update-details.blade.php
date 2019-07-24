@@ -71,7 +71,7 @@ $id = $_GET['id'] ?? '';
                         <span class="tb-col break-640">
                             <span class="col">{{ $value->title }}</span>
                             <span class="col w-1">{{ getFilterStage($value->stage_id) }}</span>
-                            <span class="col w-2">{{ $value->updated_at->format('d M Y') }}</span>
+                            <span class="col w-2">@if($value->regulatory_date) {{ date('d M Y', strtotime($value->regulatory_date)) }} @else - @endif</span>
                         </span>
                     </a>
                     <div class="content-box" id="update-{{ ($key+1) }}">

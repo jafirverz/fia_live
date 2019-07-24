@@ -67,7 +67,8 @@ class BannerController extends Controller
         $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-        ]);
+			'banner_link' => 'required_if:page_name,==,1'
+        ],['banner_link.required_if'=>'Please enter proper link.']);
         
         $banner = new Banner;
         $banner->page_name = $request->page_name;
@@ -98,7 +99,9 @@ class BannerController extends Controller
         }
         $banner->banner_image = $bannerPath;
 
-        $banner->caption = ($request->caption?$request->caption:'');
+        $banner->banner_link = ($request->banner_link?$request->banner_link:'');
+		$banner->target = ($request->target?$request->target:'');
+		$banner->caption = ($request->caption?$request->caption:'');
 		$banner->order_by =($request->order_by?$request->order_by:0);
 		$banner->created_at = Carbon::now()->toDateTimeString();
         $banner->save();
@@ -147,7 +150,8 @@ class BannerController extends Controller
          $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-        ]);
+			'banner_link' => 'required_if:page_name,==,1'
+        ],['banner_link.required_if'=>'Please enter proper link.']);
 
         
 
@@ -186,7 +190,9 @@ class BannerController extends Controller
             $banner->banner_image = $bannerPath;
         }
 
-        $banner->caption = ($request->caption?$request->caption:'');
+        $banner->banner_link = ($request->banner_link?$request->banner_link:'');
+		$banner->target = ($request->target?$request->target:'');
+		$banner->caption = ($request->caption?$request->caption:'');
 		$banner->order_by =($request->order_by?$request->order_by:0);
 		$banner->updated_at = Carbon::now()->toDateTimeString();
         $banner->save();

@@ -4,11 +4,17 @@
             @if($banners)
                 @foreach($banners as $banner)
                     <div class="item bg">
+                    @php
+                    if($banner->target==2)
+                     $target='_self';
+                    else
+                     $target='_blank';
+                    @endphp
                         <img class="bgimg" src="{{asset($banner->banner_image)}}" alt=""/>
 
                         <div class="caption">
                             {{$banner->caption}}
-                            <a href="{{url('about-us')}}" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
+                            <a target="{{ $target }}" href="{{$banner->banner_link}}" class="btn">See more <i class="fas fa-angle-double-right"></i></a>
                         </div>
                     </div>
                 @endforeach
@@ -121,7 +127,9 @@
             <div class="container">
                 <div class="tb-col">
                     <div class="col">
-                        <h2>{{ $page->title }}</h2>
+                        <h2>
+                        {{ $banner->caption }}
+                        </h2>
                     </div>
                 </div>
             </div>

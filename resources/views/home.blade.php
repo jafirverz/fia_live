@@ -265,7 +265,7 @@
                 async: false,
                 success: function (data) {
 		   var url='country-information-details?country='+country_name+'&category='+data;	
-		   url=urldecode(url);	
+		   url=url.replace(" ", "+");	
 		   if(data=='#')
            content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
            else
