@@ -29,7 +29,7 @@ class PagesFrontController extends Controller
     {
 		 $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
             $banner = get_page_banner($page->id);
             $breadcrumbs = getBreadcrumb($page);
         if(!$page)
@@ -76,13 +76,13 @@ class PagesFrontController extends Controller
         $slug = 'country-information';
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
         $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
         $slug = __('constant.COUNTRY_INFORMATION_DETAILS');
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
         $banner = get_page_banner($page->id);
 
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
@@ -95,13 +95,13 @@ class PagesFrontController extends Controller
 
     public function regulatory_details($slug)
     {
-        $regulatory = Regulatory::where('slug', $slug)->first();
+        $regulatory = Regulatory::where('slug', $slug)->firstOrFail();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
 
         $slug_page = 'regulatory-updates';
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
 
         $title_breadcrumb = [
@@ -112,7 +112,7 @@ class PagesFrontController extends Controller
         $slug_page = __('constant.REGULATORY_DETAILS');
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
         $banner = get_page_banner($page->id);
 
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
@@ -121,7 +121,7 @@ class PagesFrontController extends Controller
     public function regulatory_print($slug)
     {
 
-        $regulatory = Regulatory::where('slug', $slug)->first();
+        $regulatory = Regulatory::where('slug', $slug)->firstOrFail();
         $child_regulatory = null;
         $id = $_GET['id'] ?? '';
         if($id)
@@ -238,7 +238,7 @@ class PagesFrontController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('user_id', $id)->first();
+        $user = User::where('user_id', $id)->firstOrFail();
         if(password_verify($request->password, $user->password))
         {
             $user->salutation = $request->salutation;
@@ -268,7 +268,7 @@ class PagesFrontController extends Controller
 		$title = __('constant.PROFILE');
 		$page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
 		$banner = get_page_banner($page->id);
 
