@@ -5,7 +5,7 @@
                 @foreach($banners as $banner)
                     <div class="item bg">
                     @php
-                    if($banner->target==2)
+                    if($banner->target==1)
                      $target='_self';
                     else
                      $target='_blank';
