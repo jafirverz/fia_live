@@ -98,7 +98,9 @@ class BannerController extends Controller
         }
         $banner->banner_image = $bannerPath;
 
-        $banner->caption = ($request->caption?$request->caption:'');
+        $banner->banner_link = ($request->banner_link?$request->banner_link:'');
+		$banner->target = ($request->target?$request->target:'');
+		$banner->caption = ($request->caption?$request->caption:'');
 		$banner->order_by =($request->order_by?$request->order_by:0);
 		$banner->created_at = Carbon::now()->toDateTimeString();
         $banner->save();
@@ -186,7 +188,9 @@ class BannerController extends Controller
             $banner->banner_image = $bannerPath;
         }
 
-        $banner->caption = ($request->caption?$request->caption:'');
+        $banner->banner_link = ($request->banner_link?$request->banner_link:'');
+		$banner->target = ($request->target?$request->target:'');
+		$banner->caption = ($request->caption?$request->caption:'');
 		$banner->order_by =($request->order_by?$request->order_by:0);
 		$banner->updated_at = Carbon::now()->toDateTimeString();
         $banner->save();

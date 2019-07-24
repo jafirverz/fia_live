@@ -28,7 +28,7 @@
 
                             <div class="">
 
-                                <select class="form-control select2" name="page_name"
+                                <select class="form-control select2" name="page_name" id="page_name"
                                         style="width: 100%;">
 									<option value="">-- Select --</option>
                                     @if($pages->count())
@@ -48,6 +48,20 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="form-group hide" id="banner_link">
+                            <label for="banner_link" class=" control-label">Banner Link</label>
+                            <input class="form-control" placeholder="" value="{{ old('banner_link') }}" name="banner_link" type="text" id="banner_link">                            
+                        </div>
+                        
+                        <div class="form-group hide" id="target">
+                            <label for="target" class=" control-label">Open Link</label>
+ 								<select class="form-control select2" name="target"
+                                        style="width: 100%;">
+                                    <option value="1">New Tab</option>
+                                    <option value="2">Same Tab</option>
+                                </select>
+                         </div>
+                        
                         <div class="form-group">
                             <label for="caption" class=" control-label">Caption</label>
                             
@@ -83,5 +97,24 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+$(document).ready(function() {
+    //set initial state.
+    $("#page_name").change(function() {
+	   
+	   if($(this).val()==1)
+	   {
+		$("#banner_link").removeClass('hide');  
+		$("#target").removeClass('hide'); 
+	   }
+	   else
+	   {
+		$("#banner_link").addClass('hide');  
+		$("#target").addClass('hide');   
+	   }
+	   
+    });
+});
+</script>
 @endsection
 
