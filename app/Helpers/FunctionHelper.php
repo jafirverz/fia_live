@@ -54,7 +54,7 @@ if (!function_exists('getTopics')) {
         if ($id) {
             $country = Filter::find($id);
             if ($country) {
-                return $country->country_image;
+                return asset($country->country_image);
             }
         }
         return '#';

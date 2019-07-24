@@ -175,7 +175,7 @@
                 @endphp
                 <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="{{ getFilterCountryImage($regulatory->country_id) }}" alt="{{ getFilterCountry($regulatory->country_id) }} flag" /></figure>
+                        <figure><img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" /></figure>
                         <div class="content">
                             <div class="ecol">
                                 <h3 class="title">{{ $value->title }}</h3>
