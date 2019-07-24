@@ -52,6 +52,7 @@
                                 <td><strong>Topic(s):</strong></td>
                                 <td>
                                     @php
+                                    $db_topics = json_decode($regulatory->topic_id);
                                     $topics = getFilterTopic();
                                     @endphp
                                     @if ($topics)
