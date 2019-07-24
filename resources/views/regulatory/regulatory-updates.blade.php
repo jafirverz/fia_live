@@ -171,21 +171,21 @@
 
                 @foreach ($regulatory as $value)
                 @php
-                    $slug = getRegulatorySlug($value->parent_id);
+                    $regulatory = getRegulatoryData($value->parent_id);
                 @endphp
                 <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
+                        <figure><img src="{{ getFilterCountryImage($regulatory->country_id) }}" alt="{{ getFilterCountry($regulatory->country_id) }} flag" /></figure>
                         <div class="content">
                             <div class="ecol">
                                 <h3 class="title">{{ $value->title }}</h3>
-                                <p class="date"><span class="country">@if($value->country_id) {{ getFilterCountry($value->country_id) }} @endif</span> |
+                                <p class="date"><span class="country">@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif</span> |
                                     @if($value->regulatory_date) {{ date('M d, Y', strtotime($value->regulatory_date)) }} @endif</p>
                                     {!! Illuminate\Support\Str::limit(strip_tags($value->description), 250) !!}
                             </div>
                             <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
-                        <a class="detail" href="@if($slug) {{ url('regulatory-details', $slug) . '?id=' . $value->id }} @else javascript:void(0) @endif">View detail</a>
+                        <a class="detail" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif">View detail</a>
                     </div>
                 </div>
                 @endforeach

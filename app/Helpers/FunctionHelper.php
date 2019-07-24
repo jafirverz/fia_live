@@ -701,14 +701,14 @@ if (!function_exists('getTopics')) {
         return '-';
     }
 
-    function getRegulatorySlug($parent_id)
+    function getRegulatoryData($parent_id)
     {
         if($parent_id)
         {
             $regulatory = Regulatory::where('id', $parent_id)->first();
             if($regulatory)
             {
-                return $regulatory->slug;
+                return $regulatory;
             }
         }
         return false;
