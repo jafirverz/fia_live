@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+$id = $_GET['id'] ?? '';
+@endphp
 <div id="toppage" class="page">
 
     <div class="main-wrap">
@@ -20,7 +23,7 @@
             <div class="intro-2 ">
                 <h1 class="title-1 text-center space-2"><img src="{{ getFilterCountryImage($regulatory->country_id) }}"
                         alt="{{ getFilterCountry($regulatory->country_id) }}" />
-                    {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                    {{ $regulatory->title }}</h1>
                 <table>
                     <tbody>
                         <tr>
@@ -34,20 +37,23 @@
                         <tr>
                             <td><strong style="color: #fb7a10;">Date of Regulation in Force:</strong></td>
                             <td><strong
-                                    style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong>
+                                    style="color: #fb7a10;">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M Y') }} @endif</strong>
                             </td>
                         </tr>
                         <tr>
                             <td><strong>Topic(s):</strong></td>
                             <td>
                                 @php
+                                $db_topics = json_decode($regulatory->topic_id);
                                 $topics = getFilterTopic();
                                 @endphp
                                 @if ($topics)
                                 @foreach ($topics as $value)
+                                @if(in_array($value->id, $db_topics))
                                 {{ $value->tag_name }}
                                 @if (!$loop->first)
                                 <br />
+                                @endif
                                 @endif
                                 @endforeach
                                 @endif
@@ -65,7 +71,7 @@
                         <span class="tb-col break-640">
                             <span class="col">{{ $value->title }}</span>
                             <span class="col w-1">{{ getFilterStage($value->stage_id) }}</span>
-                            <span class="col w-2">{{ $value->updated_at->format('d M Y') }}</span>
+                            <span class="col w-2">@if($value->regulatory_date) {{ date('d M Y', strtotime($value->regulatory_date)) }} @else - @endif</span>
                         </span>
                     </a>
                     <div class="content-box" id="update-{{ ($key+1) }}">
@@ -92,7 +98,20 @@
     var slug = "{{ url('regulatory-print', $regulatory->slug) }}";
 
     var array_list = [];
-    hasClassOpen();
+
+    var id = '{{ $id }}';
+
+    if(id)
+    {
+        array_list.push(id);
+        $('div.box-3').removeClass("open");
+        $('div.box-3[data-id="'+id+'"]').addClass("open");
+        $("a.export_link").attr("href", slug + '?id=' + array_list.join());
+    }
+    else
+    {
+        hasClassOpen();
+    }
     $("div.box-3").on("click", function () {
         if ($(this).hasClass('open')) {
             array_list.push($(this).attr('data-id'));

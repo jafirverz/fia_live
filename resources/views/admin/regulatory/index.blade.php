@@ -33,7 +33,6 @@
                                             <th>Agency Responsible</th>
                                             <th>Date of Regulation in Force</th>
                                             <th>Topic</th>
-                                            <th>Stage</th>
                                             <th>Country</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
@@ -46,7 +45,7 @@
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
-                                            <td>{{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }}</td>
+                                            <td>@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td>
                                             <td>
                                                 @if($topics)
                                                 @foreach($topics as $topic)
@@ -58,7 +57,6 @@
                                                 -
                                                 @endif
                                             </td>
-                                            <td>{{ getFilterStage($regulatory->stage_id) ?? '-' }}</td>
                                             <td>{{ getFilterCountry($regulatory->country_id) ?? '-' }}</td>
                                             <td>{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td>{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>

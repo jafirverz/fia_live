@@ -53,16 +53,6 @@
                                 </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                                <label for="">Description</label>
-                                <textarea name="description" class="form-control tiny-editor" cols="30" rows="10"
-                                    placeholder="Enter description">{{ old('description') }}</textarea>
-                                @if ($errors->has('description'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('description') }}</strong>
-                                </span>
-                                @endif
-                            </div>
                             <div class="form-group{{ $errors->has('topic_id') ? ' has-error' : '' }}">
                                 <label for="">Topics</label>
                                 <select name="topic_id[]" class="form-control select2" style="width: 100%;" multiple>
@@ -76,22 +66,6 @@
                                 @if ($errors->has('topic_id'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('topic_id') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <div class="form-group{{ $errors->has('stage_id') ? ' has-error' : '' }}">
-                                <label for="">Stage</label>
-                                <select name="stage_id" class="form-control select2" style="width: 100%;">
-                                    <option value="">-- Select --</option>
-                                    @if($stages)
-                                    @foreach ($stages as $stage)
-                                    <option value="{{ $stage->id }}">{{ $stage->tag_name }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @if ($errors->has('stage_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('stage_id') }}</strong>
                                 </span>
                                 @endif
                             </div>
