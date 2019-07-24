@@ -70,8 +70,9 @@
                             <label for="target" class=" control-label">Open Link</label>
  								<select class="form-control select2" name="target"
                                         style="width: 100%;">
-                                    <option @if($banner->target == 1) selected="selected" @endif value="1">New Tab</option>
-                                    <option @if($banner->target == 2) selected="selected" @endif value="2">Same Tab</option>
+                                    <option @if($banner->target == 1) selected="selected" @endif value="2">Same Tab</option>    
+                                    <option @if($banner->target == 2) selected="selected" @endif value="1">New Tab</option>
+                                    
                                 </select>
                          </div>
                             <div class="form-group">

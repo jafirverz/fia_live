@@ -48,17 +48,18 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="form-group hide" id="banner_link">
+                        <div class="form-group @if(old('page_name')==1) show @else hide @endif" id="banner_link">
                             <label for="banner_link" class=" control-label">Banner Link</label>
                             <input class="form-control" placeholder="" value="{{ old('banner_link') }}" name="banner_link" type="text" id="banner_link">                            
                         </div>
                         
-                        <div class="form-group hide" id="target">
+                        <div class="form-group @if(old('page_name')==1) show @else hide @endif" id="target">
                             <label for="target" class=" control-label">Open Link</label>
  								<select class="form-control select2" name="target"
                                         style="width: 100%;">
-                                    <option value="1">New Tab</option>
-                                    <option value="2">Same Tab</option>
+                                    <option value="1">Same Tab</option>    
+                                    <option value="2">New Tab</option>
+                                    
                                 </select>
                          </div>
                         
