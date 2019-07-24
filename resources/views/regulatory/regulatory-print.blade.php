@@ -56,9 +56,11 @@
                                     @endphp
                                     @if ($topics)
                                     @foreach ($topics as $value)
+                                    @if(in_array($value->id, $db_topics))
                                     {{ $value->tag_name }}
                                     @if (!$loop->first)
                                     <br />
+                                    @endif
                                     @endif
                                     @endforeach
                                     @endif
