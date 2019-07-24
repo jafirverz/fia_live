@@ -58,8 +58,8 @@
                                                 @endif
                                             </td>
                                             <td>{{ getFilterCountry($regulatory->country_id) ?? '-' }}</td>
-                                            <td>{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
-                                            <td>{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                            <td data-order="{{ $regulatory->created_at }}">{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                            <td data-order="{{ $regulatory->updated_at }}">{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/regulatory/destroy') }}" method="post">
