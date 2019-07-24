@@ -43,8 +43,10 @@
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>@if($regulatory->regulatory_date) {{ date('d M, Y', strtotime($regulatory->regulatory_date)) }} @else - @endif</td>
                                             <td>{{ getFilterStage($regulatory->stage_id) ?? '-' }}</td>
+
                                             <td data-order="{{ $regulatory->created_at }}">{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td data-order="{{ $regulatory->updated_at }}">{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
+
                                             <td>
                                                 <a href="{{ url('admin/regulatory/list/'.$parent_id.'/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/regulatory/list/'.$parent_id.'/destroy') }}" method="post">

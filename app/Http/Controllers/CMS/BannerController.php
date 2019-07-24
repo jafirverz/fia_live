@@ -67,7 +67,8 @@ class BannerController extends Controller
         $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-        ]);
+			'banner_link' => 'required_if:page_name,==,1'
+        ],['banner_link.required_if'=>'Please enter proper link.']);
         
         $banner = new Banner;
         $banner->page_name = $request->page_name;
@@ -149,7 +150,8 @@ class BannerController extends Controller
          $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-        ]);
+			'banner_link' => 'required_if:page_name,==,1'
+        ],['banner_link.required_if'=>'Please enter proper link.']);
 
         
 
