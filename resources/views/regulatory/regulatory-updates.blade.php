@@ -85,8 +85,8 @@
                     <div class="col-md-8">
                         <div class="box-4">
                             @if($regulatory_main_highlight)
-                            <figure><img src="@if($regulatory_main_highlight->country_id) {{ getFilterCountryImage($regulatory_main_highlight->country_id) }} @endif"
-                                    alt="@if($regulatory_main_highlight->country_id){{  getFilterCountry($regulatory_main_highlight->country_id) }} @endif" /></figure>
+                            <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory_main_highlight->country_id))))<img src="@if($regulatory_main_highlight->country_id) {{ getFilterCountryImage($regulatory_main_highlight->country_id) }} @endif"
+                                    alt="@if($regulatory_main_highlight->country_id){{  getFilterCountry($regulatory_main_highlight->country_id) }} @endif" />@endif</figure>
                             <div class="content">
                                 <div class="text-1">
                                     <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
@@ -107,9 +107,9 @@
                             <div class="col-sm-6">
                                 @if($regulatory_other_highlight)
                                 <div class="box-4">
-                                    <figure><img
+                                    <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory_other_highlight->country_id))))<img
                                             src="@if($regulatory_other_highlight->country_id) {{ getFilterCountryImage($regulatory_other_highlight->country_id) }} @endif"
-                                            alt="@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif" />
+                                            alt="@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif" />@endif
                                     </figure>
                                     <div class="content">
                                         <div class="ecol">
@@ -137,8 +137,8 @@
                                 @if($regulatory_other_highlight)
                                 <div class="box-4">
 
-                                    <figure><img src="@if($regulatory_other_highlight->country_id) {{ getFilterCountryImage($regulatory_other_highlight->country_id) }} @endif"
-                                            alt="@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif" />
+                                    <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory_other_highlight->country_id))))<img src="@if($regulatory_other_highlight->country_id) {{ getFilterCountryImage($regulatory_other_highlight->country_id) }} @endif"
+                                            alt="@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif" />@endif
                                     </figure>
                                     <div class="content">
                                         <div class="ecol">
@@ -176,7 +176,7 @@
                 @if($regulatory)
                 <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" /></figure>
+                        <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory->country_id))))<img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" />@endif</figure>
                         <div class="content">
                             <div class="ecol">
                                 <h3 class="title">{{ $value->title }}</h3>

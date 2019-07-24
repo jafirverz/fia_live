@@ -7,7 +7,7 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="container space-1">
-                @include('admin.inc.message')
+                {{-- @include('admin.inc.message') --}}
                 <div class="form-type">
                     <h1 class="title-1 text-center">Create an Account</h1>
                     <div class="intro-1">

@@ -41,7 +41,7 @@
                                         @foreach($regulatories as $regulatory)
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
-                                            <td>@if($regulatory->regulatory_date) {{ date('d M, Y', strtotime($regulatory->regulatory_date)) }} @else - @endif</td>
+                                            <td data-order="{{ $regulatory->regulatory_date }}">@if($regulatory->regulatory_date) {{ date('d M, Y', strtotime($regulatory->regulatory_date)) }} @else - @endif</td>
                                             <td>{{ getFilterStage($regulatory->stage_id) ?? '-' }}</td>
 
                                             <td data-order="{{ $regulatory->created_at }}">{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
