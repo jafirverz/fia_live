@@ -28,6 +28,7 @@
                                             <th>Email</th>
                                             <th>Enquiry Type</th>
                                             <th>Message</th>
+                                            <th>Type</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -40,6 +41,7 @@
                                             <td>{{ $item->emailid }}</td>
                                             <td>{{ $item->enquiry_type }}</td>
                                             <td>{{ $item->message }}</td>
+                                            <td>{{ $item->type }}</td>
                                             <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                             <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                          </tr>

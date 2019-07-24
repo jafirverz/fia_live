@@ -103,7 +103,7 @@ class HomeController extends Controller
 		
 		  foreach($event_description as $event)
 		  {
-		  $item['content']=$event->description;
+		  $item['content']=substr(strip_tags($event->description),0,120);
 		  $event_title=str_replace(" ","-",$event->event_title);
 		  $item['link']=url('event/'.strtolower($event_title));
 		  $events[]=$item;
@@ -141,7 +141,8 @@ class HomeController extends Controller
 		
 		  foreach($report_description as $report)
 		  {
-		  $item['content']=$report->description;
+
+		  $item['content']=substr(strip_tags($report->description),0,120);
 		  $item['link']=url('topical-reports');
 		  $reports[]=$item;
 		  }
@@ -203,7 +204,7 @@ class HomeController extends Controller
 		{
 		  foreach($cms_description as $cms)
 		  {
-		  $item['content']=$cms->contents;
+		  $item['content']=substr(strip_tags($cms->contents),0,120);
 		  $item['link']=url($cms->slug);
 		  $others[]=$item;
 		  }
@@ -235,7 +236,8 @@ class HomeController extends Controller
 		
 		  foreach($regulatories_description as $regulatory)
 		  {
-		  $item['content']=$regulatory->description;
+
+		  $item['content']=substr(0,120,strip_tags($regulatory->description));
 		  $item['link']=url('regulatory-details',$regulatory->slug);
 		  $regulatories[]=$item;
 		  }
@@ -335,7 +337,7 @@ class HomeController extends Controller
 		  foreach($information_description as $info)
 		  {
 		  $category=get_categry_by_country($info->country_id);
-		  $item['content']=$info->information_content;
+		  $item['content']=substr(strip_tags($info->information_content,0,120));
 		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);
 		  $informations[]=$item;
 		  }

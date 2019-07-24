@@ -46,7 +46,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 1)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterCountryImage($id = null)
@@ -54,7 +54,7 @@ if (!function_exists('getTopics')) {
         if ($id) {
             $country = Filter::find($id);
             if ($country) {
-                return $country->country_image;
+                return asset($country->country_image);
             }
         }
         return '#';
@@ -82,7 +82,7 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 6)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getFilterTopic($id = null)
@@ -94,7 +94,24 @@ if (!function_exists('getTopics')) {
             }
             return '-';
         }
-        return Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'asc')->get();
+        return Filter::where('filter_name', 2)->where('status', 1)->orderBy('order_by', 'asc')->get();
+    }
+
+    function getFilterStage($id = null)
+    {
+        if ($id) {
+            $stage = Filter::find($id);
+            if ($stage) {
+                return $stage->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 3)->where('status', 1)->orderBy('order_by', 'asc')->get();
+    }
+
+    function getFilterCategory()
+    {
+        return Filter::where('filter_name', 5)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
     function getTopics($topics)
@@ -166,27 +183,10 @@ if (!function_exists('getTopics')) {
             return "";
     }
 
-    function getFilterStage($id = null)
-    {
-        if ($id) {
-            $stage = Filter::find($id);
-            if ($stage) {
-                return $stage->tag_name;
-            }
-            return '-';
-        }
-        return Filter::where('filter_name', 3)->where('status', 1)->orderBy('tag_name', 'asc')->get();
-    }
-
     function replaceStrByValue($key, $value, $contents)
     {
         $newContents = str_replace($key, $value, $contents);
         return $newContents;
-    }
-
-    function getFilterCategory()
-    {
-        return Filter::where('filter_name', 5)->where('status', 1)->orderBy('tag_name', 'asc')->get();
     }
 
     function getParentRegulatory($id)
@@ -320,8 +320,8 @@ if (!function_exists('getTopics')) {
                 $string[] = '<li ' . $sel . '><a href="#">' . $menu->title . '</a>';
 				else
 				$string[] = '<li ' . $sel . '><a ' . $target . ' href="' . $link . '">' . $menu->title . '</a>';
-				
-				
+
+
                 $string[] = '</li>';
 
 
@@ -688,4 +688,29 @@ if (!function_exists('getTopics')) {
 		}
     }
 
+    function getRegulatoryDescription($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('id', 'desc')->first();
+            if($regulatory)
+            {
+                return $regulatory->description;
+            }
+        }
+        return '-';
+    }
+
+    function getRegulatoryData($parent_id)
+    {
+        if($parent_id)
+        {
+            $regulatory = Regulatory::where('id', $parent_id)->first();
+            if($regulatory)
+            {
+                return $regulatory;
+            }
+        }
+        return false;
+    }
 }

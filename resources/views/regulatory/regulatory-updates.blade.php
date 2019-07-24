@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div id="toppage" class="page">
     <div class="main-wrap">
         @include('inc.banner')
@@ -91,8 +92,8 @@
                                     <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
                                     <p class="date"><span
                                             class="country">{{ getFilterCountry($regulatory_main_highlight->country_id) }}</span>
-                                        | {{ $regulatory_main_highlight->created_at->format('d m, Y') }}</p>
-                                    {!! Illuminate\Support\Str::limit($regulatory_main_highlight->description, 800) !!}
+                                        | @if($regulatory_main_highlight->date_of_regulation_in_force) {{ $regulatory_main_highlight->date_of_regulation_in_force->format('d m, Y') }} @endif</p>
+                                    {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_main_highlight->id)), 800) !!}
                                 </div>
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                             </div>
@@ -115,9 +116,9 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
-                                                | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
-                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description,
-                                            300) !!}
+                                                | @if($regulatory_other_highlight->date_of_regulation_in_force) {{ $regulatory_other_highlight->date_of_regulation_in_force->format('d m, Y') }} @endif</p>
+                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description),
+                                            250) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                     </div>
@@ -144,8 +145,8 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">{{ getFilterCountry($regulatory_other_highlight->country_id) }}</span>
-                                                | {{ $regulatory_other_highlight->created_at->format('d m, Y') }}</p>
-                                            {!! Illuminate\Support\Str::limit($regulatory_other_highlight->description, 200)
+                                                | @if($regulatory_other_highlight->date_of_regulatory_in_force) {{ $regulatory_other_highlight->date_of_regulatory_in_force->format('d m, Y') }} @endif</p>
+                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description), 200)
                                             !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -169,18 +170,22 @@
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
 
                 @foreach ($regulatory as $value)
+                @php
+                    $regulatory = getRegulatoryData($value->parent_id);
+                @endphp
                 <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="{{ getFilterCountryImage($value->country_id) }}" alt="thailand flag" /></figure>
+                        <figure><img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" /></figure>
                         <div class="content">
                             <div class="ecol">
                                 <h3 class="title">{{ $value->title }}</h3>
-                                <p class="date"><span class="country">{{ getFilterCountry($value->country_id) }}</span> |
-                                    {{ $value->created_at->format('M d, Y') }}</p>
-                                    {!! Illuminate\Support\Str::limit($value->description, 300) !!}
+                                <p class="date"><span class="country">@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif</span> |
+                                    @if($value->regulatory_date) {{ date('M d, Y', strtotime($value->regulatory_date)) }} @endif</p>
+                                    {!! Illuminate\Support\Str::limit(strip_tags($value->description), 250) !!}
                             </div>
+                            <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
-                        <a class="detail" href="{{ url('regulatory-details', $value->slug) }}">View detail</a>
+                        <a class="detail" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif">View detail</a>
                     </div>
                 </div>
                 @endforeach
@@ -278,4 +283,5 @@
     });
 
 </script>
+
 @endsection

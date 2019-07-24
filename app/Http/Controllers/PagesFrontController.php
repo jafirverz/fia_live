@@ -170,7 +170,7 @@ class PagesFrontController extends Controller
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.*', 'filters.*')->get();
+        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
 
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
@@ -188,28 +188,32 @@ class PagesFrontController extends Controller
             ?>
             <div class="grid-2 eheight clearfix mbox-wrap" data-num=<?php echo setting()->pagination_limit ?? 8 ?>">
         <?php
+
         foreach($result as $value)
         {
+            $regulatory = getRegulatoryData($value->parent_id);
+            if($regulatory)
+            {
         ?>
 
                 <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="<?php  echo getFilterCountryImage($value->country_id); ?>" alt="<?php  echo getFilterCountry($value->country_id); ?> flag" /></figure>
+                        <figure><img src="<?php if($regulatory->country_id) { echo getFilterCountryImage($regulatory->country_id); } ?>" alt="<?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?> flag" /></figure>
                         <div class="content">
                             <div class="ecol">
                                 <h3 class="title"><?php echo $value->title ?></h3>
-                                <p class="date"><span class="country"><?php  echo getFilterCountry($value->country_id); ?></span> |
+                                <p class="date"><span class="country"><?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?></span> |
                                     <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
-                                    <p><?php echo html_entity_decode(Str::limit($value->description, 300)); ?></p>
+                                    <p><?php echo html_entity_decode(Str::limit(strip_tags($value->description), 300)); ?></p>
                             </div>
                         </div>
-                        <a class="detail" href="<?php echo url('regulatory-details', $value->slug); ?>">View detail</a>
+                        <a class="detail" href="<?php if($regulatory->slug) { echo url('regulatory-details', $regulatory->slug) . '?id=' . $value->regulatories_id; } else { echo 'javascript:void(0)'; } ?>">View detail</a>
                     </div>
                 </div>
 
 
         <?php
-        }
+        }}
         ?>
                 <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more"> Load more <i
                     class="fas fa-angle-double-down"></i></button></div>

@@ -273,7 +273,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .menu ul ul li > a:hover, .menu ul ul li.active > a, .menu ul ul > li.hover > a { background: #14a9ce; }
 .menu ul ul ul { left: 100%; top: -1px; }
 .menu > ul > li:hover > ul, .menu > ul > li:hover > ul > li:hover > ul { height: auto; margin-top: 0; opacity: 1; overflow: visible; transform: translateY(0%); }
-
+a:hover{cursor:pointer;}
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }

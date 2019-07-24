@@ -17,13 +17,18 @@
 						</figure>
 						<div class="content">
 							<h2>Country information</h2>
-							<ul class="mlist" data-num="5">
+							<ul class="mlist" data-num="{{ setting()->pagination_limit }}">
                             @foreach($informations as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                             @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
                             @endforeach
 														</ul>
 						</div>
+						@if(count($informations)>setting()->pagination_limit)
 						<a class="see-all" href="#">Load more</a>
+                        @endif
 					</div>
                     @endif
                     @if(count($regulatories)>0)
@@ -33,13 +38,18 @@
 						</figure>
 						<div class="content">
 							<h2>Regulatory updates</h2>
-							<ul class="mlist" data-num="5">
+							<ul class="mlist" data-num="{{ setting()->pagination_limit }}">
                             @foreach($regulatories as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                             @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
                             @endforeach
 							</ul>
 						</div>
+						 @if(count($regulatories)>setting()->pagination_limit)
 						<a class="see-all" href="#">Load more</a>
+                        @endif
 					</div>
                     @endif
                     @if(count($resources)>0)
@@ -49,13 +59,18 @@
 						</figure>
 						<div class="content">
 							<h2>resources</h2>
-							<ul class="mlist" data-num="5">
+							<ul class="mlist" data-num="{{ setting()->pagination_limit }}">
                             @foreach($resources as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                            @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+								<li class="mlist-line"><a href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
                             @endforeach
 							</ul>
 						</div>
+						 @if(count($resources)>setting()->pagination_limit)
 						<a class="see-all" href="#">Load more</a>
+                        @endif
 					</div>
                     @endif
                     @if(count($others)>0)
@@ -65,18 +80,23 @@
 						</figure>
 						<div class="content">
 							<h2>others</h2>
-                            <ul class="mlist" data-num="5">
+                            <ul class="mlist" data-num="{{ setting()->pagination_limit }}">
 							@foreach($others as $info)
-								<li class="mlist-line"><a href="{{ $info['link']}}">{{ strip_tags($info['content'])}}</a></li>
+                            @php 
+                            $keyword=strip_tags($_REQUEST['search_content']);
+                            @endphp
+							<li class="mlist-line"><a href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
                             @endforeach
                             </ul>
 						</div>
+                        @if(count($others)>setting()->pagination_limit)
 						<a class="see-all" href="#">Load more</a>
+                        @endif
 					</div>
                     @endif
 				</div>
                 
             </div><!-- //main -->
             
-
+@include('inc.feedback-form')
 @endsection

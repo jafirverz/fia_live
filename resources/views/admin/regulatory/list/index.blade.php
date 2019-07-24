@@ -29,11 +29,8 @@
                                     <thead>
                                         <tr>
                                             <th>Title</th>
-                                            <th>Agency Responsible</th>
-                                            <th>Date of Regulation in Force</th>
-                                            <th>Topic</th>
+                                            <th>Date</th>
                                             <th>Stage</th>
-                                            <th>Country</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             <th>Action</th>
@@ -44,21 +41,8 @@
                                         @foreach($regulatories as $regulatory)
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
-                                            <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
-                                            <td>{{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }}</td>
-                                            <td>
-                                                @if($topics)
-                                                @foreach($topics as $topic)
-                                                    @if(in_array($topic->id, json_decode($regulatory->topic_id)))
-                                                    {{ $topic->tag_name }},
-                                                    @endif
-                                                @endforeach
-                                                @else
-                                                -
-                                                @endif
-                                            </td>
+                                            <td>@if($regulatory->regulatory_date) {{ date('d M, Y', strtotime($regulatory->regulatory_date)) }} @else - @endif</td>
                                             <td>{{ getFilterStage($regulatory->stage_id) ?? '-' }}</td>
-                                            <td>{{ getFilterCountry($regulatory->country_id) ?? '-' }}</td>
                                             <td>{{ $regulatory->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td>{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td>
