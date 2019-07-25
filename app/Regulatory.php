@@ -23,6 +23,6 @@ class Regulatory extends Model
 
     public function scopeChildRegulatory($query, $id)
     {
-        return $query->where('parent_id', $id)->latest()->get();
+        return $query->where('parent_id', $id)->orderBy('regulatory_date', 'desc')->get();
     }
 }
