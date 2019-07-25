@@ -12,20 +12,20 @@
                     <div class="inrow">
                         <span><input type="text" class="form-control @if ($errors->has('email')) is-invalid @endif" name="email" value="{{ old('email') }}" /></span>
                         <label>Email Address</label>
-                        @if ($errors->has('email'))
+                        {{-- @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('email') }}</strong>
                         </span>
-                        @endif
+                        @endif --}}
                     </div>
                     <div class="inrow">
                         <span><input type="password" class="form-control @if ($errors->has('password')) is-invalid @endif" name="password" /></span>
                         <label>Password</label>
-                        @if ($errors->has('password'))
+                        {{-- @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('password') }}</strong>
                         </span>
-                        @endif
+                        @endif --}}
                     </div>
                     <input type="hidden" name="redirect" value="@if(isset($_GET['type'])) @if($_GET['type']=='login') {{ url($_GET['page']) }} @endif @endif">
                     <div class="form-group">

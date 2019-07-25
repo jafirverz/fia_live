@@ -89,27 +89,27 @@ class RegisterController extends Controller
     {
 
         $user_id = guid();
-        $user_subscribed = User::where('email', $data['email'])->where('status', 6)->first();
-        if($user_subscribed->count())
+        $user_data = User::where('email', $data['email'])->where('status', 6)->first();
+        if($user_data->count())
         {
-            $user_subscribed->user_id   =  $user_id;
-            $user_subscribed->salutation = $data['salutation'];
-            $user_subscribed->firstname = $data['firstname'];
-            $user_subscribed->lastname = $data['lastname'];
-            $user_subscribed->organization = $data['organization'];
-            $user_subscribed->job_title = $data['job_title'];
-            $user_subscribed->telephone_code = $data['telephone_code'];
-            $user_subscribed->telephone_number = $data['telephone_number'];
-            $user_subscribed->mobile_code = $data['mobile_code'];
-            $user_subscribed->mobile_number = $data['mobile_number'];
-            $user_subscribed->country = $data['country'];
-            $user_subscribed->city = $data['city'];
-            $user_subscribed->address1 = $data['address1'];
-            $user_subscribed->address2 = $data['address2'];
-            $user_subscribed->password = Hash::make($data['password']);
-            $user_subscribed->member_type   =  2;
-            $user_subscribed->status    =  1;
-            $user_subscribed->save();
+            $user_data->user_id   =  $user_id;
+            $user_data->salutation = $data['salutation'];
+            $user_data->firstname = $data['firstname'];
+            $user_data->lastname = $data['lastname'];
+            $user_data->organization = $data['organization'];
+            $user_data->job_title = $data['job_title'];
+            $user_data->telephone_code = $data['telephone_code'];
+            $user_data->telephone_number = $data['telephone_number'];
+            $user_data->mobile_code = $data['mobile_code'];
+            $user_data->mobile_number = $data['mobile_number'];
+            $user_data->country = $data['country'];
+            $user_data->city = $data['city'];
+            $user_data->address1 = $data['address1'];
+            $user_data->address2 = $data['address2'];
+            $user_data->password = Hash::make($data['password']);
+            $user_data->member_type   =  2;
+            $user_data->status    =  1;
+            $user_data->save();
         }
         else
         {
