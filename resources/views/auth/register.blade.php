@@ -39,7 +39,7 @@
                                         name="firstname" value="{{ old('firstname') }}" />
                                     @if ($errors->has('firstname'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('firstname') }}</strong>
+                                        {{ $errors->first('firstname') }}
                                     </span>
                                     @endif
                                 </div>
@@ -51,7 +51,7 @@
                                 name="lastname" value="{{ old('lastname') }}" />
                             @if ($errors->has('lastname'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('lastname') }}</strong>
+                                {{ $errors->first('lastname') }}
                             </span>
                             @endif
                         </div>
@@ -63,7 +63,7 @@
                                 name="organization" value="{{ old('organization') }}" />
                             @if ($errors->has('organization'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('organization') }}</strong>
+                                {{ $errors->first('organization') }}
                             </span>
                             @endif
                         </div>
@@ -127,7 +127,7 @@
                             </select>
                             @if ($errors->has('country'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('country') }}</strong>
+                                {{ $errors->first('country') }}
                             </span>
                             @endif
                         </div>
@@ -152,7 +152,7 @@
                             <label><span class="required">*</span> Email Address</label>
                             @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('email') }}</strong>
+                                {{ $errors->first('email') }}
                             </span>
                             @endif
                         </div>
@@ -163,7 +163,7 @@
                             <label><span class="required">*</span> Password</label>
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('password') }}</strong>
+                                {{ $errors->first('password') }}
                             </span>
                             @endif
                         </div>
@@ -174,7 +174,7 @@
                             <label><span class="required">*</span> Confirm Password</label>
                             @if ($errors->has('password_confirmation'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                {{ $errors->first('password_confirmation') }}
                             </span>
                             @endif
                         </div>
