@@ -42,7 +42,9 @@
  
                         </div>
                         <div class="form-group @if($filter->filter_name!=1) hide else '' @endif" id="country_image_id">
-                        
+                        <div class="form-group">
+<label class="checkbox-inline"><input   @if(1 == $filter->country_information) checked="checked" @endif type="checkbox" name="country_information" value="1"><strong>Country Information</strong></label>
+                            </div>
                         <div class="form-group">
 <label class="checkbox-inline"><input  @if(1 == $filter->home_status) checked="checked" @endif type="checkbox" name="home_status" value="1"><strong>Active on map</strong></label>
                             </div>
