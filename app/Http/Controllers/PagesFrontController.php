@@ -155,11 +155,11 @@ class PagesFrontController extends Controller
         }
         if($month)
         {
-            $query->whereMonth('regulatories.created_at', date('m', strtotime($month)));
+            $query->whereMonth('regulatories.regulatory_date', date('m', strtotime($month)));
         }
         if($year)
         {
-            $query->whereYear('regulatories.created_at', $year);
+            $query->whereYear('regulatories.regulatory_date', $year);
         }
         if($topic)
         {
@@ -170,7 +170,7 @@ class PagesFrontController extends Controller
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
+        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
 
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
@@ -203,7 +203,7 @@ class PagesFrontController extends Controller
                             <div class="ecol">
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?></span> |
-                                    <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
+                                    <?php echo date('M d, Y', strtotime($value->regulatory_date)); ?></p>
                                     <p><?php echo html_entity_decode(Str::limit(strip_tags($value->description), 300)); ?></p>
                             </div>
                         </div>

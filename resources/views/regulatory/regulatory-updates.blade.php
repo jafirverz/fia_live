@@ -117,7 +117,7 @@
                                             <p class="date"><span
                                                     class="country">@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif</span>
                                                 | @if($regulatory_other_highlight->date_of_regulation_in_force) {{ $regulatory_other_highlight->date_of_regulation_in_force->format('d m, Y') }} @endif</p>
-                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description),
+                                            {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_other_highlight->id)),
                                             250) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -146,7 +146,7 @@
                                             <p class="date"><span
                                                     class="country">@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif</span>
                                                 | @if($regulatory_other_highlight->date_of_regulatory_in_force) {{ $regulatory_other_highlight->date_of_regulatory_in_force->format('d m, Y') }} @endif</p>
-                                            {!! Illuminate\Support\Str::limit(strip_tags($regulatory_other_highlight->description), 200)
+                                            {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_other_highlight->id)), 200)
                                             !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
