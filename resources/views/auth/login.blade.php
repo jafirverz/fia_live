@@ -5,27 +5,32 @@
         <div class="main-wrap">
             @include('inc.banner')
             <div class="container space-1">
-                @include('admin.inc.message')
+                {{-- @include('admin.inc.message') --}}
                 <form action="{{ route('login') }}" method="POST" class="form-wrap-1 form-type form-ani">
                     @csrf
                     <h1 class="title-1 text-center">Sign in to your account</h1>
                     <div class="inrow">
                         <span><input type="text" class="form-control @if ($errors->has('email')) is-invalid @endif" name="email" value="{{ old('email') }}" /></span>
                         <label>Email Address</label>
-                        {{-- @if ($errors->has('email'))
+                        @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                            {{ $errors->first('email') }}
                         </span>
-                        @endif --}}
+                        @endif
+                        @if(session('error'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ session('error') }}
+                        </span>
+                        @endif
                     </div>
                     <div class="inrow">
                         <span><input type="password" class="form-control @if ($errors->has('password')) is-invalid @endif" name="password" /></span>
                         <label>Password</label>
-                        {{-- @if ($errors->has('password'))
+                        @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('password') }}</strong>
+                            {{ $errors->first('password') }}
                         </span>
-                        @endif --}}
+                        @endif
                     </div>
                     <input type="hidden" name="redirect" value="@if(isset($_GET['type'])) @if($_GET['type']=='login') {{ url($_GET['page']) }} @endif @endif">
                     <div class="form-group">
