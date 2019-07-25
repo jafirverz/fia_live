@@ -32,14 +32,14 @@
                                 @endif
                             </div>
                             <div
-                                class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+                                class="form-group{{ $errors->has('regulatory_date') ? ' has-error' : '' }}">
                                 <label for="">Date</label>
                                 <input type="text" name="regulatory_date" class="form-control datepicker"
                                     placeholder="Enter date"
-                                    value="{{ old('date') }}">
-                                @if ($errors->has('date'))
+                                    value="{{ old('regulatory_date') }}">
+                                @if ($errors->has('regulatory_date'))
                                 <span class="help-block">
-                                    <strong>{{ $errors->first('date') }}</strong>
+                                    <strong>{{ $errors->first('regulatory_date') }}</strong>
                                 </span>
                                 @endif
                             </div>
