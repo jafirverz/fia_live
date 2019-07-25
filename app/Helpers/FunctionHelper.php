@@ -49,6 +49,18 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 1)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
+    function getFilterCountryInformation($id = null)
+    {
+        if ($id) {
+            $country = Filter::find($id);
+            if ($country) {
+                return $country->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->orderBy('order_by', 'asc')->get();
+    }
+
     function getFilterCountryImage($id = null)
     {
         if ($id) {

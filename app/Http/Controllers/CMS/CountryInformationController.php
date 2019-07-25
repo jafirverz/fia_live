@@ -25,7 +25,7 @@ class CountryInformationController extends Controller
     {
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'Index';
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->get();
         $categories = Filter::where('filter_name', 5)->where('status', 1)->get();
 
         return view('admin.country_information.index', compact('title', 'subtitle', 'countries', 'categories'));
@@ -94,7 +94,7 @@ class CountryInformationController extends Controller
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'Edit';
         $country_information = CountryInformation::findorfail($id);
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->get();
         $categories = Filter::where('filter_name', 5)->where('status', 1)->get();
 
         return view('admin.country_information.edit', compact('title', 'subtitle', 'country_information', 'countries', 'categories'));
