@@ -36,7 +36,7 @@
                                 <label for="">Date</label>
                                 <input type="text" name="regulatory_date" class="form-control datepicker"
                                     placeholder="Enter date"
-                                    value="@if($regulatory->regulatory_date) {{ $regulatory->regulatory_date->format('Y-m-d') }} @endif">
+                                    value="@if($regulatory->regulatory_date) {{ $regulatory->regulatory_date }} @endif">
                                 @if ($errors->has('regulatory_date'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('regulatory_date') }}</strong>
