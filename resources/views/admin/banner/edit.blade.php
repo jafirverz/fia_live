@@ -26,7 +26,7 @@
 
                             <div class="">
 
-                                <select class="form-control select2"  name="page_name"  style="width: 100%;">
+                                <select class="form-control select2"  name="page_name"  id="page_name"  style="width: 100%;">
                                     <option value="">-- Select --</option>
                                     @if($pages->count())
                                         @foreach($pages as $page)
@@ -70,8 +70,8 @@
                             <label for="target" class=" control-label">Open Link</label>
  								<select class="form-control select2" name="target"
                                         style="width: 100%;">
-                                    <option @if($banner->target == 1) selected="selected" @endif value="2">Same Tab</option>    
-                                    <option @if($banner->target == 2) selected="selected" @endif value="1">New Tab</option>
+                                    <option @if($banner->target == 1) selected="selected" @endif value="1">Same Tab</option>    
+                                    <option @if($banner->target == 2) selected="selected" @endif value="2">New Tab</option>
                                     
                                 </select>
                          </div>
