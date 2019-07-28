@@ -90,7 +90,7 @@ class RegisterController extends Controller
 
         $user_id = guid();
         $user_data = User::where('email', $data['email'])->where('status', 6)->first();
-        if($user_data->count())
+        if($user_data)
         {
             $user_data->user_id   =  $user_id;
             $user_data->salutation = $data['salutation'];
