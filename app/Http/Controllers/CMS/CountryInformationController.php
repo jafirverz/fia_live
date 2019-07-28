@@ -146,7 +146,7 @@ class CountryInformationController extends Controller
     {
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'List';
-        $country_information = CountryInformation::where('country_id', 'like', '%'.$country_id.'%')->where('information_filter_id', $information_filter_id)->get();
+        $country_information = CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
         return view('admin.country_information.list', compact('title', 'subtitle', 'country_information', 'country_id', 'information_filter_id'));
     }
 }

@@ -513,7 +513,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformation($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', 'like', '%' . $country_id . '%')->where('information_filter_id', $information_filter_id)->get();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
     }
 
     function getCountryInformationBasedOnDetails($country, $category)
@@ -569,7 +569,7 @@ if (!function_exists('getTopics')) {
     function getRegulatories($slug = null)
     {
         if ($slug) {
-            return Regulatory::where('slug', $slug)->first();
+            return Regulatory::where('slug', $slug)->select('parent_id', 'country_id', 'description', 'regulatory_date', 'slug')->first();
         }
         return Regulatory::latestregulatory();
     }

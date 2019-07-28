@@ -7,6 +7,12 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="container space-1">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ session('success') }}
+                    </div>
+                @endif
                 {{-- @include('admin.inc.message') --}}
                 <div class="form-type">
                     <h1 class="title-1 text-center">Create an Account</h1>
