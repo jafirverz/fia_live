@@ -46,17 +46,13 @@
                                                 {{__('constant.DEACTIVATE')}}
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($emailTemplate->created_at == null)
-                                                {{$emailTemplate->created_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($emailTemplate->created_at))   !!}
+                                        <td data-order="{{ $emailTemplate->created_at }}">
+                                           
+                                            {{  $emailTemplate->created_at->format('d M, Y h:i A')   }}
 
                                         </td>
-                                        <td data-order="{{ $emailTemplate->updated_at }}">@if ($emailTemplate->updated_at == null)
-                                                {{$emailTemplate->updated_at}}
-                                            @endif
-                                            {!!  date("Y-m-d H:i:s", strtotime($emailTemplate->updated_at))   !!}
+                                        <td data-order="{{ $emailTemplate->updated_at }}">
+                                            {{  $emailTemplate->created_at->format('d M, Y h:i A')   }}
 
                                         </td>
                                         <td>

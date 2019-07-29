@@ -92,7 +92,7 @@
                                     <td>
                                         {{ isset($admin->role_name) ? $admin->role_name : '-' }}
                                     </td>
-                                    <td>
+                                    <td data-order="{{ $admin->admin_created_at }}">
                                         {{ isset($admin->admin_created_at) ? date('d M, Y h:i A', strtotime($admin->admin_created_at)) : '-' }}
                                     </td>
                                     <td>

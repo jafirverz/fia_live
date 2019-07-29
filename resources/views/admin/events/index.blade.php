@@ -62,7 +62,7 @@
                                                         </td>
 
 
-                                                        <td>
+                                                        <td data-order="{{ $event->created_at }}">
                                                             @if ($event->created_at == null)
                                                                 {{$event->created_at}}
                                                             @endif

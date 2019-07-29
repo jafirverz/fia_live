@@ -67,13 +67,13 @@
                                                 {{__('constant.DEACTIVATE')}}
                                             @endif
                                         </td>
-                                        <td>
+                                        <td data-order="{{ $menu->created_at }}">
                                             @if (!is_null($menu->created_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($menu->created_at))   !!}
+                                                {{$menu->created_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
-                                        <td>@if (!is_null($menu->updated_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($menu->updated_at))   !!}
+                                        <td data-order="{{ $menu->updated_at }}">@if (!is_null($menu->updated_at))
+                                                {{$menu->updated_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
                                         <td>
