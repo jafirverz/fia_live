@@ -164,11 +164,11 @@
         <div class="container space-1 search-results">
             <h1 class="title-1 text-center">Latest Updates</h1>
             @php
-            $regulatory = getRegulatories();
+            $regulatory = getRegulatories()->splice(0, setting()->pagination_limit ?? 8);
             @endphp
             @if($regulatory)
-            <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
-
+            <input type="hidden" name="min_load" value="{{ setting()->pagination_limit ?? 8 }}">
+            <div class="grid-2 eheight clearfix">
                 @foreach ($regulatory as $value)
                 @php
                     $regulatory = getRegulatoryData($value->parent_id);
@@ -186,12 +186,12 @@
                             </div>
                             <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
-                        <a class="detail" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif">View detail</a>
+                        <a class="detail load-more-regulatory" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif" data-id="{{ $value->id }}">View detail</a>
                     </div>
                 </div>
                 @endif
                 @endforeach
-                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i
+                <div class="more-wrap"><button class="btn-4 load-more-regulatory"> Load more <i
                     class="fas fa-angle-double-down"></i></button></div>
             </div>
 
@@ -282,6 +282,33 @@
             });
 
         }
+
+        counter = 2;
+        $("body").on("click", "button.load-more-regulatory", function() {
+            var id = $("a.load-more-regulatory:last").attr("data-id");
+            var min_load = $("input[name='min_load']").val();
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('load-more-regulatories') }}",
+                data: {
+                    id: id,
+                    counter: counter,
+                    min_load: min_load,
+                    _token: CSRF_TOKEN,
+                },
+                cache: false,
+                async: false,
+                success: function (data) {
+                    $(".search-results").html('');
+                    $(".search-results").append(data);
+                }
+            });
+            $('.eheight').each(function() {
+                //alert($(this).find('.ecol').html());
+                $(this).find('.ecol').matchHeight();
+            });
+            counter++;
+        });
     });
 
 </script>
