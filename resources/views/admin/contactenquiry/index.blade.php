@@ -42,8 +42,8 @@
                                             <td>{{ $item->enquiry_type }}</td>
                                             <td>{{ $item->message }}</td>
                                             <td>{{ $item->type }}</td>
-                                            <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
-                                            <td>{{ $item->updated_at->format('d M, Y h:i A') }}</td>
+                                            <td data-order="{{ $item->created_at }}">{{ $item->created_at->format('d M, Y h:i A') }}</td>
+                                            <td data-order="{{ $item->updated_at }}">{{ $item->updated_at->format('d M, Y h:i A') }}</td>
                                          </tr>
                                         @endforeach
                                         @endif

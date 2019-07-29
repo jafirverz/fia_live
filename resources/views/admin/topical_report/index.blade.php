@@ -60,13 +60,13 @@
                                                         </td>
                                                         
                                                         
-                                                        <td>
+                                                        <td data-order="{{ $TopicalReport->created_at }}">
                                                             
-                                                            {!!  date("Y-m-d H:i:s", strtotime($TopicalReport->created_at))   !!}
+                                                            {{  $TopicalReport->created_at->format('d M, Y h:i A')   }}
 
                                                         </td>
-                                                        <td>
-                                                            {!!  date("Y-m-d H:i:s", strtotime($TopicalReport->updated_at))   !!}
+                                                        <td data-order="{{ $TopicalReport->updated_at }}">
+                                                           {{  $TopicalReport->updated_at->format('d M, Y h:i A')   }}
 
                                                         </td>
                                                         <td class="text-center">
