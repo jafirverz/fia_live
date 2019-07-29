@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Traits\GetEmailTemplate;
 use App\Mail\UserSideMail;
 use App\Mail\AdminSideMail;
+use DB;
 
 class PagesFrontController extends Controller
 {
@@ -149,29 +150,39 @@ class PagesFrontController extends Controller
         $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
 
         $query = Regulatory::query();
-        if($country)
+        $query1 = Regulatory::query();
+        if($country || $topic)
         {
-            $query->whereIn('regulatories.country_id', $country);
+            if($country)
+            {
+                $query1->whereIn('regulatories.country_id', $country);
+            }
+            if($topic)
+            {
+                $query1->where('regulatories.topic_id', 'like', '%'.$topic.'%');
+            }
+            $parent_id = $query1->get()->pluck('id')->all();
+            if($parent_id)
+            {
+                $query->WhereIn('regulatories.parent_id', $parent_id);
+            }
         }
         if($month)
         {
-            $query->whereMonth('regulatories.regulatory_date', date('m', strtotime($month)));
+            $query->whereMonth('regulatories.regulatory_date', $month);
         }
         if($year)
         {
             $query->whereYear('regulatories.regulatory_date', $year);
         }
-        if($topic)
-        {
-            $query->where('regulatories.topic_id', 'like', '%'.$topic.'%');
-        }
+
         if($stage)
         {
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
-
+        $result = $query->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*')->get();
+//return dd($result);
 
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
@@ -190,8 +201,16 @@ class PagesFrontController extends Controller
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="<?php echo setting()->pagination_limit ?? 8 ?>">
 
         <?php
-
         foreach($result as $value)
+        {
+            $regulatory = getRegulatoryData($value->parent_id);
+
+            if($regulatory)
+            {
+                $value->country_name  = getFilterCountry($regulatory->country_id);
+            }
+        }
+        foreach($result->sortBy('country_name') as $value)
         {
             $regulatory = getRegulatoryData($value->parent_id);
             if($regulatory)

@@ -725,4 +725,17 @@ if (!function_exists('getTopics')) {
         }
         return false;
     }
+
+    function getRegulatoryChildData($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->get();
+            if($regulatory)
+            {
+                return $regulatory;
+            }
+        }
+        return false;
+    }
 }
