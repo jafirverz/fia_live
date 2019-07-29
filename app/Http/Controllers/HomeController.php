@@ -237,7 +237,7 @@ class HomeController extends Controller
 		  foreach($regulatories_description as $regulatory)
 		  {
 
-		  $item['content']=substr(0,120,strip_tags($regulatory->description));
+		  $item['content']=substr(strip_tags($regulatory->description),0,120);
 		  $item['link']=url('regulatory-details',$regulatory->slug);
 		  $regulatories[]=$item;
 		  }
@@ -337,7 +337,7 @@ class HomeController extends Controller
 		  foreach($information_description as $info)
 		  {
 		  $category=get_categry_by_country($info->country_id);
-		  $item['content']=substr(strip_tags($info->information_content,0,120));
+		  $item['content']=substr(strip_tags($info->information_content),0,120);
 		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);
 		  $informations[]=$item;
 		  }

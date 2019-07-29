@@ -128,6 +128,7 @@ tinymce.init({
         inquiry_type: 'Inquiry Type',
         message: 'Message',
         fee_type: 'Fee Type',
+		user_id: 'User Id',
         attachment: 'Attachment',
         date: 'Date',
         content: 'Content',
