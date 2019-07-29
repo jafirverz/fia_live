@@ -59,13 +59,13 @@
                                         <td>
                                             {!! $banner->order_by   !!}
                                         </td>
-                                        <td>
+                                        <td data-order="{{ $banner->created_at }}">
                                             @if (!is_null($banner->created_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($banner->created_at))   !!}
+                                                {{$banner->created_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
-                                        <td>@if (!is_null($banner->updated_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($banner->updated_at))   !!}
+                                        <td data-order="{{ $banner->updated_at }}">@if (!is_null($banner->updated_at))
+                                                {{$banner->updated_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
                                         <td>

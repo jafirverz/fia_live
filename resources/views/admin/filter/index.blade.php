@@ -66,14 +66,14 @@
 
                                         </td>
 
-                                        <td>
+                                        <td data-order="{{ $filter->created_at }}">
                                             @if ($filter->created_at == null)
                                                 {{$filter->created_at}}
                                             @endif
                                             {{ $filter->created_at->format('d M, Y h:i A') }}
 
                                         </td>
-                                        <td>@if ($filter->updated_at == null)
+                                        <td data-order="{{ $filter->updated_at }}">@if ($filter->updated_at == null)
                                                 {{$filter->updated_at}}
                                             @endif
                                             {{ $filter->updated_at->format('d M, Y h:i A') }}

@@ -46,13 +46,13 @@
                                             {!! $page->slug   !!}
                                         </td>
                                         
-                                        <td>
+                                        <td data-order="{{ $page->created_at }}">
                                             @if (!is_null($page->created_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($page->created_at))   !!}
+                                               {{$page->created_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
-                                        <td>@if (!is_null($page->updated_at))
-                                                {!!  date("Y-m-d H:i:s", strtotime($page->updated_at))   !!}
+                                        <td data-order="{{ $page->updated_at }}">@if (!is_null($page->updated_at))
+                                               {{$page->updated_at->format('d M, Y h:i A')}}
                                             @endif
                                         </td>
                                         <td>
