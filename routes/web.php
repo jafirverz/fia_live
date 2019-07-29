@@ -230,6 +230,7 @@ Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/country-information-print', 'PagesFrontController@country_information_print');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
+Route::post('/load-more-regulatories', 'PagesFrontController@loadMoreRegulatories');
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
