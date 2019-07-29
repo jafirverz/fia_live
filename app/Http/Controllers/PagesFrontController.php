@@ -148,7 +148,7 @@ class PagesFrontController extends Controller
         $topic = isset($_GET['topic']) ? $_GET['topic'][0] : '';
         $stage = isset($_GET['stage']) ? $_GET['stage'][0] : '';
         $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
-        DB::enableQueryLog();
+
         $query = Regulatory::query();
         $query1 = Regulatory::query();
         if($country || $topic)
@@ -164,12 +164,12 @@ class PagesFrontController extends Controller
             $parent_id = $query1->get()->pluck('id')->all();
             if($parent_id)
             {
-                $query->whereIn('regulatories.parent_id', $parent_id);
+                $query->WhereIn('regulatories.parent_id', $parent_id);
             }
         }
         if($month)
         {
-            $query->whereMonth('regulatories.regulatory_date', date('m', strtotime($month)));
+            $query->whereMonth('regulatories.regulatory_date', $month);
         }
         if($year)
         {
@@ -181,12 +181,11 @@ class PagesFrontController extends Controller
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
+        $result = $query->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*')->get();
+//return dd($result);
 
-//dd(DB::getQueryLog());
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
-            return dd($result);
             $result = Regulatory::select('regulatories.id as regulatories_id', 'regulatories.*')->latestregulatory();
         }
         if($option_type)
@@ -202,8 +201,16 @@ class PagesFrontController extends Controller
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="<?php echo setting()->pagination_limit ?? 8 ?>">
 
         <?php
-
         foreach($result as $value)
+        {
+            $regulatory = getRegulatoryData($value->parent_id);
+
+            if($regulatory)
+            {
+                $value->country_name  = getFilterCountry($regulatory->country_id);
+            }
+        }
+        foreach($result->sortBy('country_name') as $value)
         {
             $regulatory = getRegulatoryData($value->parent_id);
             if($regulatory)

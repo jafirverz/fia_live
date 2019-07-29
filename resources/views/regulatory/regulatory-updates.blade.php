@@ -26,8 +26,8 @@
                         <div class="iw-1">
                             <select class="selectpicker" name="month">
                                 <option value="">-- Month --</option>
-                                @foreach (getFilterMonth() as $month)
-                                <option value="{{ $month->tag_name }}" @if($month->tag_name) @if($month->tag_name==date('F')) selected @endif @endif>{{ $month->tag_name }}</option>
+                                @foreach (getFilterMonth() as $key => $month)
+                                <option value="{{ $key+1 }}" @if($month->tag_name) @if(date('n')==$key+1) selected @endif @endif>{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -206,10 +206,9 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("a.lk-back").on("click", function () {
-            var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
             var d = new Date();
             $("select[name='country[]']").val('');
-            $("select[name='month']").val(months[d.getMonth()]);
+            $("select[name='month']").val(d.getMonth()+1);
             $("select[name='year']").val(d.getFullYear());
             $("select[name='topic']").val('');
             $("select[name='stage']").val('');
