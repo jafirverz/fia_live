@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Traits\GetEmailTemplate;
 use App\Mail\UserSideMail;
 use App\Mail\AdminSideMail;
+use DB;
 
 class PagesFrontController extends Controller
 {
@@ -147,11 +148,24 @@ class PagesFrontController extends Controller
         $topic = isset($_GET['topic']) ? $_GET['topic'][0] : '';
         $stage = isset($_GET['stage']) ? $_GET['stage'][0] : '';
         $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
-
+        DB::enableQueryLog();
         $query = Regulatory::query();
-        if($country)
+        $query1 = Regulatory::query();
+        if($country || $topic)
         {
-            $query->whereIn('regulatories.country_id', $country);
+            if($country)
+            {
+                $query1->whereIn('regulatories.country_id', $country);
+            }
+            if($topic)
+            {
+                $query1->where('regulatories.topic_id', 'like', '%'.$topic.'%');
+            }
+            $parent_id = $query1->get()->pluck('id')->all();
+            if($parent_id)
+            {
+                $query->whereIn('regulatories.parent_id', $parent_id);
+            }
         }
         if($month)
         {
@@ -161,10 +175,7 @@ class PagesFrontController extends Controller
         {
             $query->whereYear('regulatories.regulatory_date', $year);
         }
-        if($topic)
-        {
-            $query->where('regulatories.topic_id', 'like', '%'.$topic.'%');
-        }
+
         if($stage)
         {
             $query->where('regulatories.stage_id', $stage);
@@ -172,9 +183,10 @@ class PagesFrontController extends Controller
 
         $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
 
-
+//dd(DB::getQueryLog());
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
+            return dd($result);
             $result = Regulatory::select('regulatories.id as regulatories_id', 'regulatories.*')->latestregulatory();
         }
         if($option_type)
