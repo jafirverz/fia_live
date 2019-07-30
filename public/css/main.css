@@ -741,7 +741,7 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	.gotop:after { bottom: -4px; left: -4px; right: -4px; top: -4px; }
 	.intro-home-2 .col:last-child { padding-left: 50px; }
 }
-@media (min-width:1200px){	
+@media (min-width:1200px){
 }
 @media (max-width:1366px){
 	.footer-container .line { right: 20%; }
