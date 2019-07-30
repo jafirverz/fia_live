@@ -245,7 +245,7 @@
 		   country=country.toLowerCase();
 		   country=country.replace(" ", "_");
 
-		   var content;
+		   var content="";
 		   content+='<div id="'+country+'" class="pin-pp">';
            content+='<div class="tb-col">';
            content+='<div class="col">';
