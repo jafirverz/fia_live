@@ -513,7 +513,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformation($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->orderBy('ordering', 'asc')->get();
     }
 
     function getCountryInformationBasedOnDetails($country, $category)

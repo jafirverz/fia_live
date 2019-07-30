@@ -22,12 +22,13 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <table class="table table-bordered table-hover datatable">
+                                <table class="table table-bordered table-hover" id="datatable">
                                     <thead>
                                         <tr>
                                             <th>Country Info. Title</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
+                                            <th>Order</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -38,6 +39,7 @@
                                             <td>{{ $country->information_title }}</td>
                                             <td data-order="{{ $country->created_at }}">{{ $country->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                             <td data-order="{{ $country->updated_at }}">{{ $country->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                            <td>{{ $country->ordering }}</td>
                                             <td>
                                                 <a href="{{ url('admin/country-information/edit', $country->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                 <form action="{{ url('admin/country-information/destroy') }}" method="post">
@@ -63,4 +65,11 @@
         </div>
     </section>
 </div>
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable( {
+        "order": [[ 3, "asc" ]]
+    } );
+} );
+</script>
 @endsection
