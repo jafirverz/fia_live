@@ -39,12 +39,14 @@ Route::get('/storage-link', function () {
     return $exitCode2;
 
 });
+
+Route::get('/safelogin', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
     Route::post('/profile/update', 'AdminAuth\ProfileController@update');
-    Route::get('/', 'AdminAuth\LoginController@showLoginForm');
-    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
+    //Route::get('/', 'AdminAuth\LoginController@showLoginForm');
+
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
