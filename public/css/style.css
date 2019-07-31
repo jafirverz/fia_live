@@ -205,7 +205,7 @@ img { vertical-align: top; }
 
 
 .txt-white { color: #ffffff; }
-.txt-red { color: #f90000; }
+.txt-red, span.invalid-feedback { color: #f90000; }
 .bdr { border: 1px solid #eeeeee; }
 strong { font-weight: 600; }
 p strong { font-weight: 600; }

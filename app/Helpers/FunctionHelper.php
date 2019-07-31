@@ -49,6 +49,18 @@ if (!function_exists('getTopics')) {
         return Filter::where('filter_name', 1)->where('status', 1)->orderBy('order_by', 'asc')->get();
     }
 
+    function getFilterCountryInformation($id = null)
+    {
+        if ($id) {
+            $country = Filter::find($id);
+            if ($country) {
+                return $country->tag_name;
+            }
+            return '-';
+        }
+        return Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->orderBy('order_by', 'asc')->get();
+    }
+
     function getFilterCountryImage($id = null)
     {
         if ($id) {
@@ -501,7 +513,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformation($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', 'like', '%' . $country_id . '%')->where('information_filter_id', $information_filter_id)->get();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->orderBy('ordering', 'asc')->get();
     }
 
     function getCountryInformationBasedOnDetails($country, $category)
@@ -557,7 +569,7 @@ if (!function_exists('getTopics')) {
     function getRegulatories($slug = null)
     {
         if ($slug) {
-            return Regulatory::where('slug', $slug)->first();
+            return Regulatory::where('slug', $slug)->select('parent_id', 'country_id', 'description', 'regulatory_date', 'slug')->first();
         }
         return Regulatory::latestregulatory();
     }
@@ -692,7 +704,7 @@ if (!function_exists('getTopics')) {
     {
         if($id)
         {
-            $regulatory = Regulatory::where('parent_id', $id)->orderBy('id', 'desc')->first();
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
             if($regulatory)
             {
                 return $regulatory->description;
@@ -701,11 +713,37 @@ if (!function_exists('getTopics')) {
         return '-';
     }
 
+    function getDateRegulatoryInner($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
+            if($regulatory)
+            {
+                return $regulatory->regulatory_date;
+            }
+        }
+        return false;
+    }
+
     function getRegulatoryData($parent_id)
     {
         if($parent_id)
         {
             $regulatory = Regulatory::where('id', $parent_id)->first();
+            if($regulatory)
+            {
+                return $regulatory;
+            }
+        }
+        return false;
+    }
+
+    function getRegulatoryChildData($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->get();
             if($regulatory)
             {
                 return $regulatory;

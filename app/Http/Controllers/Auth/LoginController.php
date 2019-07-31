@@ -103,7 +103,8 @@ class LoginController extends Controller
         else
         {
             Auth::logout();
-            return redirect()->intended('login')->with('error', $error_message);
+            $request->flashExcept('password');
+            return redirect()->intended('login')->with(['error' => $error_message]);
         }
     }
 

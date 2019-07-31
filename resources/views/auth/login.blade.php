@@ -5,7 +5,7 @@
         <div class="main-wrap">
             @include('inc.banner')
             <div class="container space-1">
-                @include('admin.inc.message')
+                {{-- @include('admin.inc.message') --}}
                 <form action="{{ route('login') }}" method="POST" class="form-wrap-1 form-type form-ani">
                     @csrf
                     <h1 class="title-1 text-center">Sign in to your account</h1>
@@ -14,7 +14,12 @@
                         <label>Email Address</label>
                         @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                            {{ $errors->first('email') }}
+                        </span>
+                        @endif
+                        @if(session('error'))
+                        <span class="invalid-feedback" role="alert">
+                            {{ session('error') }}
                         </span>
                         @endif
                     </div>
@@ -23,7 +28,7 @@
                         <label>Password</label>
                         @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('password') }}</strong>
+                            {{ $errors->first('password') }}
                         </span>
                         @endif
                     </div>

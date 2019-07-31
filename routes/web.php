@@ -39,12 +39,14 @@ Route::get('/storage-link', function () {
     return $exitCode2;
 
 });
+
+Route::get('/safelogin', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/profile/edit', 'AdminAuth\ProfileController@edit');
     Route::post('/profile/update', 'AdminAuth\ProfileController@update');
-    Route::get('/', 'AdminAuth\LoginController@showLoginForm');
-    Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin_login');
+    //Route::get('/', 'AdminAuth\LoginController@showLoginForm');
+
     Route::post('/login', 'AdminAuth\LoginController@login');
     Route::post('/logout', 'AdminAuth\LoginController@logout');
 
@@ -230,6 +232,7 @@ Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
 Route::get('/country-information-print', 'PagesFrontController@country_information_print');
 Route::get('/regulatory-details/{slug}', 'PagesFrontController@regulatory_details');
+Route::post('/load-more-regulatories', 'PagesFrontController@loadMoreRegulatories');
 Route::get('/regulatory-details-search', 'PagesFrontController@regulatory_details_search');
 Route::get('/regulatory-print/{slug}', 'PagesFrontController@regulatory_print');
 Route::post('/profile-update/{student_id}', 'PagesFrontController@profileUpdate');
