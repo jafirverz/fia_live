@@ -704,13 +704,26 @@ if (!function_exists('getTopics')) {
     {
         if($id)
         {
-            $regulatory = Regulatory::where('parent_id', $id)->orderBy('id', 'desc')->first();
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
             if($regulatory)
             {
                 return $regulatory->description;
             }
         }
         return '-';
+    }
+
+    function getDateRegulatoryInner($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
+            if($regulatory)
+            {
+                return $regulatory->regulatory_date;
+            }
+        }
+        return false;
     }
 
     function getRegulatoryData($parent_id)

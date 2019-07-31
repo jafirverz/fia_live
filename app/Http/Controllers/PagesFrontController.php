@@ -130,7 +130,7 @@ class PagesFrontController extends Controller
             if(strpos($id, ',') !== false)
             {
                 $id = explode(',', $id);
-                $child_regulatory = Regulatory::whereIn('id', $id)->latest()->get();
+                $child_regulatory = Regulatory::whereIn('id', $id)->orderBy('regulatory_date', 'desc')->get();
             }
             else
             {
