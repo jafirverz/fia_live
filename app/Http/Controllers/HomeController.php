@@ -53,7 +53,8 @@ class HomeController extends Controller
 	 {
 		//dd($_GET); 
 		 $country=getCountryId($_GET['country']);
-		 $regulatories = Regulatory::where('country_id', $country)->get();
+		 $regulatories = Regulatory::where('country_id', $country)->limit(setting()->pagination_limit)->get();
+		 $total_regulatories = Regulatory::where('country_id', $country)->count();
 		 $page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
@@ -64,7 +65,7 @@ class HomeController extends Controller
 		$banner = get_page_banner($page->id);
 		//dd($banner->banner_image);
 		$breadcrumbs = getBreadcrumb($page);
-		return view('search-results-regulatory',compact('page','banner','regulatories','breadcrumbs'));
+		return view('search-results-regulatory',compact('page','banner','regulatories','breadcrumbs','total_regulatories'));
 	}
 	 public function search(Request $request)
     {

@@ -11,17 +11,18 @@
                 </div>
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
-                        <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
-                        @if($_GET['country'])
+                    @if($_GET['country'])
                         @php $countryID=getCountryId($_GET['country']);@endphp
                         @else
                         @php $countryID="";@endphp
                         @endif
+                        <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
+                                <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
-                            <option @if($countryID==$country->id) selected="selected" @endif
+                            <option  @if($countryID==$country->id) selected="selected" @endif
                                 data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}'
-                                value="{{ $country->id }}" > {{ $country->tag_name }}</option>
+                                value="{{ $country->id }}"> {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -29,8 +30,8 @@
                         <div class="iw-1">
                             <select class="selectpicker" name="month">
                                 <option value="">-- Month --</option>
-                                @foreach (getFilterMonth() as $month)
-                                <option value="{{ $month->tag_name }}">{{ $month->tag_name }}</option>
+                                @foreach (getFilterMonth() as $key => $month)
+                                <option value="{{ $key+1 }}">{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -70,11 +71,12 @@
         
         
         <div class="container space-1 search-results">
-        <h1 class="title-1 text-center">Search Results</h1>
-        <div id="search-list" class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}" data-load="#btn-load">
-        
-         @if($regulatories)
-                    @foreach($regulatories as $regulatory)
+            <h1 class="title-1 text-center">Search Results</h1>
+            <?php $total_regulatories;?>
+            @if($regulatories)
+            <input type="hidden" name="min_load" value="{{ setting()->pagination_limit ?? 8 }}">
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
+                 @foreach($regulatories as $regulatory)
 						<div class="item mbox">
                     <div class="box-4">
                         <figure><img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" /></figure>
@@ -90,11 +92,12 @@
                         <a class="detail" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $regulatory->id }} @else javascript:void(0) @endif">View detail</a>
                     </div>
                 </div>
-					@endforeach 
-                    @endif 
-                    <!-- no loop this element --> <div class="grid-sizer"></div> <!-- no loop this element -->	 
-                    </div>
-            
+					@endforeach
+                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+            </div>
+
+                @endif
+
         </div>
        
     </div><!-- //main -->
@@ -104,10 +107,9 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("a.lk-back").on("click", function () {
-            var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
             var d = new Date();
             $("select[name='country[]']").val('');
-            $("select[name='month']").val(months[d.getMonth()]);
+            $("select[name='month']").val(d.getMonth()+1);
             $("select[name='year']").val(d.getFullYear());
             $("select[name='topic']").val('');
             $("select[name='stage']").val('');
@@ -180,6 +182,9 @@
             });
 
         }
+
+        counter = 2;
+       
     });
 
 </script>
