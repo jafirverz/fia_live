@@ -38,7 +38,16 @@
                     </span>
                     @endif
                 </div>
+				<div class="form-group">
+                            <div class="google-recaptcha">
+                                <div class="g-recaptcha" data-callback="onSubmit"
+                                    data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                <input type="hidden" title="Please verify this" class="required" name="keycode"
+                                    id="keycode">
+                                <div id="cap-response" style="display:none; color:#F00;"></div>
 
+                            </div>
+                        </div>
                 <div class="form-group row">
                     <label for="password-confirm"
                         class="lb">{{ __('Confirm Password') }}</label>
