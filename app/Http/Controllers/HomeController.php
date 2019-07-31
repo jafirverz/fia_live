@@ -305,6 +305,7 @@ class HomeController extends Controller
 		  foreach($information_title as $information)
 		  {
 		  $category=get_categry_by_country($information->country_id);
+		  $item['country']=getFilterCountry($information->country_id);
 		  $item['content']=$information->information_title;
 		  $item['link']=url('country-information-details?country='.getFilterCountry($information->country_id).'&category='.$category);
 		  $informations[]=$item;
@@ -337,6 +338,7 @@ class HomeController extends Controller
 		  foreach($information_description as $info)
 		  {
 		  $category=get_categry_by_country($info->country_id);
+		  $item['country']=getFilterCountry($info->country_id);
 		  $item['content']=substr(strip_tags($info->information_content),0,120);
 		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);
 		  $informations[]=$item;
