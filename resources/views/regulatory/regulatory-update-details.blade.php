@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -128,3 +129,4 @@ $id = $_GET['id'] ?? '';
 
 </script>
 @endsection
+
