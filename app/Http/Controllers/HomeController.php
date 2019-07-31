@@ -49,11 +49,11 @@ class HomeController extends Controller
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
-	 public function search_regulatory($slug = 'search-results-regulatory')
+	  public function search_regulatory($slug = 'search-results-regulatory')
 	 {
 		//dd($_GET); 
 		 $country=getCountryId($_GET['country']);
-		 $regulatories = Regulatory::where('country_id', $country)->limit(setting()->pagination_limit)->get();
+		 $regulatories = Regulatory::where('title','like', '%'.$_GET['country'].'%')->orderBy('regulatory_date','DESC')->get();
 		 $total_regulatories = Regulatory::where('country_id', $country)->count();
 		 $page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)

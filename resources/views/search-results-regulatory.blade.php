@@ -72,27 +72,32 @@
         
         <div class="container space-1 search-results">
             <h1 class="title-1 text-center">Search Results</h1>
-            <?php $total_regulatories;?>
+            
             @if($regulatories)
             <input type="hidden" name="min_load" value="{{ setting()->pagination_limit ?? 8 }}">
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
-                 @foreach($regulatories as $regulatory)
-						<div class="item mbox">
+                 @foreach ($regulatories as $value)
+                @php
+                    $regulatory = getRegulatoryData($value->parent_id);
+                @endphp
+                @if($regulatory)
+                <div class="item mbox">
                     <div class="box-4">
-                        <figure><img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" /></figure>
+                        <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory->country_id))))<img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" />@endif</figure>
                         <div class="content">
                             <div class="ecol">
-                                <h3 class="title">{{ $regulatory->title }}</h3>
+                                <h3 class="title">{{ $value->title }}</h3>
                                 <p class="date"><span class="country">@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif</span> |
-                                    @if($regulatory->regulatory_date) {{ date('M d, Y', strtotime($regulatory->regulatory_date)) }} @endif</p>
-                                    {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory->id)), 250) !!}
+                                    @if($value->regulatory_date) {{ date('M d, Y', strtotime($value->regulatory_date)) }} @endif</p>
+                                    {!! Illuminate\Support\Str::limit(strip_tags($value->description), 250) !!}
                             </div>
                             <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
-                        <a class="detail" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $regulatory->id }} @else javascript:void(0) @endif">View detail</a>
+                        <a class="detail load-more-regulatory" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif" data-id="{{ $value->id }}">View detail</a>
                     </div>
                 </div>
-					@endforeach
+                @endif
+                @endforeach
                 <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
             </div>
 
