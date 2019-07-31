@@ -21,8 +21,9 @@
                             @foreach($informations as $info)
                              @php 
                             $keyword=strip_tags($_REQUEST['search_content']);
+                            $link=str_replace(" ","+",$info['link']);
                             @endphp
-								<li class="mlist-line"><a href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
+								<li class="mlist-line"><a href="{{ $link}}">{{$info['country']}}: {!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a></li>
                             @endforeach
 														</ul>
 						</div>

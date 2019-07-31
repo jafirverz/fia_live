@@ -165,7 +165,7 @@
                                   <div class="ecol">
                                     <h3 class="title">{{$regulatory->title}}</h3>
                                     <p class="date"><span class="country">{{getFilterCountry($regulatory->country_id)}}</span> | {{ $regulatory->created_at->format('M d, Y') }}</p>
-                                    <p>{!! Illuminate\Support\Str::limit($regulatory->description, 120) !!}</p>
+                                    {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory->id)), 150) !!}
                                   </div>
                                     <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                                 </div>
