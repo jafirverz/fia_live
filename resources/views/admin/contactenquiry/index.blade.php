@@ -21,7 +21,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <table class="table table-bordered table-hover datatable">
+                                <table class="table table-bordered table-hover " id="datatable_enquiry">
                                     <thead>
                                         <tr>
                                             <th>Contact Name</th>
@@ -61,4 +61,12 @@
         </div>
     </section>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#datatable_enquiry').dataTable({
+            'order': [6, 'desc'],
+        });
+    });
+
+</script>
 @endsection
