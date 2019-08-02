@@ -64,7 +64,7 @@
 <script>
     $(document).ready(function () {
         $('#datatable_enquiry').dataTable({
-            'order': [6, 'asc'],
+            'order': [6, 'desc'],
         });
     });
 
