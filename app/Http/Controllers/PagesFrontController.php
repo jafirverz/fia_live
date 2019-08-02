@@ -162,10 +162,7 @@ class PagesFrontController extends Controller
                 $query1->where('regulatories.topic_id', 'like', '%'.$topic.'%');
             }
             $parent_id = $query1->get()->pluck('id')->all();
-            if($parent_id)
-            {
-                $query->WhereIn('regulatories.parent_id', $parent_id);
-            }
+            $query->WhereIn('regulatories.parent_id', $parent_id);
         }
         if($month)
         {
