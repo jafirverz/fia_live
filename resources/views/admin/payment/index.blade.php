@@ -105,7 +105,7 @@
                                                     </td>
                                                     @if(!is_null($payment->path))
                                                         <td>
-                                                            <a class="" title="Download Invoice"
+                                                            <a class="" title="Download Invoice" target="_blank"
                                                                href="{{ asset('storage/'.$payment->path) }}">
                                                                 <i class="fa fa-download btn btn-primary"> Download</i>
                                                             </a>
