@@ -25,7 +25,7 @@ class CountryInformationController extends Controller
     {
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'Index';
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->get();
         $categories = Filter::where('filter_name', 5)->where('status', 1)->get();
 
         return view('admin.country_information.index', compact('title', 'subtitle', 'countries', 'categories'));
@@ -57,7 +57,7 @@ class CountryInformationController extends Controller
         $request->validate([
             'country_id'  =>  'required',
             'information_filter_id' =>  'required',
-            'information_title' =>  'required|unique:country_information,information_title',
+            'information_title' =>  'required',
             'information_content'   =>  'required',
         ]);
 
@@ -65,8 +65,9 @@ class CountryInformationController extends Controller
         $country_information->country_id = $request->country_id;
         $country_information->information_filter_id = $request->information_filter_id;
         $country_information->information_title = $request->information_title;
-        $country_information->information_title_slug = Str::slug($request->information_title, '-');
+        $country_information->information_title_slug = Str::slug($request->information_title . Str::uuid(), '-');
         $country_information->information_content = $request->information_content;
+        $country_information->ordering = $request->ordering ?? 0;
         $country_information->save();
 
         return redirect('admin/country-information')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.COUNTRY_INFORMATION')]));
@@ -94,7 +95,7 @@ class CountryInformationController extends Controller
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'Edit';
         $country_information = CountryInformation::findorfail($id);
-        $countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $countries = Filter::where('filter_name', 1)->where('status', 1)->where('country_information', 1)->get();
         $categories = Filter::where('filter_name', 5)->where('status', 1)->get();
 
         return view('admin.country_information.edit', compact('title', 'subtitle', 'country_information', 'countries', 'categories'));
@@ -112,7 +113,7 @@ class CountryInformationController extends Controller
         $request->validate([
             'country_id'  =>  'required',
             'information_filter_id' =>  'required',
-            'information_title' =>  'required|unique:country_information,information_title,'.$id.',id',
+            'information_title' =>  'required',
             'information_content'   =>  'required',
         ]);
 
@@ -120,8 +121,9 @@ class CountryInformationController extends Controller
         $country_information->country_id = $request->country_id;
         $country_information->information_filter_id = $request->information_filter_id;
         $country_information->information_title = $request->information_title;
-        $country_information->information_title_slug = Str::slug($request->information_title, '-');
+        $country_information->information_title_slug = Str::slug($request->information_title . Str::uuid(), '-');
         $country_information->information_content = $request->information_content;
+        $country_information->ordering = $request->ordering ?? 0;
         $country_information->updated_at = Carbon::now();
         $country_information->save();
 
@@ -146,7 +148,7 @@ class CountryInformationController extends Controller
     {
         $title = __('constant.COUNTRY_INFORMATION');
         $subtitle = 'List';
-        $country_information = CountryInformation::where('country_id', 'like', '%'.$country_id.'%')->where('information_filter_id', $information_filter_id)->get();
+        $country_information = CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
         return view('admin.country_information.list', compact('title', 'subtitle', 'country_information', 'country_id', 'information_filter_id'));
     }
 }

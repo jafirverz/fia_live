@@ -45,7 +45,7 @@
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
-                                            <td>@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td>
+                                            <td data-order="{{ $regulatory->date_of_regulation_in_force }}">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td>
                                             <td>
                                                 @if($topics)
                                                 @foreach($topics as $topic)

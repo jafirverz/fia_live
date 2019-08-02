@@ -39,7 +39,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
                                         <ul class="nav-list">
-                                            @foreach (getFilterCountry() as $country)
+                                            @foreach (getFilterCountryInformation() as $country)
                                             <li @if($country->tag_name==$_GET['country']) class="active" @endif>
                                                 <a href="{{ url('country-information-details') }}?country={{
                                                     $country->tag_name }}&category={{ $_GET['category'] ?? '' }}">{{ $country->tag_name }}</a>
@@ -61,7 +61,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
                                     </div>
                                     <div id="tab-2" class="tab-pane">
                                         <ul class="nav-list">
-                                            @foreach (getFilterCountry()->reverse() as $country)
+                                            @foreach (getFilterCountryInformation()->reverse() as $country)
                                             <li @if($country->tag_name==$_GET['country']) class="active" @endif>
                                                 <a href="{{ url('country-information-details') }}?country={{
                                                     $country->tag_name }}&category={{ $_GET['category'] ?? '' }}">{{ $country->tag_name }}</a>

@@ -24,7 +24,7 @@
 
                         @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                            {{ $errors->first('email') }}
                         </span>
                         @endif
                     </div>

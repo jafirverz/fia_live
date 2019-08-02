@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Traits\GetEmailTemplate;
 use App\Mail\UserSideMail;
 use App\Mail\AdminSideMail;
+use DB;
 
 class PagesFrontController extends Controller
 {
@@ -29,7 +30,7 @@ class PagesFrontController extends Controller
     {
 		 $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
             $banner = get_page_banner($page->id);
             $breadcrumbs = getBreadcrumb($page);
         if(!$page)
@@ -76,13 +77,13 @@ class PagesFrontController extends Controller
         $slug = 'country-information';
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
         $breadcrumbs = getBreadcrumb($page, $title_breadcrumb);
         $slug = __('constant.COUNTRY_INFORMATION_DETAILS');
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
         $banner = get_page_banner($page->id);
 
         return view('country_information.country-information-details', compact("page", "banner", "breadcrumbs"));
@@ -95,13 +96,13 @@ class PagesFrontController extends Controller
 
     public function regulatory_details($slug)
     {
-        $regulatory = Regulatory::where('slug', $slug)->first();
+        $regulatory = Regulatory::where('slug', $slug)->firstOrFail();
         $child_regulatory = Regulatory::childregulatory($regulatory->id);
 
         $slug_page = 'regulatory-updates';
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
 
         $title_breadcrumb = [
@@ -112,7 +113,7 @@ class PagesFrontController extends Controller
         $slug_page = __('constant.REGULATORY_DETAILS');
         $page = Page::where('pages.slug', $slug_page)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
         $banner = get_page_banner($page->id);
 
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
@@ -121,7 +122,7 @@ class PagesFrontController extends Controller
     public function regulatory_print($slug)
     {
 
-        $regulatory = Regulatory::where('slug', $slug)->first();
+        $regulatory = Regulatory::where('slug', $slug)->firstOrFail();
         $child_regulatory = null;
         $id = $_GET['id'] ?? '';
         if($id)
@@ -129,7 +130,7 @@ class PagesFrontController extends Controller
             if(strpos($id, ',') !== false)
             {
                 $id = explode(',', $id);
-                $child_regulatory = Regulatory::whereIn('id', $id)->latest()->get();
+                $child_regulatory = Regulatory::whereIn('id', $id)->orderBy('regulatory_date', 'desc')->get();
             }
             else
             {
@@ -149,36 +150,47 @@ class PagesFrontController extends Controller
         $option_type = isset($_GET['option_type']) ? $_GET['option_type'] : '';
 
         $query = Regulatory::query();
-        if($country)
+        $query1 = Regulatory::query();
+        if($country || $topic)
         {
-            $query->whereIn('regulatories.country_id', $country);
+            if($country)
+            {
+                $query1->whereIn('regulatories.country_id', $country);
+            }
+            if($topic)
+            {
+                $query1->where('regulatories.topic_id', 'like', '%'.$topic.'%');
+            }
+            $parent_id = $query1->get()->pluck('id')->all();
+            if($parent_id)
+            {
+                $query->WhereIn('regulatories.parent_id', $parent_id);
+            }
         }
         if($month)
         {
-            $query->whereMonth('regulatories.created_at', date('m', strtotime($month)));
+            $query->whereMonth('regulatories.regulatory_date', $month);
         }
         if($year)
         {
-            $query->whereYear('regulatories.created_at', $year);
+            $query->whereYear('regulatories.regulatory_date', $year);
         }
-        if($topic)
-        {
-            $query->where('regulatories.topic_id', 'like', '%'.$topic.'%');
-        }
+
         if($stage)
         {
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->join('filters', 'regulatories.country_id', '=', 'filters.id')->where('filters.filter_name', 1)->orderBy('filters.tag_name', 'asc')->orderBy('regulatories.title', 'asc')->select('regulatories.created_at as regulatories_created_at', 'regulatories.id as regulatories_id', 'regulatories.*', 'filters.*')->get();
+        $result = $query->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*')->get();
+//return dd($result);
 
         if(!$country && !$month && !$year && !$topic && !$stage)
         {
-            $result = Regulatory::latestregulatory();
+            $result = Regulatory::select('regulatories.id as regulatories_id', 'regulatories.*')->latestregulatory();
         }
         if($option_type)
         {
-            $result = Regulatory::latestregulatory();
+            $result = Regulatory::select('regulatories.id as regulatories_id', 'regulatories.*')->latestregulatory();
         }
         ?>
             <h1 class="title-1 text-center">Search Results</h1>
@@ -186,10 +198,19 @@ class PagesFrontController extends Controller
             if($result->count())
             {
             ?>
-            <div class="grid-2 eheight clearfix mbox-wrap" data-num=<?php echo setting()->pagination_limit ?? 8 ?>">
-        <?php
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num="<?php echo setting()->pagination_limit ?? 8 ?>">
 
+        <?php
         foreach($result as $value)
+        {
+            $regulatory = getRegulatoryData($value->parent_id);
+
+            if($regulatory)
+            {
+                $value->country_name  = getFilterCountry($regulatory->country_id);
+            }
+        }
+        foreach($result->sortBy('country_name') as $value)
         {
             $regulatory = getRegulatoryData($value->parent_id);
             if($regulatory)
@@ -203,11 +224,12 @@ class PagesFrontController extends Controller
                             <div class="ecol">
                                 <h3 class="title"><?php echo $value->title ?></h3>
                                 <p class="date"><span class="country"><?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?></span> |
-                                    <?php echo date('M d, Y', strtotime($value->regulatories_created_at)); ?></p>
-                                    <p><?php echo html_entity_decode(Str::limit(strip_tags($value->description), 300)); ?></p>
+                                    <?php echo date('M d, Y', strtotime($value->regulatory_date)); ?></p>
+                                    <p><?php echo html_entity_decode(Str::limit(strip_tags($value->description), 250)); ?></p>
                             </div>
+                            <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
-                        <a class="detail" href="<?php if($regulatory->slug) { echo url('regulatory-details', $regulatory->slug) . '?id=' . $value->regulatories_id; } else { echo 'javascript:void(0)'; } ?>">View detail</a>
+                        <a class="detail" href="<?php if($regulatory->slug) { echo url('regulatory-details', $regulatory->slug) . '?id=' . $value->regulatories_id ?? ''; } else { echo 'javascript:void(0)'; } ?>">View detail</a>
                     </div>
                 </div>
 
@@ -228,6 +250,57 @@ class PagesFrontController extends Controller
             }
     }
 
+    public function loadMoreRegulatories(Request $request)
+    {
+        $id = $request->id;
+        $counter = $request->counter;
+        $min_load = $request->min_load;
+        $result = Regulatory::select('regulatories.id as regulatories_id', 'regulatories.*')->limit($min_load*$counter, $min_load)->latestregulatory();
+        ?>
+            <h1 class="title-1 text-center">Latest Updates</h1>
+            <?php
+            if($result->count())
+            {
+            ?>
+            <input type="hidden" name="min_load" value="<?php echo setting()->pagination_limit ?? 8; ?>">
+            <div class="grid-2 eheight clearfix">
+
+        <?php
+        foreach($result as $value)
+        {
+            $regulatory = getRegulatoryData($value->parent_id);
+            if($regulatory)
+            {
+        ?>
+
+                <div class="item mbox">
+                    <div class="box-4">
+                        <figure><img src="<?php if($regulatory->country_id) { echo getFilterCountryImage($regulatory->country_id); } ?>" alt="<?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?> flag" /></figure>
+                        <div class="content">
+                            <div class="ecol">
+                                <h3 class="title"><?php echo $value->title ?></h3>
+                                <p class="date"><span class="country"><?php if($regulatory->country_id) { echo getFilterCountry($regulatory->country_id); } ?></span> |
+                                    <?php echo date('M d, Y', strtotime($value->regulatory_date)); ?></p>
+                                    <p><?php echo html_entity_decode(Str::limit(strip_tags($value->description), 250)); ?></p>
+                            </div>
+                            <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                        </div>
+                        <a class="detail load-more-regulatory" href="<?php if($regulatory->slug) { echo url('regulatory-details', $regulatory->slug) . '?id=' . $value->regulatories_id ?? ''; } else { echo 'javascript:void(0)'; } ?>" data-id="{{ $value->id }}">View detail</a>
+                    </div>
+                </div>
+
+
+        <?php
+        }}
+        ?>
+                <div class="more-wrap"><button id="btn-load-2" class="btn-4 load-more-regulatory"> Load more <i
+                    class="fas fa-angle-double-down"></i></button></div>
+            </div>
+
+        <?php
+            }
+    }
+
     public function profileUpdate(Request $request, $id)
     {
         $request->validate([
@@ -238,7 +311,7 @@ class PagesFrontController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('user_id', $id)->first();
+        $user = User::where('user_id', $id)->firstOrFail();
         if(password_verify($request->password, $user->password))
         {
             $user->salutation = $request->salutation;
@@ -268,7 +341,7 @@ class PagesFrontController extends Controller
 		$title = __('constant.PROFILE');
 		$page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
-            ->first();
+            ->firstOrFail();
 
 		$banner = get_page_banner($page->id);
 

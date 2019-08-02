@@ -46,7 +46,7 @@
                                 <label for="">Date of Regulation</label>
                                 <input type="text" name="date_of_regulation_in_force" class="form-control datepicker"
                                     placeholder="Enter date of regulation"
-                                    value="@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @endif">
+                                    value="@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('Y-m-d') }} @endif">
                                 @if ($errors->has('date_of_regulation_in_force'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('date_of_regulation_in_force') }}</strong>
