@@ -50,7 +50,11 @@
 									</div>
                                     
 									<div class="col">
+                                     @if(Auth::check())
 										@if($report->pdf!="")<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>@endif
+                                     @else
+                                     <a href="#find-pp" class="btn-4" data-toggle="modal"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>
+                                     @endif
 									</div>
                                     
 								</div>
@@ -65,4 +69,13 @@
 				</div>
                 
             </div>
+            
+@if ($errors->any())           
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#find-pp').modal('show');
+    });
+</script> 
+@endif 
+            @include('inc.sign-in-form')
 @endsection
