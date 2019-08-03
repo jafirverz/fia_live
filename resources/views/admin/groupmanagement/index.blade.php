@@ -52,19 +52,28 @@
                                                 </td>
                                                 <td>{{ inactiveActive($group->status) ?? '-' }}</td>
                                                 <td>
-                                                    <a href="{{ url('admin/group-management/edit', $group->id) }}"
-                                                       class="btn btn-info" title="Edit"><i class="fa fa-pencil"
-                                                                                            aria-hidden="true"></i></a>
+                                                    <table class="action-table">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{ url('admin/group-management/edit', $group->id) }}"
+                                                                   class="btn btn-info" title="Edit"><i class="fa fa-pencil"
+                                                                                                        aria-hidden="true"></i></a>
+                                                            </td>
+                                                            <td>
+                                                                <form action="{{ url('admin/group-management/destroy') }}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                            onclick="return confirm('Are you sure you want to delete?');"
+                                                                            title="Delete"><i class="fa fa-trash"
+                                                                                              aria-hidden="true"></i></button>
+                                                                    <input type="hidden" name="id" value="{{ $group->id }}">
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
 
-                                                    <form action="{{ url('admin/group-management/destroy') }}"
-                                                          method="post">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-danger"
-                                                                onclick="return confirm('Are you sure you want to delete?');"
-                                                                title="Delete"><i class="fa fa-trash"
-                                                                                  aria-hidden="true"></i></button>
-                                                        <input type="hidden" name="id" value="{{ $group->id }}">
-                                                    </form>
+
                                                 </td>
                                             </tr>
 

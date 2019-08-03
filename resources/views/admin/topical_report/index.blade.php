@@ -70,17 +70,23 @@
 
                                                         </td>
                                                         <td class="text-center">
-
-                                           <a href="{{ url('admin/topical-report/edit/' . $TopicalReport->id) }}"
-                                               title="Edit Topical Report">
-                                                <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ url('admin/topical-report/destroy/' . $TopicalReport->id) }}"
-                                               title="Destroy Topical Report"
-                                               onclick="return confirm('Are you sure you want to delete this Topical Report?');">
-                                                <i class="fa fa-trash btn btn-danger" aria-hidden="true"></i>
-                                            </a>
-
+                                                            <table class="action-table">
+                                                                <tr>
+                                                                    <td>
+                                                                        <a href="{{ url('admin/topical-report/edit/' . $TopicalReport->id) }}"
+                                                                           title="Edit Topical Report">
+                                                                            <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="{{ url('admin/topical-report/destroy/' . $TopicalReport->id) }}"
+                                                                           title="Destroy Topical Report"
+                                                                           onclick="return confirm('Are you sure you want to delete this Topical Report?');">
+                                                                            <i class="fa fa-trash btn btn-danger" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
                                                     </tr>
                                                 @endforeach

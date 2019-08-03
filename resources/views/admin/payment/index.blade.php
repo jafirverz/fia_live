@@ -95,7 +95,7 @@
                                         </td>
 
                                         <td>
-                                            <table>
+                                            <table class="action-table">
                                                 <tr>
                                                     <td>
                                                         <a class="" title="View Payment detail"
