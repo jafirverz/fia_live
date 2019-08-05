@@ -27,12 +27,12 @@
                           <p class="help-block"></p>
                         </div>
                         <div class="form-group">
-                          <label for="">Old Password</label>
+                          <label for="">New Password</label>
                           <input name="old_password" type="password" class="form-control" id="" placeholder="">
                           <p class="help-block"></p>
                         </div>
                         <div class="form-group">
-                          <label for="">New Password</label>
+                          <label for="">Confirm Password</label>
                           <input name="new_password" type="password" class="form-control" id="" placeholder="">
                           <p class="help-block"></p>
                         </div>

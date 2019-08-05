@@ -33,15 +33,13 @@ var editor_config = {
         '/css/bootstrap-datetimepicker.css'
     ],
     variable_mapper: {
-        course_cart_count: 'Course Cart Count',
-        miscellaneous_fees_cart_count: 'Miscellaneous Fees Cart Count',
-        event_cart_count: 'Event Cart Count',
+        old_password: 'Confirm Password',
 
     }
     // variable_prefix: '{{',
     // variable_suffix: '}}'
     // variable_class: 'bbbx-my-variable',
-    , variable_valid: ['course_cart_count', 'miscellaneous_fees_cart_count', 'event_cart_count'],
+    , variable_valid: ['old_password'],
     file_browser_callback: function (field_name, url, type, win) {
         var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
         var y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
@@ -117,24 +115,24 @@ tinymce.init({
     // variable plugin related
     variable_mapper: {
         name: 'Name',
+		old_password: 'Confirm Password',
         phone: 'Phone',
         email: 'Email address',
         password: 'Password',
-        amount: 'Amount',
         first_name: 'First Name',
         button_url: 'Button URL',
         url: 'url',
-        event_name: 'Name of Event',
-        inquiry_type: 'Inquiry Type',
+        enquiry_type: 'Inquiry Type',
         message: 'Message',
-        fee_type: 'Fee Type',
 		user_id: 'User Id',
         attachment: 'Attachment',
         date: 'Date',
         content: 'Content',
 
+		
+
     }
-    , variable_valid: ['name', 'phone', 'email', 'student_name', 'student_id', 'password', 'amount', 'course_names', 'programme_name', 'certificate_name', 'first_name', 'button_url', 'url', 'payment_date', 'fee_amount', 'organization_name', 'donation_date', 'donation_amount', 'payment_mode', 'payment_confirm', 'church_name', 'attendee_list', 'event_name', 'inquiry_type', 'message', 'fee_type', 'attachment', 'date', 'discount', 'order_id', 'content', 'discount_code'],
+    , variable_valid: ['name','old_password', 'phone', 'email', 'password','first_name', 'button_url', 'url', 'enquiry_type', 'message','user_id',  'attachment', 'date','content'],
     file_browser_callback: function (field_name, url, type, win) {
         var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
         var y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
