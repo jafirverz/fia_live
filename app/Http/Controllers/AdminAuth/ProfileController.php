@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'old_password'  =>  'nullable|min:6',
             'new_password'  =>  'same:old_password',
-        ]);
+        ],['same'=>'The new password and confirm password must match.']);
 
         $admin = Admin::findorfail(Auth::user()->id);
         if ($request->hasFile('profile')) {
