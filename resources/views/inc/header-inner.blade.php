@@ -3,7 +3,7 @@
         <div class="container">
             <div class="tb-col">
                 <div class="col">
-                    Hi Guest, Welcome to <strong>Food Industry Asia!</strong>
+                    Hi Guest, welcome to <strong>Food Industry Asia (FIA) Regulatory Hub!</strong>
                 </div>
                 <div class="col text-right">
                     <a class="btn-1" href="sign-in.html">Sign in</a>
