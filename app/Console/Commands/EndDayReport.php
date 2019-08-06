@@ -50,13 +50,15 @@ class EndDayReport extends Command
 
         $weekly = Carbon::now()->add(-7, 'day')->format('Y-m-d');
 
-        $regulatories = Regulatory::select(DB::raw("DATE_FORMAT(updated_at, '%Y-%m-%d') new_date"), 'regulatories.*')->get();
-        $weeklyRegulatories = $regulatories->where('new_date', '>=', $weekly);
+        $regulatories = Regulatory::where('parent_id', '!=', null)->latest()->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') new_date"), DB::raw("DATE_FORMAT(updated_at, '%Y-%m-%d') modified_date"), 'regulatories.*')->get();
 
+        $weeklyRegulatories = $regulatories->where('modified_date', '>=', $weekly);
+        //dd($weeklyRegulatories);
         $content = [];
         foreach($weeklyRegulatories as $regulatory)
         {
-            $content[] = '<h3>'.$regulatory->title.'</h3><a href="'.url('regulatory-details', $regulatory->slug).'">Read More</a><br/>';
+            $value = getRegulatoryData($regulatory->parent_id);
+            $content[] = '<h3>'.$regulatory->title.'</h3><a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'">Read More</a><br/>';
         }
 
         if ($weeklyRegulatories->count()) {
