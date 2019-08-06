@@ -4,8 +4,7 @@
             <div class="tb-col">
                 @if(Auth::check())
                 <div class="col">
-                    Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, Welcome to <strong>Food Industry
-                        Asia!</strong>
+                    Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, welcome to <strong>Food Industry Asia (FIA) Regulatory Hub!</strong>
                 </div>
                 <div class="col text-right">
                     <a class="btn-1" href="{{ url('profile') }}">Profile</a>
