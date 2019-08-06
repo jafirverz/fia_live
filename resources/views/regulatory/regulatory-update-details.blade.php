@@ -48,7 +48,7 @@ $id = $_GET['id'] ?? '';
                                 $db_topics = json_decode($regulatory->topic_id);
                                 $topics = getFilterTopic();
                                 @endphp
-                                @if ($topics)
+                                @if ($topics && $db_topics)
                                 @foreach ($topics as $value)
                                 @if(in_array($value->id, $db_topics))
                                 {{ $value->tag_name }}
