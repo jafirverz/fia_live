@@ -15,7 +15,7 @@
                 </div>
                 @else
                 <div class="col">
-                    Hi Guest, Welcome to <strong>Food Industry Asia!</strong>
+                    Hi Guest, welcome to <strong>Food Industry Asia (FIA) Regulatory Hub!</strong>
                 </div>
                 <div class="col text-right">
                     <a class="btn-1" href="{{ url('login') }}">Sign in</a>
