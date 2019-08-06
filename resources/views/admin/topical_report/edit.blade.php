@@ -42,8 +42,8 @@
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
-                                     @php $topics = \DB::table('topical_report_countries')->where('filter_id',$country->id)->count(); @endphp
-                                    <option value="{{ $country->id }}" @if($topics>0) selected="selected" @endif>{{ $country->tag_name }}</option>
+                                     @php $topic_country = getCountryByTopicalReportId($topicalReport->id); $topic_country=explode(',',$topic_country);  @endphp
+                                    <option value="{{ $country->id }}" @if(in_array($country->tag_name, $topic_country)) selected @endif>{{ $country->tag_name }}</option>
                                     @endforeach
                                     @endif
                                 </select>

@@ -219,9 +219,10 @@ class HomeController extends Controller
 		}
 		elseif($request->country!="" && $request->search_content!="")
 		{
+		$country_name=getFilterCountry($request->country);
 		$regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%'.$request->search_content.'%')
-				->where('country_id',$request->country)
+				->where('title','like', '%'.$country_name.'%')
                 ->get();
 		}
 		else
@@ -253,9 +254,10 @@ class HomeController extends Controller
 
 		elseif($request->country!="" && $request->search_content!="")
 		{
+		$country_name=getFilterCountry($request->country);	
 		$regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%'.$request->search_content.'%')
-				->where('country_id',$request->country)
+				->where('title','like', '%'.$country_name.'%')
                 ->get();
 		}
 		else
@@ -305,7 +307,7 @@ class HomeController extends Controller
 
 		  foreach($information_title as $information)
 		  {
-		  $category=get_categry_by_country($information->country_id);
+		  $category=getFilterCountry($information->information_filter_id);
 		  $item['country']=getFilterCountry($information->country_id);
 		  $item['content']=$information->information_title;
 		  $item['link']=url('country-information-details?country='.getFilterCountry($information->country_id).'&category='.$category);
@@ -338,7 +340,7 @@ class HomeController extends Controller
 		
 		  foreach($information_description as $info)
 		  {
-		  $category=get_categry_by_country($info->country_id);
+		  $category=getFilterCountry($info->information_filter_id);
 		  $item['country']=getFilterCountry($info->country_id);
 		  $item['content']=substr(strip_tags($info->information_content),0,120);
 		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);

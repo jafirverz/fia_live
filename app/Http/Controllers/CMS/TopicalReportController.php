@@ -61,8 +61,8 @@ class TopicalReportController extends Controller
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
-		$topics = Filter::where('filter_name', 2)->where('status', 1)->get();
-		$countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+		$topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
+		$countries = Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name','ASC')->get();
         return view("admin.topical_report.create", compact("title", "topics","countries"));
 
     }
@@ -76,8 +76,8 @@ class TopicalReportController extends Controller
 
         $topicalReport = TopicalReport::findorfail($id);
 
-        $topics = Filter::where('filter_name', 2)->where('status', 1)->get();
-		$countries = Filter::where('filter_name', 1)->where('status', 1)->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
+		$countries = Filter::where('filter_name', 1)->where('status', 1)->orderBy('tag_name','ASC')->get();
         return view("admin.topical_report.edit", compact("title", "topics","topicalReport","countries"));
 
     }
