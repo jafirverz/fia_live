@@ -49,11 +49,12 @@ class HomeController extends Controller
 		$regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		return view('home',compact('page','banners','regulatories'));
     }
-	 public function search_regulatory($slug = 'search-results-regulatory')
+	  public function search_regulatory($slug = 'search-results-regulatory')
 	 {
 		//dd($_GET); 
 		 $country=getCountryId($_GET['country']);
-		 $regulatories = Regulatory::where('country_id', $country)->get();
+		 $regulatories = Regulatory::where('title','like', '%'.$_GET['country'].'%')->orderBy('regulatory_date','DESC')->get();
+		 $total_regulatories = Regulatory::where('country_id', $country)->count();
 		 $page=Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
             ->first();
@@ -64,7 +65,7 @@ class HomeController extends Controller
 		$banner = get_page_banner($page->id);
 		//dd($banner->banner_image);
 		$breadcrumbs = getBreadcrumb($page);
-		return view('search-results-regulatory',compact('page','banner','regulatories','breadcrumbs'));
+		return view('search-results-regulatory',compact('page','banner','regulatories','breadcrumbs','total_regulatories'));
 	}
 	 public function search(Request $request)
     {
@@ -305,6 +306,7 @@ class HomeController extends Controller
 		  foreach($information_title as $information)
 		  {
 		  $category=get_categry_by_country($information->country_id);
+		  $item['country']=getFilterCountry($information->country_id);
 		  $item['content']=$information->information_title;
 		  $item['link']=url('country-information-details?country='.getFilterCountry($information->country_id).'&category='.$category);
 		  $informations[]=$item;
@@ -337,6 +339,7 @@ class HomeController extends Controller
 		  foreach($information_description as $info)
 		  {
 		  $category=get_categry_by_country($info->country_id);
+		  $item['country']=getFilterCountry($info->country_id);
 		  $item['content']=substr(strip_tags($info->information_content),0,120);
 		  $item['link']=url('country-information-details?country='.getFilterCountry($info->country_id).'&category='.$category);
 		  $informations[]=$item;

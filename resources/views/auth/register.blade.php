@@ -16,13 +16,13 @@
                 {{-- @include('admin.inc.message') --}}
                 <div class="form-type">
                     <h1 class="title-1 text-center">Create an Account</h1>
-                    <div class="intro-1">
+                    {{--<div class="intro-1">
                         <p>Membership of FIA is on a company basis. This means that all employees of member companies
                             may register for Full or Premium online access, according to their company’s status.
                             Membership usually covers all subsidiaries in which the member holds more than 50%
                             ownlership.</p>
                         <p>Already a Member? <a href="{{ url('login') }}">Sign In</a></p>
-                    </div>
+                    </div>--}}
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="row row-1">
@@ -189,7 +189,7 @@
                         <div class="form-group">
                             <div class="google-recaptcha">
                                 <div class="g-recaptcha" data-callback="onSubmit"
-                                    data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                    data-sitekey="{{env('CAPTCHA_SITE_KEY')}}" data-size="invisible"></div>
                                 <input type="hidden" title="Please verify this" class="required" name="keycode"
                                     id="keycode">
                                 <div id="cap-response" style="display:none; color:#F00;"></div>

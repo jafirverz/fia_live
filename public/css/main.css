@@ -657,6 +657,8 @@ background: -webkit-linear-gradient(bottom, #efefef 0%,#fff 100%);
 .document h5 { font-size: 16px; }
 .document ol li, .document ul li { margin-bottom: 7px; }
 .document ol ol, .document ul ul, .document ol ul, .document ul ol { margin-top: 15px; }
+.document table { border: none !important; width: 100% !important; }
+.document table th, .document table td { border: #ccc solid 1px !important; padding: 10px !important; }
 
 .map { margin-top: 20px; }
 .map iframe { width: 100% !important; }
@@ -781,6 +783,9 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 
 @media (min-width:992px){
 	.hide-992 { display: block !important; }
+	.grid-4 .text-1 { height: 290px; min-height: 50px; overflow: hidden; }
+	.grid-4 .ecol { height: 240px !important; min-height: 50px; overflow: hidden; }
+	.grid-4 .col-md-4 .ecol { height: 121px !important; min-height: 50px; overflow: hidden; }
 }
 
 @media (max-width:991px){

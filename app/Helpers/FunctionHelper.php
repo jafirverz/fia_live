@@ -513,7 +513,7 @@ if (!function_exists('getTopics')) {
 
     function getCountryInformation($country_id, $information_filter_id)
     {
-        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
+        return CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->orderBy('ordering', 'asc')->get();
     }
 
     function getCountryInformationBasedOnDetails($country, $category)
@@ -704,13 +704,26 @@ if (!function_exists('getTopics')) {
     {
         if($id)
         {
-            $regulatory = Regulatory::where('parent_id', $id)->orderBy('id', 'desc')->first();
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
             if($regulatory)
             {
                 return $regulatory->description;
             }
         }
         return '-';
+    }
+
+    function getDateRegulatoryInner($id)
+    {
+        if($id)
+        {
+            $regulatory = Regulatory::where('parent_id', $id)->orderBy('regulatory_date', 'desc')->first();
+            if($regulatory)
+            {
+                return $regulatory->regulatory_date;
+            }
+        }
+        return false;
     }
 
     function getRegulatoryData($parent_id)

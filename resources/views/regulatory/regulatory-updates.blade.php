@@ -26,8 +26,8 @@
                         <div class="iw-1">
                             <select class="selectpicker" name="month">
                                 <option value="">-- Month --</option>
-                                @foreach (getFilterMonth() as $month)
-                                <option value="{{ $month->tag_name }}" @if($month->tag_name) @if($month->tag_name==date('F')) selected @endif @endif>{{ $month->tag_name }}</option>
+                                @foreach (getFilterMonth() as $key => $month)
+                                <option value="{{ $key+1 }}" @if($month->tag_name) @if(date('n')==$key+1) selected @endif @endif>{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -92,7 +92,7 @@
                                     <h3 class="title">{{ $regulatory_main_highlight->title }}</h3>
                                     <p class="date"><span
                                             class="country">@if($regulatory_main_highlight->country_id) {{ getFilterCountry($regulatory_main_highlight->country_id) }} @endif</span>
-                                        | @if($regulatory_main_highlight->date_of_regulation_in_force) {{ $regulatory_main_highlight->date_of_regulation_in_force->format('d m, Y') }} @endif</p>
+                                        | @if(getDateRegulatoryInner($regulatory_main_highlight->id)) {{ date('d m, Y', strtotime(getDateRegulatoryInner($regulatory_main_highlight->id))) }} @endif</p>
                                     {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_main_highlight->id)), 800) !!}
                                 </div>
                                 <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -116,7 +116,7 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif</span>
-                                                | @if($regulatory_other_highlight->date_of_regulation_in_force) {{ $regulatory_other_highlight->date_of_regulation_in_force->format('d m, Y') }} @endif</p>
+                                                | @if(getDateRegulatoryInner($regulatory_other_highlight->id)) {{ date('d m, Y', strtotime(getDateRegulatoryInner($regulatory_other_highlight->id))) }} @endif</p>
                                             {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_other_highlight->id)),
                                             250) !!}
                                         </div>
@@ -145,7 +145,7 @@
                                             <h3 class="title">{{ $regulatory_other_highlight->title }}</h3>
                                             <p class="date"><span
                                                     class="country">@if($regulatory_other_highlight->country_id) {{ getFilterCountry($regulatory_other_highlight->country_id) }} @endif</span>
-                                                | @if($regulatory_other_highlight->date_of_regulatory_in_force) {{ $regulatory_other_highlight->date_of_regulatory_in_force->format('d m, Y') }} @endif</p>
+                                                | @if(getDateRegulatoryInner($regulatory_other_highlight->id)) {{ date('d m, Y', strtotime(getDateRegulatoryInner($regulatory_other_highlight->id))) }} @endif</p>
                                             {!! Illuminate\Support\Str::limit(strip_tags(getRegulatoryDescription($regulatory_other_highlight->id)), 200)
                                             !!}
                                         </div>
@@ -206,10 +206,9 @@
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $("a.lk-back").on("click", function () {
-            var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
             var d = new Date();
             $("select[name='country[]']").val('');
-            $("select[name='month']").val(months[d.getMonth()]);
+            $("select[name='month']").val(d.getMonth()+1);
             $("select[name='year']").val(d.getFullYear());
             $("select[name='topic']").val('');
             $("select[name='stage']").val('');

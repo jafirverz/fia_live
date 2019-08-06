@@ -11,17 +11,18 @@
                 </div>
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
-                        <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
-                        @if($_GET['country'])
+                    @if($_GET['country'])
                         @php $countryID=getCountryId($_GET['country']);@endphp
                         @else
                         @php $countryID="";@endphp
                         @endif
+                        <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
+                                <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
-                            <option @if($countryID==$country->id) selected="selected" @endif
+                            <option  @if($countryID==$country->id) selected="selected" @endif
                                 data-content='<img src="{{ $country->country_image ?? '#' }}" alt="{{ $country->tag_name }}" /> {{ $country->tag_name }}'
-                                value="{{ $country->id }}" > {{ $country->tag_name }}</option>
+                                value="{{ $country->id }}"> {{ $country->tag_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -29,8 +30,8 @@
                         <div class="iw-1">
                             <select class="selectpicker" name="month">
                                 <option value="">-- Month --</option>
-                                @foreach (getFilterMonth() as $month)
-                                <option value="{{ $month->tag_name }}">{{ $month->tag_name }}</option>
+                                @foreach (getFilterMonth() as $key => $month)
+                                <option value="{{ $key+1 }}">{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -70,28 +71,38 @@
         
         
         <div class="container space-1 search-results">
-        <h1 class="title-1 text-center">Search Results</h1>
-        <div id="search-list" class="masony grid-2" data-num="8" data-load="#btn-load">
-        
-         @if($regulatories)
-                    @foreach($regulatories as $regulatory)
-						<div class="item">
-							<div class="box-4">
-								<figure><img src="{{getFilterCountryImage($regulatory->country_id)}}" alt="{{getFilterCountry($regulatory->country_id)}} flag" /></figure>
-								<div class="content">
-									<h3 class="title">{{$regulatory->title}}</h3>
-									<p class="date"><span class="country">{{getFilterCountry($regulatory->country_id)}}</span>  |  {{ $regulatory->created_at->format('M d, Y') }}</p>
-									<p>{!! substr(strip_tags($regulatory->description),0,120) !!}</p>
-									<p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
-								</div>
-								<a class="detail" href="{{url('regulatory-details',$regulatory->slug)}}">View detail</a>
-							</div>						
-						</div>
-					@endforeach 
-                    @endif 
-                    <!-- no loop this element --> <div class="grid-sizer"></div> <!-- no loop this element -->	 
-                    </div>
+            <h1 class="title-1 text-center">Search Results</h1>
             
+            @if($regulatories)
+            <input type="hidden" name="min_load" value="{{ setting()->pagination_limit ?? 8 }}">
+            <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
+                 @foreach ($regulatories as $value)
+                @php
+                    $regulatory = getRegulatoryData($value->parent_id);
+                @endphp
+                @if($regulatory)
+                <div class="item mbox">
+                    <div class="box-4">
+                        <figure>@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory->country_id))))<img src="@if($regulatory->country_id) {{ getFilterCountryImage($regulatory->country_id) }} @endif" alt="@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif flag" />@endif</figure>
+                        <div class="content">
+                            <div class="ecol">
+                                <h3 class="title">{{ $value->title }}</h3>
+                                <p class="date"><span class="country">@if($regulatory->country_id) {{ getFilterCountry($regulatory->country_id) }} @endif</span> |
+                                    @if($value->regulatory_date) {{ date('M d, Y', strtotime($value->regulatory_date)) }} @endif</p>
+                                    {!! Illuminate\Support\Str::limit(strip_tags($value->description), 250) !!}
+                            </div>
+                            <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                        </div>
+                        <a class="detail load-more-regulatory" href="@if($regulatory->slug) {{ url('regulatory-details', $regulatory->slug) . '?id=' . $value->id }} @else javascript:void(0) @endif" data-id="{{ $value->id }}">View detail</a>
+                    </div>
+                </div>
+                @endif
+                @endforeach
+                <div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
+            </div>
+
+                @endif
+
         </div>
        
     </div><!-- //main -->
@@ -100,9 +111,15 @@
 <script>
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $("a.lk-back").on("click", function (e) {
-            e.preventDefault();
-            window.location.reload();
+        $("a.lk-back").on("click", function () {
+            var d = new Date();
+            $("select[name='country[]']").val('');
+            $("select[name='month']").val(d.getMonth()+1);
+            $("select[name='year']").val(d.getFullYear());
+            $("select[name='topic']").val('');
+            $("select[name='stage']").val('');
+            $('.selectpicker').selectpicker('refresh');
+            getSearchResult();
         });
 
         var country_array = [];
@@ -112,31 +129,32 @@
         var stage_array = [];
 
         $("select[name='country[]']").on("change", function () {
-            country_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='month']").on("change", function () {
-            month_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='year']").on("change", function () {
-            year_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='topic']").on("change", function () {
-            topic_array.push($(this).val());
             getSearchResult();
         });
 
         $("select[name='stage']").on("change", function () {
-            stage_array.push($(this).val());
             getSearchResult();
         });
 
         function getSearchResult(option_type) {
+            country_array.push($("select[name='country[]']").val());
+            month_array.push($("select[name='month']").val());
+            year_array.push($("select[name='year']").val());
+            topic_array.push($("select[name='topic']").val());
+            stage_array.push($("select[name='stage']").val());
+
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/regulatory-details-search') }}",
@@ -152,8 +170,10 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+
                     $(".search-results").html(data);
                     $(".bg-tempt").addClass("hide");
+                    showMore();
                 }
             });
             country_array = [];
@@ -161,7 +181,15 @@
             year_array = [];
             topic_array = [];
             stage_array = [];
+            $('.eheight').each(function() {
+                //alert($(this).find('.ecol').html());
+                $(this).find('.ecol').matchHeight();
+            });
+
         }
+
+        counter = 2;
+       
     });
 
 </script>

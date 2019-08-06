@@ -237,7 +237,7 @@
                                         <td>{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                         <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
-                                            <table>
+                                            <table class="action-table">
                                                 <tr>
                                                     <td>
                                                         <a class="" title="View User"
@@ -262,7 +262,7 @@
                                             </table>
                                             @if(!in_array($user->status,[__('constant.ACCOUNT_ACTIVE')]))
 
-                                                <table>
+                                                <table class="action-table">
                                                     <tr>
                                                         <td>
 
@@ -287,7 +287,7 @@
                                                     </tr>
                                                 </table>
                                             @endif
-                                            <table>
+                                            <table class="action-table">
                                                 <tr>
                                                     <td>
                                                         <a class="" title="Reject"

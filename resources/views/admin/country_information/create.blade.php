@@ -73,6 +73,16 @@
                                 </span>
                                 @endif
                             </div>
+                            <div class="form-group{{ $errors->has('ordering') ? ' has-error' : '' }}">
+                                <label for="">Order</label>
+                                <input type="number" name="ordering" class="form-control" min="0"
+                                    placeholder="Enter order" value="{{ old('ordering') ?? 0 }}">
+                                @if ($errors->has('ordering'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('ordering') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                         </div>
                         <!-- /.col -->
                     </div>

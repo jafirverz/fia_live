@@ -67,6 +67,7 @@ class CountryInformationController extends Controller
         $country_information->information_title = $request->information_title;
         $country_information->information_title_slug = Str::slug($request->information_title . Str::uuid(), '-');
         $country_information->information_content = $request->information_content;
+        $country_information->ordering = $request->ordering ?? 0;
         $country_information->save();
 
         return redirect('admin/country-information')->with('success',  __('constant.CREATED', ['module'    =>  __('constant.COUNTRY_INFORMATION')]));
@@ -122,6 +123,7 @@ class CountryInformationController extends Controller
         $country_information->information_title = $request->information_title;
         $country_information->information_title_slug = Str::slug($request->information_title . Str::uuid(), '-');
         $country_information->information_content = $request->information_content;
+        $country_information->ordering = $request->ordering ?? 0;
         $country_information->updated_at = Carbon::now();
         $country_information->save();
 
