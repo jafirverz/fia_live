@@ -236,11 +236,19 @@ class HomeController extends Controller
 		if(isset($regulatories_description) && $regulatories_description->count())
 		{
 		
-		  foreach($regulatories_description as $regulatory)
+		  foreach($regulatories_description as $value)
 		  {
-
-		  $item['content']=substr(strip_tags($regulatory->description),0,120);
-		  $item['link']=url('regulatory-details',$regulatory->slug);
+		  $regulatory = getRegulatoryData($value->parent_id);  
+		  $item['content']=substr(strip_tags($value->description), 120);
+		  if($regulatory)
+		  {
+		  $link=url('regulatory-details', $regulatory->slug).'?id='. $value->id;
+		  }
+		  else
+		  {
+		   $link='#';
+		  }
+		  $item['link']=$link;
 		  $regulatories[]=$item;
 		  }
 		}
@@ -271,10 +279,19 @@ class HomeController extends Controller
 		if(isset($regulatories_title) && $regulatories_title->count())
 		{
 
-		  foreach($regulatories_title as $regulatory)
+		  foreach($regulatories_title as $value)
 		  {
-		  $item['content']=$regulatory->title;
-		  $item['link']=url('regulatory-details',$regulatory->slug);
+		  $regulatory = getRegulatoryData($value->parent_id);  
+		  $item['content']=$value->title;
+			  if($regulatory)
+			  {
+			  $link=url('regulatory-details', $regulatory->slug).'?id='. $value->id;
+			  }
+			  else
+			  {
+			   $link='#';
+			  }
+		  $item['link']=$link;
 		  $regulatories[]=$item;
 		  }
 		}
