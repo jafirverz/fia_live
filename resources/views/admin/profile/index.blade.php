@@ -22,7 +22,7 @@
                           <label for="">Profile</label>
                           <input name="profile" type="file" class="form-control" id="" placeholder="">
                           @if($admin->profile)
-                          <img src="{{ Storage::url($admin->profile) }}" class="img-responsive" width="100px"/>
+                          <img src="{{ asset($admin->profile) }}" class="img-responsive" width="100px"/>
                           @endif
                           <p class="help-block"></p>
                         </div>
