@@ -201,8 +201,18 @@
                                         <td>{{ $user->country ?? '-' }}</td>
                                         <td>{{ $user->city ?? '-' }}</td>
                                         <td>{{ $user->email ?? '-' }}</td>
-                                        <td>@if((!is_null($user->invoice()) && $user->invoice()->paid==1 && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at)))) || (is_null($user->invoice()) && $user->status==5) )
-                                                Paid @else Unpaid @endif
+                                        <td>
+                                            @if(!is_null($user->expired_at))
+                                                @if(date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at)))
+                                                    Paid
+                                                @else
+                                                    Unpaid
+                                                @endif
+                                            @elseif(is_null($user->expired_at) && $user->status==5)
+                                                Paid
+                                            @else
+                                                Unpaid
+                                            @endif
                                         </td>
                                         <td>
                                             <?php
