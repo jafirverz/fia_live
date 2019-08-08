@@ -21,7 +21,7 @@
                         <div class="form-group">
                           <label for="">Profile</label>
                           <input name="profile" type="file" class="form-control" id="" placeholder="">
-                          @if($admin->profile)
+                          @if($admin->profile) <br/>
                           <img src="{{ asset($admin->profile) }}" class="img-responsive" width="100px"/>
                           @endif
                           <p class="help-block"></p>
