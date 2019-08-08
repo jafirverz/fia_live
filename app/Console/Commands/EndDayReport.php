@@ -49,11 +49,10 @@ class EndDayReport extends Command
         //DB::enableQueryLog();
         $users = User::where('subscribe_status', 1)->get();
 
-        $weekly = Carbon::now()->add(-7, 'day')->format('Y-m-d');
+        $beforeWeek = Carbon::now()->add(-7, 'day');
+        $weekly = $beforeWeek->format('Y-m-d');
 
-        $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->where(function ($query) use ($weekly) {
-            $query->whereDate('created_at', '>=', $weekly)->orwhereDate('updated_at', '>=', $weekly);
-        })->latest()->limit(10)->get();
+        $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->whereDate('regulatory_date', '>=', $weekly)->latest()->limit(10)->get();
         //dd(DB::getQueryLog());
         //dd($weeklyRegulatories->count());
         $content = [];
@@ -69,7 +68,8 @@ class EndDayReport extends Command
         if ($content) {
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
-                $content = implode('<hr/>', $content);
+                $content_data = $beforeWeek->format('jS M, Y') . ' - ' . date('jS M, Y') . '<br/><br/>';
+                $content_data .= implode('<hr/>', $content);
                 foreach ($users as $user) {
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
@@ -77,7 +77,7 @@ class EndDayReport extends Command
                     $data_user['from_email'] = setting()->from_email;
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $key_user = ['{{name}}', '{{content}}'];
-                    $value_user = [$user->firstname . ' ' . $user->lastname, $content];
+                    $value_user = [$user->firstname . ' ' . $user->lastname, $content_data];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
@@ -86,7 +86,6 @@ class EndDayReport extends Command
                         dd($exception);
                     }
                 }
-
             }
         }
     }
