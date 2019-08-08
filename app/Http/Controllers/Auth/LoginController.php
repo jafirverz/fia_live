@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/profile';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -110,7 +110,7 @@ class LoginController extends Controller
 
     protected function sendLoginResponse(Request $request)
     {
-        $redirectTo = url('profile');
+        $redirectTo = url('home');
         if($request->redirect)
         {
             $redirectTo = url($request->redirect);

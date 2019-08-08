@@ -46,7 +46,7 @@
                             <tr>
                                 <td><strong style="color: #fb7a10;">Date of Regulation in Force:</strong></td>
                                 <td><strong
-                                        style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong>
+                                        style="color: #fb7a10;">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M Y') }} @endif</strong>
                                 </td>
                             </tr>
                             <tr>
