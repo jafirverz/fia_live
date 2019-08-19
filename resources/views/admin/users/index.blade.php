@@ -237,14 +237,14 @@
                                         </td>
 
                                         <td>@if($user->status==5)Active @else Inactive @endif</td>
-                                        <td>
+                                        <td data-order="{{ $user->expired_at }}">
                                             @if(!is_null($user->expired_at) )
                                                 {{date('d M, Y', strtotime($user->expired_at))}}
                                             @elseif(is_null($user->expired_at) && $user->status==5)
                                                 Lifetime Validity
                                             @else - @endif
                                         </td>
-                                        <td>{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                        <td data-order="{{ $user->created_at }}">{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                         <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
                                             <table class="action-table">
