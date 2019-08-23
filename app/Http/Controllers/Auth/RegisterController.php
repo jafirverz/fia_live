@@ -187,7 +187,7 @@ class RegisterController extends Controller
         $user = User::where('user_id', $user_id)->first();
         if($user->email_verified_at)
         {
-            return abort(404);
+            return redirect(url('account-verified'));
         }
         $user->email_verified_at = now();
         $user->status = 2;
