@@ -32,7 +32,7 @@
                     <h1 class="title-1 text-center space-2">@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory->country_id))))<img
                             src="{{ getFilterCountryImage($regulatory->country_id) }}"
                             alt="{{ getFilterCountry($regulatory->country_id) }}" />@endif
-                        {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                        {{ $regulatory->title }}</h1>
                     <table>
                         <tbody>
                             <tr>
