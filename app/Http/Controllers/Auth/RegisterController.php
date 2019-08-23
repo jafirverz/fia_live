@@ -138,7 +138,7 @@ class RegisterController extends Controller
         }
 
         $student = [
-            'button_url' => url('/register/verification/' . $user_id),
+            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . '>Click to Verify</a>',
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
