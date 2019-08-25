@@ -138,7 +138,7 @@ class RegisterController extends Controller
         }
 
         $student = [
-            'button_url' => url('/register/verification/' . $user_id),
+            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . '>Click to Verify</a>',
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
@@ -187,7 +187,7 @@ class RegisterController extends Controller
         $user = User::where('user_id', $user_id)->first();
         if($user->email_verified_at)
         {
-            return abort(404);
+            return redirect(url('account-verified'));
         }
         $user->email_verified_at = now();
         $user->status = 2;
