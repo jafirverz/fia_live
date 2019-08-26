@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Banner;
 use App\Page;
 use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 use App\Traits\GetEmailTemplate;
 use App\Traits\DynamicRoute;
 use Illuminate\Http\Request;
@@ -158,6 +159,29 @@ class RegisterController extends Controller
             try {
                 if ($data['email']) {
                     $mail_user = Mail::to($data['email'])->send(new UserSideMail($data));
+                }
+
+            } catch (Exception $exception) {
+                return dd($exception);
+
+            }
+        }
+
+        $emailTemplate = $this->emailTemplate(__('constant.USER_REGISTER_ON_SITE'));
+
+        if ($emailTemplate) {
+
+            $data = [];
+            $data['subject'] = $emailTemplate->subject;
+            $data['email_sender_name'] = setting()->email_sender_name;
+            $data['from_email'] = setting()->from_email;
+            $data['subject'] = $emailTemplate->subject;
+            $data['contents'] = $emailTemplate->contents;
+            //dd($data);
+
+            try {
+                if (setting()->from_email) {
+                    $mail = Mail::to(setting()->from_email)->send(new AdminSideMail($data));
                 }
 
             } catch (Exception $exception) {
