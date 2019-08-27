@@ -185,7 +185,7 @@
                             @endif
                         </div>
                         <div class="checkbox"><input type="checkbox" id="update" name="subscribe_status"
-                                value="1" /><label for="update">I want to receive updates.</label></div>
+                                value="1" /><label for="update">I’d like to subscribe to the FIA Regulatory Hub newsletter to receive the latest regulatory updates.</label></div>
                         <div class="form-group">
                             <div class="google-recaptcha">
                                 <div class="g-recaptcha" data-callback="onSubmit"

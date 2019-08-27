@@ -20,10 +20,23 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <script src="{{ asset('js/Chart.min.js') }}" charset="utf-8"></script>
+                <script src="{{ asset('js/utils.js') }}"></script>
                 <div class="row">
                     <div class="col-md-12">
-                        You are logged in as Admin!
-                        <!-- /.form-group -->
+                        <h2>Member Type Country</h2>
+
+                        <div style="width:100%;">
+                            {!! $chart1->render() !!}
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-12">
+                        <h2>Membership Growth</h2>
+
+                        <div style="width:100%;">
+                            {!! $chart2->render() !!}
+                        </div>
                     </div>
                     <!-- /.col -->
                 </div>
