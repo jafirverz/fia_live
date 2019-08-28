@@ -181,7 +181,7 @@ class RegisterController extends Controller
 
             try {
                 if (setting()->from_email) {
-                    $mail = Mail::to(setting()->from_email)->send(new AdminSideMail($data));
+                    $mail = Mail::to(setting()->to_email)->send(new AdminSideMail($data));
                 }
 
             } catch (Exception $exception) {
