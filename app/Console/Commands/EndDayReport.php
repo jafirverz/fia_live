@@ -47,7 +47,7 @@ class EndDayReport extends Command
     public function handle()
     {
         //DB::enableQueryLog();
-        $users = User::where('subscribe_status', 1)->limit(1)->get();
+        $users = User::where('subscribe_status', 1)->get();
 
         $beforeWeek = Carbon::now()->add(-7, 'day');
         $weekly = $beforeWeek->format('Y-m-d');
