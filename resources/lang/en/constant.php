@@ -122,6 +122,7 @@ return [
   'REMINDER_EMAIL_TEMP_ID' => '10',
 
   'END_DAY_REPORT'  =>  '12',
+  'USER_ACCOUNT_APPROVED'   =>  '13',
 
 
 

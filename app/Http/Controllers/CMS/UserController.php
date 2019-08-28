@@ -262,8 +262,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findorfail($id);
-        $user->status = 9;
-        $user->save();
+        $user->delete();
         return redirect('admin/user')->with('success', __('constant.DELETED', ['module' => __('constant.USER')]));
     }
 
@@ -358,6 +357,29 @@ class UserController extends Controller
             $user->member_type = $request->member_type;
             $user->status = __('constant.ACCOUNT_ACTIVE');
             $user->expired_at = null;
+
+            $emailTemplate_user = $this->emailTemplate(__('constant.USER_ACCOUNT_APPROVED'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{  }}name}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+                try {
+                    $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    $response['msg'] = "Status updated successfully.";
+                    $response['status'] = "error";
+                    return $response;
+                }
+            }
+
             if (empty($user->email_verified_at)) {
                 $user->email_verified_at = Carbon::now()->toDateTimeString();
             }
