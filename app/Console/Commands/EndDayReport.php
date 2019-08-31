@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\UserSideMail;
+use App\Mail\RegulatoryUpdates;
 use Carbon\Carbon;
 use App\User;
 use App\Regulatory;
@@ -47,7 +47,7 @@ class EndDayReport extends Command
     public function handle()
     {
         //DB::enableQueryLog();
-        $users = User::where('subscribe_status', 1)->get();
+        $users = User::where('subscribe_status', 1)->limit(1)->get();
 
         $beforeWeek = Carbon::now()->add(-7, 'day');
         $weekly = $beforeWeek->format('Y-m-d');
@@ -62,15 +62,14 @@ class EndDayReport extends Command
             $value = getRegulatoryData($regulatory->parent_id);
             if($value)
             {
-                $content[] = '<h3>'.$regulatory->title.'</h3><a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'">Read More</a><br/>';
+                $content[] = '<tr><td style="text-align: left; padding: 0 30px 0; font-size: 12px;"><p style="color: #f48120; ">'.$regulatory->title.'</p><p>'.Str::limit($regulatory->description, 300).'<a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'" target="_blank" style="color: #f48120; text-decoration:none; "> Read more </a></p></td></tr>';
             }
         }
 
         if ($content) {
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
-                $content_data = $beforeWeek->format('jS M, Y') . ' - ' . $today_date->format('jS M, Y') . '<br/><br/>';
-                $content_data .= implode('<hr/>', $content);
+                $content_data = implode(' ', $content);
                 foreach ($users as $user) {
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
@@ -82,7 +81,7 @@ class EndDayReport extends Command
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
-                        $mail_user = Mail::to($user->email)->queue(new UserSideMail($data_user));
+                        $mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
                     } catch (Exception $exception) {
                         dd($exception);
                     }
