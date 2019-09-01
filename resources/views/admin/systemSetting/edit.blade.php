@@ -17,20 +17,20 @@
                         <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
-                    <form method="post" action="{{ url('/admin/system-setting/update/'.$systemSetting->id)}}" enctype="multipart/form-data"> 
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"> 
+                    <form method="post" action="{{ url('/admin/system-setting/update/'.$systemSetting->id)}}" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="box-body">
                         <div class="form-group">
                             <label for="title" class=" control-label">Title</label>
                             <div class="">
-                                 <input class="form-control" placeholder="" value="{{ $systemSetting->title }}" name="title" type="text"> 
+                                 <input class="form-control" placeholder="" value="{{ $systemSetting->title }}" name="title" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="logo" class=" control-label">Logo</label>
-                            <div class="row">
+                            <div class="@if(isset($systemSetting->logo)) row @endif">
                                 <div class="@if(isset($systemSetting->logo) && ($systemSetting->logo != ''))col-sm-10 @endif">
-                                    <input class="form-control" placeholder="" name="logo" type="file"> 
+                                    <input class="form-control" placeholder="" name="logo" type="file">
                                 </div>
                                 @if(isset($systemSetting->logo) && ($systemSetting->logo != ''))
                                     <div class=" col-sm-2">
@@ -41,11 +41,29 @@
                                     </div>
                                 @endif
                             </div>
+                            <span class="text-muted">Note: Logo size should be 100*60 for better display.</span>
                         </div>
-                        <div class="form-group">                            
+                        <div class="form-group">
+                            <label for="logo" class=" control-label">Email Template Logo</label>
+                            <div class="@if(isset($systemSetting->email_template_logo)) row @endif">
+                                <div class="@if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))col-sm-10 @endif">
+                                    <input class="form-control" placeholder="" name="email_template_logo" type="file">
+                                </div>
+                                @if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))
+                                    <div class=" col-sm-2">
+                                        <div class="attachment-block clearfix">
+                                            <img class="attachment-img" src="{!! asset($systemSetting->email_template_logo) !!}"
+                                                 alt="Email Template Logo Image">
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                            <span class="text-muted">Note: Email Template Logo size should be 1250*200 for better display.</span>
+                        </div>
+                        <div class="form-group">
                             <label for="email_sender_name" class=" control-label">Email Sender Name</label>
                             <div class="">
-                                <input class="form-control" placeholder="" value="{{ $systemSetting->email_sender_name }}" name="email_sender_name" type="text"> 
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->email_sender_name }}" name="email_sender_name" type="text">
                             </div>
                         </div>
                         <div class="form-group">
@@ -91,7 +109,7 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="contact_email" class=" control-label">Feedback Email</label>
                             <div class="">
@@ -99,7 +117,7 @@
 
                             </div>
                         </div>
-                        
+
                         <!--<div class="form-group">
                             <label for="contact_address" class=" control-label">Company Addresses</label>
                             <div class="">
@@ -113,9 +131,17 @@
                             </div>
                         </div>
                         <div class="form-group">
-<label for="social_link" class=" control-label">Social Link</label>
-						<div class="">
-                                 <textarea class="form-control tiny-editor " name="social_link">{{ $systemSetting->social_link }}</textarea>
+                            <label for="linkedin_link" class=" control-label">Linkedin</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->linkedin_link }}" name="linkedin_link" type="text">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter_link" class=" control-label">Twitter</label>
+                            <div class="">
+                                <input class="form-control" placeholder="" value="{{ $systemSetting->twitter_link }}" name="twitter_link" type="text">
+
                             </div>
                         </div>
                         <div class="form-group">

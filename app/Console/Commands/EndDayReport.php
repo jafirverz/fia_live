@@ -70,14 +70,17 @@ class EndDayReport extends Command
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
+                $email_template_logo = '<img src="'.asset(setting()->email_template_logo).'" alt="">';
+                $linkedin = '';
+                $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img src="'.asset('images/icon2.jpg').'"></a>';
                 foreach ($users as $user) {
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $data_user['email_sender_name'] = setting()->email_sender_name;
                     $data_user['from_email'] = setting()->from_email;
                     $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{name}}', '{{content}}'];
-                    $value_user = [$user->firstname . ' ' . $user->lastname, $content_data];
+                    $key_user = ['{{logo}}', '{{linkedin}}', '{{twitter}}', '{{content}}'];
+                    $value_user = [$email_template_logo, $linkedin, $twitter, $content_data];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
