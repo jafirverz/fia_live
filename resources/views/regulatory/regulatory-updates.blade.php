@@ -12,7 +12,7 @@
                 </div>
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
-                        <select class="selectpicker" data-actions-box="true" name="country[]" multiple>
+                        <select class="selectpicker" data-actions-box="true" name="country[]" title="-- Country --" multiple>
                                 <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
@@ -25,9 +25,9 @@
                     <div class="cw-4">
                         <div class="iw-1">
                             <select class="selectpicker" name="month">
-                                <option value="">-- Month --</option>
+                                <option value="">-- Months --</option>
                                 @foreach (getFilterMonth() as $key => $month)
-                                <option value="{{ $key+1 }}" @if($month->tag_name) @if(date('n')==$key+1) selected @endif @endif>{{ $month->tag_name }}</option>
+                                <option value="{{ $key+1 }}">{{ $month->tag_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -208,7 +208,7 @@
         $("a.lk-back").on("click", function () {
             var d = new Date();
             $("select[name='country[]']").val('');
-            $("select[name='month']").val(d.getMonth()+1);
+            $("select[name='month']").val('');
             $("select[name='year']").val(d.getFullYear());
             $("select[name='topic']").val('');
             $("select[name='stage']").val('');

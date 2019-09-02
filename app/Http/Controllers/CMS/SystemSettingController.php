@@ -49,7 +49,7 @@ class SystemSettingController extends Controller
 		else
 		return redirect('admin/system-setting')->with('error', __('constant.EDITABLE', ['module' => __('constant.SYSTEM_SETTING')]));
 
-		
+
     }
 
     /**
@@ -162,6 +162,7 @@ class SystemSettingController extends Controller
         $validatorFields = [
             'title' => 'required|max:191',
             'logo' => 'image|nullable|max:1999',
+            'email_template_logo' => 'image|nullable|max:1999',
             'footer' => 'required',
             'email_sender_name' => 'required',
             'from_email' => 'required | email',
@@ -173,7 +174,8 @@ class SystemSettingController extends Controller
             'contact_email' => 'required | email ',
 			'feedback_emailid' => 'required | email ',
 			'pagination_limit' => 'required',
-			'social_link' => 'required',
+            'linkedin_link' => 'required',
+            'twitter_link'  =>  'required',
 			'footer_copyright' => 'required',
 
         ];
@@ -199,7 +201,8 @@ class SystemSettingController extends Controller
         $systemSetting->footer = $request->footer;
 		$systemSetting->footer_copyright = $request->footer_copyright;
 		$systemSetting->pagination_limit = $request->pagination_limit;
-		$systemSetting->social_link = $request->social_link;
+        $systemSetting->linkedin_link = $request->linkedin_link;
+        $systemSetting->twitter_link = $request->twitter_link;
 
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -232,6 +235,29 @@ class SystemSettingController extends Controller
             }
             $bannerPath = $destinationPath . '/' . $banner_image;
             $systemSetting->logo = $bannerPath;
+        }
+
+        if ($request->hasFile('email_template_logo')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('email_template_logo')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('email_template_logo')->getClientOriginalExtension();
+            // Filename to store
+            $banner_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('email_template_logo')->move($destinationPath, $banner_image);
+        }
+
+
+        if ($request->hasFile('email_template_logo')) {
+            if ($systemSetting->email_template_logo) {
+                File::delete($systemSetting->email_template_logo);
+            }
+            $bannerPath = $destinationPath . '/' . $banner_image;
+            $systemSetting->email_template_logo = $bannerPath;
         }
         $systemSetting->save();
 

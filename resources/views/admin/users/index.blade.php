@@ -18,42 +18,7 @@
             <div class="col-lg-12">
                 @include('admin.inc.message')
                         <!-- SELECT2 EXAMPLE -->
-                <div class="box box-default chart">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Charts</h3>
 
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                                    title="" data-original-title="Collapse">
-                                <i class="fa fa-plus"></i></button>
-
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <script src="{{ asset('js/Chart.min.js') }}" charset="utf-8"></script>
-                    <script src="{{ asset('js/utils.js') }}"></script>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h2>Member Type Country</h2>
-
-                                <div style="width:100%;">
-                                    {!! $chart1->render() !!}
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-md-12">
-                                <h2>Membership Growth</h2>
-
-                                <div style="width:100%;">
-                                    {!! $chart2->render() !!}
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                </div>
                 <!-- /.box -->
                 <div class="box">
                     <div class="box-header with-border">

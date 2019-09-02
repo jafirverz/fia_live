@@ -64,7 +64,10 @@
 
                         <h4 class="sp">Follow Us</h4>
 
-                        {!!  setting()->social_link!!}
+                        <ul class="socials">
+                        <li><a class="fab fa-linkedin-in" href="{{ setting()->linkedin_link }}" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a class="fab fa-twitter" href="{{ setting()->twitter_link }}" target="_blank" rel="noopener">Twitter</a></li>
+                        </ul>
 
                     </div>
 
@@ -179,7 +182,7 @@
             }
 
         });
-		
+
 		 $("form[name='feedback']").validate({
 
             rules: {
