@@ -53,7 +53,9 @@ return [
 
 	'SITEMAP' => 'Sitemap',
 
-	'CONTACT' => 'Contact Us',
+    'CONTACT' => 'Contact Us',
+
+    'CHANGE_PASSWORD'   =>  'Change Password',
 
 	'FEEDBACK' => 'Feedback',
 

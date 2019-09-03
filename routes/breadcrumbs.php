@@ -12,6 +12,11 @@ for ('front_contact', function ($trail) {
 	$trail->parent('front_home');
     $trail->push(__('constant.CONTACT'), url('/contact-us'));
 }) ;
+Breadcrumbs::
+for ('change_password', function ($trail) {
+	$trail->parent('front_home');
+    $trail->push(__('constant.CHANGE_PASSWORD'), url('/change-password'));
+}) ;
 //COUNTRY
 Breadcrumbs::for('country_information', function ($trail) {
     $trail->parent('dashboard');

@@ -127,7 +127,7 @@ class EmailTemplateController extends Controller
         $emailTemplate->contents = $request->contents;
         $emailTemplate->subject = $request->subject;
         $emailTemplate->status = $request->status;
-        $emailTemplate->updated_at = Carbon::now()->toDateTimeString();
+        $emailTemplate->updated_at = Carbon::now();
         $emailTemplate->save();
         return redirect(route('email-template.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.EMAIL_TEMPLATE')]));
     }

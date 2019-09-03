@@ -227,6 +227,7 @@
                                                type="text" id="" readonly>
                                     </div>
                                 </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="address2" class=" control-label">Overall Status</label>
@@ -234,6 +235,11 @@
                                                value="{{memberShipStatus($user->status)}}"
                                                name="address2" type="text" id="" readonly>
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label class=" control-label">Subscribed</label>: @if($user->subscribe_status==1) Yes @else No @endif
+                                        </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
