@@ -301,8 +301,8 @@ class UserController extends Controller
                 $data_user['email_sender_name'] = setting()->email_sender_name;
                 $data_user['from_email'] = setting()->from_email;
                 $data_user['subject'] = $emailTemplate_user->subject;
-                $key_user = ['{{firstname}}'];
-                $value_user = [$user->firstname];
+                $key_user = ['{{name}}', '{{user_id}}'];
+                $value_user = [$user->firstname, $user->user_id];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
 
