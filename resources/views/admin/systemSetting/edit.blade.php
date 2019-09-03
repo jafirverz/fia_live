@@ -31,7 +31,9 @@
                             <div class="@if(isset($systemSetting->logo)) row @endif">
                                 <div class="@if(isset($systemSetting->logo) && ($systemSetting->logo != ''))col-sm-10 @endif">
                                     <input class="form-control" placeholder="" name="logo" type="file">
+                                    <span class="text-muted">Note: Logo size should be 100*60 for better display.</span>
                                 </div>
+
                                 @if(isset($systemSetting->logo) && ($systemSetting->logo != ''))
                                     <div class=" col-sm-2">
                                         <div class="attachment-block clearfix">
@@ -41,13 +43,14 @@
                                     </div>
                                 @endif
                             </div>
-                            <span class="text-muted">Note: Logo size should be 100*60 for better display.</span>
+
                         </div>
                         <div class="form-group">
                             <label for="logo" class=" control-label">Email Template Logo</label>
                             <div class="@if(isset($systemSetting->email_template_logo)) row @endif">
                                 <div class="@if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))col-sm-10 @endif">
                                     <input class="form-control" placeholder="" name="email_template_logo" type="file">
+                                    <span class="text-muted">Note: Email Template Logo size should be 1250*200 for better display.</span>
                                 </div>
                                 @if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))
                                     <div class=" col-sm-2">
@@ -58,7 +61,7 @@
                                     </div>
                                 @endif
                             </div>
-                            <span class="text-muted">Note: Email Template Logo size should be 1250*200 for better display.</span>
+
                         </div>
                         <div class="form-group">
                             <label for="email_sender_name" class=" control-label">Email Sender Name</label>

@@ -204,8 +204,10 @@ class RegisterController extends Controller
             $data['email_sender_name'] = setting()->email_sender_name;
             $data['from_email'] = setting()->from_email;
             $data['subject'] = $emailTemplate->subject;
-            $data['contents'] = $emailTemplate->contents;
-            //dd($data);
+            $key = ['{{name}}', '{{user_id}}'];
+            $value = [$user->firstname . ' ' . $user->lastname, $user->user_id];
+            $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
+            $data['contents'] = $newContents;
 
             try {
                 if (setting()->from_email) {
