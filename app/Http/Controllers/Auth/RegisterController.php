@@ -139,7 +139,16 @@ class RegisterController extends Controller
         }
 
         $student = [
-            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . ' style="background: #ececec; border: none; border-radius: 0; color: #f16f27 !important; display: inline-block; font-size: 14px; font-weight: 500; line-height: 1; padding: 15px 20px; position: relative; text-align: center; vertical-align: top;">Verify Email</a>',
+            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . ' style="border-radius: 3px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+            color: #fff;
+            display: inline-block;
+            text-decoration: none;
+            -webkit-text-size-adjust: none;background-color: #3490dc;
+            border-top: 10px solid #3490dc;
+            border-right: 18px solid #3490dc;
+            border-bottom: 10px solid #3490dc;
+            border-left: 18px solid #3490dc;">Verify Email</a>',
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));

@@ -28,6 +28,7 @@
         <button type="submit" class="btn-2">Sign in</button>
         <div class="links">
             <a href="{{ route('password.request') }}">Forgot Password?</a>
+            <p>Don't have an account yet? <a href="{{ url('register') }}">Create account</a></p>
         </div>
     </form>
 </div>

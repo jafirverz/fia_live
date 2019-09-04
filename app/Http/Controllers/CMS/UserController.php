@@ -136,6 +136,7 @@ class UserController extends Controller
         $user->email_verified_at = Carbon::now()->toDateTimeString();
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        $user->subscribe_status  = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -221,6 +222,7 @@ class UserController extends Controller
         if (isset($request->status) && !is_null($request->status)) {
             $user->status = $request->status;
         }
+        $user->subscribe_status  = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -301,8 +303,8 @@ class UserController extends Controller
                 $data_user['email_sender_name'] = setting()->email_sender_name;
                 $data_user['from_email'] = setting()->from_email;
                 $data_user['subject'] = $emailTemplate_user->subject;
-                $key_user = ['{{name}}', '{{user_id}}'];
-                $value_user = [$user->firstname, $user->user_id];
+                $key_user = ['{{name}}', '{{email}}'];
+                $value_user = [$user->firstname, $user->email];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
 
