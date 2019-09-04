@@ -15,7 +15,9 @@ use Carbon\Carbon;
 use App\Traits\GetEmailTemplate;
 use App\Mail\UserSideMail;
 use App\Mail\AdminSideMail;
+use DaveJamesMiller\Breadcrumbs\BreadcrumbsManager;
 use DB;
+use Illuminate\Support\Facades\Hash;
 
 class PagesFrontController extends Controller
 {
@@ -23,6 +25,7 @@ class PagesFrontController extends Controller
 
 	public function __construct()
     {
+        $this->middleware('auth')->only('showChangePassword', 'updateChangePassword');
         $this->module_name = 'COUNTRY_INFORMATION';
     }
 
@@ -407,4 +410,46 @@ class PagesFrontController extends Controller
     }
 
 
+    public function showChangePassword(BreadcrumbsManager $breadcrumbs,$slug='change-password')
+    {
+        $page=Page::where('pages.slug', $slug)
+
+            ->where('pages.status', 1)
+
+            ->first();
+
+		$banner = get_page_banner($page->id);
+
+		if (!$page) {
+
+		return abort(404);
+
+		}
+
+        $title = __('constant.CHANGE_PASSWORD');
+
+        $breadcrumbs = $breadcrumbs->generate('change_password');
+
+
+
+        return view('change_password',compact('page','banner','breadcrumbs'));
+    }
+
+    public function updateChangePassword(Request $request)
+    {
+        $request->validate([
+            'old_password'  =>  'required',
+            'password'  =>  'required',
+            'password_confirmation'  =>  'required|min:8,confirmed',
+        ]);
+
+        $user = User::find(Auth::user()->id);
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->password);
+            $user->updated_at = Carbon::now();
+            $user->save();
+            return back()->with('success', 'Password have been updated.');
+        }
+        return back()->with('error', 'Old Password does not match.');
+    }
 }

@@ -139,7 +139,7 @@ class RegisterController extends Controller
         }
 
         $student = [
-            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . '>Click to Verify</a>',
+            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . ' style="background: #ececec; border: none; border-radius: 0; color: #f16f27 !important; display: inline-block; font-size: 14px; font-weight: 500; line-height: 1; padding: 15px 20px; position: relative; text-align: center; vertical-align: top;">Verify Email</a>',
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
@@ -167,28 +167,7 @@ class RegisterController extends Controller
             }
         }
 
-        $emailTemplate = $this->emailTemplate(__('constant.USER_REGISTER_ON_SITE'));
 
-        if ($emailTemplate) {
-
-            $data = [];
-            $data['subject'] = $emailTemplate->subject;
-            $data['email_sender_name'] = setting()->email_sender_name;
-            $data['from_email'] = setting()->from_email;
-            $data['subject'] = $emailTemplate->subject;
-            $data['contents'] = $emailTemplate->contents;
-            //dd($data);
-
-            try {
-                if (setting()->from_email) {
-                    $mail = Mail::to(setting()->to_email)->send(new AdminSideMail($data));
-                }
-
-            } catch (Exception $exception) {
-                return dd($exception);
-
-            }
-        }
         //dd($emailTemplate);
         return $user_data;
     }
@@ -216,6 +195,30 @@ class RegisterController extends Controller
         $user->email_verified_at = now();
         $user->status = 2;
         $user->save();
+        $emailTemplate = $this->emailTemplate(__('constant.USER_REGISTER_ON_SITE'));
+
+        if ($emailTemplate) {
+
+            $data = [];
+            $data['subject'] = $emailTemplate->subject;
+            $data['email_sender_name'] = setting()->email_sender_name;
+            $data['from_email'] = setting()->from_email;
+            $data['subject'] = $emailTemplate->subject;
+            $key = ['{{name}}', '{{user_id}}'];
+            $value = [$user->firstname . ' ' . $user->lastname, $user->user_id];
+            $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
+            $data['contents'] = $newContents;
+
+            try {
+                if (setting()->from_email) {
+                    $mail = Mail::to(setting()->to_email)->send(new AdminSideMail($data));
+                }
+
+            } catch (Exception $exception) {
+                return dd($exception);
+
+            }
+        }
         return redirect(url('verified-thank-you'));
     }
 }

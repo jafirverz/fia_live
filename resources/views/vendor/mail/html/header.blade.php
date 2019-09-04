@@ -1,7 +1,7 @@
 <tr>
-    <td class="header" style="background: #303030;">
+    <td style="line-height: 0 !important;">
         <a href="{{ $url }}">
-            <img src="{{asset(setting()->logo)}}"/>
+            <img src="{{asset(setting()->email_template_logo)}}"/>
         </a>
     </td>
 </tr>

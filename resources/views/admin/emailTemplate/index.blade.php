@@ -47,12 +47,12 @@
                                             @endif
                                         </td>
                                         <td data-order="{{ $emailTemplate->created_at }}">
-                                           
+
                                             {{  $emailTemplate->created_at->format('d M, Y h:i A')   }}
 
                                         </td>
                                         <td data-order="{{ $emailTemplate->updated_at }}">
-                                            {{  $emailTemplate->created_at->format('d M, Y h:i A')   }}
+                                            {{  $emailTemplate->updated_at->format('d M, Y h:i A')   }}
 
                                         </td>
                                         <td>

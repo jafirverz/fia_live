@@ -244,7 +244,8 @@ Route::get('/subscribers', 'HomeController@subscribers');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
-
+Route::get('/change-password', 'PagesFrontController@showChangePassword');
+Route::post('/change-password', 'PagesFrontController@updateChangePassword');
 
 /*
 |--------------------------------------------------------------------------

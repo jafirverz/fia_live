@@ -71,7 +71,7 @@ class EndDayReport extends Command
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
                 $email_template_logo = '<img src="'.asset(setting()->email_template_logo).'" alt="">';
-                $linkedin = '';
+                $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img src="'.asset('images/icon5.jpg').'"></a>';
                 $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img src="'.asset('images/icon2.jpg').'"></a>';
                 foreach ($users as $user) {
                     $data_user = [];

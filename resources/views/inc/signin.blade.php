@@ -22,6 +22,9 @@
 
                 </div>
             </div>
+            <div class="checkbox text-center">
+                <input type="checkbox"  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} /><label for="remember">Remember me?</label>
+            </div>
         <button type="submit" class="btn-2">Sign in</button>
         <div class="links">
             <a href="{{ route('password.request') }}">Forgot Password?</a>
