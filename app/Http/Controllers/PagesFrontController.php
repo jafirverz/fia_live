@@ -327,6 +327,7 @@ class PagesFrontController extends Controller
             $user->city = $request->city;
             $user->address1 = $request->address1;
             $user->address2 = $request->address2;
+            $user->subscribe_status = $request->subscribe_status ?? null;
             $user->save();
             return redirect('profile')->with('success',  'Success! Profile have been updated.');
         }

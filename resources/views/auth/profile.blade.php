@@ -132,6 +132,8 @@
                     <input type="text" class="form-control" name="address1" value="{{ $user->address1 }}" />
                     <label class="lb">Address Line 2</label>
                     <input type="text" class="form-control" name="address2" value="{{ $user->address2 }}" />
+                    <div class="checkbox"><input type="checkbox" id="update" name="subscribe_status"
+                        value="1" @if($user->subscribe_status==1) checked @endif /><label for="update">I’d like to subscribe to the FIA Regulatory Hub newsletter to receive the latest regulatory updates.</label></div>
                 </div>
             </div>
             <div class="box-2">
