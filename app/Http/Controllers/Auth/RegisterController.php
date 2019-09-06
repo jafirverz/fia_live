@@ -171,7 +171,7 @@ class RegisterController extends Controller
                 }
 
             } catch (Exception $exception) {
-                return dd($exception);
+                //return dd($exception);
 
             }
         }
@@ -224,7 +224,7 @@ class RegisterController extends Controller
                 }
 
             } catch (Exception $exception) {
-                return dd($exception);
+                //return dd($exception);
 
             }
         }
