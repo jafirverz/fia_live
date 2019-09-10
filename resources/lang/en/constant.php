@@ -125,6 +125,7 @@ return [
 
   'END_DAY_REPORT'  =>  '12',
   'USER_ACCOUNT_APPROVED'   =>  '13',
+  'SUBSCRIPTION_ADMIN_TO_USER_EMAIL_TEMP_ID'   =>  '15',
 
 
 

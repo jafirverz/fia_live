@@ -136,7 +136,7 @@ class UserController extends Controller
         $user->email_verified_at = Carbon::now()->toDateTimeString();
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
-        $user->subscribe_status  = $request->subscribe_status ?? null;
+        $user->subscribe_status = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -222,7 +222,7 @@ class UserController extends Controller
         if (isset($request->status) && !is_null($request->status)) {
             $user->status = $request->status;
         }
-        $user->subscribe_status  = $request->subscribe_status ?? null;
+        $user->subscribe_status = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -232,6 +232,28 @@ class UserController extends Controller
                 $groupUserId->user_id = $user->id;
                 $groupUserId->group_id = $groupId;
                 $groupUserId->save();
+            }
+        }
+        if (isset($request->subscribe_status) && $request->subscribe_status == 1) {
+            $emailTemplate_user = $this->emailTemplate(__('constant.SUBSCRIPTION_ADMIN_TO_USER_EMAIL_TEMP_ID'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{firstname}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                //dd($exception);
             }
         }
 
