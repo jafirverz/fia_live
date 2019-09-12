@@ -63,7 +63,7 @@
                                 
                                 </div>
                                 <img id="holder" @if($filter->country_image!="") src="{{url($filter->country_image)}}" @endif  style="margin-top:15px;max-height:100px;">
-                                    
+                          <p class="text-muted"><strong>Note:</strong> Image size should be W:60 H:40 for better display</p>          
                  </div>
                         </div>
                         <div class="form-group">
@@ -76,10 +76,9 @@
 							<label for="status" class=" control-label">Status</label>
                             <div class="">
                             <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
-                           <?php ?>
-                            @foreach (inactiveActive() as $key => $value)
+                           @foreach (inactiveActive() as $key => $value)
                                     <option  @if($filter->status==$key) selected @endif value="{{ $key }}">{{ $value }}</option>
-                            @endforeach                           
+                            @endforeach                         
                             </select>                            
                             </div>
                         </div>

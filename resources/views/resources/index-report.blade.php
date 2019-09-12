@@ -50,10 +50,16 @@
 									</div>
                                     
 									<div class="col">
+									@php
+									$report_pdf=explode(".",$report->pdf,-1);
+									$report_pdf=explode("/",$report_pdf[0]);
+									$report_pdf=explode("_",$report_pdf[2],-1);
+									
+									@endphp
                                      @if(Auth::check())
-										@if($report->pdf!="")<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>@endif
+										@if($report->pdf!="")<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> {{implode(" ",$report_pdf)}}</a>@endif
                                      @else
-                                     <a href="#find-pp" class="btn-4" data-toggle="modal"><i class="far fa-file-pdf"></i> Open PDF in New Tab</a>
+                                     <a href="#find-pp" class="btn-4" data-toggle="modal"><i class="far fa-file-pdf"></i> {{implode(" ",$report_pdf)}}</a>
                                      @endif
 									</div>
                                     
