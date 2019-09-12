@@ -43,9 +43,9 @@
 <label class="checkbox-inline"><input  @if(1 == old('country_information')) checked="checked" @endif type="checkbox" name="country_information" value="1"><strong>Country Information</strong></label>
                             </div>
                             
-                    <div class="form-group">
+                    <!--<div class="form-group">
 <label class="checkbox-inline"><input  @if(1 == old('home_status')) checked="checked" @endif type="checkbox" name="home_status" value="1"><strong>Active on map</strong></label>
-                            </div>        
+                            </div>-->        
                     <div class="form-group">
                             <label class='control-label' for="">Country Image:</label>
                            <div class="input-group">
