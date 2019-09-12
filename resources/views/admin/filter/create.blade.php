@@ -18,34 +18,34 @@
                         <!-- general form elements -->
                 <div class="box box-primary">
                     <!-- form start -->
-                   
+
                     <form name="filter" method="post" action="{{ url('/admin/filter/store')}}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="box-body">
                         <div class="form-group">
-<label for="filter_name" class=" control-label">Filter Name:</label>                            
+<label for="filter_name" class=" control-label">Filter Name:</label>
                                <select  name="filter_name" class="form-control select2"  id="selectpicker">
                                <option value="">Choose One</option>
  						@foreach(get_filter_name() as $k => $v)
                             <option value="{{$k}}"  @if(old('filter_name')==$k) selected @endif>{{$v}}</option>
-                        @endforeach                             
-</select> 
+                        @endforeach
+</select>
                             </div>
                     <div class="form-group">
                      <label for="tag_name" class=" control-label">Tag Name:</label>
-                    <input class="form-control" placeholder="" value="{{ old('tag_name') }}" name="tag_name" type="text" id="tag_name">                            
+                    <input class="form-control" placeholder="" value="{{ old('tag_name') }}" name="tag_name" type="text" id="tag_name">
 					</div>
-                    
+
                     <div @if(old('filter_name')==1) class="" @else class="hide" @endif id="country_image_id">
-                    
-                    
+
+
                     <div class="form-group">
 <label class="checkbox-inline"><input  @if(1 == old('country_information')) checked="checked" @endif type="checkbox" name="country_information" value="1"><strong>Country Information</strong></label>
                             </div>
-                            
+
                     <!--<div class="form-group">
 <label class="checkbox-inline"><input  @if(1 == old('home_status')) checked="checked" @endif type="checkbox" name="home_status" value="1"><strong>Active on map</strong></label>
-                            </div>-->        
+                            </div>-->
                     <div class="form-group">
                             <label class='control-label' for="">Country Image:</label>
                            <div class="input-group">
@@ -56,37 +56,37 @@
                                     </a>
                                 </span>
                                 <input id="thumbnail" class="form-control" type="text" name="country_image">
-                                
-                            
-                            
+
+
+
                             </div><img id="holder" style="margin-top:15px;max-height:100px;">
-                   <p class="text-muted"><strong>Note:</strong> Image size should be W:60 H:40 for better display</p>          
+                   <p class="text-muted"><strong>Note:</strong> Image size should be W:60 H:40 for better display</p>
              </div>
                     </div>
-                    
+
                     <div class="form-group">
-                            <label for="order_by" class=" control-label">View Order</label>                            
-                           
+                            <label for="order_by" class=" control-label">View Order</label>
+
                                 <input type="number" name="order_by" class="form-control" />
-                           
+
                         </div>
                         <div class="form-group">
 <label for="status" class="control-label">Status:</label>
-                           
+
 <select  name="status" class="form-control select2"  id="selectpicker" data-placeholder="Select Status" >
 						@foreach (inactiveActive() as $key => $value)
                                     <option @if($key==1) selected @endif value="{{ $key }}">{{ $value }}</option>
-                        @endforeach                           
-</select>                            
-                           
+                        @endforeach
+</select>
+
                     </div>
-                    
+
                     <!-- /.box-body -->
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary pull-right">Submit</button>
                     </div>
-                    
+
                 </div>
                 </form>
                 <!-- /.box -->
@@ -109,11 +109,11 @@ $(document).ready(function() {
 				}
 				else
 				{
-					$("#country_image_id").addClass('hide');	
+					$("#country_image_id").addClass('hide');
 				}
 			});
-});		
-		
+});
+
 </script>
 @endsection
 
