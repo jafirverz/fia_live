@@ -60,7 +60,7 @@
                             
                             
                             </div><img id="holder" style="margin-top:15px;max-height:100px;">
-                           
+                   <p class="text-muted"><strong>Note:</strong> Image size should be W:60 H:40 for better display</p>          
              </div>
                     </div>
                     
