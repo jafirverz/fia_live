@@ -85,7 +85,7 @@ class FilterController extends Controller
 		if(isset($request->country_image))
 		$filter->country_image = $request->country_image;
 		$filter->status = $request->status;
-		$filter->home_status = ($request->home_status?$request->home_status:0);
+		//$filter->home_status = ($request->home_status?$request->home_status:0);
 		$filter->country_information = ($request->country_information?$request->country_information:0);
 		$filter->order_by =($request->order_by?$request->order_by:0);
         $filter->created_at = Carbon::now()->toDateTimeString();
