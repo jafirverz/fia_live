@@ -8,7 +8,7 @@ var editor_config = {
         "advlist autolink lists link  charmap print preview hr anchor pagebreak variables",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
         "insertdatetime  nonbreaking save table contextmenu directionality",
-        "emoticons template paste textcolor colorpicker textpattern image  "
+        "emoticons  paste textcolor colorpicker textpattern image  "
     ],
     toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
