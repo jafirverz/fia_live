@@ -125,16 +125,22 @@ for ('banner', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('constant.BANNER'), url('/admin/banner'));
 }) ;
+//BANNER
+Breadcrumbs::
+for ('banner-type', function ($trail,$type) {
+    $trail->parent('banner');
+    $trail->push(ucfirst($type).' banner', url('/admin/banner/type/'.$type));
+}) ;
 
 Breadcrumbs::
-for ('banner_create', function ($trail) {
-    $trail->parent('banner');
+for ('banner_create', function ($trail,$type) {
+    $trail->parent('banner-type',$type);
     $trail->push(__('constant.CREATE'), url('/admin/banner/create'));
 }) ;
 
 Breadcrumbs::
-for ('banner_edit', function ($trail, $id) {
-    $trail->parent('banner');
+for ('banner_edit', function ($trail, $id,$type) {
+    $trail->parent('banner-type',$type);
     $trail->push(__('constant.EDIT'), url('/admin/banner/edit' . $id));
 }) ;
 

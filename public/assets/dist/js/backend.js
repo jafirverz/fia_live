@@ -5,11 +5,12 @@ var editor_config = {
     font_formats: 'Roboto,sans-serif;',
     branding: false,
     plugins: [
-        "advlist autolink lists link  charmap print preview hr anchor pagebreak variables",
+        "advlist autolink lists link  charmap   hr anchor  variables",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
         "insertdatetime  nonbreaking save table contextmenu directionality",
         "emoticons  paste textcolor colorpicker textpattern image  "
     ],
+    menubar: 'edit insert view format table tools',
     toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
     //menubar: "tools",

@@ -15,7 +15,7 @@
 
     <meta name="author" content="">
     <link rel="icon" href="{{asset('favicon.ico')}}">
-    <link rel="shortcut icon" href="http://regulatoryhub.foodndustry.asia/favicon.ico"/>
+    <link rel="shortcut icon" href="https://regulatoryhub.foodndustry.asia/favicon.ico"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

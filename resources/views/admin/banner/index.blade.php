@@ -6,7 +6,7 @@
     <section class="content-header">
         <h1>
             {{ $title }}
-        </h1> {{ Breadcrumbs::render('banner') }}
+        </h1> {{ Breadcrumbs::render('banner-type',$type) }}
     </section>
 
     <!-- Main content -->
@@ -17,7 +17,7 @@
                 @include('admin.inc.message')
                 <div class="box">
                     <div class="box-header with-border">
-                        <a href="{{ url('admin/banner/create') }}" class="btn btn-primary pull-right">Create</a>
+                        <a href="{{ route('banner.create',['type'=>$type]) }}" class="btn btn-primary pull-right">Create</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
@@ -69,12 +69,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ url('admin/banner/edit/' . $banner->id) }}"
+                                            <a href="{{ route('banner.edit',["id"=>$banner->id,"type"=>$type]) }}"
                                                title="Edit Banner">
                                                 <i class="fa fa-pencil btn btn-primary" aria-hidden="true"></i>
                                             </a>
                                             @if(!in_array($banner->banner_type,[1,2]))
-                                                <a href="{{ url('admin/banner/destroy/' . $banner->id) }}"
+                                                <a href="{{ route('banner.destroy',["id"=>$banner->id,"type"=>$type]) }}"
                                                    title="Delete Banner" class=""
                                                    onclick="return confirm('Are you sure you want to delete this Banner?');">
                                                     <i class="fa fa-trash btn btn-danger " aria-hidden="true"></i>

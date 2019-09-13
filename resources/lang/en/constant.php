@@ -169,6 +169,8 @@ return [
 	'SEARCH_RESULTS_REGULATORY'  =>  'search-results-regulatory',
 
     'LOGIN' =>  'login',
+	'BANNER_TYPE_HOME' =>'home',
+	'BANNER_TYPE_OTHER' =>'other',
 
 	//User status constants
 	'PENDING_EMAIL_VERIFICATION' => '1',
