@@ -20,17 +20,32 @@ class BannerController extends Controller
         $this->module_name = 'BANNER';
     }
 
+    public function typeIndex()
+    {
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
+        $title = __('constant.BANNER');
+        return view('admin.banner.type', compact('title'));
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type=null)
     {
+
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.BANNER');
-        $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->get();
-        return view('admin.banner.index', compact('title', 'banners'));
+        if($type==__('constant.BANNER_TYPE_HOME')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('page_name',1)->get();
+            return view('admin.banner.index', compact('title', 'banners','type'));
+        }else if($type==__('constant.BANNER_TYPE_OTHER')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('page_name','!=',1)->get();
+            return view('admin.banner.index', compact('title', 'banners','type'));
+        }else{
+            return view('admin.banner.type', compact('title','type'));
+        }
+
     }
 
     /**
@@ -38,19 +53,25 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
+        $type = $request->type;
         //$viewOrderBanner = Banner::orderBy('view_order', 'DESC')->first();
         $viewOrderBanner = null;
         $viewOrder = 0;
         if ($viewOrderBanner) {
             $viewOrder = $viewOrderBanner->view_order + 1;
         }
-        $pages = Page::select('id', 'title')->where('status', 1)->get();
+        if($type==__('constant.BANNER_TYPE_HOME')){
+            $pages = Page::select('id', 'title')->where('status', 1)->where('id',1)->get();
+        }else if($type==__('constant.BANNER_TYPE_OTHER')){
+            $pages = Page::select('id', 'title')->where('status', 1)->where('id','!=',1)->get();
+        }
 
-        return view('admin.banner.create', compact('title', 'pages', 'viewOrder'));
+
+        return view('admin.banner.create', compact('title', 'pages', 'viewOrder','type'));
     }
 
     /**
@@ -63,13 +84,30 @@ class BannerController extends Controller
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
 
-        
+
         $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
             'banner_link' => 'required_if:page_name,==,1|nullable|url'
         ],['banner_link.required_if'=>'Please enter proper link.']);
-        
+
+        $type = $request->type;
+        $page = Page::select('id', 'title')->where('status', 1)->where('id',$request->page_name)->first();
+        if($type==__('constant.BANNER_TYPE_HOME')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('page_name',1)->get();
+            if($banners->count()>=5)
+            {
+                return redirect( url("admin/banner/type",["type"=>$type]))->with('error','You can add maximum five banner for '.$page->title);
+            }
+        }else if($type==__('constant.BANNER_TYPE_OTHER')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('page_name',$request->page_name)->get();
+            if($banners->count()>=1)
+            {
+                return redirect( url("admin/banner/type",["type"=>$type]))->with('error', 'You can add maximum one banner for '.$page->title);
+            }
+        }
+
+
         $banner = new Banner;
         $banner->page_name = $request->page_name;
 
@@ -106,7 +144,7 @@ class BannerController extends Controller
 		$banner->created_at = Carbon::now()->toDateTimeString();
         $banner->save();
 
-        return redirect('admin/banner')->with('success', __('constant.CREATED', ['module' => __('constant.BANNER')]));
+        return redirect( url("admin/banner/type",["type"=>$type]))->with('success', __('constant.CREATED', ['module' => __('constant.BANNER')]));
     }
 
     /**
@@ -126,13 +164,18 @@ class BannerController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $type = $request->type;
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
-        $pages = Page::select('id', 'title')->where('status', 1)->get();
+        if($type==__('constant.BANNER_TYPE_HOME')){
+            $pages = Page::select('id', 'title')->where('status', 1)->where('id',1)->get();
+        }else if($type==__('constant.BANNER_TYPE_OTHER')){
+            $pages = Page::select('id', 'title')->where('status', 1)->where('id','!=',1)->get();
+        }
         $title = __('constant.EDIT');
         $banner = Banner::findorfail($id);
-        return view('admin.banner.edit', compact('title', 'banner', 'pages'));
+        return view('admin.banner.edit', compact('title', 'banner', 'pages','type'));
     }
 
     /**
@@ -146,14 +189,26 @@ class BannerController extends Controller
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
         $banner = Banner::findorfail($id);
-        
+        $type = $request->type;
          $request->validate([
             'page_name' => 'required|max:191',
             'banner_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
 			'banner_link' => 'required_if:page_name,==,1|nullable|url'
         ],['banner_link.required_if'=>'Please enter proper link.']);
 
-        
+        if($type==__('constant.BANNER_TYPE_HOME')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('id','!=',$id)->where('page_name',1)->get();
+            if($banners->count()>=5)
+            {
+                return redirect( url("admin/banner/type",["type"=>$type]))->with('error','You can add maximum five banner');
+            }
+        }else if($type==__('constant.BANNER_TYPE_OTHER')){
+            $banners = Banner::orderBy('page_name','ASC')->orderBy('order_by','ASC')->where('id','!=',$id)->where('page_name',$request->page_name)->get();
+            if($banners->count()>=1)
+            {
+                return redirect( url("admin/banner/type",["type"=>$type]))->with('error', 'You can add maximum one banner');
+            }
+        }
 
         $banner->page_name = $request->page_name;
 
@@ -197,7 +252,7 @@ class BannerController extends Controller
 		$banner->updated_at = Carbon::now()->toDateTimeString();
         $banner->save();
 
-        return redirect('admin/banner')->with('success', __('constant.UPDATED', ['module' => __('constant.BANNER')]));
+        return redirect( url("admin/banner/type",["type"=>$type]))->with('success', __('constant.UPDATED', ['module' => __('constant.BANNER')]));
     }
 
     /**
@@ -206,12 +261,13 @@ class BannerController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
+        $type = $request->type;
          is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'deletes');
         $banner = Banner::findorfail($id);
         $banner->delete();
 
-        return back()->with('success', __('constant.REMOVED', ['module' => __('constant.BANNER')]));
+        return redirect( url("admin/banner/type",["type"=>$type]))->with('success', __('constant.REMOVED', ['module' => __('constant.BANNER')]));
     }
 }

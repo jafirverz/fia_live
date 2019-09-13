@@ -751,4 +751,17 @@ if (!function_exists('getTopics')) {
         }
         return false;
     }
+    function getHomeMapCountry($key=null){
+        $array_list = ['China','Japan','Korea','Chinese Taipei','Hongkong SAR','Macau SAR','Myanmar','Laos','India','Thailand','Vietnam','Philippines','Sri Lanka','Cambodia','Malaysia','Brunei','Singapore','Indonesia','Australia','New Zealand'];
+
+        if (!is_null($key)) {
+            if (Arr::has($array_list, $key)) {
+                return $array_list[$key];
+            } else {
+                return null;
+            }
+
+        }
+        return $array_list;
+    }
 }

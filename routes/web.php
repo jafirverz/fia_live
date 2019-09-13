@@ -116,11 +116,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
     //BANNER
     Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
-    Route::get('/banner/create', 'CMS\BannerController@create');
+    Route::get('/banner/type/{type}', 'CMS\BannerController@index');
+    Route::get('/banner/create', 'CMS\BannerController@create')->name('banner.create');
     Route::post('/banner/store', 'CMS\BannerController@store');
-    Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
+    Route::get('/banner/edit/{id}', 'CMS\BannerController@edit')->name('banner.edit');
     Route::post('/banner/update/{id}', 'CMS\BannerController@update');
-    Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
+    Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy')->name('banner.destroy');
     //PAGE
     Route::get('/page', 'CMS\PageController@index')->name('page.index');
     Route::get('/page/create', 'CMS\PageController@create');
