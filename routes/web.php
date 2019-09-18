@@ -207,6 +207,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
     Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
     Route::get('/user/cron', 'CMS\UserController@userStatusExpired')->name('cron');
+    Route::get('/user/weekly-report', 'CMS\UserController@weeklyReport')->name('weekly-report');
     /*end user module backend*/
 
     /*Master Setting Start*/
@@ -242,6 +243,7 @@ Route::post('/update-profile-status', 'PagesFrontController@updateStatus');
 Route::get('/update-profile-status', 'PagesFrontController@updateStatus')->name('update-profile-status');
 Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/subscribers', 'HomeController@subscribers');
+Route::get('/unsubscribe/{id}', 'HomeController@unsubscribe');
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
