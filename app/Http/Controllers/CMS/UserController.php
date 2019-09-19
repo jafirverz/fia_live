@@ -494,9 +494,9 @@ class UserController extends Controller
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
                 $email_template_logo = '<img  src="'.asset(setting()->email_template_logo).'" alt="">';
-                $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon5.jpg').'"></a>';
-                $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon2.jpg').'"></a>';
-                $users = ['zyon.toh@foodindustry.asia','may.supaing@foodindustry.asia','desmond.lau@foodindustry.asia','yifan.jiang@foodindustry.asia','nikunj@verzdesign.com','monwai@verzdesign.com'];
+                $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="'.asset('photos/2/icon5.jpg').'"></a>';
+                $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="'.asset('photos/2/icon2.jpg').'"></a>';
+                $users = ['nikunj@verzdesign.com'];
                 foreach ($users as $user) {
 
                     $data_user = [];
@@ -513,7 +513,7 @@ class UserController extends Controller
                         $mail_user = Mail::to($user)->queue(new RegulatoryUpdates($data_user));
                         //dd($user);
                     } catch (Exception $exception) {
-                        dd($exception);
+                        //dd($exception);
                     }
                 }
             }
