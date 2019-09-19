@@ -151,4 +151,26 @@ class CountryInformationController extends Controller
         $country_information = CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
         return view('admin.country_information.list', compact('title', 'subtitle', 'country_information', 'country_id', 'information_filter_id'));
     }
+    public  function checkViewOrder(Request $request){
+
+        $id = $request->id;
+        $country_id = $request->country_id;
+        $information_filter_id = $request->information_filter_id;
+        if(isset($request->id)){
+            $country_information = CountryInformation::find($id);
+            if($country_information ){
+                if($country_information->country_id == $country_id && $country_information->information_filter_id == $information_filter_id){
+                    return $country_information->ordering;
+                }
+            }
+
+        }
+        $country_information = CountryInformation::where('country_id', $country_id)->where('information_filter_id', $information_filter_id)->get();
+        if($country_information->count()){
+            $viewOrder = $country_information->count() + 1;
+        }else{
+            $viewOrder = 0;
+        }
+        return $viewOrder;
+    }
 }
