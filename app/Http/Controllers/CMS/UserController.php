@@ -470,7 +470,7 @@ class UserController extends Controller
     public function weeklyReport()
     {
         //DB::enableQueryLog();
-        $users = User::where('subscribe_status', 1)->get();
+        $users = User::where('subscribe_status', 1)->where('email','nikunj@verzdesign.com')->get();
         $today_date = Carbon::now();
         $beforeWeek =Carbon::now()->addDay(-7);
         $weekly = $beforeWeek->format('Y-m-d');
@@ -496,27 +496,29 @@ class UserController extends Controller
                 $email_template_logo = '<img  src="'.asset(setting()->email_template_logo).'" alt="">';
                 $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon5.jpg').'"></a>';
                 $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon2.jpg').'"></a>';
+                $users = ['zyon.toh@foodindustry.asia','may.supaing@foodindustry.asia','desmond.lau@foodindustry.asia','yifan.jiang@foodindustry.asia','nikunj@verzdesign.com','monwai@verzdesign.com'];
                 foreach ($users as $user) {
 
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $data_user['email_sender_name'] = setting()->email_sender_name;
                     $data_user['from_email'] = setting()->from_email;
-                    $unsubscribe = '<a style="color:#999" href="'.url('unsubscribe/'.base64_encode($user->email)).'" target="_blank">unsubscribe</a>';
+                    $unsubscribe = '<a style="color:#999" href="'.url('unsubscribe/'.base64_encode($user)).'" target="_blank">unsubscribe</a>';
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $key_user = ['{{logo}}', '{{linkedin}}', '{{twitter}}', '{{content}}','{{unsubscribe}}'];
                     $value_user = [$email_template_logo, $linkedin, $twitter, $content_data,$unsubscribe];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
-                        $mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
-                        dd($user);
+                        $mail_user = Mail::to($user)->queue(new RegulatoryUpdates($data_user));
+                        //dd($user);
                     } catch (Exception $exception) {
                         dd($exception);
                     }
                 }
             }
         }
+        dd("Success");
     }
 
 
