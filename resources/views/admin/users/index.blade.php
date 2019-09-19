@@ -111,6 +111,10 @@
                         <table id="users" class="table table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th>Action</th>
+                                <th>Email</th>
+                                <th>Overall Status</th>
+                                <th>Subscription Status</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Member Type</th>
@@ -120,15 +124,13 @@
                                 <th>Telephone Number</th>
                                 <th>Country</th>
                                 <th>City</th>
-                                <th>Email</th>
                                 <th>Payment Status</th>
                                 <th>Group Name</th>
-                                <th>Subscription Date</th>
-                                <th>Subscription Status</th>
-                                <th>Renewal Date</th>
                                 <th>Registration Date</th>
-                                <th>Overall Status</th>
-                                <th>Action</th>
+                                <th>Subscription Date</th>
+                                <th>Renewal Date</th>
+
+
                             </tr>
                             </thead>
                             <tbody>
@@ -136,81 +138,6 @@
                                 @foreach($users as $user)
                                     <?php  $groupNames = memberGroupByUserIds($user->id); ?>
                                     <tr>
-                                        <td>{{ $user->firstname ?? '-' }}</td>
-                                        <td>{{ $user->lastname ?? '-' }}</td>
-                                        <td>
-                                            {{memberType($user->member_type)}}
-                                        </td>
-                                        <td>{{ $user->organization ?? '-' }}</td>
-                                        <td>{{ $user->job_title ?? '-' }}</td>
-                                        <td>
-                                            @if($user->mobile_number)
-                                                @if($user->mobile_code)
-                                                    {{ '+'.$user->mobile_code}}
-                                                @endif
-                                                &nbsp;{{$user->mobile_number ?? '-' }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($user->telephone_number)
-                                                @if($user->telephone_code)
-                                                    {{ '+'.$user->telephone_code}}
-                                                @endif
-                                                &nbsp;{{$user->telephone_number ?? '-' }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        <td>{{ $user->country ?? '-' }}</td>
-                                        <td>{{ $user->city ?? '-' }}</td>
-                                        <td>{{ $user->email ?? '-' }}</td>
-                                        <td>
-                                            @if(!is_null($user->expired_at))
-                                                @if(date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at)))
-                                                    Paid
-                                                @else
-                                                    Unpaid
-                                                @endif
-                                            @elseif(is_null($user->expired_at) && $user->status==5)
-                                                Paid
-                                            @else
-                                                Unpaid
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <?php
-                                            $groupNames = $groupNames->pluck('group_name')->all();
-                                            ?>
-                                            @if(count($groupNames))
-                                                {{implode(',',$groupNames)}}
-                                            @else
-                                                None
-                                            @endif
-                                        </td>
-                                        <td data-order="<?php if (!is_null($user->invoice())) {
-                                            echo $user->invoice()->created_at->format('d M, Y H:i:s');
-                                        }?>">
-                                            @if(!is_null($user->invoice()) && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at))) )
-                                                {{ $user->invoice()->created_at->format('d M, Y')}}
-                                            @elseif(is_null($user->invoice()) && $user->status==5)
-                                                {{ date('d M, Y',strtotime($user->renew_at))}}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-
-                                        <td>@if($user->status==5)Active @else Inactive @endif</td>
-                                        <td data-order="{{ $user->expired_at }}">
-                                            @if(!is_null($user->expired_at) )
-                                                {{date('d M, Y', strtotime($user->expired_at))}}
-                                            @elseif(is_null($user->expired_at) && $user->status==5)
-                                                Lifetime Validity
-                                            @else - @endif
-                                        </td>
-                                        <td data-order="{{ $user->created_at }}">{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
-                                        <td>{{memberShipStatus($user->status)}}</td>
                                         <td>
                                             <table class="action-table">
                                                 <tr>
@@ -285,6 +212,89 @@
                                             </table>
 
 
+                                        </td>
+                                        <td>{{ $user->email ?? '-' }}</td>
+                                        <td>{{memberShipStatus($user->status)}}</td>
+                                        <td>@if($user->status==5)Active @else Inactive @endif</td>
+                                        <td>{{ $user->firstname ?? '-' }}</td>
+                                        <td>{{ $user->lastname ?? '-' }}</td>
+                                        <td>
+                                            {{memberType($user->member_type)}}
+                                        </td>
+                                        <td>{{ $user->organization ?? '-' }}</td>
+                                        <td>{{ $user->job_title ?? '-' }}</td>
+                                        <td>
+                                            @if($user->mobile_number)
+                                                @if($user->mobile_code)
+                                                    {{ '+'.$user->mobile_code}}
+                                                @endif
+                                                &nbsp;{{$user->mobile_number ?? '-' }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($user->telephone_number)
+                                                @if($user->telephone_code)
+                                                    {{ '+'.$user->telephone_code}}
+                                                @endif
+                                                &nbsp;{{$user->telephone_number ?? '-' }}
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>{{ $user->country ?? '-' }}</td>
+                                        <td>{{ $user->city ?? '-' }}</td>
+                                        <td>
+                                            @if(!is_null($user->expired_at))
+                                                @if(date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at)))
+                                                    Paid
+                                                @else
+                                                    Unpaid
+                                                @endif
+                                            @elseif(is_null($user->expired_at) && $user->status==5)
+                                                Paid
+                                            @else
+                                                Unpaid
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <?php
+                                            $groupNames = $groupNames->pluck('group_name')->all();
+                                            ?>
+                                            @if(count($groupNames))
+                                                {{implode(',',$groupNames)}}
+                                            @else
+                                                None
+                                            @endif
+                                        </td>
+                                        <td data-order="{{ $user->created_at }}">{{ $user->created_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                        <td data-order="<?php if (!is_null($user->invoice())) {
+                                            echo $user->invoice()->created_at->format('d M, Y H:i:s');
+                                        }?>">
+                                            @if(!is_null($user->invoice()) && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at))) )
+                                                @if(!is_null($user->invoice()->created_at))
+                                                    {{ $user->invoice()->created_at->format('d M, Y')}}
+                                                @else
+                                                    -
+                                                @endif
+                                            @elseif(is_null($user->invoice()) && $user->status==5)
+                                                @if(!is_null($user->renew_at))
+                                                    {{ date('d M, Y',strtotime($user->renew_at))}}
+                                                @else
+                                                    -
+                                                @endif
+
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td data-order="{{ $user->expired_at }}">
+                                            @if(!is_null($user->expired_at) )
+                                                {{date('d M, Y', strtotime($user->expired_at))}}
+                                            @elseif(is_null($user->expired_at) && $user->status==5)
+                                                Lifetime Validity
+                                            @else - @endif
                                         </td>
 
 
@@ -361,8 +371,7 @@
     });
 
     $('#users').DataTable({
-        "pageLength": 10,
-        'ordering': true,
+        dom: 'Bfrtip',
         'order': [
             [15, 'desc']
         ],
@@ -372,29 +381,53 @@
         },
             {
                 width: 100,
-                targets: 0
-            },
-            {
-                width: 150,
-                targets: 1
-            },
-            {
-                width: 300,
-                targets: 2
-            },
-            {
-                width: 150,
-                targets: 3
-            },
-            {
-                width: 150,
                 targets: 4
             },
             {
                 width: 150,
+                targets: 5
+            },
+            {
+                width: 300,
                 targets: 6
+            },
+            {
+                width: 150,
+                targets: 7
+            },
+            {
+                width: 150,
+                targets: 8
+            },
+            {
+                width: 150,
+                targets: 10
             }
 
+        ],
+        buttons: [
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17]
+                },
+                filename: function () {
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; //January is 0!
+                    var yyyy = today.getFullYear();
+                    var yy = yyyy.toString().substring(2);
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+                    today = yy + '' + mm + '' + dd;
+                    return 'Members - ' + today;
+                }
+            }
         ]
     });
     $(document).ready(function () {

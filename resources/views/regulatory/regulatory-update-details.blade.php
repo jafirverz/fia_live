@@ -78,6 +78,11 @@ $id = $_GET['id'] ?? '';
                     <div class="content-box" id="update-{{ ($key+1) }}">
                         <div class="document">
                             {!! $value->description !!}
+                            @if($value->impact_on_industry)
+                                <hr>
+                                <h4>Impact on Industry:</h4>
+                                {!! $value->impact_on_industry !!}
+                                @endif
                         </div>
                     </div>
                 </div>

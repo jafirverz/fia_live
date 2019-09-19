@@ -98,7 +98,7 @@
                 </span>
                 @endif
   @if($topicalReport->pdf!="")                         
-  <a href='{{ asset($topicalReport->pdf) }}' target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Open PDF in New Tab</a>
+  <a href='{{ asset($topicalReport->pdf) }}' target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Topical Report PDF</a>
   @endif
                         </div>                    
                 <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">

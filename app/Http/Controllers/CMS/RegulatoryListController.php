@@ -74,6 +74,7 @@ class RegulatoryListController extends Controller
         $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
         $regulatory->regulatory_date = $request->regulatory_date;
         $regulatory->description = $request->description;
+        $regulatory->impact_on_industry = $request->impact_on_industry;
         $regulatory->parent_id = $parent_id;
         $regulatory->stage_id = $request->stage_id;
         $regulatory->save();
@@ -132,6 +133,7 @@ class RegulatoryListController extends Controller
         $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
         $regulatory->regulatory_date = $request->regulatory_date;
         $regulatory->description = $request->description;
+        $regulatory->impact_on_industry = $request->impact_on_industry;
         $regulatory->parent_id = $parent_id;
         $regulatory->stage_id = $request->stage_id;
         $regulatory->updated_at = Carbon::now();

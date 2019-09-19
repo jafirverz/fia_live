@@ -20,8 +20,16 @@
                 <div class="box box-default">
                     <!-- /.box-header -->
                     <div class="box-header">
-                        <a href="{{ url('admin/regulatory/create') }}" class="btn btn-primary pull-right">Create</a>
-                        <a href="{{ url('admin/regulatory/highlight/edit') }}" class="btn btn-primary pull-right">Highlight</a>
+                        <table class="action-table pull-right">
+                            <tr>
+                                <td>
+                                    <a href="{{ url('admin/regulatory/create') }}" class="btn btn-primary ">Create</a>
+                                </td>
+                                <td>
+                                    <a href="{{ url('admin/regulatory/highlight/edit') }}" class="btn btn-primary pull-right">Highlight</a>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="box-body">
                         <div class="row">

@@ -1,7 +1,7 @@
 @extends('admin.layout.dashboard')
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
+        <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -24,33 +24,51 @@
                             <div class="col-md-12 table-responsive">
                                 <table class="table table-bordered table-hover" id="datatable">
                                     <thead>
-                                        <tr>
-                                            <th>Country Info. Title</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
-                                            <th>Order</th>
-                                            <th>Action</th>
-                                        </tr>
+                                    <tr>
+                                        <th>Country Info. Title</th>
+                                        <th>Created At</th>
+                                        <th>Updated At</th>
+                                        <th>Order</th>
+                                        <th>Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @if($country_information)
+                                    @if($country_information)
                                         @foreach($country_information as $country)
-                                        <tr>
-                                            <td>{{ $country->information_title }}</td>
-                                            <td data-order="{{ $country->created_at }}">{{ $country->created_at->format('d M, Y h:i A') ?? '-' }}</td>
-                                            <td data-order="{{ $country->updated_at }}">{{ $country->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
-                                            <td>{{ $country->ordering }}</td>
-                                            <td>
-                                                <a href="{{ url('admin/country-information/edit', $country->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <form action="{{ url('admin/country-information/destroy') }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                    <input type="hidden" name="id" value="{{ $country->id }}">
-                                                </form>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{ $country->information_title }}</td>
+                                                <td data-order="{{ $country->created_at }}">{{ $country->created_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                                <td data-order="{{ $country->updated_at }}">{{ $country->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
+                                                <td>{{ $country->ordering }}</td>
+                                                <td>
+                                                    <table class="action-table">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{ url('admin/country-information/edit', $country->id) }}"
+                                                                   class="btn btn-info" title="Edit"><i class=" fa fa-pencil"
+                                                                                                        aria-hidden="true"></i></a>
+                                                            </td>
+                                                            <td>
+                                                                <form action="{{ url('admin/country-information/destroy') }}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                            onclick="return confirm('Are you sure you want to delete?');"
+                                                                            title="Delete"><i class="fa fa-trash"
+                                                                                              aria-hidden="true"></i></button>
+                                                                    <input type="hidden" name="id" value="{{ $country->id }}">
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+
+                                                </td>
+
+                                            </tr>
                                         @endforeach
-                                        @endif
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -66,10 +84,10 @@
     </section>
 </div>
 <script>
-$(document).ready(function() {
-    $('#datatable').DataTable( {
-        "order": [[ 3, "asc" ]]
-    } );
-} );
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "order": [[3, "asc"]]
+        });
+    });
 </script>
 @endsection
