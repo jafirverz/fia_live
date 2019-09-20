@@ -302,8 +302,8 @@ class PagesFrontController extends Controller
     public function profileUpdate(Request $request, $id)
     {
         $request->validate([
-            'firstname' => 'required|alpha',
-            'lastname' => 'required|alpha',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
             'organization' => 'required|string',
             'country'   =>  'required',
             'password' => 'required',
