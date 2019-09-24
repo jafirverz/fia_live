@@ -223,6 +223,7 @@ class HomeController extends Controller
                     $link = '#';
                 }
                 $item['link'] = $link;
+                $item['title'] = $value->title;
                 $regulatories[] = $item;
             }
         }
@@ -256,6 +257,7 @@ class HomeController extends Controller
                     $link = '#';
                 }
                 $item['link'] = $link;
+                $item['title'] = $value->title;
                 $regulatories[] = $item;
             }
         }

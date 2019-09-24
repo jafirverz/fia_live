@@ -513,7 +513,7 @@ class UserController extends Controller
                         $mail_user = Mail::to($user)->queue(new RegulatoryUpdates($data_user));
                         //dd($user);
                     } catch (Exception $exception) {
-                        //dd($exception);
+                        dd($exception);
                     }
                 }
             }
