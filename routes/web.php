@@ -11,11 +11,8 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('page');
-});
+use App\Page;
 
-*/
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
@@ -248,7 +245,9 @@ Route::post('/update-profile-status', 'PagesFrontController@updateStatus');
 Route::get('/update-profile-status', 'PagesFrontController@updateStatus')->name('update-profile-status');
 Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/subscribers', 'HomeController@subscribers');
-Route::get('/unsubscribe/{id}', 'HomeController@unsubscribe');
+Route::get('/post-unsubscribe/{id}', 'HomeController@unsubscribe');
+Route::get('/unsubscribe', 'HomeController@getUnsubscribe');
+
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');

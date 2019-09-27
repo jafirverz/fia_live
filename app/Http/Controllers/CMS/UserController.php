@@ -485,7 +485,8 @@ class UserController extends Controller
             $value = getRegulatoryData($regulatory->parent_id);
             if($value)
             {
-                $content[] = '<tr><td style="text-align: left; padding: 0 30px 0; font-size: 16px;"><p style="color: #017cba; "><b>'.$regulatory->title.'</b></p><p>'.Str::limit($regulatory->description, 100).'<a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'" target="_blank" style="color: #f48120; text-decoration:none; "> <b>Read More&nbsp;&#x226B;</b></a></p></td></tr>';
+                $content[] = '<tr>
+								<td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;"><p style="color: #017cba; "><b>'.$regulatory->title.'</b></p><p>'.Str::limit($regulatory->description, 100).'<a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'" target="_blank" style="color: #f48120; text-decoration:none; "> <b>Read More&nbsp;&#x226B;</b></a></p></td></tr>';
             }
         }
 
@@ -494,19 +495,20 @@ class UserController extends Controller
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
                 $email_template_logo = '<img  src="'.asset(setting()->email_template_logo).'" alt="">';
+                $contact = '<a href="mailto:regulatory@foodindustry.asia" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('photos/2/icon6.jpg').'"></a>';
                 $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="'.asset('photos/2/icon5.jpg').'"></a>';
                 $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="'.asset('photos/2/icon2.jpg').'"></a>';
-                $users = ['nikunj@verzdesign.com'];
+                $users = ['monwai@verzdesign.com','nikunj@verzdesign.com'];
                 foreach ($users as $user) {
 
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $data_user['email_sender_name'] = setting()->email_sender_name;
                     $data_user['from_email'] = setting()->from_email;
-                    $unsubscribe = '<a style="color:#999" href="'.url('unsubscribe/'.base64_encode($user)).'" target="_blank">unsubscribe</a>';
+                    $unsubscribe = '<a style="color:#999" href="'.url('unsubscribe?id='.base64_encode($user)).'" target="_blank">unsubscribe</a>';
                     $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{logo}}', '{{linkedin}}', '{{twitter}}', '{{content}}','{{unsubscribe}}'];
-                    $value_user = [$email_template_logo, $linkedin, $twitter, $content_data,$unsubscribe];
+                    $key_user = ['{{logo}}','{{contact}}', '{{linkedin}}', '{{twitter}}', '{{content}}','{{unsubscribe}}'];
+                    $value_user = [$email_template_logo,$contact, $linkedin, $twitter, $content_data,$unsubscribe];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
@@ -518,7 +520,7 @@ class UserController extends Controller
                 }
             }
         }
-        dd("Success");
+        dd($weeklyRegulatories->count());
     }
 
 
