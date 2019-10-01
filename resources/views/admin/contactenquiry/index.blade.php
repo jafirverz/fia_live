@@ -71,7 +71,6 @@
 </div>
 <script>
     $(document).ready(function () {
-        alert($('input[name=bluk_remove]').length);
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#enquiry').dataTable({
             'order': [6, 'desc'],
@@ -145,7 +144,6 @@
                 $("a.bulk_remove").find(".badge").text(bulk_arr.length);
                 $("div.bulk_status").find(".badge").text(bulk_arr1.length);
             }
-//alert(bulk_arr);
         });
         $("input[name='all_bulk_remove']").on("click", function () {
             bulk_arr = [];
