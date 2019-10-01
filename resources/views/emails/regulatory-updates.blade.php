@@ -37,11 +37,12 @@
                    style="box-sizing: border-box; background-color: #ffffff; margin: 0 auto; padding: 0; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
                 <tr>
                     <td style="box-sizing: border-box; line-height: 0 !important; text-align: center; padding: 10px;">
-                        <a href="http://localhost"
+                        <a href="{{url('/')}}" target="_blank"
                            style="box-sizing: border-box; color: #3869d4;">
                             <img style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; max-width: 100%; border: none; width: 120px;"
                                  src="{{asset(setting()->email_template_logo)}}">
                         </a>
+
                     </td>
                 </tr>
 
