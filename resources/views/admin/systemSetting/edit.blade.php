@@ -50,7 +50,7 @@
                             <div class="@if(isset($systemSetting->email_template_logo)) row @endif">
                                 <div class="@if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))col-sm-10 @endif">
                                     <input class="form-control" placeholder="" name="email_template_logo" type="file">
-                                    <span class="text-muted">Note: Email Template Logo size should be 1250*200 for better display.</span>
+                                    <span class="text-muted">Note: Email Template Logo size should be 120*72 for better display.</span>
                                 </div>
                                 @if(isset($systemSetting->email_template_logo) && ($systemSetting->email_template_logo != ''))
                                     <div class=" col-sm-2">

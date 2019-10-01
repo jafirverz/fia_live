@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="slug" class=" control-label">Slug</label>
+                            <label for="slug" class=" control-label">Friendly URL</label>
                             <div class="">
                                 <input class="form-control" placeholder="" value="{{ old('slug') }}" name="slug" type="text">
                             </div>

@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="slug" class=" control-label">Slug</label>
+                            <label for="slug" class=" control-label">Friendly URL</label>
                             <div class="">
                                 @if($page->page_type == 2)
                                 <input class="form-control lower-case" readonly="readonly" placeholder="" value="{{ $page->slug }}" name="slug" type="text">                            

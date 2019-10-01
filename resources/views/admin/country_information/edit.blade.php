@@ -21,9 +21,10 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <input type="hidden" value="{{$country_information->id}}" id="information-id" >
                             <div class="form-group{{ $errors->has('country_id') ? ' has-error' : '' }}">
                                 <label for="">Country</label>
-                                <select name="country_id" class="form-control select2" style="width: 100%;" >
+                                <select name="country_id" id="country-id" class=" checkViewOrder form-control select2" style="width: 100%;" >
                                     <option value="">-- Select --</option>
                                     @if($countries)
                                     @foreach ($countries as $country)
@@ -39,7 +40,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('information_filter_id') ? ' has-error' : '' }}">
                                 <label for="">Information Filter</label>
-                                <select name="information_filter_id" class="form-control select2" style="width: 100%;">
+                                <select name="information_filter_id" id="information-filter-id" class=" checkViewOrder form-control select2" style="width: 100%;">
                                     <option value="">-- Select --</option>
                                     @if($categories)
                                     @foreach ($categories as $category)
@@ -75,7 +76,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('ordering') ? ' has-error' : '' }}">
                                 <label for="">Order</label>
-                                <input type="number" name="ordering" class="form-control" min="0"
+                                <input type="number" id="ordering" name="ordering" class="form-control" min="0"
                                     placeholder="Enter order" value="{{ $country_information->ordering ?? 0 }}">
                                 @if ($errors->has('ordering'))
                                 <span class="help-block">
@@ -98,4 +99,24 @@
         <!-- /.box -->
     </section>
 </div>
+<script>
+    $('.checkViewOrder').change(function() {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var informationFilterId = $('#information-filter-id').val();
+        var countryId = $('#country-id').val();
+        var id = $('#information-id').val();
+        $.ajax({
+            url:"<?php echo url('/admin'); ?>/country-information/check-view-order",
+            method:"POST",
+            dataType:"JSON",
+            data:{ _token: CSRF_TOKEN,information_filter_id:informationFilterId,country_id:countryId,id:id},
+            success:function(ordering)
+            {
+                $('#ordering').val(ordering);
+            }
+        })
+
+    });
+
+</script>
 @endsection

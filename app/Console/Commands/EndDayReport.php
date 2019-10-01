@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use App\Traits\GetEmailTemplate;
 use Illuminate\Support\Facades\Mail;
@@ -48,8 +49,8 @@ class EndDayReport extends Command
     {
         //DB::enableQueryLog();
         $users = User::where('subscribe_status', 1)->get();
-
-        $beforeWeek = Carbon::now()->add(-7, 'day');
+        $today_date = Carbon::now();
+        $beforeWeek =Carbon::now()->addDay(-7);
         $weekly = $beforeWeek->format('Y-m-d');
         $today_date = Carbon::now();
 
@@ -62,7 +63,7 @@ class EndDayReport extends Command
             $value = getRegulatoryData($regulatory->parent_id);
             if($value)
             {
-                $content[] = '<tr><td style="text-align: left; padding: 0 30px 0; font-size: 12px;"><p style="color: #f48120; ">'.$regulatory->title.'</p><p>'.Str::limit($regulatory->description, 300).'<a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'" target="_blank" style="color: #f48120; text-decoration:none; "> Read more </a></p></td></tr>';
+                $content[] = '<tr><td style="text-align: left; padding: 0 30px 0; font-size: 16px;"><p style="color: #017cba; "><b>'.$regulatory->title.'</b></p><p>'.Str::limit($regulatory->description, 100).'<a href="'.url('regulatory-details', $value->slug) . '?id=' . $regulatory->id.'" target="_blank" style="color: #f48120; text-decoration:none; "> <b>Read More&nbsp;&#x226B;</b></a></p></td></tr>';
             }
         }
 
@@ -70,23 +71,26 @@ class EndDayReport extends Command
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
-                $email_template_logo = '<img src="'.asset(setting()->email_template_logo).'" alt="">';
-                $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img src="'.asset('images/icon5.jpg').'"></a>';
-                $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img src="'.asset('images/icon2.jpg').'"></a>';
+                $email_template_logo = '<img  src="'.asset(setting()->email_template_logo).'" alt="">';
+                $linkedin = '<a href="'.setting()->linkedin_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon5.jpg').'"></a>';
+                $twitter = '<a href="'.setting()->twitter_link.'" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="'.asset('images/icon2.jpg').'"></a>';
                 foreach ($users as $user) {
+
                     $data_user = [];
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $data_user['email_sender_name'] = setting()->email_sender_name;
                     $data_user['from_email'] = setting()->from_email;
+                    $unsubscribe = '<a style="color:#999" href="'.url('unsubscribe/'.base64_encode($user->email)).'" target="_blank">unsubscribe</a>';
                     $data_user['subject'] = $emailTemplate_user->subject;
-                    $key_user = ['{{logo}}', '{{linkedin}}', '{{twitter}}', '{{content}}'];
-                    $value_user = [$email_template_logo, $linkedin, $twitter, $content_data];
+                    $key_user = ['{{logo}}', '{{linkedin}}', '{{twitter}}', '{{content}}','{{unsubscribe}}'];
+                    $value_user = [$email_template_logo, $linkedin, $twitter, $content_data,$unsubscribe];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
                         $mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
+                        //dd($user);
                     } catch (Exception $exception) {
-                        dd($exception);
+                        //dd($exception);
                     }
                 }
             }

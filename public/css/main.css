@@ -1064,3 +1064,25 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	aside { display: none; }
 	a[href]:after { content: none !important; }
 }
+
+
+
+
+
+
+
+.img-text-wrap {
+    background: #8dcef4;
+    position: relative;
+    padding-bottom: 50px;
+	margin-bottom:50px;
+}
+.unc-detail {
+    position: relative;
+    margin: 0 auto;
+    margin-top: -100px;
+	color:#000;
+}
+.output{z-index:999; position:relative;}
+.btn-unc{background:#e00024; color:#fff;}
+.btn-cancel{margin-left:10px; background:#fff; color:#000 !important;}

@@ -49,7 +49,7 @@
                                 $keyword=strip_tags($_REQUEST['search_content']);
                                 @endphp
                                 <li class="mlist-line"><a
-                                            href="{{ $info['link']}}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a>
+                                            href="{{ $info['link']}}">{!!  $info['title'] !!}</a>
                                 </li>
                             @endforeach
                         </ul>

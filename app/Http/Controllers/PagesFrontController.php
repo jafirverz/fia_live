@@ -63,8 +63,6 @@ class PagesFrontController extends Controller
             return view('auth.profile', compact("page", "banner", "breadcrumbs", 'user'));
         }
       elseif ($page->page_type == 0) {
-
-
                 return view("cms", compact("page", "banner", "breadcrumbs"));
 
             }
@@ -304,8 +302,8 @@ class PagesFrontController extends Controller
     public function profileUpdate(Request $request, $id)
     {
         $request->validate([
-            'firstname' => 'required|alpha',
-            'lastname' => 'required|alpha',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
             'organization' => 'required|string',
             'country'   =>  'required',
             'password' => 'required',
@@ -327,7 +325,7 @@ class PagesFrontController extends Controller
             $user->city = $request->city;
             $user->address1 = $request->address1;
             $user->address2 = $request->address2;
-            $user->subscribe_status = $request->subscribe_status ?? null;
+            $user->subscribe_status = $request->subscribe_status ?? 0;
             $user->save();
             return redirect('profile')->with('success',  'Success! Profile have been updated.');
         }
