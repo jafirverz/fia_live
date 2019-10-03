@@ -24,16 +24,16 @@
                         <div class="form-group">
 								<label for="title" class=" control-label">Title</label>                            
                                 <div class="">
-                                <input class="form-control" placeholder="" value="{{ $page->title }}" name="title" type="text">                            
+                                <input class="form-control" placeholder="" id="page-heading" value="{{ $page->title }}" name="title" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="slug" class=" control-label">Friendly URL</label>
                             <div class="">
-                                @if($page->page_type == 2)
-                                <input class="form-control lower-case" readonly="readonly" placeholder="" value="{{ $page->slug }}" name="slug" type="text">                            
+                                @if(in_array($page->page_type,[1,2]))
+                                <input class="form-control lower-case" id="url-name" readonly="readonly" placeholder="" value="{{ $page->slug }}" name="slug" type="text">
                                 @else
-                                <input class="form-control lower-case" readonly="readonly" placeholder="" value="{{ $page->slug }}" name="slug" type="text">                            
+                                <input class="form-control lower-case" id="url-name" readonly="readonly" placeholder="" value="{{ $page->slug }}" name="slug" type="text">
                                 @endif
                             </div>
 
@@ -140,3 +140,13 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+@push('scripts')
+<script>
+    $(function() {
+        $('#page-heading').change(function() {
+            var page_heading = $.trim($(this).val()).toLowerCase().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+            $('#url-name').val(page_heading);
+        });
+    });
+</script>
+@endpush
