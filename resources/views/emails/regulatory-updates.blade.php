@@ -8,9 +8,10 @@
 </head>
 <body style="box-sizing: border-box; background-color: #f8fafc; color: #74787e; height: 100%; hyphens: auto; line-height: 1.4; margin: 0; -moz-hyphens: auto; -ms-word-break: break-all; width: 100% !important; -webkit-hyphens: auto; -webkit-text-size-adjust: none; word-break: break-word;">
 <style>
-    td{
-
+    body, td, input, textarea, select {
+        font-family: Arial !important;
     }
+
     @media    only screen and (max-width: 600px) {
         .inner-body {
             width: 100% !important;
@@ -29,7 +30,7 @@
 </style>
 
 <table class="wrapper" width="100%" cellpadding="0" cellspacing="0"
-       style="box-sizing: border-box; background-color: #f8fafc; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%; font-family: Arial">
+       style="box-sizing: border-box; background-color: #f8fafc; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
     <tr>
         <td align="center"
             style="box-sizing: border-box;">
@@ -39,7 +40,7 @@
                     <td style="box-sizing: border-box; line-height: 0 !important; text-align: center; padding: 10px;">
                         <a href="{{url('/')}}" target="_blank"
                            style="box-sizing: border-box; color: #3869d4;">
-                            <img style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; max-width: 100%; border: none; width: 120px;"
+                            <img style=" box-sizing: border-box; max-width: 100%; border: none; width: 120px;"
                                  src="{{asset(setting()->email_template_logo)}}">
                         </a>
 
@@ -57,4 +58,5 @@
         </td>
     </tr>
 </table>
+
 </body>
