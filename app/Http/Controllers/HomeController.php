@@ -118,16 +118,19 @@ class HomeController extends Controller
                 ->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $report_description = DB::table('topical_reports')
                 ->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
                 ->where('topical_report_countries.filter_id', $request->country)
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         } else {
             $report_description = DB::table('topical_reports')
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         }
 
@@ -146,16 +149,19 @@ class HomeController extends Controller
                 ->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $report_title = DB::table('topical_reports')
                 ->join('topical_report_countries', 'topical_reports.id', '=', 'topical_report_countries.topical_report_id')
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
                 ->where('topical_report_countries.filter_id', $request->country)
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         } else {
             $report_title = DB::table('topical_reports')
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
+                ->orderBy('topical_reports.id','DESC')
                 ->get();
         }
 
