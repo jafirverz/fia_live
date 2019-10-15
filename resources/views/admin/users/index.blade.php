@@ -129,8 +129,6 @@
                                 <th>Registration Date</th>
                                 <th>Subscription Date</th>
                                 <th>Renewal Date</th>
-
-
                             </tr>
                             </thead>
                             <tbody>
@@ -272,18 +270,20 @@
                                         <td data-order="<?php if (!is_null($user->invoice())) {
                                             echo $user->invoice()->created_at->format('d M, Y H:i:s');
                                         }?>">
-                                            @if(!is_null($user->invoice()) && (date('Y-m-d')<date('Y-m-d',strtotime($user->expired_at))) )
+                                            @if(!is_null($user->invoice()))
                                                 @if(!is_null($user->invoice()->created_at))
+
                                                     {{ $user->invoice()->created_at->format('d M, Y')}}
+
                                                 @else
                                                     -
                                                 @endif
-                                            @elseif(is_null($user->invoice()) && $user->status==5)
+                                           {{-- @elseif(is_null($user->invoice()) && $user->status==5)
                                                 @if(!is_null($user->renew_at))
                                                     {{ date('d M, Y',strtotime($user->renew_at))}}
                                                 @else
                                                     -
-                                                @endif
+                                                @endif--}}
 
                                             @else
                                                 -
