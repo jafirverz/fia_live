@@ -93,7 +93,7 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 
                             <div class="col">
 
-                                <h1 class="title-1">{{ $_GET['country'] ?? '' }}</h1>
+                                <h1 class="title-1">{{ ucfirst($_GET['country']) ?? '' }}</h1>
 
                                 <h2 class="title-2">{{ $_GET['category'] ?? '' }}</h2>
 
