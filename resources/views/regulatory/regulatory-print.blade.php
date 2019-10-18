@@ -32,7 +32,7 @@
                     <h1 class="title-1 text-center space-2">@if(file_exists(str_replace(url('/').'/', '', getFilterCountryImage($regulatory->country_id))))<img
                             src="{{ getFilterCountryImage($regulatory->country_id) }}"
                             alt="{{ getFilterCountry($regulatory->country_id) }}" />@endif
-                        {{ getFilterCountry($regulatory->country_id) }}:{{ $regulatory->title }}</h1>
+                        {{ $regulatory->title }}</h1>
                     <table>
                         <tbody>
                             <tr>
@@ -46,7 +46,7 @@
                             <tr>
                                 <td><strong style="color: #fb7a10;">Date of Regulation in Force:</strong></td>
                                 <td><strong
-                                        style="color: #fb7a10;">{{ $regulatory->date_of_regulation_in_force->format('d M Y') }}</strong>
+                                        style="color: #fb7a10;">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M Y') }} @endif</strong>
                                 </td>
                             </tr>
                             <tr>

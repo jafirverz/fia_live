@@ -3,14 +3,15 @@
 @section('content')
             <div class="main-wrap">
                 @include('inc.banner')
-                @if(!$page->slug!='verified-thank-you')
-				<div class="container @if($page->slug!='thank-you') space-1 @else thanks-wrap @endif">
 
-						<div class="document" style="margin:0px;"><a class="fas fa-angle-double-left lk-back" onclick="window.history.back(1)">Back</a></div>
+				<div class="container @if(in_array($page->slug,['thank-you','email-verification','resend-email-verification','unsubscribed']))  thanks-wrap @else space-1 @endif">
+                        @if($page->slug=='verified-thank-you' && $page->slug=='account-verified')
+                        <div class="document" style="margin:0px;"><a class="fas fa-angle-double-left lk-back" onclick="window.history.back(1)">Back</a></div>
+                        @endif
 						{!! $page->contents!!}
 
                 </div>
-                @endif
+
                 @if($page->slug=='about-us' && !Auth::check())
 				<div class="box-1">
 					<div class="container">

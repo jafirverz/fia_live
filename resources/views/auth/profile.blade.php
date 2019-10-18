@@ -132,6 +132,8 @@
                     <input type="text" class="form-control" name="address1" value="{{ $user->address1 }}" />
                     <label class="lb">Address Line 2</label>
                     <input type="text" class="form-control" name="address2" value="{{ $user->address2 }}" />
+                    <div class="checkbox"><input type="checkbox" id="update" name="subscribe_status"
+                        value="1" @if($user->subscribe_status==1) checked @endif /><label for="update">I’d like to subscribe to the FIA Regulatory Hub newsletter to receive the latest regulatory updates.</label></div>
                 </div>
             </div>
             <div class="box-2">
@@ -145,7 +147,7 @@
                         <div class="form-group">
                                 <div class="google-recaptcha">
                                     <div class="g-recaptcha" data-callback="onSubmit"
-                                        data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                        data-sitekey="{{env('CAPTCHA_SITE_KEY')}}" data-size="invisible"></div>
                                     <input type="hidden" title="Please verify this" class="required" name="keycode"
                                         id="keycode">
                                     <div id="cap-response" style="display:none; color:#F00;"></div>

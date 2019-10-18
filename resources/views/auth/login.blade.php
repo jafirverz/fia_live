@@ -32,11 +32,14 @@
                         </span>
                         @endif
                     </div>
+                    <div class="checkbox text-center">
+                        <input type="checkbox"  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} /><label for="remember">Remember me?</label>
+                    </div>
                     <input type="hidden" name="redirect" value="@if(isset($_GET['type'])) @if($_GET['type']=='login') {{ url($_GET['page']) }} @endif @endif">
                     <div class="form-group">
                             <div class="google-recaptcha">
                                 <div class="g-recaptcha" data-callback="onSubmit"
-                                    data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                                    data-sitekey="{{env('CAPTCHA_SITE_KEY')}}" data-size="invisible"></div>
                                 <input type="hidden" title="Please verify this" class="required" name="keycode"
                                     id="keycode">
                                 <div id="cap-response" style="display:none; color:#F00;"></div>
@@ -46,6 +49,7 @@
                     <button type="submit" class="btn-2">Sign in</button>
                     <div class="links">
                         <a href="{{ route('password.request') }}">Forgot Password?</a>
+                        <p>Don't have an account yet? <a href="{{ url('register') }}">Create account</a></p>
                     </div>
                 </form>
             </div>

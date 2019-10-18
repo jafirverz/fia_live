@@ -4,19 +4,24 @@
             <div class="tb-col">
                 @if(Auth::check())
                 <div class="col">
-                    Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, Welcome to <strong>Food Industry
-                        Asia!</strong>
+                    Hi {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}, welcome to <strong>Food Industry Asia (FIA) Regulatory Hub!</strong>
                 </div>
                 <div class="col text-right">
-                    <a class="btn-1" href="{{ url('profile') }}">Profile</a>
-                    <a class="btn-2" href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                    <div class="dropdown">
+                        <a class="btn-1" data-toggle="dropdown" href="#">Profile</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url('profile') }}">Profile</a></li>
+                            <li><a href="{{ url('change-password') }}">Change Password</a></li>
+                            <li><a href="{{ url('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
+                        </ul>
+                    </div>
                     <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 </div>
                 @else
                 <div class="col">
-                    Hi Guest, Welcome to <strong>Food Industry Asia!</strong>
+                    Hi Guest, welcome to <strong>Food Industry Asia (FIA) Regulatory Hub!</strong>
                 </div>
                 <div class="col text-right">
                     <a class="btn-1" href="{{ url('login') }}">Sign in</a>

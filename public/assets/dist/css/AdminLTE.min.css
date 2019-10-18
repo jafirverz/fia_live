@@ -5213,7 +5213,9 @@ table.text-center, table.text-center td, table.text-center th {
 .form-control[readonly]{
     background-color: #fff !important;
 }
-
+.action-table tr td{
+    padding: 2px;
+}
 @media print {
     .no-print, .main-sidebar, .left-side, .main-header, .content-header {
         display: none !important

@@ -38,15 +38,15 @@
                     @endif
                 </div>
 
-                {{--<div class="captcha">
+                <div class="captcha">
                     <div class="google-recaptcha">
                         <div class="g-recaptcha" data-callback="onSubmit"
-                             data-sitekey="6Lf7LawUAAAAAF81NXrWPmOJ3HmDXwRZfDCsURC3" data-size="invisible"></div>
+                             data-sitekey="{{env('CAPTCHA_SITE_KEY')}}" data-size="invisible"></div>
                         <input type="hidden" title="Please verify this" class="required" name="keycode" id="keycode">
 
                         <div id="cap-response" style="display:none; color:#F00;"></div>
                     </div>
-                </div>--}}
+                </div>
                 <button type="submit" class="btn-2">Subscribe</button>
             </form>
 

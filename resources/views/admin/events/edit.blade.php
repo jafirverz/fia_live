@@ -47,6 +47,9 @@
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="event_image">
                                 </div>
+                                   <p class="text-muted"><strong>Note:</strong>
+                                       Image size should be 1400*470 for better display
+                                   </p>
 <img id="holder" @if($event->event_image!="") src="{{url($event->event_image)}}" @endif  style="margin-top:15px;max-height:100px;">                                </div>
                                  
                                 </div>

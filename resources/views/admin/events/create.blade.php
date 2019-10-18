@@ -50,9 +50,13 @@
                                         </a>
                                     </span>
                                     <input id="thumbnail" class="form-control" type="text" name="event_image">
-                                    <img id="holder" style="margin-top:15px;max-height:100px;">
-                                </div></div>
-                                
+                                </div>
+                                   <p class="text-muted"><strong>Note:</strong>
+                                       Image size should be 1400*470 for better display
+                                   </p>
+                                   <img id="holder" style="margin-top:15px;max-height:100px;">
+                               </div>
+
                                 </div>
                             </div>
                 <div class="form-group">

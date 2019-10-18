@@ -24,13 +24,13 @@
                         <div class="form-group">
                             <label for="name" class=" control-label">Title</label>
                             <div class="">
-                                <input class="form-control" placeholder="" value="{{ old('title') }}" name="title" type="text">                            
+                                <input class="form-control" placeholder="" value="{{ old('title') }}" name="title" type="text" id="page-heading">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="slug" class=" control-label">Slug</label>
+                            <label for="slug" class=" control-label">Friendly URL</label>
                             <div class="">
-                                <input class="form-control" placeholder="" value="{{ old('slug') }}" name="slug" type="text">
+                                <input class="form-control" id="url-name" placeholder="" value="{{ old('slug') }}" name="slug" type="text">
                             </div>
                         </div>
                         
@@ -90,4 +90,12 @@
 <!-- /.content-wrapper -->
 @endsection
 @push('scripts')
+<script>
+    $(function() {
+        $('#page-heading').change(function() {
+            var page_heading = $.trim($(this).val()).toLowerCase().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+            $('#url-name').val(page_heading);
+        });
+    });
+</script>
 @endpush

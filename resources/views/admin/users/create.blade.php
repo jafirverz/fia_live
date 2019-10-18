@@ -171,6 +171,10 @@
                                        name="password_confirmation" type="password" id="">
                             </div>
                             <div class="form-group">
+                                    <label class="checkbox-inline"><input type="checkbox" id="update" name="subscribe_status"
+                                        value="1" /> I’d like to subscribe to the FIA Regulatory Hub newsletter to receive the latest regulatory updates.</label>
+                            </div>
+                            <div class="form-group">
                                 <label for="status" class="control-label">Status</label>
 
                                 <select name="status" class="form-control select2" id="selectpicker"
@@ -191,6 +195,7 @@
                     </form>
                     <!-- /.box -->
                 </div>
+            </div>
             </div>
             <!-- /.row -->
     </section>

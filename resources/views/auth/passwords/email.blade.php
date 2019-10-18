@@ -28,7 +28,16 @@
                         </span>
                         @endif
                     </div>
+					<div class="form-group">
+                            <div class="google-recaptcha">
+                                <div class="g-recaptcha" data-callback="onSubmit"
+                                    data-sitekey="{{env('CAPTCHA_SITE_KEY')}}" data-size="invisible"></div>
+                                <input type="hidden" title="Please verify this" class="required" name="keycode"
+                                    id="keycode">
+                                <div id="cap-response" style="display:none; color:#F00;"></div>
 
+                            </div>
+                        </div>
                     <div class="form-group row mb-0">
                         <button type="submit" class="btn-2">
                             {{ __('Send Password Reset Link') }}

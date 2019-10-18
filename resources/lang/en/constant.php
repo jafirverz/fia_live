@@ -53,7 +53,9 @@ return [
 
 	'SITEMAP' => 'Sitemap',
 
-	'CONTACT' => 'Contact Us',
+    'CONTACT' => 'Contact Us',
+
+    'CHANGE_PASSWORD'   =>  'Change Password',
 
 	'FEEDBACK' => 'Feedback',
 
@@ -122,6 +124,8 @@ return [
   'REMINDER_EMAIL_TEMP_ID' => '10',
 
   'END_DAY_REPORT'  =>  '12',
+  'USER_ACCOUNT_APPROVED'   =>  '13',
+  'SUBSCRIPTION_ADMIN_TO_USER_EMAIL_TEMP_ID'   =>  '15',
 
 
 
@@ -165,6 +169,8 @@ return [
 	'SEARCH_RESULTS_REGULATORY'  =>  'search-results-regulatory',
 
     'LOGIN' =>  'login',
+	'BANNER_TYPE_HOME' =>'home',
+	'BANNER_TYPE_OTHER' =>'other',
 
 	//User status constants
 	'PENDING_EMAIL_VERIFICATION' => '1',

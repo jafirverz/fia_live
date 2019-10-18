@@ -92,4 +92,25 @@ class ContactEnquiryController extends Controller
     {
         //
     }
+
+    public function bulkRemove(Request $request)
+    {
+        $ids = isset($request->id) ? $request->id : [];
+        $type = isset($request->type) ? $request->type : '';
+        //return $ids;
+        if (count($ids)) {
+            if ($type == 'bulk_remove_contact_enquiry') {
+                Contact::destroy($ids);
+            } else {
+                foreach ($ids as $id) {
+                     if ($type == 'bulk_enquiry_remove') {
+                        $users = Contact::find($id);
+                        $users->delete();
+                    }
+                }
+            }
+
+            echo "success";
+        }
+    }
 }

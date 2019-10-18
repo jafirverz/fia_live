@@ -48,12 +48,21 @@
                                             <td data-order="{{ $regulatory->updated_at }}">{{ $regulatory->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
 
                                             <td>
-                                                <a href="{{ url('admin/regulatory/list/'.$parent_id.'/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <form action="{{ url('admin/regulatory/list/'.$parent_id.'/destroy') }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                    <input type="hidden" name="id" value="{{ $regulatory->id }}">
-                                                </form>
+                                                <table class="action-table">
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{{ url('admin/regulatory/list/'.$parent_id.'/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{ url('admin/regulatory/list/'.$parent_id.'/destroy') }}" method="post">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                                <input type="hidden" name="id" value="{{ $regulatory->id }}">
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
                                             </td>
                                         </tr>
                                         @endforeach

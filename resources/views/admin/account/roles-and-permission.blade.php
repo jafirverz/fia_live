@@ -43,17 +43,27 @@
                                         {{ 'view, create, edit, delete' }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('admin/roles-and-permission/edit/' . $role->id) }}"
-                                            class="btn btn-primary btn-sm" title="Edit">
-                                            <i aria-hidden="true" class="fa fa-pencil-square"></i>
-                                        </a>
-                                        <form action="{{ url('admin/roles-and-permission/delete') }}" method="post">
-                                            @csrf
-                                        <input type="hidden" name="id" value="{{ $role->id }}">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete permission?');" class="btn btn-danger btn-sm" title="Delete">
-                                            <i aria-hidden="true" class="fa fa-trash"></i>
-                                        </button>
-                                        </form>
+                                        <table class="action-table">
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ url('admin/roles-and-permission/edit/' . $role->id) }}"
+                                                       class="btn btn-primary btn-sm" title="Edit">
+                                                        <i aria-hidden="true" class="fa fa-pencil-square"></i>
+                                                    </a>
+
+                                                </td>
+                                                <td>
+                                                    <form action="{{ url('admin/roles-and-permission/delete') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $role->id }}">
+                                                        <button type="submit" onclick="return confirm('Are you sure you want to delete permission?');" class="btn btn-danger btn-sm" title="Delete">
+                                                            <i aria-hidden="true" class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+
                                     </td>
                                 </tr>
                                 @endforeach
@@ -102,19 +112,27 @@
                                         {{ isset($admin->admin_updated_at) ? date('d M, Y h:i A', strtotime($admin->admin_updated_at)) : '-' }}
                                     </td>
                                     <td>
-                                        <a href="{{ url('admin/roles/edit/' . $admin->admins_id) }}"
-                                            class="btn btn-primary btn-sm" title="Edit">
-                                            <i aria-hidden="true" class="fa fa-pencil-square"></i>
-                                        </a>
-                                        @if($admin->admins_id!=1)
-                                        <form action="{{ url('admin/roles/delete') }}" method="post">
-                                            @csrf
-                                        <input type="hidden" name="id" value="{{ $admin->admins_id }}">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete role?');" class="btn btn-danger btn-sm" title="Delete">
-                                            <i aria-hidden="true" class="fa fa-trash"></i>
-                                        </button>
-                                        </form>
-                                        @endif
+                                <table class="action-table">
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url('admin/roles/edit/' . $admin->admins_id) }}"
+                                               class="btn btn-primary btn-sm" title="Edit">
+                                                <i aria-hidden="true" class="fa fa-pencil-square"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if($admin->admins_id!=1)
+                                                <form action="{{ url('admin/roles/delete') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $admin->admins_id }}">
+                                                    <button type="submit" onclick="return confirm('Are you sure you want to delete role?');" class="btn btn-danger btn-sm" title="Delete">
+                                                        <i aria-hidden="true" class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </table>
                                     </td>
                                 </tr>
                                 @endforeach

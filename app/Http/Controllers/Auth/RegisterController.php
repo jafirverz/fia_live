@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Banner;
 use App\Page;
 use App\Mail\UserSideMail;
+use App\Mail\AdminSideMail;
 use App\Traits\GetEmailTemplate;
 use App\Traits\DynamicRoute;
 use Illuminate\Http\Request;
@@ -64,7 +66,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -73,7 +75,7 @@ class RegisterController extends Controller
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'organization' => 'required|string',
-            'country'   =>  'required',
+            'country' => 'required',
             'email' => 'required|email|unique:users,email,6,status',
             'password' => 'required|confirmed',
         ]);
@@ -82,7 +84,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
@@ -90,9 +92,8 @@ class RegisterController extends Controller
 
         $user_id = guid();
         $user_data = User::where('email', $data['email'])->where('status', 6)->first();
-        if($user_data)
-        {
-            $user_data->user_id   =  $user_id;
+        if ($user_data) {
+            $user_data->user_id = $user_id;
             $user_data->salutation = $data['salutation'];
             $user_data->firstname = $data['firstname'];
             $user_data->lastname = $data['lastname'];
@@ -107,15 +108,13 @@ class RegisterController extends Controller
             $user_data->address1 = $data['address1'];
             $user_data->address2 = $data['address2'];
             $user_data->password = Hash::make($data['password']);
-            $user_data->member_type   =  2;
-            $user_data->status    =  1;
+            $user_data->member_type = 2;
+            $user_data->status = 1;
             $user_data->save();
-        }
-        else
-        {
+        } else {
 
-            $user_data =  User::create([
-                'user_id'    =>  $user_id,
+            $user_data = User::create([
+                'user_id' => $user_id,
                 'salutation' => $data['salutation'],
                 'firstname' => $data['firstname'],
                 'lastname' => $data['lastname'],
@@ -131,14 +130,23 @@ class RegisterController extends Controller
                 'address2' => $data['address2'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'member_type'   =>  2,
-                'subscribe_status'  => $data['subscribe_status'] ?? null,
-                'status'    =>  1,
+                'member_type' => 2,
+                'subscribe_status' => $data['subscribe_status'] ?? null,
+                'status' => 1,
             ]);
         }
 
         $student = [
-            'button_url' => url('/register/verification/' . $user_id),
+            'button_url' => '<a href=' . url('/register/verification/' . $user_id) . ' style="border-radius: 3px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+            color: #fff;
+            display: inline-block;
+            text-decoration: none;
+            -webkit-text-size-adjust: none;background-color: #3490dc;
+            border-top: 10px solid #3490dc;
+            border-right: 18px solid #3490dc;
+            border-bottom: 10px solid #3490dc;
+            border-left: 18px solid #3490dc;">Verify Email</a>',
             'student_name' => $data['firstname'] . ' ' . $data['lastname'],
         ];
         $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
@@ -161,10 +169,12 @@ class RegisterController extends Controller
                 }
 
             } catch (Exception $exception) {
-                return dd($exception);
+                //return dd($exception);
 
             }
         }
+
+
         //dd($emailTemplate);
         return $user_data;
     }
@@ -179,19 +189,133 @@ class RegisterController extends Controller
         //$this->guard()->login($user);
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath())->with('success', 'An email is sent to your mail box with a link, please click on the link for verification. If you did not receive the email, please check your SPAM folder.');
+            ?: redirect(url('email-verification/'.base64_encode($user->email)));
     }
 
     public function verification($user_id)
     {
         $user = User::where('user_id', $user_id)->first();
-        if($user->email_verified_at)
-        {
-            return abort(404);
+        if ($user->email_verified_at) {
+            return redirect(url('account-verified'));
         }
         $user->email_verified_at = now();
         $user->status = 2;
         $user->save();
+        $emailTemplate = $this->emailTemplate(__('constant.USER_REGISTER_ON_SITE'));
+
+        if ($emailTemplate) {
+
+            $data = [];
+            $data['subject'] = $emailTemplate->subject;
+            $data['email_sender_name'] = setting()->email_sender_name;
+            $data['from_email'] = setting()->from_email;
+            $data['subject'] = $emailTemplate->subject;
+            $key = ['{{name}}', '{{user_id}}'];
+            $value = [$user->firstname . ' ' . $user->lastname, $user->email];
+            $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
+            $data['contents'] = $newContents;
+
+            try {
+                if (setting()->from_email) {
+                    $mail = Mail::to(setting()->to_email)->send(new AdminSideMail($data));
+                }
+
+            } catch (Exception $exception) {
+                //return dd($exception);
+
+            }
+        }
         return redirect(url('verified-thank-you'));
+    }
+
+    public function emailVerification($id)
+    {
+        $email = base64_decode($id);
+        $page = Page::where('pages.slug', 'email-verification')
+            ->where('pages.status', 1)
+            ->firstOrFail();
+        $banner = get_page_banner($page->id);
+        $breadcrumbs = getBreadcrumb($page);
+        if (!$page) {
+
+            return abort(404);
+
+        }
+        return view("auth.resend-email", compact("page", "banner", "breadcrumbs","email"));
+
+
+    }
+    public function resendEmailVerification()
+    {
+        $page = Page::where('pages.slug', 'resend-email-verification')
+            ->where('pages.status', 1)
+            ->firstOrFail();
+        $banner = get_page_banner($page->id);
+        $breadcrumbs = getBreadcrumb($page);
+        if (!$page) {
+
+            return abort(404);
+
+        }
+        return view("auth.reset", compact("page", "banner", "breadcrumbs"));
+
+
+    }
+
+    public function resendEmailVerificationPost(Request $request)
+    {
+
+        $user_data = User::where('email', $request->email)->first();
+        if(!$user_data){
+            return redirect(url('resend-email-verification'))->with('error','We can not find a user with that e-mail address.');
+        }
+        $student = [
+            'button_url' => '<a href=' . url('/register/verification/' . $user_data->user_id) . ' style="border-radius: 3px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+            color: #fff;
+            display: inline-block;
+            text-decoration: none;
+            -webkit-text-size-adjust: none;background-color: #3490dc;
+            border-top: 10px solid #3490dc;
+            border-right: 18px solid #3490dc;
+            border-bottom: 10px solid #3490dc;
+            border-left: 18px solid #3490dc;">Verify Email</a>',
+            'student_name' => $user_data['firstname'] . ' ' . $user_data['lastname'],
+        ];
+        $emailTemplate = $this->emailTemplate(__('constant.STUDENT_VERIFICATION'));
+
+        if ($emailTemplate) {
+
+            $data['subject'] = $emailTemplate->subject;
+            $data['email_sender_name'] = setting()->email_sender_name;
+            $data['from_email'] = setting()->from_email;
+            $data['subject'] = $emailTemplate->subject;
+            $key = ['{{name}}', '{{button_url}}'];
+            $value = [$student['student_name'], $student['button_url']];
+            $newContents = replaceStrByValue($key, $value, $emailTemplate->contents);
+            $data['contents'] = $newContents;
+            //dd($data);
+
+            try {
+                if ($user_data['email']) {
+                    $mail_user = Mail::to($user_data['email'])->send(new UserSideMail($data));
+                }
+
+            } catch (Exception $exception) {
+                //return dd($exception);
+
+            }
+            $page = Page::where('pages.slug', 'resend-email-verification')
+                ->where('pages.status', 1)
+                ->firstOrFail();
+            $banner = get_page_banner($page->id);
+            $breadcrumbs = getBreadcrumb($page);
+            if (!$page) {
+
+                return abort(404);
+
+            }
+            return redirect(url('resend-email-verification'))->with('success','We sent you a message with a link to activate your account. If you did not receive it, you can re-enter your email address and we will send you a new activation link.');
+        }
     }
 }

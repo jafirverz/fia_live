@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Mail\RegulatoryUpdates;
+use App\Regulatory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -14,6 +16,7 @@ use Auth;
 use App\GroupUserId;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -39,10 +42,8 @@ class UserController extends Controller
         $search['email'] = null;
         $search['status'] = null;
         $result = $this->members($search);
-        $chart1 = $result['chart1'];
-        $chart2 = $result['chart2'];
         $users = $result['users'];
-        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2', 'search'));
+        return view('admin.users.index', compact('title', 'users', 'subtitle', 'search'));
     }
 	
 	ublic function members($search)
@@ -78,12 +79,9 @@ class UserController extends Controller
         $subtitle = 'Index';
         $search = $request->all();
         $result = $this->members($search);
-        $chart1 = $result['chart1'];
-        $chart2 = $result['chart2'];
         $users = $result['users'];
 
-
-        return view('admin.users.index', compact('title', 'users', 'subtitle', 'chart1', 'chart2', 'search'));
+        return view('admin.users.index', compact('title', 'users', 'subtitle', 'search'));
     }
 
     public function members($search)
@@ -109,136 +107,6 @@ class UserController extends Controller
             $query->where('status', $search['status']);
         }
         $result['users'] = $query->orderBy('created_at', 'desc')->get();
-
-        $memberbycountry = User::get();
-
-        $membership_growth_date = User::whereYear('created_at', date('Y'))->where('status', '!=', __('constant.NEWSLATTER_SUBSCRIBER'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->groupby('new_date')->get();
-        $membership_growth = User::whereYear('created_at', date('Y'))->where('status', '!=', __('constant.NEWSLATTER_SUBSCRIBER'))->select(DB::raw("DATE_FORMAT(created_at, '%Y-%m') new_date"), 'users.*')->get();
-        //dd($membership_growth->where('renew_status', 1)->where('new_date', '2019-07')->count());
-        // CHART1
-        $country_array = $memberbycountry->groupBy('country')->toArray();
-
-        $fia_member_dataset = [];
-        $member_dataset = [];
-        $complimentary_dataset = [];
-        $fia_member_dataset_color = [];
-        $member_dataset_color = [];
-        $complimentary_dataset_color = [];
-
-        foreach (array_keys($country_array) as $value) {
-            $fia_member_dataset[] = $memberbycountry->where('member_type', 1)->where('country', $value)->count();
-            $fia_member_dataset_color[] = 'rgb(0,192,239)';
-            $member_dataset[] = $memberbycountry->where('member_type', 2)->where('country', $value)->count();
-            $member_dataset_color[] = 'rgb(60,141,188)';
-            $complimentary_dataset[] = $memberbycountry->where('member_type', 3)->where('country', $value)->count();
-            $complimentary_dataset_color[] = 'rgb(210,214,222)';
-        }
-
-        //CHART2
-        $new_dataset = [];
-        $expired_dataset = [];
-        $renewed_dataset = [];
-        foreach ($membership_growth_date as $value) {
-            $new_dataset[] = $membership_growth->where('renew_status', 1)->where('new_date', $value->new_date)->count();
-            $expired_dataset[] = $membership_growth->where('renew_status', 3)->where('new_date', $value->new_date)->count();
-            $renewed_dataset[] = $membership_growth->where('renew_status', 2)->where('new_date', $value->new_date)->count();
-        }
-        $result['chart1'] = app()->chartjs
-            ->name('memberbycountry')
-            ->type('bar')
-            ->size(['width' => 400, 'height' => 100])
-            ->labels(array_keys($country_array))
-            ->datasets([
-                [
-                    "label" => "FIA Member",
-                    'backgroundColor' => $fia_member_dataset_color,
-                    'data' => $fia_member_dataset
-                ],
-                [
-                    "label" => "Member",
-                    'backgroundColor' => $member_dataset_color,
-                    'data' => $member_dataset
-                ],
-                [
-                    "label" => "Complimentary",
-                    'backgroundColor' => $complimentary_dataset_color,
-                    'data' => $complimentary_dataset
-                ]
-            ])
-            ->optionsRaw([
-                'responsive' => true,
-                'legend' => [
-                    'display' => true,
-                    'labels' => [
-                        'fontColor' => '#000'
-                    ]
-                ],
-                'scales' => [
-                    'xAxes' => [
-                        [
-                            'stacked' => true,
-                            'gridLines' => [
-                                'display' => true
-                            ]
-                        ]
-                    ],
-                    'yAxes' => [
-                        [
-                            'stacked' => true,
-                            'gridLines' => [
-                                'display' => true
-                            ]
-                        ]
-                    ]
-                ]
-            ]);
-
-        $result['chart2'] = app()->chartjs
-            ->name('membershipgrowth')
-            ->type('line')
-            ->size(['width' => 400, 'height' => 100])
-            ->labels($membership_growth_date->pluck('new_date')->toArray())
-            ->datasets([
-                [
-                    "label" => "New",
-                    'borderColor' => ['rgb(251,189,11)'],
-                    'data' => $new_dataset
-                ],
-                [
-                    "label" => "Expired",
-                    'borderColor' => ['rgb(234,67,53)'],
-                    'data' => $expired_dataset
-                ],
-                [
-                    "label" => "Renewed",
-                    'borderColor' => ['rgb(0,192,239)'],
-                    'data' => $renewed_dataset
-                ]
-            ])
-            ->optionsRaw([
-                'maintainAspectRatio' => false,
-                'spanGaps' => false,
-                'elements' => [
-                    'line' => [
-                        'tension' => 0.000001
-                    ],
-                ],
-                'scales' => [
-                    'yAxes' => [
-                        [
-                            'stacked' => true,
-                        ]
-                    ]
-                ],
-                'plugins' => [
-                    'filler' => [
-                        'propagate' => false
-                    ],
-                    'samples-filler-analyser' => [
-                        'target' => 'chart-analyser'
-                    ],
-                ],
-            ]);
         return $result;
     }
 
@@ -294,6 +162,7 @@ class UserController extends Controller
         $user->email_verified_at = Carbon::now()->toDateTimeString();
         $user->password = Hash::make($request->password);
         $user->status = $request->status;
+        $user->subscribe_status = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -379,6 +248,7 @@ class UserController extends Controller
         if (isset($request->status) && !is_null($request->status)) {
             $user->status = $request->status;
         }
+        $user->subscribe_status = $request->subscribe_status ?? null;
         $user->save();
 
         if (isset($request->group_ids) && count($request->group_ids)) {
@@ -388,6 +258,28 @@ class UserController extends Controller
                 $groupUserId->user_id = $user->id;
                 $groupUserId->group_id = $groupId;
                 $groupUserId->save();
+            }
+        }
+        if (isset($request->subscribe_status) && $request->subscribe_status == 1) {
+            $emailTemplate_user = $this->emailTemplate(__('constant.SUBSCRIPTION_ADMIN_TO_USER_EMAIL_TEMP_ID'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{firstname}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+
+            }
+
+            try {
+                $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+            } catch (Exception $exception) {
+                //dd($exception);
             }
         }
 
@@ -420,8 +312,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findorfail($id);
-        $user->status = 9;
-        $user->save();
+        $user->delete();
         return redirect('admin/user')->with('success', __('constant.DELETED', ['module' => __('constant.USER')]));
     }
 
@@ -460,8 +351,8 @@ class UserController extends Controller
                 $data_user['email_sender_name'] = setting()->email_sender_name;
                 $data_user['from_email'] = setting()->from_email;
                 $data_user['subject'] = $emailTemplate_user->subject;
-                $key_user = ['{{firstname}}'];
-                $value_user = [$user->firstname];
+                $key_user = ['{{name}}', '{{email}}'];
+                $value_user = [$user->firstname, $user->email];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
 
@@ -516,6 +407,29 @@ class UserController extends Controller
             $user->member_type = $request->member_type;
             $user->status = __('constant.ACCOUNT_ACTIVE');
             $user->expired_at = null;
+
+            $emailTemplate_user = $this->emailTemplate(__('constant.USER_ACCOUNT_APPROVED'));
+            if ($emailTemplate_user) {
+
+                $data_user = [];
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $data_user['email_sender_name'] = setting()->email_sender_name;
+                $data_user['from_email'] = setting()->from_email;
+                $data_user['subject'] = $emailTemplate_user->subject;
+                $key_user = ['{{name}}'];
+                $value_user = [$user->firstname];
+                $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                $data_user['contents'] = $newContents_user;
+                try {
+                    $mail_user = Mail::to($user->email)->send(new UserSideMail($data_user));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    $response['msg'] = "Status updated successfully.";
+                    $response['status'] = "error";
+                    return $response;
+                }
+            }
+
             if (empty($user->email_verified_at)) {
                 $user->email_verified_at = Carbon::now()->toDateTimeString();
             }
@@ -574,6 +488,72 @@ class UserController extends Controller
             }
         }
 
+    }
+
+    public function weeklyReport()
+    {
+        //DB::enableQueryLog();
+        $users = User::where('subscribe_status', 1)->where('email', 'nikunj@verzdesign.com')->get();
+        $today_date = Carbon::now();
+        $beforeWeek = Carbon::now()->addDay(-7);
+        $weekly = $beforeWeek->format('Y-m-d');
+        $today_date = Carbon::now();
+
+        $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
+        //dd(DB::getQueryLog());
+        //dd($weeklyRegulatories->count());
+        $content = ['<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+                <tbody>'];
+        foreach ($weeklyRegulatories as $regulatory) {
+            $value = getRegulatoryData($regulatory->parent_id);
+            if ($value) {
+                $content [] = '<tr>
+								<td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+								<p style="color: #017cba;font-family: Arial !important; "><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . $regulatory->title . '</p>
+								</td>
+							</tr>
+							<tr>
+							<td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+							<a href="' . url('regulatory-details', $value->slug) . '?id=' . $regulatory->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
+							</td>
+						</tr>';
+            }
+        }
+        $content[] = '</tbody>
+            </table>';
+
+        if ($content) {
+            $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
+            if ($emailTemplate_user) {
+                $content_data = implode(' ', $content);
+                $email_template_logo = '<img  src="' . asset(setting()->email_template_logo) . '" alt="">';
+                $contact = '<a href="mailto:regulatory@foodindustry.asia" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="' . asset('photos/2/icon6.jpg') . '"></a>';
+                $linkedin = '<a href="' . setting()->linkedin_link . '" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="' . asset('photos/2/icon5.jpg') . '"></a>';
+                $twitter = '<a href="' . setting()->twitter_link . '" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="' . asset('photos/2/icon2.jpg') . '"></a>';
+                $users = ['desmond.lau@foodindustry.asia','monwai@verzdesign.com','nikunj@verzdesign.com'];
+                //$users = ['monwai@verzdesign.com','nikunj@verzdesign.com'];
+                foreach ($users as $user) {
+
+                    $data_user = [];
+                    $data_user['subject'] = $emailTemplate_user->subject;
+                    $data_user['email_sender_name'] = setting()->email_sender_name;
+                    $data_user['from_email'] = setting()->from_email;
+                    $unsubscribe = '<a style="color:#999;font-family: Arial !important;" href="' . url('unsubscribe?id=' . base64_encode($user)) . '" target="_blank">unsubscribe</a>';
+                    $data_user['subject'] = $emailTemplate_user->subject;
+                    $key_user = ['{{logo}}', '{{contact}}', '{{linkedin}}', '{{twitter}}', '{{content}}', '{{unsubscribe}}'];
+                    $value_user = [$email_template_logo, $contact, $linkedin, $twitter, $content_data, $unsubscribe];
+                    $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
+                    $data_user['contents'] = $newContents_user;
+                    try {
+                        $mail_user = Mail::to($user)->queue(new RegulatoryUpdates($data_user));
+                        //dd($user);
+                    } catch (Exception $exception) {
+                        //dd($exception);
+                    }
+                }
+            }
+        }
+        dd(count($users), 'sent ok!');
     }
 
 

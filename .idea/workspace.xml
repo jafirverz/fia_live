@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
+
     <list default="true" id="1c2c3e66-5f78-46bf-97ed-2621719e65d3" name="Default" comment="" />
     <ignored path="fia.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
-=======
+
     <list default="true" id="c55c1331-fc19-4643-a5dc-390f62fd08ac" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CMS/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/constant.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/constant.php" afterDir="false" />
     </list>
->>>>>>> Stashed changes
+
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +30,7 @@
   <component name="FavoritesManager">
     <favorites_list name="fia" />
   </component>
-<<<<<<< Updated upstream
+
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="Kernel.php" pinned="false" current-in-tab="false">
@@ -391,7 +391,7 @@
       </pane>
     </panes>
   </component>
-=======
+
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -399,13 +399,13 @@
     <servers />
   </component>
   <component name="ProjectId" id="1RSUutetZqttIvsvLGBvHmSmPcL" />
->>>>>>> Stashed changes
+
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../bgst_new" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
   </component>
-<<<<<<< Updated upstream
+
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\fia\public\assets\dist\img" />
@@ -414,7 +414,7 @@
       <recent name="C:\xampp\htdocs\fia\resources\views\admin\users" />
       <recent name="C:\xampp\htdocs\fia\resources\views" />
     </key>
-=======
+
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -426,7 +426,7 @@
         </RuleState>
       </list>
     </option>
->>>>>>> Stashed changes
+
   </component>
   <component name="RunManager">
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
@@ -450,7 +450,7 @@
       <changelist id="1c2c3e66-5f78-46bf-97ed-2621719e65d3" name="Default" comment="" />
       <created>1562125400871</created>
       <option name="number" value="Default" />
-<<<<<<< Updated upstream
+
       <updated>1562125400871</updated>
     </task>
     <servers />
@@ -500,7 +500,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
-=======
+
       <option name="presentableId" value="Default" />
       <updated>1565246458377</updated>
       <workItem from="1569660242325" duration="2717000" />
@@ -520,7 +520,7 @@
         </entry>
       </map>
     </option>
->>>>>>> Stashed changes
+
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -530,7 +530,7 @@
       <collection />
     </option>
   </component>
-<<<<<<< Updated upstream
+
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -933,6 +933,4 @@
       </provider>
     </entry>
   </component>
-=======
->>>>>>> Stashed changes
 </project>

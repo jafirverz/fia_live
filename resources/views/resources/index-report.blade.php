@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-      <div class="main-wrap">   
+      <div class="main-wrap">
 				@include('inc.banner')
 				<div class="filter-wrap fw-type">
-					<div class="container">						
+					<div class="container">
 						<div class="tb-col break-480">
 				<form name="filter" method="get" action="{{ url('/topical-reports/search')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -19,7 +19,7 @@
 									</select>
 								</div>
 							</div>
-                </form>	
+                </form>
 							<div class="col">
 								<a class="lk-back" href="#">Clear all</a>
 							</div>
@@ -33,8 +33,8 @@
 					</div>
 					<div class="mbox-wrap" data-num="{{ setting()->pagination_limit }}">
                     @php $i=0; @endphp
-                    @foreach($reports as $report)	
-                    @php $i++; @endphp					
+                    @foreach($reports as $report)
+                    @php $i++; @endphp
 						<div class="box-3 mbox @if($i==1) open @endif">
 							<a class="head-box" data-height="120" href="#report-1">@php $topics=json_decode($report->topical_id); @endphp {{getTopics($topics)}} : {{$report->title}}</a>
 							<div class="content-box" id="report-1">
@@ -48,7 +48,7 @@
 										<h4>Countries which have regulations or draft regulations:</h4>
 										<div class="flag-wrap">{!!getCountryImages($report->id)!!}</div>
 									</div>
-                                    
+
 									<div class="col">
 									@php
 									$report_pdf=explode(".",$report->pdf,-1);
@@ -62,26 +62,26 @@
                                      <a href="#find-pp" class="btn-4" data-toggle="modal"><i class="far fa-file-pdf"></i> {{implode(" ",$report_pdf)}}</a>
                                      @endif
 									</div>
-                                    
+
 								</div>
 							</div>
-						</div>	
+						</div>
                     @endforeach
                     @if(count($reports)>setting()->pagination_limit)
 						<div class="more-wrap"><button class="btn-4 mbox-load"> Load more <i class="fas fa-angle-double-down"></i></button></div>
                      @endif
 					</div>
-					
+
 				</div>
-                
+
             </div>
-            
-@if ($errors->any())           
+
+@if ($errors->any())
 <script type="text/javascript">
     $(window).on('load',function(){
         $('#find-pp').modal('show');
     });
-</script> 
-@endif 
-            @include('inc.sign-in-form')
+</script>
+@endif
+@include('inc.sign-in-form')
 @endsection

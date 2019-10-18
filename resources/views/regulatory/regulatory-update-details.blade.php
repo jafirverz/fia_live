@@ -48,7 +48,7 @@ $id = $_GET['id'] ?? '';
                                 $db_topics = json_decode($regulatory->topic_id);
                                 $topics = getFilterTopic();
                                 @endphp
-                                @if ($topics)
+                                @if ($topics && $db_topics)
                                 @foreach ($topics as $value)
                                 @if(in_array($value->id, $db_topics))
                                 {{ $value->tag_name }}
@@ -78,6 +78,11 @@ $id = $_GET['id'] ?? '';
                     <div class="content-box" id="update-{{ ($key+1) }}">
                         <div class="document">
                             {!! $value->description !!}
+                            @if($value->impact_on_industry)
+                                <hr>
+                                <h4>Impact on Industry:</h4>
+                                {!! $value->impact_on_industry !!}
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -87,7 +92,7 @@ $id = $_GET['id'] ?? '';
                             class="fas fa-angle-double-down"></i></button></div>
             </div>
             @else
-            @include('inc.signin')
+                @include('inc.signin')
             @endif
         </div>
 

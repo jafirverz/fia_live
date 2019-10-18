@@ -11,14 +11,14 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('page');
-});
+use App\Page;
 
-*/
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/email-verification/{id}','Auth\RegisterController@emailVerification');
+Route::get('/resend-email-verification','Auth\RegisterController@resendEmailVerification');
+Route::post('/resend-email-verification','Auth\RegisterController@resendEmailVerificationPost')->name('resend.email.verification');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 Route::get('/register/verification/{user_id}', 'Auth\RegisterController@verification');
 Route::get('/login', 'Auth\LoginController@showLoginForm');
@@ -67,6 +67,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/country-information/edit/{id}', 'CMS\CountryInformationController@edit');
     Route::post('/country-information/update/{id}', 'CMS\CountryInformationController@update');
     Route::post('/country-information/destroy', 'CMS\CountryInformationController@destroy');
+    Route::post('/country-information/check-view-order', 'CMS\CountryInformationController@checkViewOrder');
 
     Route::get('/country-information/list/{country_id}/{information_filter_id}', 'CMS\CountryInformationController@information_list');
 
@@ -98,6 +99,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //CONTACT
     Route::get('/contact-enquiry', 'CMS\ContactEnquiryController@index');
+    Route::post('/user-bulk-delete', 'CMS\ContactEnquiryController@bulkRemove')->name('user-bulk-remove');
 
     //REGULATORY
     Route::get('/group-management', 'CMS\GroupManagementController@index');
@@ -116,11 +118,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/filter/destroy/{id}', 'CMS\FilterController@destroy');
     //BANNER
     Route::get('/banner', 'CMS\BannerController@index')->name('banner.index');
-    Route::get('/banner/create', 'CMS\BannerController@create');
+    Route::get('/banner/type/{type}', 'CMS\BannerController@index');
+    Route::get('/banner/create', 'CMS\BannerController@create')->name('banner.create');
     Route::post('/banner/store', 'CMS\BannerController@store');
-    Route::get('/banner/edit/{id}', 'CMS\BannerController@edit');
+    Route::get('/banner/edit/{id}', 'CMS\BannerController@edit')->name('banner.edit');
     Route::post('/banner/update/{id}', 'CMS\BannerController@update');
-    Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy');
+    Route::get('/banner/destroy/{id}', 'CMS\BannerController@destroy')->name('banner.destroy');
     //PAGE
     Route::get('/page', 'CMS\PageController@index')->name('page.index');
     Route::get('/page/create', 'CMS\PageController@create');
@@ -206,6 +209,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/user/destroy/{id}', 'CMS\UserController@destroy');
     Route::get('/user/update-status', 'CMS\UserController@updateStatus')->name('update-status');
     Route::get('/user/cron', 'CMS\UserController@userStatusExpired')->name('cron');
+    Route::get('/user/weekly-report', 'CMS\UserController@weeklyReport')->name('weekly-report');
     /*end user module backend*/
 
     /*Master Setting Start*/
@@ -241,10 +245,14 @@ Route::post('/update-profile-status', 'PagesFrontController@updateStatus');
 Route::get('/update-profile-status', 'PagesFrontController@updateStatus')->name('update-profile-status');
 Route::post('/subscribers', 'HomeController@subscribers');
 Route::get('/subscribers', 'HomeController@subscribers');
+Route::get('/post-unsubscribe/{id}', 'HomeController@unsubscribe');
+Route::get('/unsubscribe', 'HomeController@getUnsubscribe');
+
 Route::get('/search-results', 'HomeController@search');
 Route::get('/country-information-category', 'HomeController@get_category');
 Route::get('/search-results-regulatory', 'HomeController@search_regulatory');
-
+Route::get('/change-password', 'PagesFrontController@showChangePassword');
+Route::post('/change-password', 'PagesFrontController@updateChangePassword');
 
 /*
 |--------------------------------------------------------------------------

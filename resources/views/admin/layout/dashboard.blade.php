@@ -45,6 +45,9 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{{ asset('assets/bower_components/datatables.net/Buttons-1.5.1/css/buttons.dataTables.min.css') }}">
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/select2/dist/css/select2.min.css') }}">
     <!-- Theme style -->

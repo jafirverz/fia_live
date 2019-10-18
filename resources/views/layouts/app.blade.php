@@ -6,9 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
+    <meta name="description" content="Food Industry Asia was established by a group of leading food and beverage companies. We provide a hub for advocacy and debate and bring together the food industry's leaders to promote sustainable growth and support policies that deliver harmonised results. Visit our website today!"/>
+
+    <meta name="keywords" content="Food Industry Asia, Food & Beverage Hub Asia, Food & Beverage Industry Asia, F&B Advocacy, F&B Debate Hub, F&B Regional Hub, Health and Nutrition Hub Asia, Food Safety Organisation Asia, F&B Non-Profit Organisation"/>
+
+
+    <meta name="dcterms.rightsHolder" content="regulatoryhub.foodndustry.asia - Food Industry Asia"/>
+
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="{{asset('favicon.ico')}}">
+    <link rel="shortcut icon" href="https://regulatoryhub.foodndustry.asia/favicon.ico"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -24,6 +31,16 @@
 
     <script src="{{ asset('js/plugin.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144907960-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-144907960-1');
+    </script>
+
 
 </head>
 
