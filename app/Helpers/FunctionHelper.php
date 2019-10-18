@@ -172,7 +172,7 @@ if (!function_exists('getTopics')) {
     {
         $category = CountryInformation::where('country_id', $country_id)->first();
         if ($category) {
-            $filter = Filter::where('filters.filter_name', 5)->where('id', $category->information_filter_id)->first();
+            $filter = Filter::where('filters.filter_name', 5)->orderBy('order_by','ASC')->first();
             if ($filter)
                 return $filter->tag_name;
             else
