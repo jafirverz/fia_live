@@ -40,11 +40,34 @@ class UserController extends Controller
         $search['name'] = null;
         $search['organization'] = null;
         $search['email'] = null;
-        $search['member_type'] = null;
         $search['status'] = null;
         $result = $this->members($search);
         $users = $result['users'];
         return view('admin.users.index', compact('title', 'users', 'subtitle', 'search'));
+    }
+	
+	ublic function members($search)
+    {
+        $result = [];
+        $query = User::query();
+        if ($search['name']) {
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'like', '%' . $search['name'] . '%')
+                    ->orWhere('lastname', 'like', '%' . $search['name'] . '%');
+            });
+        }
+        if ($search['organization']) {
+            $query->where('organization', 'like', '%' . $search['organization'] . '%');
+        }
+        if ($search['email']) {
+            $query->where('email', 'like', '%' . $search['email'] . '%');
+        }
+        
+        if ($search['status']) {
+            $query->where('status', $search['status']);
+        }
+        $result['users'] = $query->orderBy('created_at', 'desc')->get();
+        return $result;
     }
 
     /**
