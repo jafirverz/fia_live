@@ -27,7 +27,7 @@
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="col sl-country hideico">
-                    <select name="country" class="selectpicker">
+                    <select name="country" class="selectpicker" data-live-search="true">
                         <option value="" data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                         @foreach(getAllCountry() as $country)
                           @if($country=='Other')
@@ -67,7 +67,7 @@
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 								<div class="tb-col search-wrap-2 break-320">
 									<div class="col sl-country hideico">
-										<select name="country" class="selectpicker">
+										<select name="country" class="selectpicker" data-live-search="true">
 											<option value="" data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                                             @foreach(getAllCountry() as $country)
       <option value="{{$country->id}}" @if(isset($_REQUEST['country']) && $_REQUEST['country']==$country->id) selected="selected" @endif data-content='<img src="{{$country->country_image}}" alt="{{$country->tag_name}}" /> {{$country->tag_name}}'>{{$country->tag_name}}</option>

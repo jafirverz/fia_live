@@ -17,7 +17,7 @@
                 @include('admin.inc.message')
                 <div class="box">
                     <div class="box-header with-border">
-
+                        
                     </div>
                     <form id="payment_search" action="{{ url('admin/payment/date-range-search') }}" method="post">
                         @csrf
@@ -199,7 +199,9 @@
 
             $('input', this.footer()).on('keyup change', function () {
                 if (that.search() !== this.value) {
-                    that.search(this.value).draw();
+                    that
+                            .search(this.value)
+                            .draw();
                 }
             });
         });
