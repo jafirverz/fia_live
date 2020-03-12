@@ -63,6 +63,11 @@ $(window).scroll(function(){
 $(document).ready(function(){
 	respon();
 	
+	var md = new MobileDetect(window.navigator.userAgent);
+	if(md.mobile() == "iPhone"){
+	  $("body").addClass("ios");
+	}
+	
 	stickyHeader();
 	$('.show-tooltip').tooltip();
 	

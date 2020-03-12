@@ -11,7 +11,7 @@
 							<div class="col">
 								<label>Filter by</label>
 								<div class="w-1">
-									<select onchange="this.form.submit()" name="month" class="selectpicker">
+									<select data-live-search="true" onchange="this.form.submit()" name="month" class="selectpicker">
 										<option value="">Month</option>
                                         @foreach(getMonthList() as $key=>$value)
 										<option @if($data['month']==$key) selected="selected" @endif value="{{$key}}">{{$value}}</option>
@@ -20,7 +20,7 @@
 								</div>
 								<div class="w-2">
                                 
-									<select onchange="this.form.submit()" name="year" class="selectpicker">
+									<select data-live-search="true" onchange="this.form.submit()" name="year" class="selectpicker">
 										<option value="">Year</option>
 										@foreach(getYearList() as $year)
 										<option @if($data['year']==$year) selected="selected" @endif value="{{$year}}">{{$year}}</option>

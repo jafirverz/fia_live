@@ -28,7 +28,7 @@
                             <div class="row row-1">
                                 <div class="col-sm-4 col sl-1">
                                     <label class="lb">Salutation</label>
-                                    <select class="selectpicker" name="salutation">
+                                    <select class="selectpicker" data-live-search="true" name="salutation">
                                         <option value="">Select Salutation</option>
                                         @if (salutation())
                                         @foreach (salutation() as $item)
@@ -83,7 +83,7 @@
                             <label class="lb">Telephone Number</label>
                             <div class="input-group ig-1">
                                 <div class="input-group-addon sl-1">
-                                    <select class="selectpicker" name="telephone_code">
+                                    <select class="selectpicker" data-live-search="true" name="telephone_code">
                                         @if (CountryList())
                                         @foreach (CountryList() as $item)
                                         <option value="{{ $item->phonecode }}"
@@ -103,7 +103,7 @@
                             <label class="lb">Mobile Number</label>
                             <div class="input-group ig-1">
                                 <div class="input-group-addon sl-1">
-                                    <select class="selectpicker" name="mobile_code">
+                                    <select class="selectpicker" data-live-search="true" name="mobile_code">
                                         @if (CountryList())
                                         @foreach (CountryList() as $item)
                                         <option value="{{ $item->phonecode }}"
@@ -122,7 +122,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label class="lb"><span class="required">*</span> Country</label>
-                            <select class="selectpicker @if ($errors->has('country')) is-invalid @endif" name="country">
+                            <select data-live-search="true" class="selectpicker @if ($errors->has('country')) is-invalid @endif" name="country">
                                 <option value="">Select Country</option>
                                 @if (CountryList())
                                 @foreach (CountryList() as $item)

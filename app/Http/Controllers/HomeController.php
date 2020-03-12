@@ -81,6 +81,10 @@ class HomeController extends Controller
         $breadcrumbs = getBreadcrumb($page);
         $banner = get_page_banner($page->id);
         $country_name = getCountryId($request->country);
+        if($country_name=='South Korea')
+            {
+                $country_name ='Korea';
+            }
         //dd($country_name);
 
         $events = $others = $reports = $regulatories = $informations = [];
@@ -180,6 +184,7 @@ class HomeController extends Controller
 
         $cms_title = DB::table('pages')
             ->where('title', 'like', '%' . $request->search_content . '%')
+            ->whereNotIn('id',[17,21,22,25,27,29,30,31,32])
             ->get();
         if (isset($cms_title) && $cms_title->count()) {
             foreach ($cms_title as $cms) {
@@ -191,6 +196,7 @@ class HomeController extends Controller
 
         $cms_description = DB::table('pages')
             ->where('contents', 'like', '%' . $request->search_content . '%')
+            ->whereNotIn('id',[17,21,22,25,27,29,30,31,32])
             ->get();
         if (isset($cms_description) && $cms_description->count()) {
             foreach ($cms_description as $cms) {
@@ -207,6 +213,10 @@ class HomeController extends Controller
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $country_name = getFilterCountry($request->country);
+            if($country_name=='South Korea')
+            {
+                $country_name ='Korea';
+            }
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
@@ -241,6 +251,10 @@ class HomeController extends Controller
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $country_name = getFilterCountry($request->country);
+            if($country_name=='South Korea')
+            {
+                $country_name ='Korea';
+            }
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
@@ -250,7 +264,7 @@ class HomeController extends Controller
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->get();
         }
-
+        
 
         if (isset($regulatories_title) && $regulatories_title->count()) {
 
@@ -363,11 +377,8 @@ class HomeController extends Controller
             $data_user['from_email'] = setting()->from_email;
 
             $data_user['subject'] = $emailTemplate_user->subject;
-
             /*$key_user = ['{{name}}'];
-
             $value_user = [$request->name];
-
             $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);*/
 
             $data_user['contents'] = $emailTemplate_user->contents;

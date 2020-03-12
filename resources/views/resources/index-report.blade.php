@@ -11,7 +11,7 @@
                 	<div class="col">
 								<label>Filter by</label>
 								<div class="w-1">
-									<select name="topic" onchange="this.form.submit()" class="selectpicker">
+									<select data-live-search="true" name="topic" onchange="this.form.submit()" class="selectpicker">
 										<option value="">Topic</option>
                                         @foreach(getAllTopics() as $name)
                                         <option @if($data['topic']==$name->id) selected="selected" @endif value="{{$name->id}}">{{$name->tag_name}}</option>

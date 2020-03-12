@@ -12,7 +12,7 @@
                 </div>
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
-                        <select class="selectpicker" data-actions-box="true" name="country[]" title="-- Country --" multiple>
+                        <select class="selectpicker" data-live-search="true" data-actions-box="true" name="country[]" title="-- Country --" multiple>
                                 <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                             <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                             @foreach (getFilterCountry() as $country)
@@ -24,7 +24,7 @@
                     </div>
                     <div class="cw-4">
                         <div class="iw-1">
-                            <select class="selectpicker" name="month">
+                            <select class="selectpicker" data-live-search="true" name="month">
                                 <option value="">-- Months --</option>
                                 @foreach (getFilterMonth() as $key => $month)
                                 <option value="{{ $key+1 }}">{{ $month->tag_name }}</option>
@@ -32,7 +32,7 @@
                             </select>
                         </div>
                         <div class="iw-2">
-                            <select class="selectpicker" name="year">
+                            <select class="selectpicker" data-live-search="true" name="year">
                                 <option value="">-- Year --</option>
                                 @foreach (getFilterYear() as $year)
                                 <option value="{{ $year->tag_name }}" @if($year->tag_name) @if($year->tag_name==date('Y')) selected @endif @endif>{{ $year->tag_name }}</option>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="cw-4">
                         <div class="iw-1">
-                            <select class="selectpicker" name="topic">
+                            <select class="selectpicker" data-live-search="true" name="topic">
                                 <option value="">-- Topic --</option>
                                 @foreach (getFilterTopic() as $topic)
                                 <option value="{{ $topic->id }}">{{ $topic->tag_name }}</option>
@@ -50,7 +50,7 @@
                             </select>
                         </div>
                         <div class="iw-2">
-                            <select class="selectpicker" name="stage">
+                            <select class="selectpicker" data-live-search="true" name="stage">
                                 <option value="">-- Stage --</option>
                                 @foreach (getFilterStage() as $stage)
                                 <option value="{{ $stage->id }}">{{ $stage->tag_name }}</option>
