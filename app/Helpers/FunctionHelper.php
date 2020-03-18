@@ -12,6 +12,7 @@ use App\GroupUserId;
 use Illuminate\Support\Facades\DB;
 use App\GroupManagement;
 use App\Invoice;
+use Carbon\Carbon;
 
 
 
@@ -24,7 +25,27 @@ if (!function_exists('getTopics')) {
      * @return
      */
 
-
+    function user_last_login_date($id)
+    {
+        $authentication_log = DB::table('authentication_log')->where('authenticatable_id', $id)->where('authenticatable_type','App\User')->orderby('id', 'desc')->first();
+        if ($authentication_log) {
+            return Carbon::parse($authentication_log->login_at)->format('d M, Y h:i A');
+        }
+        return '-';
+    }
+	
+	function user_total_no_login($id)
+    {
+       //DB::enableQueryLog();
+	    $total_count = DB::table('authentication_log')->where('authenticatable_id', $id)->whereRaw('year(`login_at`) = ?', array(2019))->where('authenticatable_type','like','%User%')->count();
+	  //dd(DB::getQueryLog());
+	        if ($total_count) {
+            return '<span class="badge">'.$total_count.'</span>';
+        }
+        return '<span class="badge">-</span>';
+    }
+	
+	
     function CountryList($value = null)
     {
         $country_list = DB::table('country')->orderBy('country', 'asc')->get();

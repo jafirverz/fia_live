@@ -197,7 +197,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
 
     /*start User Module backend*/
-    Route::get('/user', 'CMS\UserController@index')->name('user.index');
+    
+	Route::get('/user', 'CMS\UserController@index')->name('user.index');
+	Route::get('/user/log-status/{id}', 'CMS\UserController@log_status');
     Route::get('/user/create', 'CMS\UserController@create');
     Route::post('/user/store', 'CMS\UserController@store');
     Route::get('/user/search', 'CMS\UserController@index');
