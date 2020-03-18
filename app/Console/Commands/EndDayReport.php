@@ -56,10 +56,10 @@ class EndDayReport extends Command
 
         $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
         //dd(DB::getQueryLog());
-        //dd($weeklyRegulatories->count());
+        // dd($weeklyRegulatories->count());
         $content = ['<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
                 <tbody>'];
-        foreach ($weeklyRegulatories as $regulatory) {
+        foreach ($weeklyRegulatories->sortByDesc('regulatory_date') as $regulatory) {
             $value = getRegulatoryData($regulatory->parent_id);
             if ($value) {
                 $content [] = '<tr>
