@@ -54,7 +54,7 @@ class UserController extends Controller
         $user = User::findorfail($id);
 		$title = $user->firstname.' '.$user->lastname;
 		$subtitle = 'Log';
-        $users = DB::table('authentication_log')->where('authenticatable_id', $id)->whereRaw('year(`login_at`) = ?', array(2019))->where('authenticatable_type','like','%User%')->get();
+        $users = DB::table('authentication_log')->where('authenticatable_id', $id)->where('login_at', '<=', Carbon::now())->where('login_at', '>=', Carbon::now()->subMonth(12))->where('authenticatable_type','like','%User%')->get();
         return view('admin.users.log', compact('title', 'users', 'subtitle'));
     }
 

@@ -37,12 +37,12 @@ if (!function_exists('getTopics')) {
 	function user_total_no_login($id)
     {
        //DB::enableQueryLog();
-	    $total_count = DB::table('authentication_log')->where('authenticatable_id', $id)->whereRaw('year(`login_at`) = ?', array(2019))->where('authenticatable_type','like','%User%')->count();
+	    $total_count = DB::table('authentication_log')->where('authenticatable_id', $id)->where('login_at', '<=', Carbon::now())->where('login_at', '>=', Carbon::now()->subMonth(12))->where('authenticatable_type','like','%User%')->count();
 	  //dd(DB::getQueryLog());
 	        if ($total_count) {
-            return '<span class="badge">'.$total_count.'</span>';
+            return '<span class="badge bg-red">'.$total_count.'</span>';
         }
-        return '<span class="badge">-</span>';
+        return '<span class="badge bg-red">0</span>';
     }
 	
 	
