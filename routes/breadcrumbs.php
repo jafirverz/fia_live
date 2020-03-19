@@ -394,6 +394,11 @@ Breadcrumbs::for('user_view', function ($trail, $id) {
     $trail->parent('user');
     $trail->push(__('constant.VIEW'), url('/admin/user/view'. $id));
 });
+Breadcrumbs::for('user-login-log', function ($trail) {
+    $trail->parent('user');
+    $trail->push(__('constant.USER_LOG_DETAIL'), url('/admin/user/log-status'));
+});
+
 
 //Master Setting
 Breadcrumbs::for('master-setting-create', function ($trail) {
