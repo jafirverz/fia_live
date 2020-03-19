@@ -8,7 +8,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('user') }}
+        {{ Breadcrumbs::render('user-login-log') }}
     </section>
 
     <!-- Main content -->
@@ -116,7 +116,7 @@
                                 <th>Overall Status</th>
                                 <th>Subscription Status</th>
                                 <th>Newsletter Subscription</th>
-                                <th>Last Login</th>
+                                <th>Last&nbsp;Login</th>
                                 <th>No of Login Attempts (12 Months)</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -390,7 +390,7 @@
                 targets: 4
             },
             {
-                width: 150,
+                width: 300,
                 targets: 5
             },
             {
@@ -416,7 +416,7 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17]
+                    columns: [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
                 },
                 filename: function () {
                     var today = new Date();

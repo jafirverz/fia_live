@@ -8,7 +8,7 @@
             {{ $title }}
             <small>{{ $subtitle }}</small>
         </h1>
-        {{ Breadcrumbs::render('user') }}
+        {{ Breadcrumbs::render('user-login-log') }}
     </section>
 
     <!-- Main content -->
@@ -26,7 +26,7 @@
 
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table id="users" class="table table-bordered table-hover">
+                        <table id="users-log" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>IP Address</th>
@@ -40,7 +40,7 @@
                                     <tr>
                                         
                                         <td>{{ $user->ip_address ?? '-' }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($user->login_at)->format('d M, Y h:i A') ?? '-' }}</td>
+                                    <td data-order="{{$user->login_at}}">{{ \Carbon\Carbon::parse($user->login_at)->format('d M, Y h:i A') ?? '-' }}</td>
                                         <td>{{ \Carbon\Carbon::parse($user->logout_at)->format('d M, Y h:i A') ?? '-' }}</td>
                                         
 
@@ -67,6 +67,11 @@
 @push('scripts')
 <script>
    
-    $('#users').DataTable();
+    $('#users-log').DataTable({
+        "pageLength": 50,
+        'order': [
+            [1, 'desc']
+        ],
+});
 </script>
 @endpush

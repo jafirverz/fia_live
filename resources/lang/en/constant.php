@@ -185,6 +185,8 @@ return [
 	'NEWSLATTER_SUBSCRIBER' => '10',
 	'UNSUBSCRIBE' => '11',
 
+	'USER_LOG_DETAIL'=>'Log Detail'
+
 
 ];
 
