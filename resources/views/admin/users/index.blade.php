@@ -115,9 +115,9 @@
                                 <th>Email</th>
                                 <th>Overall Status</th>
                                 <th>Subscription Status</th>
-                                <th>Newsletter Subscribed?</th>
+                                <th>Newsletter Subscription</th>
                                 <th>Last Login</th>
-                                <th>Total No. Login(12 Months)</th>
+                                <th>No of Login Attempts (12 Months)</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Member Type</th>
@@ -219,7 +219,7 @@
                                         <td>@if($user->status==5)Active @else Inactive @endif</td>
                                         <td>{{($user->subscribe_status==1)?'Yes':'No'}}</td>
                                         <td>{!!user_last_login_date($user->id)!!}</td>
-                                        <td align="center"><a title="View Log" href="{{ url('admin/user/log-status/' . $user->id) }}">{!!user_total_no_login($user->id)!!}</a></td>
+                                        <td align="center" valign="bottom"><a title="View Log" href="{{ url('admin/user/log-status/' . $user->id) }}">{!!user_total_no_login($user->id)!!}</a></td>
                                         <td>{{ $user->firstname ?? '-' }}</td>
                                         <td>{{ $user->lastname ?? '-' }}</td>
                                         <td>
