@@ -7,7 +7,9 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 //dd($contents);
 
 @endphp
-
+@php
+$id = $_GET['id'] ?? '';
+@endphp
 @section('content')
 
 <div id="toppage" class="page">
@@ -173,9 +175,22 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
 
 
 
-    var array_list = [];
+        var array_list = [];
 
-    hasClassOpen();
+    var id = '{{ $id }}';
+
+    if(id)
+    {
+        console.log(id);
+        array_list.push(id);
+        $('div.box-3').removeClass("open");
+        $('div.box-3[data-id="'+id+'"]').addClass('open');
+        $("a.export_link").attr("href", slug + '?id=' + array_list.join());
+    }
+    else
+    {
+        hasClassOpen();
+    }
 
     $("div.box-3").on("click", function () {
 
@@ -204,7 +219,14 @@ $contents = getCountryInformationBasedOnDetails($_GET['country'], $_GET['categor
     }
 
 
-
+    $(document).ready(function() {
+        if(id)
+        {
+            $('html, body').animate({
+                scrollTop: $('div.box-3[data-id="'+id+'"]').offset().top
+            }, 1500);
+        }
+    });
 </script>
 
 @endsection

@@ -123,6 +123,7 @@ class HomeController extends Controller
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*', 'topical_report_countries.*')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $report_description = DB::table('topical_reports')
@@ -130,11 +131,13 @@ class HomeController extends Controller
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
                 ->where('topical_report_countries.filter_id', $request->country)
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*', 'topical_report_countries.*')
                 ->get();
         } else {
             $report_description = DB::table('topical_reports')
                 ->where('topical_reports.description', 'like', '%' . $request->search_content . '%')
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*')
                 ->get();
         }
 
@@ -142,7 +145,7 @@ class HomeController extends Controller
         if (isset($report_description) && $report_description->count()) {
 
             foreach ($report_description as $report) {
-
+                $item['id'] = $report->id;
                 $item['content'] = substr(strip_tags($report->description), 0, 120);
                 $item['link'] = url('topical-reports');
                 $reports[] = $item;
@@ -154,6 +157,7 @@ class HomeController extends Controller
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('topical_report_countries.filter_id', $ActiveCountries)
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*', 'topical_report_countries.*')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $report_title = DB::table('topical_reports')
@@ -161,11 +165,13 @@ class HomeController extends Controller
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
                 ->where('topical_report_countries.filter_id', $request->country)
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*', 'topical_report_countries.*')
                 ->get();
         } else {
             $report_title = DB::table('topical_reports')
                 ->where('topical_reports.title', 'like', '%' . $request->search_content . '%')
                 ->orderBy('topical_reports.id','DESC')
+                ->select('topical_reports.id as topical_reports_id', 'topical_reports.*')
                 ->get();
         }
 
@@ -173,6 +179,7 @@ class HomeController extends Controller
         if (isset($report_title) && $report_title->count()) {
 
             foreach ($report_title as $report) {
+                $item['id'] = $report->topical_reports_id;
                 $item['content'] = $report->title;
                 $item['link'] = url('topical-reports');
                 $reports[] = $item;
@@ -264,7 +271,7 @@ class HomeController extends Controller
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->get();
         }
-        
+
 
         if (isset($regulatories_title) && $regulatories_title->count()) {
 
@@ -305,6 +312,7 @@ class HomeController extends Controller
 
             foreach ($information_title as $information) {
                 $category = getFilterCountry($information->information_filter_id);
+                $item['id'] = $information->id;
                 $item['country'] = getFilterCountry($information->country_id);
                 $item['content'] = $information->information_title;
                 $item['link'] = url('country-information-details?country=' . getFilterCountry($information->country_id) . '&category=' . $category);
@@ -331,6 +339,7 @@ class HomeController extends Controller
         if (isset($information_description) && $information_description->count()) {
 
             foreach ($information_description as $info) {
+                $item['id'] = $info->id;
                 $category = getFilterCountry($info->information_filter_id);
                 $item['country'] = getFilterCountry($info->country_id);
                 $item['content'] = substr(strip_tags($info->information_content), 0, 120);

@@ -105,13 +105,13 @@ $id = $_GET['id'] ?? '';
 
     var array_list = [];
 
-    var id = '{{ $id }}';
+    var id = '{{ $id ?? '' }}';
 
     if(id)
     {
         array_list.push(id);
         $('div.box-3').removeClass("open");
-        $('div.box-3[data-id="'+id+'"]').addClass("open");
+        $('div.box-3[data-id="'+id+'"]').addClass('open');
         $("a.export_link").attr("href", slug + '?id=' + array_list.join());
     }
     else
@@ -132,6 +132,14 @@ $id = $_GET['id'] ?? '';
         $("a.export_link").attr("href", slug + '?id=' + array_list.join());
     }
 
+    $(document).ready(function() {
+        if(id)
+        {
+            $('html, body').animate({
+                scrollTop: $('div.box-3[data-id="'+id+'"]').offset().top
+            }, 1500);
+        }
+    });
 </script>
 @endsection
 
