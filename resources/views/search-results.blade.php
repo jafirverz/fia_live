@@ -70,9 +70,10 @@
                             @foreach($resources as $info)
                                 @php
                                 $keyword=strip_tags($_REQUEST['search_content']);
+                                $report_id = isset($info['id']) ? '?id=report-'.$info['id'] : '';
                                 @endphp
                                 <li class="mlist-line"><a
-                                            href="{{ $info['link'].'?id=report-'.$info['id'] }}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a>
+                                            href="{{ $info['link'].$report_id }}">{!!  preg_replace("/($keyword)/i","<b>$1</b>",$info['content']); !!}</a>
                                 </li>
                             @endforeach
                         </ul>
