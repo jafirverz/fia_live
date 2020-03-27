@@ -4,6 +4,10 @@
 @section('content')
 @php
 $id = $_GET['id'] ?? '';
+if($id)
+{
+    $to_position = array_search($id, $child_regulatory->pluck("id")->toArray());
+}
 @endphp
 <div id="toppage" class="page">
 
@@ -105,13 +109,14 @@ $id = $_GET['id'] ?? '';
 
     var array_list = [];
 
-    var id = '{{ $id }}';
+    var id = '{{ $id ?? '' }}';
+
 
     if(id)
     {
         array_list.push(id);
         $('div.box-3').removeClass("open");
-        $('div.box-3[data-id="'+id+'"]').addClass("open");
+        $('div.box-3[data-id="'+id+'"]').addClass('open');
         $("a.export_link").attr("href", slug + '?id=' + array_list.join());
     }
     else
@@ -132,6 +137,22 @@ $id = $_GET['id'] ?? '';
         $("a.export_link").attr("href", slug + '?id=' + array_list.join());
     }
 
+    $(document).ready(function() {
+        if(id)
+        {
+            var to_position = '{{ $to_position }}';
+            var click_times = Math.floor(to_position/5);
+            setTimeout(function() {
+                for(var i=0;i<click_times;i++)
+                {
+                    $("button.mbox-load").trigger("click");
+                }
+                $('html, body').animate({
+                    scrollTop: $('div.box-3[data-id="'+id+'"]').offset().top
+                }, 1500);
+            }, 1000);
+        }
+    });
 </script>
 @endsection
 

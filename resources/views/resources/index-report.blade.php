@@ -36,7 +36,7 @@
                     @foreach($reports as $report)
                     @php $i++; @endphp
 						<div class="box-3 mbox @if($i==1) open @endif">
-							<a class="head-box" data-height="120" href="#report-1">@php $topics=json_decode($report->topical_id); @endphp {{getTopics($topics)}} : {{$report->title}}</a>
+							<a class="head-box" data-height="120" href="#report-{{ $report->id }}">@php $topics=json_decode($report->topical_id); @endphp {{getTopics($topics)}} : {{$report->title}}</a>
 							<div class="content-box" id="report-1">
 								<div class="document">
 									{!!$report->description!!}
@@ -54,7 +54,7 @@
 									$report_pdf=explode(".",$report->pdf,-1);
 									$report_pdf=explode("/",$report_pdf[0]);
 									$report_pdf=explode("_",$report_pdf[2],-1);
-									
+
 									@endphp
                                      @if(Auth::check())
 										@if($report->pdf!="")<a class="btn-4" href="{{url(asset($report->pdf))}}" target="_blank"><i class="far fa-file-pdf"></i> {{implode(" ",$report_pdf)}}</a>@endif
@@ -75,7 +75,26 @@
 				</div>
 
             </div>
+<script>
+    var id = '{{ $_GET["id"] }}';
 
+    if(id)
+    {
+        $('div.box-3').removeClass("open");
+        $('div.box-3 a[href="#'+id+'"]').parent('div.box-3').addClass('open');
+    }
+
+    $(document).ready(function() {
+        if(id)
+        {
+            setTimeout(function() {
+                $('html, body').animate({
+                    scrollTop: $('div.box-3 a[href="#'+id+'"]').offset().top
+                }, 1500);
+            }, 1000);
+        }
+    });
+</script>
 @if ($errors->any())
 <script type="text/javascript">
     $(window).on('load',function(){

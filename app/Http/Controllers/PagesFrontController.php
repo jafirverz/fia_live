@@ -116,7 +116,6 @@ class PagesFrontController extends Controller
             ->where('pages.status', 1)
             ->firstOrFail();
         $banner = get_page_banner($page->id);
-
         return view('regulatory.regulatory-update-details', compact('regulatory', 'child_regulatory', "page", "banner", "breadcrumbs"));
     }
 
