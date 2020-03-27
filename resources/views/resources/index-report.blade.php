@@ -87,9 +87,11 @@
     $(document).ready(function() {
         if(id)
         {
-            $('html, body').animate({
-                scrollTop: $('div.box-3 a[href="#'+id+'"]').offset().top
-            }, 1500);
+            setTimeout(function() {
+                $('html, body').animate({
+                    scrollTop: $('div.box-3 a[href="#'+id+'"]').offset().top
+                }, 1500);
+            }, 1000);
         }
     });
 </script>

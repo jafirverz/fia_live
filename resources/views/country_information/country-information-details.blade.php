@@ -181,7 +181,6 @@ $id = $_GET['id'] ?? '';
 
     if(id)
     {
-        console.log(id);
         array_list.push(id);
         $('div.box-3').removeClass("open");
         $('div.box-3[data-id="'+id+'"]').addClass('open');
@@ -222,9 +221,11 @@ $id = $_GET['id'] ?? '';
     $(document).ready(function() {
         if(id)
         {
-            $('html, body').animate({
-                scrollTop: $('div.box-3[data-id="'+id+'"]').offset().top
-            }, 1500);
+            setTimeout(function() {
+                $('html, body').animate({
+                    scrollTop: $('div.box-3[data-id="'+id+'"]').offset().top
+                }, 1500);
+            }, 1000);
         }
     });
 </script>
