@@ -76,7 +76,7 @@
 
             </div>
 <script>
-    var id = '{{ $_GET["id"] }}';
+    var id = '{{ $_GET["id"] ?? "" }}';
 
     if(id)
     {
