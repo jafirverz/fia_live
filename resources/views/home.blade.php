@@ -244,7 +244,7 @@
                 var country= $(this).text();
                 country=country.toLowerCase();
                 country=country.replace(" ", "_");
-
+				
                 var content="";
                 content+='<div id="'+country+'" class="pin-pp">';
                 content+='<div class="tb-col">';
@@ -252,7 +252,7 @@
                 content+='<div class="content">';
                 content+='<a href="#new" class="fas fa-times">Close</a>';
                 content+='<h2>'+$(this).text()+'</h2>';
-                content+='<a class="fas fa-angle-double-right link" href="search-results-regulatory?country='+$(this).text()+'"><span class="ico"><img src="images/tempt/ico-5.png" alt="" /></span> Regulatory Updates</a>';
+               
 
                 $.ajax({
                     type: 'GET',
@@ -264,8 +264,13 @@
                     cache: false,
                     async: false,
                     success: function (data) {
-                        var url='country-information-details?country='+country_name+'&category='+data;
+						
+						var result=data.split('::');
+						var country_id=result[1];
+						var category=result[0];
+                        var url='country-information-details?country='+country_name+'&category='+category;
                         url=url.replace(" ", "+");
+						 content+='<a class="fas fa-angle-double-right link" href="search-results-regulatory?country='+country_id+'"><span class="ico"><img src="images/tempt/ico-5.png" alt="" /></span> Regulatory Updates</a>';
                         if(data=='#')
                             content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
                         else

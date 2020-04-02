@@ -55,8 +55,14 @@ class HomeController extends Controller
     public function search_regulatory($slug = 'search-results-regulatory')
     {
         //dd($_GET);
-        $country = getCountryId($_GET['country']);
-        $regulatories = Regulatory::where('title', 'like', '%' . $_GET['country'] . '%')->orderBy('regulatory_date', 'DESC')->get();
+        $country = $_GET['country'];
+        $query1 = Regulatory::query();
+        if($country)
+        {
+            $query1->where('regulatories.country_id', $country);
+            $parent_id = $query1->get()->pluck('id')->all();
+        }
+        $regulatories = Regulatory::WhereIn('regulatories.parent_id', $parent_id)->orderBy('regulatory_date', 'DESC')->get();
         $total_regulatories = Regulatory::where('country_id', $country)->count();
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
@@ -364,7 +370,7 @@ class HomeController extends Controller
         $country = isset($_GET['country']) ? $_GET['country'] : '';
         $country_id = getCountryId($country);
         $category = get_categry_by_country($country_id);
-        return $category;
+        return $category.'::'.$country_id;
 
     }
 
