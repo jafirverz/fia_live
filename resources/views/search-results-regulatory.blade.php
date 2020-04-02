@@ -12,7 +12,7 @@
                 <div class="cw-2">
                     <div class="cw-3 sl-country hideico">
                     @if($_GET['country'])
-                        @php $countryID=getCountryId($_GET['country']);@endphp
+                        @php $countryID=$_GET['country'];@endphp
                         @else
                         @php $countryID="";@endphp
                         @endif
@@ -76,7 +76,9 @@
             @if($regulatories)
             <input type="hidden" name="min_load" value="{{ setting()->pagination_limit ?? 8 }}">
             <div class="grid-2 eheight clearfix mbox-wrap" data-num="{{ setting()->pagination_limit ?? 8 }}">
+           
                  @foreach ($regulatories as $value)
+                 
                 @php
                     $regulatory = getRegulatoryData($value->parent_id);
                 @endphp
