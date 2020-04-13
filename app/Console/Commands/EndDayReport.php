@@ -60,10 +60,12 @@ class EndDayReport extends Command
         $content = [];
         if($weeklyRegulatories->count())
         {
+            $i = 0;
+            $len = $weeklyRegulatories->count();
             foreach ($weeklyRegulatories->sortByDesc('regulatory_date') as $regulatory) {
                 $value = getRegulatoryData($regulatory->parent_id);
                 if ($value) {
-                    if($loop->first)
+                    if($i==0)
                     {
                         $content [] = '<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
                         <tbody>';
@@ -78,12 +80,13 @@ class EndDayReport extends Command
                                 <a href="' . url('regulatory-details', $value->slug) . '?id=' . $regulatory->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
                                 </td>
                             </tr>';
-                    if($loop->last)
+                    if($i==($len-1))
                     {
                         $content[] = '</tbody>
                         </table>';
                     }
                 }
+                $i++;
             }
 
             if ($content) {
