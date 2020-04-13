@@ -442,16 +442,12 @@ class HomeController extends Controller
         $user->updated_at = Carbon::now()->toDateTimeString();
         $user->save();
 
-        return redirect(url('unsubscribed'));
+        return redirect(url('unsubscribe'));
 
     }
 
     public function getUnsubscribe()
     {
-        if (!isset($_GET['id'])) {
-            return abort(404);
-        }
-        $id = $_GET['id'];
         $page = Page::where('pages.slug', 'unsubscribe')
             ->where('pages.status', 1)
             ->firstOrFail();
@@ -460,6 +456,15 @@ class HomeController extends Controller
         if (!$page) {
             return abort(404);
         }
-        return view('unsubscribe', compact("page", "banner", "breadcrumbs", "id"));
+        else if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            return view('unsubscribe', compact("page", "banner", "breadcrumbs", "id"));
+        }
+        else
+        {
+            return view('unsubscribe-thank-you', compact("page", "banner", "breadcrumbs"));
+        }
+        return abort(404);
     }
 }
