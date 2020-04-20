@@ -378,9 +378,7 @@
 
     $('#users').DataTable({
         dom: 'Bfrtip',
-        'order': [
-            [15, 'desc']
-        ],
+        "aaSorting": [],
         "aoColumnDefs": [{
             "aTargets": [17],
             "bSortable": false
