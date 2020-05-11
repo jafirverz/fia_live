@@ -12,7 +12,7 @@
                     I am searching for
                 </div>
                 <div class="col-2 sl-country hideico">
-                    <select name="country" class="selectpicker" data-live-search="true">
+                    <select data-size="5" name="country" class="selectpicker" data-live-search="true">
                         <option data-content='<strong>COUNTRY</strong>'>COUNTRY</option>
                         <!--<option data-content='<img src="images/tempt/flag-afghanistan.jpg" alt="china" /> Afghanistan'> Afghanistan</option>-->
                         @foreach (getFilterCountryInformation() as $country)
@@ -24,7 +24,7 @@
                 <div class="col-3">regarding
                 </div>
                 <div class="col-4">
-                    <select name="category" class="selectpicker" data-live-search="true">
+                    <select data-size="5" name="category" class="selectpicker" data-live-search="true">
                         @foreach (getFilterCategory() as $category)
                         <option value="{{ $category->tag_name }}">{{ $category->tag_name }}</option>
                         @endforeach
