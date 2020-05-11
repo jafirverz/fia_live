@@ -77,12 +77,6 @@ textarea.form-control { height: auto; }
 .form-control:focus { border-color: #fb7a10 !important; box-shadow: #fb7a10 0 0 1px !important; }
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control { background: #f6f6f6; }
 
-.form-control::-webkit-input-placeholder { line-height: 32px; }
-.form-control:-moz-placeholder { line-height: 46px; }
-.form-control::-moz-placeholder { line-height: 46px; }
-.form-control:-ms-input-placeholder { line-height: 46px; }
-.ios .form-control { line-height: 1.2 !important; }
-
 .ig-btn .input-group-btn { font-size: 13px; min-width: 90px; padding-left: 10px; }
 .ig-btn .form-control { border-radius: 4px !important; }
 
@@ -92,10 +86,11 @@ textarea.form-control { height: auto; }
 .bootstrap-select.btn-group .dropdown-toggle .caret:before { color: #909090; content: "\f107"; font-family: 'Font Awesome 5 Free'; font-weight: 900; }
 .bootstrap-select.btn-group.open .dropdown-toggle .caret:before { color: #fb7a10; }
 .bootstrap-select.open > .dropdown-toggle { border: #fb7a10 solid 2px !important; border-radius: 30px 30px 0 0 !important; outline: none !important; }
-.bootstrap-select.btn-group .dropdown-menu { background: #f9f9f9; border: #fb7a10 solid 2px; border-radius: 0 0 10px 10px; max-height: 275px !important; margin-top: -2px; padding: 0; }
+.bootstrap-select.btn-group .dropdown-menu { background: #f9f9f9; border: #fb7a10 solid 2px; border-radius: 0 0 10px 10px; margin-top: -2px; padding: 0; }
 .bootstrap-select.btn-group .dropdown-menu li a { border-bottom: #e9e9e9 solid 1px; padding: 10px 15px; -webkit-transition: all 0.5s ease; -moz-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease; }
 .bootstrap-select.btn-group .dropdown-menu li:last-child a { border-bottom: none; }
 .bootstrap-select.btn-group .dropdown-menu li.selected a, .bootstrap-select.btn-group .dropdown-menu li a:hover { background: #e5f4fb; color: #333; }
+.bootstrap-select .bs-searchbox .form-control { height: 30px; line-height: 28px; }
 
 .bootstrap-select.open.dropup > .dropdown-toggle { border-radius: 0 0 30px 30px !important; }
 .bootstrap-select.open.dropup .dropdown-menu.open { border-radius: 10px 10px 0 0 !important; margin-bottom: -2px; margin-top: 0; }
@@ -372,7 +367,7 @@ a:hover{cursor:pointer;}
 .form-ani .inrow { margin-bottom: 20px; position: relative; }
 .form-ani .inrow label { bottom: 0; color: #909090; font-size: 14px; font-weight: 400; left: 20px; position: absolute; right: 0; top: 17px; margin: 0; padding: 0; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; }
 .form-ani .not-empty .form-control { background: #fff; padding-top: 5px; }
-.form-ani .focus + label { color: #999; font-size: 70%; padding: 2px 0; text-transform: uppercase; top: 0; }
+.form-ani .focus + label { color: #999; font-size: 70%; padding: 1px 0; text-transform: uppercase; top: 0; }
 
 .form-wrap-1 { margin: 50px auto; max-width: 560px; }
 .form-wrap-1 .btn-2 { display: block; width: 100%; }
@@ -558,7 +553,7 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .search-wrap-2 .sl-country .bootstrap-select.btn-group .dropdown-menu { left: 0; right: auto; width: 200px; }
 .search-wrap-2 .sl-country .bootstrap-select.open.dropup > .dropdown-toggle { border-radius: 0 0 0 30px !important; }
 .search-wrap-2 .form-control { border: none; font-weight: 400; height: 50px; line-height: 52px; }
-.search-wrap-2 .form-control::-webkit-input-placeholder { line-height: 28px; }
+.search-wrap-2 .form-control::-webkit-input-placeholder { line-height: 52px; }
 .search-wrap-2 .form-control:-moz-placeholder { line-height: 52px; }
 .search-wrap-2 .form-control::-moz-placeholder { line-height: 52px; }
 .search-wrap-2 .form-control:-ms-input-placeholder { line-height: 52px; }
@@ -944,7 +939,6 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	.search-wrap-1 .col-4 { margin-top: 15px; padding-right: 0; width: 100%; }
 	.intro-home-1 { padding-bottom: 20px; padding-top: 20px; }
 	.intro-home-1 .intro { text-align: center; }
-	.banner:hover .slick-arrow { display: none !important; }
 }
 @media (min-width:721px){
 	.hide-720 { display: block !important; }
