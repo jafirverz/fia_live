@@ -93,7 +93,7 @@
                 @endif
                 @if(checkCountryExist('New Zealand')==1)
                     <a class="pin p-new" href="#new_zealand"><span class="flag"><img src="images/tempt/flag-new-zealand.jpg"
-                                                                                     alt="NEW ZEALAND flag" /></span><span class="text">NEW ZEALAND</span></a>
+                                                                                     alt="NEW ZEALAND flag" /></span><span class="text">New Zealand</span></a>
                 @endif
             </div>
             <div id="map_country_detail">
