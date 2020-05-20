@@ -218,7 +218,7 @@
                                         <td>{{memberShipStatus($user->status)}}</td>
                                         <td>@if($user->status==5)Active @else Inactive @endif</td>
                                         <td>{{($user->subscribe_status==1)?'Yes':'No'}}</td>
-                                        <td>{!!user_last_login_date($user->id)!!}</td>
+                                        <td data-sort="@if(user_last_login_date($user->id)) {{ strtotime(user_last_login_date($user->id)) }} @endif">@if(user_last_login_date($user->id)) {{ date('d M, Y h:i A', strtotime(user_last_login_date($user->id))) }} @else - @endif</td>
                                         <td align="center" valign="bottom"><a title="View Log" href="{{ url('admin/user/log-status/' . $user->id) }}">{!!user_total_no_login($user->id)!!}</a></td>
                                         <td>{{ $user->firstname ?? '-' }}</td>
                                         <td>{{ $user->lastname ?? '-' }}</td>
