@@ -382,7 +382,7 @@
             [18, 'desc']
         ],
         "aoColumnDefs": [{
-            "aTargets": [18],
+            "aTargets": [17],
             "bSortable": false
         },
             {
