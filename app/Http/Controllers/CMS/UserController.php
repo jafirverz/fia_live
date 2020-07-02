@@ -518,8 +518,6 @@ class UserController extends Controller
                 $contact = '<a href="mailto:regulatory@foodindustry.asia" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" src="' . asset('photos/2/icon6.jpg') . '"></a>';
                 $linkedin = '<a href="' . setting()->linkedin_link . '" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="' . asset('photos/2/icon5.jpg') . '"></a>';
                 $twitter = '<a href="' . setting()->twitter_link . '" target="_blank" style="width: 20px;display: inline-block;margin: 0 5px;"><img width="20px" height="20px" src="' . asset('photos/2/icon2.jpg') . '"></a>';
-                $users = ['desmond.lau@foodindustry.asia','monwai@verzdesign.com','nikunj@verzdesign.com'];
-                //$users = ['monwai@verzdesign.com','nikunj@verzdesign.com'];
                 foreach ($users as $user) {
 
                     $data_user = [];
