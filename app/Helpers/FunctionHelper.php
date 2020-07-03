@@ -29,11 +29,11 @@ if (!function_exists('getTopics')) {
     {
         $authentication_log = DB::table('authentication_log')->where('authenticatable_id', $id)->where('authenticatable_type','App\User')->orderby('id', 'desc')->first();
         if ($authentication_log) {
-            return Carbon::parse($authentication_log->login_at)->format('d M, Y h:i A');
+            return $authentication_log->login_at;
         }
-        return '-';
+        return false;
     }
-	
+
 	function user_total_no_login($id)
     {
        //DB::enableQueryLog();
@@ -44,8 +44,8 @@ if (!function_exists('getTopics')) {
         }
         return '<span class="badge bg-red">0</span>';
     }
-	
-	
+
+
     function CountryList($value = null)
     {
         $country_list = DB::table('country')->orderBy('country', 'asc')->get();

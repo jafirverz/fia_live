@@ -207,7 +207,7 @@ class PagesFrontController extends Controller
                 $value->country_name  = getFilterCountry($regulatory->country_id);
             }
         }
-        foreach($result->sortBy('country_name') as $value)
+        foreach($result as $value)
         {
             $regulatory = getRegulatoryData($value->parent_id);
             if($regulatory)

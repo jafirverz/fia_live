@@ -55,14 +55,8 @@ class HomeController extends Controller
     public function search_regulatory($slug = 'search-results-regulatory')
     {
         //dd($_GET);
-        $country = $_GET['country'];
-        $query1 = Regulatory::query();
-        if($country)
-        {
-            $query1->where('regulatories.country_id', $country);
-            $parent_id = $query1->get()->pluck('id')->all();
-        }
-        $regulatories = Regulatory::WhereIn('regulatories.parent_id', $parent_id)->orderBy('regulatory_date', 'DESC')->get();
+        $country = getCountryId($_GET['country']);
+        $regulatories = Regulatory::where('title', 'like', '%' . $_GET['country'] . '%')->orderBy('regulatory_date', 'DESC')->get();
         $total_regulatories = Regulatory::where('country_id', $country)->count();
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
@@ -370,7 +364,7 @@ class HomeController extends Controller
         $country = isset($_GET['country']) ? $_GET['country'] : '';
         $country_id = getCountryId($country);
         $category = get_categry_by_country($country_id);
-        return $category.'::'.$country_id;
+        return $category;
 
     }
 
@@ -448,16 +442,12 @@ class HomeController extends Controller
         $user->updated_at = Carbon::now()->toDateTimeString();
         $user->save();
 
-        return redirect(url('unsubscribed'));
+        return redirect(url('unsubscribe'));
 
     }
 
     public function getUnsubscribe()
     {
-        if (!isset($_GET['id'])) {
-            return abort(404);
-        }
-        $id = $_GET['id'];
         $page = Page::where('pages.slug', 'unsubscribe')
             ->where('pages.status', 1)
             ->firstOrFail();
@@ -466,6 +456,15 @@ class HomeController extends Controller
         if (!$page) {
             return abort(404);
         }
-        return view('unsubscribe', compact("page", "banner", "breadcrumbs", "id"));
+        else if(isset($_GET['id']))
+        {
+            $id = $_GET['id'];
+            return view('unsubscribe', compact("page", "banner", "breadcrumbs", "id"));
+        }
+        else
+        {
+            return view('unsubscribe-thank-you', compact("page", "banner", "breadcrumbs"));
+        }
+        return abort(404);
     }
 }
