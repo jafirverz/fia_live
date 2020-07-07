@@ -49,6 +49,11 @@
             'url'   =>  'admin/podcast',
         ],
         [
+            'title' =>  __('constant.THINKING_PIECE'),
+            'icon'  =>  '<i class="fa fa-check"></i>',
+            'url'   =>  'admin/thinking_piece',
+        ],
+        [
             'title' =>  __('constant.PAYMENT'),
             'icon'  =>  '<i class="fa fa-check"></i>',
             'url'   =>  'admin/payment',
