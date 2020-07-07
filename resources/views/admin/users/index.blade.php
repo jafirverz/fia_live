@@ -366,80 +366,158 @@
 @endsection
 @push('scripts')
 <script>
+
     $('.update-status').click(function () {
+
         var memberType = $('#member-type');
+
         memberType.val($(this).data('member-type'));
+
         memberType.change();
+
         $('#status').val($(this).data('status'));
+
         $('#user-id').val($(this).data('user-id'));
+
         $(".button-title").html($(this).data('title'));
+
         $('#payment-approve-modal').modal('show');
+
     });
+
+
 
     $('#users').DataTable({
+
         dom: 'Bfrtip',
+
         'order': [
+
             [18, 'desc']
-        ],
-        "aoColumnDefs": [{
-            "aTargets": [17],
-            "bSortable": false
-        },
-            {
-                width: 100,
-                targets: 4
-            },
-            {
-                width: 300,
-                targets: 5
-            },
-            {
-                width: 300,
-                targets: 6
-            },
-            {
-                width: 150,
-                targets: 7
-            },
-            {
-                width: 150,
-                targets: 8
-            },
-            {
-                width: 150,
-                targets: 10
-            }
 
         ],
-        buttons: [
+
+        "aoColumnDefs": [{
+
+            "aTargets": [17],
+
+            "bSortable": false
+
+        },
+
             {
-                extend: 'excel',
-                footer: true,
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-                },
-                filename: function () {
-                    var today = new Date();
-                    var dd = today.getDate();
-                    var mm = today.getMonth() + 1; //January is 0!
-                    var yyyy = today.getFullYear();
-                    var yy = yyyy.toString().substring(2);
-                    if (dd < 10) {
-                        dd = '0' + dd
-                    }
-                    if (mm < 10) {
-                        mm = '0' + mm
-                    }
-                    today = yy + '' + mm + '' + dd;
-                    return 'Members - ' + today;
-                }
+
+                width: 100,
+
+                targets: 4
+
+            },
+
+            {
+
+                width: 300,
+
+                targets: 5
+
+            },
+
+            {
+
+                width: 300,
+
+                targets: 6
+
+            },
+
+            {
+
+                width: 150,
+
+                targets: 7
+
+            },
+
+            {
+
+                width: 150,
+
+                targets: 8
+
+            },
+
+            {
+
+                width: 150,
+
+                targets: 10
+
             }
+
+
+
+        ],
+
+        buttons: [
+
+            {
+
+                extend: 'excel',
+
+                footer: true,
+
+                exportOptions: {
+
+                    columns: [1, 2, 3, 4, 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+                },
+
+                filename: function () {
+
+                    var today = new Date();
+
+                    var dd = today.getDate();
+
+                    var mm = today.getMonth() + 1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+
+                    var yy = yyyy.toString().substring(2);
+
+                    if (dd < 10) {
+
+                        dd = '0' + dd
+
+                    }
+
+                    if (mm < 10) {
+
+                        mm = '0' + mm
+
+                    }
+
+                    today = yy + '' + mm + '' + dd;
+
+                    return 'Members - ' + today;
+
+                }
+
+            }
+
         ]
+
     });
+
     $(document).ready(function () {
+
         $("div.chart").addClass("collapsed-box");
+
     });
+
+
+
 
 
 </script>
+
 @endpush
+

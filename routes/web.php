@@ -188,6 +188,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/events/edit/{id}', 'CMS\EventsController@edit');
     Route::post('/events/update/{id}', 'CMS\EventsController@update');
     Route::get('/events/destroy/{id}', 'CMS\EventsController@destroy');
+	
+	/**/
+	Route::get('/thinking_piece', 'CMS\ThinkingPieceController@index')->name('thinking_piece.index');
+    Route::get('/thinking_piece/create', 'CMS\ThinkingPieceController@create');
+    Route::post('/thinking_piece/store', 'CMS\ThinkingPieceController@store');
+    Route::get('/thinking_piece/edit/{id}', 'CMS\ThinkingPieceController@edit');
+    Route::post('/thinking_piece/update/{id}', 'CMS\ThinkingPieceController@update');
+    Route::get('/thinking_piece/destroy/{id}', 'CMS\ThinkingPieceController@destroy');
 
     Route::get('/topical-report', 'CMS\TopicalReportController@index')->name('topical_report.index');
     Route::get('/topical-report/create', 'CMS\TopicalReportController@create');
@@ -195,6 +203,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/topical-report/edit/{id}', 'CMS\TopicalReportController@edit');
     Route::post('/topical-report/update/{id}', 'CMS\TopicalReportController@update');
     Route::get('/topical-report/destroy/{id}', 'CMS\TopicalReportController@destroy');
+	
+	//PODCAST
+	Route::get('/podcast', 'CMS\PodcastController@index')->name('podcast.index');
+    Route::get('/podcast/create', 'CMS\PodcastController@create');
+    Route::post('/podcast/store', 'CMS\PodcastController@store');
+    Route::get('/podcast/edit/{id}', 'CMS\PodcastController@edit');
+    Route::post('/podcast/update/{id}', 'CMS\PodcastController@update');
+    Route::get('/podcast/destroy/{id}', 'CMS\PodcastController@destroy');
 
     /*start User Module backend*/
     

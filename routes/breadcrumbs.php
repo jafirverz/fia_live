@@ -354,7 +354,7 @@ for ('event_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/events/edit' . $id));
 }) ;
 
-//EVENT
+//Topical Report
 Breadcrumbs::
 for ('topical_report', function ($trail) {
     $trail->parent('dashboard');
@@ -374,7 +374,46 @@ for ('topical_report_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/topical-report/edit' . $id));
 }) ;
 
-//students route start
+//Podcast
+Breadcrumbs::
+for ('podcast', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.PODCAST'), url('/admin/podcast'));
+
+});
+
+Breadcrumbs::
+for ('podcast_create', function ($trail) {
+
+    $trail->parent('podcast');
+    $trail->push(__('constant.CREATE'), url('/admin/podcast/create'));
+}) ;
+Breadcrumbs::
+for ('podcast_edit', function ($trail, $id) {
+    $trail->parent('podcast');
+    $trail->push(__('constant.EDIT'), url('/admin/podcast/edit' . $id));
+}) ;
+
+//THINKING_PIECE
+Breadcrumbs::
+for ('thinking_piece', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.THINKING_PIECE'), url('/admin/thinking_piece'));
+
+});
+
+Breadcrumbs::
+for ('thinking_piece_create', function ($trail) {
+
+    $trail->parent('thinking_piece');
+    $trail->push(__('constant.CREATE'), url('/admin/thinking_piece/create'));
+}) ;
+Breadcrumbs::
+for ('thinking_piece_edit', function ($trail, $id) {
+    $trail->parent('thinking_piece');
+    $trail->push(__('constant.EDIT'), url('/admin/thinking_piece/edit' . $id));
+}) ;
+
 
 Breadcrumbs::for('user', function ($trail) {
     $trail->parent('dashboard');

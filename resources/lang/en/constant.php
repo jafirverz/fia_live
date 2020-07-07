@@ -16,6 +16,10 @@ return [
     'COUNTRY_INFORMATION'   =>  'Country Information',
 
     'REGULATORY'    =>  'Regulatory',
+	
+	'PODCAST'    =>  'Podcast',
+	
+	'THINKING_PIECE'    =>  'Thinking Piece',
 
     'REGULATORY_LIST'    =>  'Regulatory List',
 
@@ -52,6 +56,8 @@ return [
 	'FOOTER' => 'Footer',
 
 	'SITEMAP' => 'Sitemap',
+	
+	'PODCAST' => 'Podcast',
 
     'CONTACT' => 'Contact Us',
 
