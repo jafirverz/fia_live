@@ -25,6 +25,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Title</th>
+                                                <th>Feature</th>
                                                 <th>Topics</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
@@ -42,7 +43,9 @@
                                                                 {{__('constant.NONE')}}
                                                             @endif
                                                         </td>
-
+														<td>
+                                                        @if($podcast->feature==1) Yes @else No @endif
+                                                        </td>
 
                                                         
                                                         <td>

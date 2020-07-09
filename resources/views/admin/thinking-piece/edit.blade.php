@@ -37,6 +37,9 @@
                             </span>
                             @endif
                 <span class="add-on"><i class="icon-th"></i></span></div></div></div>
+                <div class="form-group">
+                   <input value="1" @if($thinking_piece->feature==1) checked="checked" @endif id="feature" name="feature" type="checkbox"> <label for="feature" class=" control-label">Feature?</label> 
+                </div>
                 <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                     <div class="row"><label class='col-sm-2 control-label' for="contents">Description :</label>
 <div class="col-sm-10"><textarea class="tiny-editor form-control" rows="5" id="description"

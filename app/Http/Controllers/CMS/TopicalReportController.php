@@ -112,6 +112,7 @@ class TopicalReportController extends Controller
 		
         $TopicalReport->topical_id = json_encode($request->topical_id);
         $TopicalReport->title = $request->title;
+		$TopicalReport->feature = isset($request->feature)?:0;
 		$TopicalReport->description = $request->description;
 		/*if($request->banner_image)
         {
@@ -206,6 +207,7 @@ class TopicalReportController extends Controller
 		$TopicalReport = new TopicalReport;
 		$TopicalReport->topical_id = json_encode($request->topical_id);
         $TopicalReport->title = $request->title;
+		$TopicalReport->feature = isset($request->feature)?:0;
 		$TopicalReport->description = $request->description;
 		
 		/*if($request->banner_image)

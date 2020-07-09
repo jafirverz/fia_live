@@ -90,7 +90,7 @@ class PodcastController extends Controller
 		$validatorFields = [
                 'topical_id' => 'required',
 				'title' => 'required',
-				'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+				'audio_file' => 'nullable|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
 				'podcast_image' => 'nullable|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
                 'description' => 'required'
             ];
@@ -101,7 +101,7 @@ class PodcastController extends Controller
         $podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
 		$podcast->description = $request->description;
-		
+		$podcast->feature = isset($request->feature)?:0;
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -199,7 +199,7 @@ class PodcastController extends Controller
 		$podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
 		$podcast->description = $request->description;
-		
+		$podcast->feature = isset($request->feature)?:0;
 		
         if (!is_dir('uploads')) {
             mkdir('uploads');

@@ -338,7 +338,6 @@ for ('front_thinking_piece_listing', function ($trail) {
 Breadcrumbs::
 for ('front_thinking_piece_detail', function ($trail,$name) {
 	$trail->parent('front_thinking_piece_listing');
-    $trail->push(__('constant.THINKING_PIECE'), url('/thinking_piece'));
 	$trail->push($name, "#");
 }) ;
 

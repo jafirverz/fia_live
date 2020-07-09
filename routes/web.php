@@ -285,9 +285,9 @@ Route::post('/change-password', 'PagesFrontController@updateChangePassword');
 */
 
 //Route::post('/podcast', 'PodcastController@index');
-Route::get('/thinking_piece', 'PodcastController@index');
-Route::get('/thinking_piece/search', 'PodcastController@search');
-Route::get('/thinking_piece/{slug}', 'EventController@detail');
+Route::get('/thinking-piece', 'ThinkingPieceController@index');
+Route::get('/thinking-piece/search', 'ThinkingPieceController@search');
+Route::get('/thinking-piece/{slug}', 'ThinkingPieceController@detail');
 Route::get('/podcast', 'PodcastController@index');
 Route::get('/podcast/search', 'PodcastController@search');
 Route::get('/subscription', 'PayPalController@getIndex');

@@ -50,6 +50,9 @@
                 @endif
                 </div>
                 <div class="form-group">
+                   <input value="1" @if(old('feature')==1) checked="checked" @endif id="feature" name="feature" type="checkbox"> <label for="feature" class=" control-label">Feature?</label> 
+                </div>
+                <div class="form-group">
                                 <label for="podcast_image" class=" control-label">Image</label>
 
                                 <div class="">

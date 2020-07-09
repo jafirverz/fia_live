@@ -25,6 +25,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Title</th>
+                                                <th>Feature</th>
                                                 <th>Date and time</th>
                                                 <th>Image </th>
                                                 <th>Created on</th>
@@ -44,7 +45,9 @@
                                                             @endif
                                                         </td>
 
-
+														<td>
+                                                        @if($thinking->feature==1) Yes @else No @endif
+                                                        </td>
 
                                                         <td>
                                                             @if($thinking->thinking_piece_date)
