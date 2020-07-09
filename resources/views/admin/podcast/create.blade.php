@@ -49,7 +49,17 @@
                 </span>
                 @endif
                 </div>
-                
+                <div class="form-group">
+                                <label for="podcast_image" class=" control-label">Image</label>
+
+                                <div class="">
+                                    <input type="file" name="podcast_image" class="form-control" placeholder=""/>
+
+                                    <p class="text-muted"><strong>Note:</strong>
+                                            Image size should be 605*605 for better display
+                                    </p>
+                                </div>
+                            </div>
                 <div class="form-group{{ $errors->has('pdf') ? ' has-error' : '' }}">
                             <label for="audio_file" class=" control-label">Audio File</label>                            
                             

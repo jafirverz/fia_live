@@ -1,16 +1,11 @@
 <?php
-
-
 namespace App\Http\Controllers\CMS;
 use App\Podcast;
 use App\Filter;
 use App\TopicalReportCountry;
 use App\Http\Controllers\Controller;
-
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -95,7 +90,8 @@ class PodcastController extends Controller
 		$validatorFields = [
                 'topical_id' => 'required',
 				'title' => 'required',
-				'pdf' => 'nullable|mimes:pdf',
+				'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+				'podcast_image' => 'nullable|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
                 'description' => 'required'
             ];
 
@@ -133,7 +129,30 @@ class PodcastController extends Controller
         }
        
 		
-        $podcast->updated_at = Carbon::now()->toDateTimeString();
+        if (!is_dir('uploads/podcast')) {
+            mkdir('uploads/podcast');
+        }
+        $destinationPath = 'uploads/podcast'; // upload path
+        $podcast_image = '';
+        $podcast_imagePath = null;
+        if ($request->hasFile('podcast_image')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('podcast_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('podcast_image')->getClientOriginalExtension();
+            // Filename to store
+            $podcast_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('podcast_image')->move($destinationPath, $podcast_image);
+            $podcast_imagePath = $destinationPath . "/" . $podcast_image;
+			$podcast->podcast_image = $podcast_imagePath;
+
+        }
+		
+		$podcast->updated_at = Carbon::now()->toDateTimeString();
         $podcast->save();
 
 		
@@ -166,7 +185,8 @@ class PodcastController extends Controller
         $validatorFields = [
                 'topical_id' => 'required',
 				'title' => 'required',
-				'audio_file' => 'nullable|mimes:pdf',
+				'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+				'podcast_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
                 'description' => 'required'
 
             ];
@@ -206,7 +226,27 @@ class PodcastController extends Controller
             $audioPath = $destinationPath . "/" . $audio_url;
 			$podcast->audio_file = $audioPath;
         }
-        
+        if (!is_dir('uploads/podcast')) {
+            mkdir('uploads/podcast');
+        }
+        $destinationPath = 'uploads/podcast'; // upload path
+        $podcast_image = '';
+        $podcast_imagePath = null;
+        if ($request->hasFile('podcast_image')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('podcast_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('podcast_image')->getClientOriginalExtension();
+            // Filename to store
+            $podcast_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('podcast_image')->move($destinationPath, $podcast_image);
+            $podcast_imagePath = $destinationPath . "/" . $podcast_image;
+            $podcast->podcast_image = $podcast_imagePath;
+        }
 		$podcast->save();
 		
 		

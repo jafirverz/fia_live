@@ -249,6 +249,7 @@ Route::get('/events/search', 'EventController@search');
 Route::get('/events', 'EventController@index')->name('events');
 Route::get('/topical-reports', 'EventController@reports')->name('reports');
 Route::post('/topical-reports/search', 'EventController@search_report');
+
 Route::get('/topical-reports/search', 'EventController@search_report');
 Route::get('/event/{slug}', 'EventController@detail');
 Route::get('/country-information-details', 'PagesFrontController@country_information_details');
@@ -283,6 +284,9 @@ Route::post('/change-password', 'PagesFrontController@updateChangePassword');
 |
 */
 
+//Route::post('/podcast', 'PodcastController@index');
+Route::get('/podcast', 'PodcastController@index');
+Route::get('/podcast/search', 'PodcastController@search');
 Route::get('/subscription', 'PayPalController@getIndex');
 Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
 Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
@@ -291,4 +295,4 @@ Route::post('paypal/notify', 'PayPalController@notify');
 Route::get('recurring-profile/{id}', 'PayPalController@recurringPaymentProfileDetail');
 Route::get('recurring-profile-update/{id}', 'PayPalController@recurringPaymentProfileDetailUpdate');
 
-Route::get('/{slug}', 'PagesFrontController@index');
+//Route::get('/{slug}', 'PagesFrontController@index');

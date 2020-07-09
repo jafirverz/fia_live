@@ -48,7 +48,22 @@
                 </span>
                 @endif
                 </div>
-               
+               <div class="form-group">
+                            <label for="podcast_image" class=" control-label">Image</label>                            
+                                      <input type="file" name="podcast_image" class="form-control" placeholder="" />
+                                        <p class="text-muted"><strong>Note:</strong>
+                                            
+                                                Image size should be 600*600 for better display
+                                        </p>
+                                    @if(isset($podcast->podcast_image) && ($podcast->podcast_image != ''))
+                                        <div class=" col-sm-2">
+                                            <div class="attachment-block clearfix">
+                                                <img class="attachment-img" src="{!! asset($podcast->podcast_image) !!}"
+                                                     alt="Image">
+                                            </div>
+                                        </div>
+                                    @endif
+                            </div>
                  <div class="form-group{{ $errors->has('audio_file') ? ' has-error' : '' }}">
                             <label for="audio_file" class=" control-label">Audio File</label>                            
                             <div class="">

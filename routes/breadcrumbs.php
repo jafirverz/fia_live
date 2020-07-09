@@ -322,6 +322,12 @@ for ('front_report_listing', function ($trail) {
 	$trail->parent('front_resource');
     $trail->push(__('constant.TOPICAL_REPORTS'), url('/topical-reports'));
 }) ;
+
+Breadcrumbs::
+for ('front_pocast_listing', function ($trail) {
+	$trail->parent('front_home');
+    $trail->push(__('constant.PODCAST'), url('/pocast'));
+}) ;
 Breadcrumbs::
 for ('front_event_listing', function ($trail) {
 	$trail->parent('front_resource');
