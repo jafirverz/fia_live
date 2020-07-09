@@ -20,6 +20,8 @@ return [
 	'PODCAST'    =>  'Podcast',
 	
 	'THINKING_PIECE'    =>  'Thinking Piece',
+	
+	'THINKING_PIECE_DETAIL'    =>  'Thinking Piece Detail',
 
     'REGULATORY_LIST'    =>  'Regulatory List',
 

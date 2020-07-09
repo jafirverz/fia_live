@@ -56,7 +56,9 @@
                   </div>
                 </div>
                 </div>
-                
+                <div class="form-group">
+                   <input value="1" @if(old('feature')==1) checked="checked" @endif id="feature" name="feature" type="checkbox"> <label for="feature" class=" control-label">Feature?</label> 
+                </div>
                  <div class="form-group {{ $errors->has('thinking_piece_image') ? ' has-error' : '' }}">
                            <div class="row">
                            <label for="thinking_piece_image" class="col-sm-2 control-label">Image</label>                            

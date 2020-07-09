@@ -25,6 +25,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Title</th>
+                                                <th>Feature</th>
                                                 <th>Topics</th>
                                                 <th>Countries</th>
                                                 <th>Created on</th>
@@ -44,7 +45,9 @@
                                                             @endif
                                                         </td>
 
-
+														<td>
+                                                        @if($TopicalReport->feature==1) Yes @else No @endif
+                                                        </td>
                                                         
                                                         <td>
                                                             @if($TopicalReport->topical_id)

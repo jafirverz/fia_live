@@ -178,6 +178,72 @@
                 </div>
             </div>
         </div>
+        <div class="intro-home-1 container-fluid">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="intro spleft">
+                        <h2>FEATURED RESOURCES</h2>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="grid-2 slick-1 eheight">
+                        
+
+                            @if($topical)
+                            <div class="item">
+                                <div class="box-4">
+                                    <figure><img src="{{getFilterCountryImage(16)}}" alt="{{getFilterCountry(16)}} flag" /></figure>
+                                    <div class="content">
+                                        <div class="ecol">
+                                            <h3 class="title">{{$topical->title}}</h3>
+                                            <p class="date"><span class="country">{{getFilterCountry(16)}}</span> | {{ $topical->created_at->format('M d, Y') }}</p>
+                                            {!! Illuminate\Support\Str::limit(strip_tags($topical->description), 150) !!}
+                                        </div>
+                                        <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                    </div>
+                                    <a class="detail" href="{{url('topical-reports')}}">View detail</a>
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @if($podcast)
+                            <div class="item">
+                                <div class="box-4">
+                                    <figure></figure>
+                                    <div class="content">
+                                        <div class="ecol">
+                                            <h3 class="title">{{$podcast->title}}</h3>
+                                            <p class="date">{{ $podcast->created_at->format('M d, Y') }}</p>
+                                            {!! Illuminate\Support\Str::limit(strip_tags($podcast->description), 150) !!}
+                                        </div>
+                                        <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                    </div>
+                                    <a class="detail" href="{{url('podcast').'?id='.$podcast->id}}">View detail</a>
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @if($thinkingPiece)
+                            <div class="item">
+                                <div class="box-4">
+                                    <figure></figure>
+                                    <div class="content">
+                                        <div class="ecol">
+                                            <h3 class="title">{{$thinkingPiece->thinking_piece_title}}</h3>
+                                            <p class="date">{{ $thinkingPiece->created_at->format('M d, Y') }}</p>
+                                            {!! Illuminate\Support\Str::limit(strip_tags($thinkingPiece->description), 150) !!}
+                                        </div>
+                                        <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
+                                    </div>
+                                    @php $thinking_piece_title=str_replace(" ","-",$thinkingPiece->thinking_piece_title);@endphp
+                                    <a class="detail" href="{{url('thinking-piece/'.strtolower($thinking_piece_title))}}">View detail</a>
+                                </div>
+                            </div>
+                            @endif
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="intro-home-2 tb-col break-720">
             @if(!Auth::check())
                 @php

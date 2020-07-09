@@ -328,6 +328,19 @@ for ('front_pocast_listing', function ($trail) {
 	$trail->parent('front_home');
     $trail->push(__('constant.PODCAST'), url('/pocast'));
 }) ;
+
+Breadcrumbs::
+for ('front_thinking_piece_listing', function ($trail) {
+	$trail->parent('front_home');
+    $trail->push(__('constant.THINKING_PIECE'), url('/thinking_piece'));
+}) ;
+
+Breadcrumbs::
+for ('front_thinking_piece_detail', function ($trail,$name) {
+	$trail->parent('front_thinking_piece_listing');
+	$trail->push($name, "#");
+}) ;
+
 Breadcrumbs::
 for ('front_event_listing', function ($trail) {
 	$trail->parent('front_resource');
