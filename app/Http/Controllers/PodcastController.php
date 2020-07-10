@@ -72,27 +72,5 @@ class PodcastController extends Controller
 
 
 
-    public function detail(BreadcrumbsManager $breadcrumbs, $slug)
-    {
-
-        $page = pageDetails(__('constant.EVENTS_DETAIL_SLUG'));
-        if (!$page) {
-           return abort(404);
-        }
-        $title = __('constant.EVENT_DETAIL');
-		$banner = get_page_banner($page->id);
-		$url_name=str_replace("-"," ",$slug);
-		$breadcrumbs = $breadcrumbs->generate('front_event_detail',strtoupper($slug));
-		$event = Event::where('event_title', strtoupper($url_name))->orWhere('event_title',$slug)->first();
-		if (!$event) {
-           return abort(404);
-        }
-
-        //dd($news);
-        return view('resources/event-details', compact('title', 'breadcrumbs', 'event',  'page' , 'banner'));
-    }
-
-
-
 
 }
