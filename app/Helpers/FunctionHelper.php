@@ -554,9 +554,9 @@ if (!function_exists('getTopics')) {
 
     function getTopicsName($id = null)
     {
-        $topics = DB::table('filters')->whereIn('id', $id)->select('tag_name')->get();
+        $topics = DB::table('filters')->whereIn('id', $id)->select('id','tag_name')->get();
         foreach ($topics as $topic) {
-            $title[] = $topic->tag_name;
+            $title[] = '<a href="'.url('podcast/search?topical_id='.$topic->id).'">'.$topic->tag_name.'</a>';
         }
         // print_r($title);
         if (is_array($title) && count($title) > 0)

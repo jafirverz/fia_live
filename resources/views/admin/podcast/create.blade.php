@@ -22,7 +22,7 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                <div class="box-body">
                <div class="form-group{{ $errors->has('topical_id') ? ' has-error' : '' }}">
-                <label for="">Topic</label>
+                <label for="">Topic:</label>
                 <select name="topical_id[]" class="form-control select2" style="width: 100%;" multiple>
                     <option value="">-- Select --</option>
                     @if($topics)
@@ -49,22 +49,24 @@
                 </span>
                 @endif
                 </div>
-                <div class="form-group">
-                   <input value="1" @if(old('feature')==1) checked="checked" @endif id="feature" name="feature" type="checkbox"> <label for="feature" class=" control-label">Feature?</label> 
-                </div>
-                <div class="form-group">
-                                <label for="podcast_image" class=" control-label">Image</label>
+                
+                <div class="form-group {{ $errors->has('podcast_image') ? ' has-error' : '' }}">
+                                <label for="podcast_image" class=" control-label">Image:</label>
 
                                 <div class="">
                                     <input type="file" name="podcast_image" class="form-control" placeholder=""/>
-
+                @if ($errors->has('podcast_image'))
+                			<span class="help-block">
+                               <strong>{{ $errors->first('podcast_image') }}</strong>
+     						</span>
+                @endif
                                     <p class="text-muted"><strong>Note:</strong>
                                             Image size should be 605*605 for better display
                                     </p>
                                 </div>
                             </div>
                 <div class="form-group {{ $errors->has('audio_file') ? ' has-error' : '' }}">
-                            <label for="audio_file" class=" control-label">Audio File</label>                            
+                            <label for="audio_file" class=" control-label">Audio File:</label>                            
                             
                                 <input type="file" name="audio_file" class="form-control" placeholder="" />
                                
@@ -78,7 +80,7 @@
                 
                     <label class='control-label' for="contents">Description :</label>
 <textarea class="tiny-editor form-control" rows="5" id="description"
-                              name="description">{{ old('descripion') }}</textarea>
+                              name="description">{{ old('description') }}</textarea>
                   @if ($errors->has('description'))
                 			<span class="help-block">
                                <strong>{{ $errors->first('description') }}</strong>

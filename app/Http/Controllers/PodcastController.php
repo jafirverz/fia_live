@@ -44,7 +44,7 @@ class PodcastController extends Controller
 		$podcast =Podcast::where('id',$_GET['id'])->first();
 		else
 		$podcast =Podcast::first();
-		$podcasts =Podcast::where('id','!=', $podcast->id)->orderBy('id')->paginate(setting()->pagination_limit);
+		$podcasts =Podcast::where('id','!=', $podcast->id)->orderBy('id','desc')->paginate(setting()->pagination_limit);
 		$topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
         return view('podcast/index', compact('title', 'podcasts','podcast','topics', 'page', 'banner' ,'breadcrumbs'));
     }

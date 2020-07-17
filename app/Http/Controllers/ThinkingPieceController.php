@@ -40,7 +40,7 @@ class ThinkingPieceController extends Controller
 
         $title = __('constant.THINKING_PIECE');
         $breadcrumbs = $breadcrumbs->generate('front_thinking_piece_listing');
-		$thinkingPieces =ThinkingPiece::orderBy('id')->paginate(setting()->pagination_limit);
+		$thinkingPieces =ThinkingPiece::orderBy('id','desc')->paginate(setting()->pagination_limit);
 		$data=array('month'=>'','year'=>'');
         return view('thinking_piece/index', compact('title', 'thinkingPieces', 'page', 'data','banner' ,'breadcrumbs'));
     }
