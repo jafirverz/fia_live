@@ -92,7 +92,6 @@ class ThinkingPieceController extends Controller
 
         $this->validate($request, $validatorFields);
 		$thinkingPiece = ThinkingPiece::findorfail($id);
-		$thinkingPiece->feature = isset($request->feature)?:0;
         $thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
@@ -164,7 +163,6 @@ class ThinkingPieceController extends Controller
 		$thinkingPiece = new ThinkingPiece;
 		$thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
-		$thinkingPiece->feature = isset($request->feature)?:0;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
 		
 		 if (!is_dir('uploads')) {

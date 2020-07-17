@@ -14,7 +14,7 @@
 									<select data-live-search="true" onchange="this.form.submit()" name="month" class="selectpicker">
 										<option value="">Month</option>
                                         @foreach(getMonthList() as $key=>$value)
-										<option @if($data['month']==$key) selected="selected" @endif value="{{$key}}">{{$value}}</option>
+										<option @if(request()->get('month')==$key) selected="selected" @endif value="{{$key}}">{{$value}}</option>
                                         @endforeach
 									</select>
 								</div>
@@ -23,7 +23,7 @@
 									<select data-live-search="true" onchange="this.form.submit()" name="year" class="selectpicker">
 										<option value="">Year</option>
 										@foreach(getYearList() as $year)
-										<option @if($data['year']==$year) selected="selected" @endif value="{{$year}}">{{$year}}</option>
+										<option @if(request()->get('year')==$year) selected="selected" @endif value="{{$year}}">{{$year}}</option>
                                         @endforeach
 									</select>
 								</div>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="container space-1">
 					
-					<h1 class="title-1 text-center">Upcoming Thinking Piece</h1>
+					<h1 class="title-1 text-center">Thinking Piece</h1>
 					<div id="events" class="masony" data-num="{{ setting()->pagination_limit }}" data-load="#btn-load">
 						@foreach($thinkingPieces as $thinkingPiece)
 						<div class="grid-1 item">

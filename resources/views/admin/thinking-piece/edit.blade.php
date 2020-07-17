@@ -37,9 +37,7 @@
                             </span>
                             @endif
                 <span class="add-on"><i class="icon-th"></i></span></div></div></div>
-                <div class="form-group">
-                   <input value="1" @if($thinking_piece->feature==1) checked="checked" @endif id="feature" name="feature" type="checkbox"> <label for="feature" class=" control-label">Feature?</label> 
-                </div>
+                
                 <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                     <div class="row"><label class='col-sm-2 control-label' for="contents">Description :</label>
 <div class="col-sm-10"><textarea class="tiny-editor form-control" rows="5" id="description"
@@ -55,7 +53,7 @@
                
                <div class="form-group{{ $errors->has('thinking_piece_image') ? ' has-error' : '' }}">
                            <div class="row">
-                           <label for="thinking_piece_image" class="col-sm-2 control-label">Image</label>                            
+                           <label for="thinking_piece_image" class="col-sm-2 control-label">Image:</label>                            
                            <div class="col-sm-10"> <input type="file" name="thinking_piece_image" class="form-control" placeholder="" />
                              @if($thinking_piece->thinking_piece_image!="")                         
   <img src='{{ asset($thinking_piece->thinking_piece_image) }}' height="80" alt="" />

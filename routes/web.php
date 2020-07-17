@@ -173,7 +173,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/roles/edit/{id}', 'AdminAuth\Account\PermissionController@edit_roles');
     Route::post('/roles/update/{id}', 'AdminAuth\Account\PermissionController@update_roles');
     Route::post('/roles/delete', 'AdminAuth\Account\PermissionController@delete_roles');
-
+    //FEATURED RESOURCES
+	Route::get('/featured-resources', 'CMS\EmailTemplateController@index')->name('email-template.index');
     /*Email Templates route start*/
     Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
     Route::get('/email-template/create/', 'CMS\EmailTemplateController@create');

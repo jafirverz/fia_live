@@ -101,7 +101,6 @@ class PodcastController extends Controller
         $podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
 		$podcast->description = $request->description;
-		$podcast->feature = isset($request->feature)?:0;
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -199,7 +198,6 @@ class PodcastController extends Controller
 		$podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
 		$podcast->description = $request->description;
-		$podcast->feature = isset($request->feature)?:0;
 		
         if (!is_dir('uploads')) {
             mkdir('uploads');

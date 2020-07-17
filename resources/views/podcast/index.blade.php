@@ -22,7 +22,9 @@
                             </audio>
                         </div>
                         <h3>{{$podcast->title}}</h3>
-                        <p class="date">{{date('j F Y',strtotime($podcast->created_at))}}</p>
+                        <p class="date">{{date('j F Y',strtotime($podcast->created_at))}} | @if($podcast->topical_id)
+                             {!! getTopicsName(json_decode($podcast->topical_id))!!}
+                            @endif</p>
                         {{$podcast->description}}
                         
 					</div>
@@ -35,7 +37,7 @@
                            <form name="filter" method="get" action="{{url('podcast/search')}}">
                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">       
                                     <div class="col-sm-5 bcol">
-                                        <select id="topical_id" name="topical_id" class="selectpicker">
+                                        <select data-live-search="true" id="topical_id" name="topical_id" class="selectpicker">
                                             <option value="">Sort based on Topics / Categories</option>
                                             @if($topics)
                     						@foreach ($topics as $topic)
@@ -45,7 +47,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-4 bcol">
-                                        <input type="text" name="keyword" class="form-control" placeholder="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{$_GET['keyword']}} @endif" />
+                                        <input type="text" name="keyword" class="form-control" placeholder="keyword" value="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{$_GET['keyword']}} @endif" />
                                     </div>
                                     <div class="col-sm-3 bcol">
                                         <button class="btn-5 btn-block" type="submit">Search</button>
@@ -65,9 +67,13 @@
                             <h3>{{$podcast->title}}</h3>
                             <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} | 
                             @if($podcast->topical_id)
-                             {{ getTopicsName(json_decode($podcast->topical_id))   }}
+                             {!! getTopicsName(json_decode($podcast->topical_id))  !!}
                             @endif</p>
-                            <p>{{substr($podcast->description,0,330)}}...</p>
+                            @if(strlen($podcast->description)>330)
+                            <p>{!!substr($podcast->description,0,330)!!}...</p>
+                            @else
+                            <p>{!! $podcast->description !!}</p>
+                            @endif
                             <span class="btn-3">Read more</span>
                         </div>
                         <a class="fix-link" href="{{url('podcast').'?id='.$podcast->id}}">Read more</a>
