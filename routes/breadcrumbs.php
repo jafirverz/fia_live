@@ -332,7 +332,7 @@ for ('front_pocast_listing', function ($trail) {
 Breadcrumbs::
 for ('front_thinking_piece_listing', function ($trail) {
 	$trail->parent('front_home');
-    $trail->push(__('constant.THINKING_PIECE'), url('/thinking_piece'));
+    $trail->push(__('constant.THINKING_PIECE'), url('/thinking-piece'));
 }) ;
 
 Breadcrumbs::

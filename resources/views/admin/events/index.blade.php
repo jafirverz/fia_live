@@ -48,7 +48,7 @@
 
                                                         <td>
                                                             @if($event->event_date)
-                                                                {{ date('j,F Y H:i A',strtotime($event->event_date)) }}
+                                                                {{ date('j F, Y H:i A',strtotime($event->event_date)) }}
                                                             @else
                                                                {{__('constant.NONE')}}
                                                             @endif
