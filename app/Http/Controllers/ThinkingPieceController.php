@@ -91,10 +91,10 @@ class ThinkingPieceController extends Controller
         if (!$page) {
            return abort(404);
         }
-		/*if (!Auth::check())
+		if (!Auth::check())
 		{
 		return redirect()->route('login');	
-		}*/
+		}
         $title = __('constant.THINKING_PIECE_DETAIL');
 		$banner = get_page_banner($page->id);
 		$url_name=str_replace("-"," ",$slug);
