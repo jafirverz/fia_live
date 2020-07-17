@@ -40,7 +40,7 @@
 
         gtag('config', 'UA-144907960-1');
     </script>
-
+@yield('facebook_meta')
 
 </head>
 
