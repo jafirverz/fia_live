@@ -46,7 +46,7 @@
 
                                                         <td>
                                                             @if($thinking->thinking_piece_date)
-                                                                {{ date('j,F Y H:i A',strtotime($thinking->thinking_piece_date)) }}
+                                                                {{ date('j F, Y H:i A',strtotime($thinking->thinking_piece_date)) }}
                                                             @else
                                                                {{__('constant.NONE')}}
                                                             @endif

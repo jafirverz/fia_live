@@ -45,7 +45,7 @@
 														
                                                         <td>
                                                             @if($podcast->topical_id)
-                                                                {{ getTopicsName(json_decode($podcast->topical_id))   }}
+                                                                {!! strip_tags(getTopicsName(json_decode($podcast->topical_id)))   !!}
                                                             @else
                                                                 {{__('constant.NONE')}}
                                                             @endif
