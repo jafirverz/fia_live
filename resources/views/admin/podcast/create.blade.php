@@ -63,7 +63,7 @@
                                     </p>
                                 </div>
                             </div>
-                <div class="form-group{{ $errors->has('pdf') ? ' has-error' : '' }}">
+                <div class="form-group {{ $errors->has('audio_file') ? ' has-error' : '' }}">
                             <label for="audio_file" class=" control-label">Audio File</label>                            
                             
                                 <input type="file" name="audio_file" class="form-control" placeholder="" />
@@ -74,7 +74,7 @@
                 </span>
                 @endif
                         </div>                    
-                <div class="form-group{{ $errors->has('descripion') ? ' has-error' : '' }}">
+                <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                 
                     <label class='control-label' for="contents">Description :</label>
 <textarea class="tiny-editor form-control" rows="5" id="description"

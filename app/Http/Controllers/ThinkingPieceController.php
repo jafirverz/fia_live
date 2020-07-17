@@ -29,7 +29,7 @@ class ThinkingPieceController extends Controller
         //get page data
 
 		
-        $page=Page::where('pages.slug','podcast')
+        $page=Page::where('pages.slug','thinking-piece')
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
@@ -49,7 +49,7 @@ class ThinkingPieceController extends Controller
     public function search(BreadcrumbsManager $breadcrumbs, Request $request)
     {
 
-        $page=Page::where('pages.slug','thinking_piece')
+        $page=Page::where('pages.slug','thinking-piece')
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
@@ -93,7 +93,7 @@ class ThinkingPieceController extends Controller
         }
 		if (!Auth::check())
 		{
-		return redirect()->route('home');	
+		return redirect()->route('login');	
 		}
         $title = __('constant.THINKING_PIECE_DETAIL');
 		$banner = get_page_banner($page->id);

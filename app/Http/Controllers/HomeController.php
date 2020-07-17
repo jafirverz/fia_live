@@ -53,9 +53,11 @@ class HomeController extends Controller
         $banners = Banner::where('page_name', $page->id)->orderBy('order_by', 'ASC')->get();
         $regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
 		$topical = TopicalReport::where('feature',1)->orderBy('id', 'DESC')->first();
+		$countries=$topical->topical_report_countries;
+		$country_id=$countries[0]['filter_id'];
 		$thinkingPiece = ThinkingPiece::where('feature',1)->orderBy('id', 'DESC')->first();
 		$podcast = Podcast::where('feature',1)->orderBy('id', 'DESC')->first();
-        return view('home', compact('page', 'banners', 'regulatories','topical','thinkingPiece','podcast'));
+        return view('home', compact('page', 'banners', 'regulatories','country_id','topical','thinkingPiece','podcast'));
     }
 
     public function search_regulatory($slug = 'search-results-regulatory')
