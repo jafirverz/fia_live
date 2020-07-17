@@ -556,11 +556,11 @@ if (!function_exists('getTopics')) {
     {
         $topics = DB::table('filters')->whereIn('id', $id)->select('id','tag_name')->get();
         foreach ($topics as $topic) {
-            $title[] = '<a href="'.url('podcast/search?topical_id='.$topic->id).'">'.$topic->tag_name.'</a>';
+            $title[] = '<a href="'.url('podcast/search?topical_id='.$topic->id).'">#'.$topic->tag_name.'</a>';
         }
         // print_r($title);
         if (is_array($title) && count($title) > 0)
-            return implode(',', $title);
+            return implode(', ', $title);
         else
             return __('constant.NONE');
     }

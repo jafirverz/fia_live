@@ -49,7 +49,7 @@
 									<div class="content">								
 										<h2>{{$thinkingPiece->thinking_piece_title}}</h2>
 										<p class="date-post">{{date("D",strtotime($thinkingPiece->thinking_piece_date))}}  |  {{ date("h:i A",strtotime($thinkingPiece->thinking_piece_date)) }}</p>
-										<p>{{$thinkingPiece->thinking_piece_address}}</p>
+										<p>{!!$thinkingPiece->thinking_piece_address!!}</p>
 										<span class="btn-4">See More <i class="fas fa-angle-double-right"></i></span>
 									</div>
 								</div>
