@@ -36,7 +36,7 @@
                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">       
                                     <div class="col-sm-5 bcol">
                                         <select id="topical_id" name="topical_id" class="selectpicker">
-                                            <option>Sort based on Topics / Categories</option>
+                                            <option value="">Sort based on Topics / Categories</option>
                                             @if($topics)
                     						@foreach ($topics as $topic)
                                             <option @if(isset($_GET['topical_id']) && $topic->id==$_GET['topical_id']) selected @endif value="{{ $topic->id }}">{{ $topic->tag_name }}</option>

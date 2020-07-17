@@ -298,4 +298,4 @@ Route::post('paypal/notify', 'PayPalController@notify');
 Route::get('recurring-profile/{id}', 'PayPalController@recurringPaymentProfileDetail');
 Route::get('recurring-profile-update/{id}', 'PayPalController@recurringPaymentProfileDetailUpdate');
 
-//Route::get('/{slug}', 'PagesFrontController@index');
+Route::get('/{slug}', 'PagesFrontController@index');

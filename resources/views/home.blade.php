@@ -192,7 +192,7 @@
                             @if($topical)
                             <div class="item">
                                 <div class="box-4">
-                                    <figure><img src="{{getFilterCountryImage(16)}}" alt="{{getFilterCountry(16)}} flag" /></figure>
+                                    <figure><img src="{{getFilterCountryImage($country_id)}}" alt="{{getFilterCountry($country_id)}} flag" /></figure>
                                     <div class="content">
                                         <div class="ecol">
                                             <h3 class="title">{{$topical->title}}</h3>
