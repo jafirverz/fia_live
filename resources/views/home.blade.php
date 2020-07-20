@@ -193,7 +193,7 @@
                             @foreach($topicals as $topical)
                             @php
                             $countries=$topical->topical_report_countries;
-		                    $country_id=15;
+		                    $country_id=$countries[0]->filter_id;
                             @endphp
                             <div class="item">
                                 <div class="box-4">

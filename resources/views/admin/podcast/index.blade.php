@@ -17,7 +17,12 @@
                 @include('admin.inc.message')
                 <div class="box">
                     <div class="box-header with-border">
-                        <a href="{{ url('admin/podcast/create') }}" class="btn btn-primary pull-right">Create</a>
+                     <table class="action-table pull-right">
+                    <tr>
+                        <td><a href="{{ url('admin/podcast/create') }}" class="btn btn-primary pull-right">Create</a></td>
+                        <td><a href="{{ url('admin/featured-resources') }}" class="btn btn-primary pull-right">Featured</a></td>
+                    </tr>
+                    </table>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
