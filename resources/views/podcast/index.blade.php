@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+@section('facebook_meta')
+    <meta property="og:url" content="{{url('podcast').'?id='.$podcast->id}}">
+    <meta property="og:image" content="{{ asset($podcast->podcast_image) }}">
+    <meta property="og:description" content="{{$podcast->description}}">
+@endsection
 <div id="toppage" class="page">
     <div class="main-wrap">
         <h1 class="hidden">Food Industry Asia</h1>
@@ -59,12 +64,12 @@
                     </div>
                      @if($podcasts->count()>0)
                        @foreach($podcasts as $podcast)
-                        <div class="grid-5 imgeffect clearfix">
+                        <div class="grid-5 clearfix">
                         <figure class="imgwrap">
-                            <img src="{{ asset($podcast->podcast_image) }}" alt="" />
+                            <a href="{{url('podcast').'?id='.$podcast->id}}"><img src="{{ asset($podcast->podcast_image) }}" alt="" /></a>
                         </figure>
                         <div class="descripts">
-                            <h3>{{$podcast->title}}</h3>
+                            <h3><a href="{{url('podcast').'?id='.$podcast->id}}">{{$podcast->title}}</a></h3>
                             <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} | 
                             @if($podcast->topical_id)
                              {!! getTopicsName(json_decode($podcast->topical_id))  !!}
@@ -74,9 +79,9 @@
                             @else
                             <p>{!! $podcast->description !!}</p>
                             @endif
-                            <span class="btn-3">Read more</span>
+                            <a class="btn-3" href="{{url('podcast').'?id='.$podcast->id}}">Read more</a>
                         </div>
-                        <a class="fix-link" href="{{url('podcast').'?id='.$podcast->id}}">Read more</a>
+                        
                     </div>
                        @endforeach
                     

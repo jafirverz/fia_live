@@ -413,6 +413,13 @@ for ('podcast_edit', function ($trail, $id) {
     $trail->push(__('constant.EDIT'), url('/admin/podcast/edit' . $id));
 }) ;
 
+//FEATURED RESOURCE
+Breadcrumbs::
+for ('featured_resource', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('constant.FEATURED_RESOURCE'), url('/admin/featured-resources'));
+
+});
 //THINKING_PIECE
 Breadcrumbs::
 for ('thinking_piece', function ($trail) {
