@@ -189,7 +189,12 @@
                     <div class="grid-2 slick-1 eheight">
                         
 
-                            @if($topical)
+                            @if($topicals)
+                            @foreach($topicals as $topical)
+                            @php
+                            $countries=$topical->topical_report_countries;
+		                    $country_id=15;
+                            @endphp
                             <div class="item">
                                 <div class="box-4">
                                     <figure><img src="{{getFilterCountryImage($country_id)}}" alt="{{getFilterCountry($country_id)}} flag" /></figure>
@@ -204,9 +209,11 @@
                                     <a class="detail" href="{{url('topical-reports')}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                             
-                            @if($podcast)
+                            @if($podcasts)
+                            @foreach($podcasts as $podcast)
                             <div class="item">
                                 <div class="box-4">
                                     <figure></figure>
@@ -221,9 +228,11 @@
                                     <a class="detail" href="{{url('podcast').'?id='.$podcast->id}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                             
-                            @if($thinkingPiece)
+                            @if($thinkingPieces)
+                            @foreach($thinkingPieces as $thinkingPiece)
                             <div class="item">
                                 <div class="box-4">
                                     <figure></figure>
@@ -239,6 +248,7 @@
                                     <a class="detail" href="{{url('thinking-piece/'.strtolower($thinking_piece_title))}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                     </div>
                 </div>
