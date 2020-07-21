@@ -148,7 +148,7 @@ class PodcastController extends Controller
             $request->file('podcast_image')->move($destinationPath, $podcast_image);
             $podcast_imagePath = $destinationPath . "/" . $podcast_image;
 			/*Crop Image*/
-			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(200, 200, 100, 100);
+			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(125, 125, 100, 100);
 			$thumb_img->save($destinationPath.'/thumb/'.$podcast_image);
 			$podcast->thumb_image = $destinationPath.'/thumb/'.$podcast_image;
 			/*Crop Image saved*/

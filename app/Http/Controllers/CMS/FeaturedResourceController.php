@@ -39,6 +39,7 @@ class FeaturedResourceController extends Controller
     {
         //is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'views');
         $title = __('constant.FEATURED_RESOURCE');
+		$featured_1=$featured_2=$featured_3=[];
 		$featureResource = FeatureResource::findorfail(1);
 		if($featureResource->featured_1_type==1)
 		$featured_1 = TopicalReport::all();
@@ -108,23 +109,23 @@ class FeaturedResourceController extends Controller
 
     {
        // dd($request);        
+		
 		$validatorFields = [
-                'featured_1_type' => 'required',
-				'featured_2_type' => 'required',
-                'featured_3_type' => 'required'
+                'featured_1' => 'required_unless:featured_1_type,null',
+				'featured_2' => 'required_unless:featured_2_type,null',
+                'featured_3' => 'required_unless:featured_3_type,null'
             ];
-
         //dd($request);
         $this->validate($request, $validatorFields);
 		
 		$featureResource = FeatureResource::findorfail(1);
 		
         $featureResource->featured_1_type = $request->featured_1_type;
-		$featureResource->featured_1 = $request->featured_1;
-        $featureResource->featured_2_type = $request->featured_2_type;
-		$featureResource->featured_2 = $request->featured_2;
-		$featureResource->featured_3_type = $request->featured_3_type;
-		$featureResource->featured_3 = $request->featured_3;
+		$featureResource->featured_1 =($request->featured_1_type!='null')?$request->featured_1:0;
+        $featureResource->featured_2_type =  $request->featured_2_type;
+		$featureResource->featured_2 = ($request->featured_2_type!='null')?$request->featured_2:0;
+		$featureResource->featured_3_type =  $request->featured_3_type;
+		$featureResource->featured_3 = ($request->featured_3_type!='null')?$request->featured_3:0;
 		$featureResource->updated_at = Carbon::now()->toDateTimeString();
         $featureResource->save();
 

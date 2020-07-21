@@ -25,7 +25,7 @@
                             <div class="form-group{{ $errors->has('featured_1_type') ? ' has-error' : '' }}">
                                 <label for="">Featured 1</label>
                                 <select name="featured_1_type" class="form-control select2" style="width: 100%;">
-                                    <option value=''>-- Select --</option>
+                                    <option value='null'>-- Select --</option>
                                     @if(getFeaturedResource())
                                     @foreach(getFeaturedResource() as $key=>$value)
                                     <option @if($featureResource->featured_1_type==$key) selected="selected" @endif  value='{{$key}}'>{{$value}}</option>
@@ -48,7 +48,7 @@
                             <div class="form-group{{ $errors->has('featured_2_type') ? ' has-error' : '' }}">
                                 <label for="">Featured 2</label>
                                 <select name="featured_2_type" class="form-control select2" style="width: 100%;">
-                                   <option value=''>-- Select --</option>
+                                   <option value='null'>-- Select --</option>
                                     @if(getFeaturedResource())
                                     @foreach(getFeaturedResource() as $key=>$value)
                                     <option @if($featureResource->featured_2_type==$key) selected="selected" @endif  value='{{$key}}'>{{$value}}</option>
@@ -73,7 +73,7 @@
                             <div class="form-group{{ $errors->has('featured_3_type') ? ' has-error' : '' }}">
                                 <label for="">Featured 3</label>
                                 <select name="featured_3_type" class="form-control select2" style="width: 100%;">
-                                    <option value=''>-- Select --</option>
+                                    <option value='null'>-- Select --</option>
                                     @if(getFeaturedResource())
                                     @foreach(getFeaturedResource() as $key=>$value)
                                     <option @if($featureResource->featured_3_type==$key) selected="selected" @endif  value='{{$key}}'>{{$value}}</option>

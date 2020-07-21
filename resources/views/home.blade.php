@@ -178,6 +178,7 @@
                 </div>
             </div>
         </div>
+        @if((count($topicals)+count($podcasts)+count($thinkingPieces))>0)
         <div class="intro-home-1 container-fluid">
             <div class="row">
                 <div class="col-sm-5">
@@ -254,6 +255,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="intro-home-2 tb-col break-720">
             @if(!Auth::check())
                 @php
