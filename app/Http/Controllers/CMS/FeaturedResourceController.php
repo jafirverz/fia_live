@@ -110,7 +110,13 @@ class FeaturedResourceController extends Controller
     {
        // dd($request);        
 		
-        
+		$validatorFields = [
+                'featured_1' => 'required_unless:featured_1_type,null',
+				'featured_2' => 'required_unless:featured_2_type,null',
+                'featured_3' => 'required_unless:featured_3_type,null'
+            ];
+        //dd($request);
+        $this->validate($request, $validatorFields);
 		
 		$featureResource = FeatureResource::findorfail(1);
 		
