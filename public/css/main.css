@@ -510,17 +510,16 @@ background: -webkit-linear-gradient(45deg, #1285bf 0%,#14afd0 100%);
 .grid-4 .box-4 { margin: 0 0 30px; }
 .grid-4 .text-1, .grid-4 .ecol { min-height: 250px; }
 
-.grid-5 { border-bottom: #ddd solid 1px; padding: 30px 0; position: relative; }
+.grid-5 { border-bottom: #ddd solid 1px; padding: 30px 0; }
 .grid-5 figure { float: left; width: 250px; }
 .grid-5 figure img { width: 100%; }
 .grid-5 .descripts { margin-left: 290px; }
 .grid-5 .btn-3 { margin-top: 20px; }
-.grid-5 h3 { color: #333; font-size: 24px; margin: 0 0 5px; }
+.grid-5 h3 a { color: #333; font-size: 24px; margin: 0 0 5px; }
+.grid-5 h3 a:hover { color: #f28e1f; }
 .grid-5 p { line-height: 1.6; }
 .grid-5 .type { color: #999; font-size: 0.9em; margin: 0 0 20px; }
-.grid-5:hover { color: #333; }
-.grid-5:hover h3 { color: #f28e1f; }
-.grid-5:hover .btn-3 { background: #f28e1f; }
+.grid-5 .btn-3:hover { background: #f28e1f; }
 
 .more-wrap { float: left; margin: 20px 0; text-align: center; width: 100%; }
 .more-wrap .fas { margin-left: 5px; }

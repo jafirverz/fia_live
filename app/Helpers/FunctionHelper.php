@@ -477,6 +477,17 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+	
+	function getFeaturedResource($value = null)
+    {
+
+        $array_list = ["1" => 'Topical Report', "2" => 'Podcast', "3" => 'Thinking Pad'];;
+
+        if ($value) {
+            return $array_list[$value - 1];
+        }
+        return $array_list;
+    }
 
     function get_payment_mode($value = null)
     {

@@ -41,7 +41,7 @@ class EventController extends Controller
 
         $title = __('constant.EVENT');
         $breadcrumbs = $breadcrumbs->generate('front_event_listing');
-		$events =Event::all();
+		$events= DB::select("SELECT events.* FROM events WHERE (events.event_date>now() OR events.event_date>now())");
 		$data=array('month'=>'','year'=>'');
         return view('resources/index', compact('title', 'events', 'page', 'banner' ,'data','breadcrumbs'));
     }

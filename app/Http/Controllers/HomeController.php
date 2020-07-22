@@ -7,6 +7,7 @@ use App\User;
 use App\Banner;
 use App\TopicalReport;
 use App\ThinkingPiece;
+use App\FeatureResource;
 use App\Podcast;
 use App\Regulatory;
 use Carbon\Carbon;
@@ -50,14 +51,43 @@ class HomeController extends Controller
         if (!$page) {
             return abort(404);
         }
+		$topical_id=$podcast_id=$think_piece_id=[];
+		$featureResource = FeatureResource::findorfail(1);
         $banners = Banner::where('page_name', $page->id)->orderBy('order_by', 'ASC')->get();
         $regulatories = Regulatory::join('filters', 'filters.id', '=', 'regulatories.country_id')->get();
-		$topical = TopicalReport::where('feature',1)->orderBy('id', 'DESC')->first();
-		$countries=$topical->topical_report_countries;
-		$country_id=$countries[0]['filter_id'];
-		$thinkingPiece = ThinkingPiece::where('feature',1)->orderBy('id', 'DESC')->first();
-		$podcast = Podcast::where('feature',1)->orderBy('id', 'DESC')->first();
-        return view('home', compact('page', 'banners', 'regulatories','country_id','topical','thinkingPiece','podcast'));
+		
+		if($featureResource->featured_1_type==1)
+		$topical_id[]=$featureResource->featured_1;
+		
+		if($featureResource->featured_2_type==1)
+		$topical_id[]=$featureResource->featured_2;
+		
+		if($featureResource->featured_3_type==1)
+		$topical_id[]=$featureResource->featured_3;
+		
+		if($featureResource->featured_1_type==2)
+		$podcast_id[]=$featureResource->featured_1;
+		
+		if($featureResource->featured_2_type==2)
+		$podcast_id[]=$featureResource->featured_2;
+		
+		if($featureResource->featured_3_type==2)
+		$podcast_id[]=$featureResource->featured_3;
+		
+		if($featureResource->featured_1_type==3)
+		$think_piece_id[]=$featureResource->featured_1;
+		
+		if($featureResource->featured_2_type==3)
+		$think_piece_id[]=$featureResource->featured_2;
+		
+		if($featureResource->featured_3_type==3)
+		$think_piece_id[]=$featureResource->featured_3;
+		$topicals = TopicalReport::whereIn('id',$topical_id)->orderBy('id', 'DESC')->get();
+		
+		$thinkingPieces = ThinkingPiece::whereIn('id',$think_piece_id)->orderBy('id', 'DESC')->get();
+		$podcasts = Podcast::whereIn('id',$podcast_id)->orderBy('id', 'DESC')->get();
+		//dd($podcasts);
+        return view('home', compact('page', 'banners', 'regulatories','country_id','topicals','thinkingPieces','podcasts'));
     }
 
     public function search_regulatory($slug = 'search-results-regulatory')

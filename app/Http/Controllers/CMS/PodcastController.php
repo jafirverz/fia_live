@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
-
+use Image;
 use Auth;
 
 
@@ -147,6 +147,11 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('podcast_image')->move($destinationPath, $podcast_image);
             $podcast_imagePath = $destinationPath . "/" . $podcast_image;
+			/*Crop Image*/
+			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(125, 125, 100, 100);
+			$thumb_img->save($destinationPath.'/thumb/'.$podcast_image);
+			$podcast->thumb_image = $destinationPath.'/thumb/'.$podcast_image;
+			/*Crop Image saved*/
 			$podcast->podcast_image = $podcast_imagePath;
 
         }
@@ -243,6 +248,12 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('podcast_image')->move($destinationPath, $podcast_image);
             $podcast_imagePath = $destinationPath . "/" . $podcast_image;
+			/*Crop Image*/
+			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(200, 200, 100, 100);
+			$thumb_img->save($destinationPath.'/thumb/'.$podcast_image);
+			$podcast->thumb_image = $destinationPath.'/thumb/'.$podcast_image;
+			/*Crop Image saved*/
+			
             $podcast->podcast_image = $podcast_imagePath;
         }
 		$podcast->save();

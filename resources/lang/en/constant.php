@@ -22,6 +22,8 @@ return [
 	'THINKING_PIECE'    =>  'Thinking Piece',
 	
 	'THINKING_PIECE_DETAIL'    =>  'Thinking Piece Detail',
+	
+	'FEATURED_RESOURCE'    =>  'Featured Resource',
 
     'REGULATORY_LIST'    =>  'Regulatory List',
 

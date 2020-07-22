@@ -178,6 +178,7 @@
                 </div>
             </div>
         </div>
+        @if((count($topicals)+count($podcasts)+count($thinkingPieces))>0)
         <div class="intro-home-1 container-fluid">
             <div class="row">
                 <div class="col-sm-5">
@@ -189,7 +190,12 @@
                     <div class="grid-2 slick-1 eheight">
                         
 
-                            @if($topical)
+                            @if($topicals)
+                            @foreach($topicals as $topical)
+                            @php
+                            $countries=$topical->topical_report_countries;
+		                    $country_id=$countries[0]->filter_id;
+                            @endphp
                             <div class="item">
                                 <div class="box-4">
                                     <figure><img src="{{getFilterCountryImage($country_id)}}" alt="{{getFilterCountry($country_id)}} flag" /></figure>
@@ -204,9 +210,11 @@
                                     <a class="detail" href="{{url('topical-reports')}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                             
-                            @if($podcast)
+                            @if($podcasts)
+                            @foreach($podcasts as $podcast)
                             <div class="item">
                                 <div class="box-4">
                                     <figure></figure>
@@ -221,9 +229,11 @@
                                     <a class="detail" href="{{url('podcast').'?id='.$podcast->id}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                             
-                            @if($thinkingPiece)
+                            @if($thinkingPieces)
+                            @foreach($thinkingPieces as $thinkingPiece)
                             <div class="item">
                                 <div class="box-4">
                                     <figure></figure>
@@ -239,11 +249,13 @@
                                     <a class="detail" href="{{url('thinking-piece/'.strtolower($thinking_piece_title))}}">View detail</a>
                                 </div>
                             </div>
+                            @endforeach
                             @endif
                     </div>
                 </div>
             </div>
         </div>
+        @endif
         <div class="intro-home-2 tb-col break-720">
             @if(!Auth::check())
                 @php
