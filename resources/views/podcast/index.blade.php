@@ -30,7 +30,7 @@
                         <p class="date">{{date('j F Y',strtotime($podcast->created_at))}} | @if($podcast->topical_id)
                              {!! getTopicsName(json_decode($podcast->topical_id))!!}
                             @endif</p>
-                        {{$podcast->description}}
+                        {!!$podcast->description!!}
                         
 					</div>
                     @endif
@@ -55,6 +55,10 @@
                                         <input type="text" name="keyword" class="form-control" placeholder="keyword" value="@if(isset($_GET['keyword']) && $_GET['keyword']!='') {{$_GET['keyword']}} @endif" />
                                     </div>
                                     <div class="col-sm-3 bcol">
+                                    @if(isset($_GET['id']) && $_GET['id']!='')
+                                    <input type="hidden" name="id" value="{{$_GET['id']}}" />
+                                    @endif
+
                                         <button class="btn-5 btn-block" type="submit">Search</button>
                                     </div>      
                                 </form>      
@@ -89,7 +93,7 @@
                         {{$podcasts->links()}}
                     </div> 
                     @else
-                    <h4>No record found.</h4>
+                    <p class="text-center">No result found.</p>
                     @endif
 				</div>
 
