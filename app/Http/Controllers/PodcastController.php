@@ -63,7 +63,10 @@ class PodcastController extends Controller
         $banner = get_page_banner($page->id);
 
         $title = __('constant.EVENT');
-        $breadcrumbs = $breadcrumbs->generate('front_event_listing');
+        $breadcrumbs = $breadcrumbs->generate('front_pocast_listing');
+		if($request->input('id'))
+		$podcast = Podcast::where('id',$request->input('id'))->first();
+		else
 		$podcast = Podcast::orderBy('id')->first();
         $podcasts = Podcast::search($request)->where('id','!=', $podcast->id)->orderBy('id')->paginate(setting()->pagination_limit);
 		$topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
