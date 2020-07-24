@@ -197,12 +197,12 @@
 		                    $country_id=$countries[0]->filter_id;
                             @endphp
                             <div class="item">
-                                <div class="box-4">
-                                    <figure><img src="{{getFilterCountryImage($country_id)}}" alt="{{getFilterCountry($country_id)}} flag" /></figure>
+                                <div class="box-4" style="padding-top: 50px;">
+                                    <figure></figure>
                                     <div class="content">
                                         <div class="ecol">
                                             <h3 class="title">{{$topical->title}}</h3>
-                                            <p class="date"><span class="country">{{getFilterCountry(16)}}</span> | {{ $topical->created_at->format('M d, Y') }}</p>
+                                            <p class="date">{{ $topical->created_at->format('M d, Y') }}</p>
                                             {!! Illuminate\Support\Str::limit(strip_tags($topical->description), 150) !!}
                                         </div>
                                         <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
@@ -216,7 +216,7 @@
                             @if($podcasts)
                             @foreach($podcasts as $podcast)
                             <div class="item">
-                                <div class="box-4">
+                                <div class="box-4" style="padding-top: 50px;">
                                     <figure></figure>
                                     <div class="content">
                                         <div class="ecol">
@@ -235,7 +235,7 @@
                             @if($thinkingPieces)
                             @foreach($thinkingPieces as $thinkingPiece)
                             <div class="item">
-                                <div class="box-4">
+                                <div class="box-4" style="padding-top: 50px;">
                                     <figure></figure>
                                     <div class="content">
                                         <div class="ecol">

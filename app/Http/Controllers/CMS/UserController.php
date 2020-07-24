@@ -505,14 +505,14 @@ class UserController extends Controller
                                             </tr>';
                 }
                 $content[] = '<tr>
-                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                    <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
                                     <table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
 														<tbody> 
 															<tr>
 																<td style="padding-top:5px;"><img src="' . asset($podcast->thumb_image) . '" alt="" width="120px" /></td>
 																<td style="padding-top:5px;"><img src="' . asset('images/tempt/blank.png') . '" alt="" style="width:30px" /></td>
 																<td style="padding-top:5px;">
-                                                                <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . $podcast->title . '</p>
+                                                                <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . strtoupper($podcast->title) . '</p>
                                                                 <p style="color: #000000;font-family: Arial !important;padding-top:10px; ">';
                 if (strlen($podcast->description) > 50) {
                     $content[] = substr($podcast->description, 0, 50) . '...';
@@ -554,12 +554,12 @@ class UserController extends Controller
                                             </tr>';
                     }
                     $content[] = '<tr>
-                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
-                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . $regulatory->title . '</p>
+                                    <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
+                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . strtoupper($regulatory->title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <td style="text-align: right; padding: 10px 30px 0; font-size: 16px;">
                                 <a href="' . url('regulatory-details', $value->slug) . '?id=' . $regulatory->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
                                 </td>
                             </tr>';
@@ -589,12 +589,12 @@ class UserController extends Controller
                                             </tr>';
                 }
                 $content[] = '<tr>
-                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
-                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($topical->created_at)) . ' | </b>' . $topical->title . '</p>
+                                    <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
+                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($topical->created_at)) . ' | </b>' . strtoupper($topical->title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <td style="text-align: right; padding: 10px 30px 0; font-size: 16px;">
                                 <a href="' . url('topical-reports') . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
                                 </td>
                             </tr>';
@@ -626,12 +626,12 @@ class UserController extends Controller
                                             </tr>';
                 }
                 $content[] = '<tr>
-                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
-                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($thinking->created_at)) . ' | </b>' . $thinking->thinking_piece_title . '</p>
+                                    <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
+                                    <p style="color: #017cba;font-family: Arial !important; "><b>' . date('d M Y', strtotime($thinking->created_at)) . ' | </b>' . strtoupper($thinking->thinking_piece_title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
-                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <td style="text-align: right; padding: 10px 30px 0; font-size: 16px;">
                                 <a href="' . url('thinking-piece/' . strtolower($thinking_piece_title)) . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
                                 </td>
                             </tr>';
