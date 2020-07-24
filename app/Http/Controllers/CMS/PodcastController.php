@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\CMS;
+
 use App\Podcast;
 use App\Filter;
 use App\TopicalReportCountry;
@@ -41,9 +43,7 @@ class PodcastController extends Controller
 
         $podcasts = Podcast::all();
 
-        return view("admin.podcast.index", compact("events", "title","podcasts"));
-
-
+        return view("admin.podcast.index", compact("events", "title", "podcasts"));
     }
 
 
@@ -55,9 +55,8 @@ class PodcastController extends Controller
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $title = __('constant.CREATE');
 
-		$topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'ASC')->get();
         return view("admin.podcast.create", compact("title", "topics"));
-
     }
 
 
@@ -68,9 +67,8 @@ class PodcastController extends Controller
         $title = __('constant.EDIT');
 
         $podcast = Podcast::findorfail($id);
-        $topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name','ASC')->get();
+        $topics = Filter::where('filter_name', 2)->where('status', 1)->orderBy('tag_name', 'ASC')->get();
         return view("admin.podcast.edit", compact("title", "podcast", "topics"));
-
     }
 
 
@@ -86,21 +84,21 @@ class PodcastController extends Controller
 
     {
         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'edits');
-        $podcast = Podcast::findorfail($id);        
-		$validatorFields = [
-                'topical_id' => 'required',
-				'title' => 'required',
-				'audio_file' => 'nullable|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
-				'podcast_image' => 'nullable|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-                'description' => 'required'
-            ];
+        $podcast = Podcast::findorfail($id);
+        $validatorFields = [
+            'topical_id' => 'required',
+            'title' => 'required',
+            'audio_file' => 'nullable|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+            'podcast_image' => 'nullable|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
+            'description' => 'required'
+        ];
 
 
         $this->validate($request, $validatorFields);
-		
+
         $podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
-		$podcast->description = $request->description;
+        $podcast->description = $request->description;
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -124,12 +122,18 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('audio_file')->move($destinationPath, $audio_url);
             $audioPath = $destinationPath . "/" . $audio_url;
-			$podcast->audio_file = $audioPath;
+            $podcast->audio_file = $audioPath;
         }
-       
-		
+
+
         if (!is_dir('uploads/podcast')) {
             mkdir('uploads/podcast');
+        }
+        if (!is_dir('uploads/podcast/thumb')) {
+            mkdir('uploads/podcast/thumb');
+        }
+        if (!is_dir('uploads/podcast/social')) {
+            mkdir('uploads/podcast/social');
         }
         $destinationPath = 'uploads/podcast'; // upload path
         $podcast_image = '';
@@ -147,24 +151,27 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('podcast_image')->move($destinationPath, $podcast_image);
             $podcast_imagePath = $destinationPath . "/" . $podcast_image;
-			/*Crop Image*/
-			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(125, 125, 100, 100);
-			$thumb_img->save($destinationPath.'/thumb/'.$podcast_image);
-			$podcast->thumb_image = $destinationPath.'/thumb/'.$podcast_image;
-			/*Crop Image saved*/
-			$podcast->podcast_image = $podcast_imagePath;
+            /*Crop Image*/
+            $thumb_img = Image::make($destinationPath . '/' . $podcast_image)->resize(125, 125);
+            $thumb_img->save($destinationPath . '/thumb/' . $podcast_image);
+            $podcast->thumb_image = $destinationPath . '/thumb/' . $podcast_image;
 
+            //social image
+            $socialImage = Image::make($destinationPath . '/' . $podcast_image)->resize(376, 376);
+            $socialImage->save($destinationPath . '/social/' . $podcast_image);
+            $podcast->social_image = $destinationPath . '/social/' . $podcast_image;
+            /*Crop Image saved*/
+
+            $podcast->podcast_image = $podcast_imagePath;
         }
-		
-		$podcast->updated_at = Carbon::now()->toDateTimeString();
+
+        $podcast->updated_at = Carbon::now()->toDateTimeString();
         $podcast->save();
 
-		
-		
-		
+
+
+
         return redirect(route('podcast.index'))->with('success', __('constant.UPDATED', ['module' => __('constant.PODCAST')]));
-
-
     }
 
 
@@ -175,35 +182,34 @@ class PodcastController extends Controller
         $podcast = Podcast::findorfail($id);
         $podcast->delete();
         return back()->with('success', __('constant.REMOVED', ['module' => __('constant.PODCAST')]));
-
     }
 
-   
-    
+
+
 
 
     public function store(Request $request)
     {
 
-         is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
+        is_permission_allowed(Auth::user()->admin_role, $this->module_name, 'creates');
         $validatorFields = [
-                'topical_id' => 'required',
-				'title' => 'required',
-				'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
-				'podcast_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
-                'description' => 'required'
+            'topical_id' => 'required',
+            'title' => 'required',
+            'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+            'podcast_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
+            'description' => 'required'
 
-            ];
+        ];
 
 
 
 
         $this->validate($request, $validatorFields);
-		$podcast = new Podcast;
-		$podcast->topical_id = json_encode($request->topical_id);
+        $podcast = new Podcast;
+        $podcast->topical_id = json_encode($request->topical_id);
         $podcast->title = $request->title;
-		$podcast->description = $request->description;
-		
+        $podcast->description = $request->description;
+
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -227,7 +233,7 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('audio_file')->move($destinationPath, $audio_url);
             $audioPath = $destinationPath . "/" . $audio_url;
-			$podcast->audio_file = $audioPath;
+            $podcast->audio_file = $audioPath;
         }
         if (!is_dir('uploads/podcast')) {
             mkdir('uploads/podcast');
@@ -248,20 +254,22 @@ class PodcastController extends Controller
             // Upload Image
             $request->file('podcast_image')->move($destinationPath, $podcast_image);
             $podcast_imagePath = $destinationPath . "/" . $podcast_image;
-			/*Crop Image*/
-			$thumb_img = Image::make($destinationPath.'/'.$podcast_image)->crop(200, 200, 100, 100);
-			$thumb_img->save($destinationPath.'/thumb/'.$podcast_image);
-			$podcast->thumb_image = $destinationPath.'/thumb/'.$podcast_image;
-			/*Crop Image saved*/
-			
+            /*Crop Image*/
+            $thumb_img = Image::make($destinationPath . '/' . $podcast_image)->crop(200, 200, 100, 100);
+            $thumb_img->save($destinationPath . '/thumb/' . $podcast_image);
+            $podcast->thumb_image = $destinationPath . '/thumb/' . $podcast_image;
+            /*Crop Image saved*/
+
+            //social image
+            $socialImage = Image::make($destinationPath . '/' . $podcast_image)->crop(376, 376, 100, 100);
+            $socialImage->save($destinationPath . '/social/' . $podcast_image);
+            $podcast->social_image = $destinationPath . '/social/' . $podcast_image;
+
             $podcast->podcast_image = $podcast_imagePath;
         }
-		$podcast->save();
-		
-		
+        $podcast->save();
+
+
         return redirect(route('podcast.index'))->with('success', __('constant.CREATED', ['module' => __('constant.PODCAST')]));
-
-        }
-
     }
-
+}

@@ -48,6 +48,9 @@ class EndDayReport extends Command
      *
      * @return mixed
      */
+
+    //You can test by url follow route below
+    //Route::get('/user/weekly-report', 'CMS\UserController@weeklyReport')->name('weekly-report');
     public function handle()
     {
         //DB::enableQueryLog();
@@ -55,15 +58,18 @@ class EndDayReport extends Command
         $today_date = Carbon::now();
         $beforeWeek = Carbon::now()->addDay(-7);
         $beforeMonth = Carbon::now()->subMonth();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
         $weekly = $beforeWeek->format('Y-m-d');
+        $startOfMonthDate = $startOfMonth->format('Y-m-d');
+        $endOfMonthDate = $endOfMonth->format('Y-m-d');
         $today_date = Carbon::now();
-
         $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
 
         $weeklyTopicalReports = TopicalReport::whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
 
         //Podcast update we will send for whole month repeat in every week.
-        $weeklyPodcasts = Podcast::whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
+        $weeklyPodcasts = Podcast::whereDate('created_at', '>=', $startOfMonthDate)->whereDate('created_at', '<=', $endOfMonthDate)->latest()->limit(10)->get();
 
         $weeklyThinkingPiece = ThinkingPiece::whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
         //dd(DB::getQueryLog());
@@ -89,8 +95,8 @@ class EndDayReport extends Command
                                     <table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
 														<tbody> 
 															<tr>
-																<td><img src="images/tempt/podcast-thumb-1.jpg" alt="" width="120px" /></td>
-																<td><img src="images/tempt/blank.png" alt="" style="width:30px" /></td>
+																<td><img src="' . asset($podcast->social_image) . '" alt="" width="120px" /></td>
+																<td><img src="' . asset($podcast->social_image) . '" alt="" style="width:30px" /></td>
 																<td>
                                                                 <p style="color: #017cba;font-family: Arial !important; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . $podcast->title . '</p>
                                                                 <p style="color: #000000;font-family: Arial !important; ">';
@@ -188,7 +194,7 @@ class EndDayReport extends Command
             $content[] = '</td></tr>';
         }
 
-       
+
 
         if ($weeklyThinkingPiece->count()) {
             $i = 0;

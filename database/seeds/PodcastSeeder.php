@@ -31,7 +31,7 @@ class PodcastSeeder extends Seeder
             $podcast->thumb_image = "uploads/podcast/thumb/podcast_" . $i . ".jpg";
             $podcast->social_image = "uploads/podcast/social/podcast_" . $i . ".jpg";
             $podcast->description =  $faker->paragraph(50);
-            $podcast->created_at = '2019-05-01 09:39:12';
+            $podcast->created_at = '2020-07-01 09:39:12';
             $podcast->save();
         }
     }

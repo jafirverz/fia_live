@@ -14,6 +14,9 @@ use Exception;
 use App\Mail\UserSideMail;
 use Auth;
 use App\GroupUserId;
+use App\Podcast;
+use App\ThinkingPiece;
+use App\TopicalReport;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Str;
@@ -46,15 +49,15 @@ class UserController extends Controller
         $users = $result['users'];
         return view('admin.users.index', compact('title', 'users', 'subtitle', 'search'));
     }
-	
-	public function log_status($id)
+
+    public function log_status($id)
     {
-        
-        
+
+
         $user = User::findorfail($id);
-		$title = $user->firstname.' '.$user->lastname;
-		$subtitle = 'Log';
-        $users = DB::table('authentication_log')->where('authenticatable_id', $id)->where('login_at', '<=', Carbon::now())->where('login_at', '>=', Carbon::now()->subMonth(12))->where('authenticatable_type','like','%User%')->get();
+        $title = $user->firstname . ' ' . $user->lastname;
+        $subtitle = 'Log';
+        $users = DB::table('authentication_log')->where('authenticatable_id', $id)->where('login_at', '<=', Carbon::now())->where('login_at', '>=', Carbon::now()->subMonth(12))->where('authenticatable_type', 'like', '%User%')->get();
         return view('admin.users.log', compact('title', 'users', 'subtitle'));
     }
 
@@ -131,7 +134,7 @@ class UserController extends Controller
             'status' => 'required',
         ]);
         $user_id = guid();
-        $user = New User();
+        $user = new User();
         $user->user_id = $user_id;
         $user->salutation = $request->salutation;
         $user->firstname = $request->firstname;
@@ -177,7 +180,6 @@ class UserController extends Controller
                 $value_user = [$user->firstname];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
-
             }
 
             try {
@@ -262,7 +264,6 @@ class UserController extends Controller
                 $value_user = [$user->firstname];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
-
             }
 
             try {
@@ -325,12 +326,9 @@ class UserController extends Controller
         if ($request->status == __('constant.PENDING_EMAIL_VERIFICATION')) {
             $user->status = __('constant.PENDING_EMAIL_VERIFICATION');
             $response['msg'] = "Status updated and verification mail send to user.";
-
         } elseif ($request->status == __('constant.PENDING_ADMIN_APPROVAL')) {
             $user->status = __('constant.PENDING_ADMIN_APPROVAL');
             $response['msg'] = "Status updated successfully.";
-
-
         } elseif ($request->status == __('constant.REJECTED')) {
             $emailTemplate_user = $this->emailTemplate(__('constant.USER_REGISTRATION_REJECTED'));
             if ($emailTemplate_user) {
@@ -344,7 +342,6 @@ class UserController extends Controller
                 $value_user = [$user->firstname, $user->email];
                 $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                 $data_user['contents'] = $newContents_user;
-
             }
 
             try {
@@ -357,7 +354,6 @@ class UserController extends Controller
             }
             $user->status = __('constant.REJECTED');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.PENDING_FOR_PAYMENT')) {
 
             $emailTemplate_user = $this->emailTemplate(__('constant.SEND_PAYMENT_LINK'));
@@ -391,7 +387,6 @@ class UserController extends Controller
             $user->renew_status = 0;
             $user->renew_at = Carbon::now()->toDateTimeString();
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.ACCOUNT_ACTIVE')) {
             $user->member_type = $request->member_type;
             $user->status = __('constant.ACCOUNT_ACTIVE');
@@ -423,31 +418,24 @@ class UserController extends Controller
                 $user->email_verified_at = Carbon::now()->toDateTimeString();
             }
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.ACCOUNT_INACTIVE')) {
             $user->status = __('constant.ACCOUNT_INACTIVE');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.ACCOUNT_LAPSED')) {
             $user->status = __('constant.ACCOUNT_LAPSED');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.ACCOUNT_EXPIRED')) {
             $user->status = __('constant.ACCOUNT_EXPIRED');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.ACCOUNT_DELETED')) {
             $user->status = __('constant.ACCOUNT_DELETED');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.NEWSLATTER_SUBSCRIBER')) {
             $user->status = __('constant.NEWSLATTER_SUBSCRIBER');
             $response['msg'] = "Status updated successfully.";
-
         } elseif ($request->status == __('constant.UNSUBSCRIBE')) {
             $user->status = __('constant.UNSUBSCRIBE');
             $response['msg'] = "Status updated successfully.";
-
         }
         $response['status'] = "success";
         $user->save();
@@ -481,34 +469,182 @@ class UserController extends Controller
     public function weeklyReport()
     {
         //DB::enableQueryLog();
-        $users = User::where('subscribe_status', 1)->where('email', 'nikunj@verzdesign.com')->get();
+        $users = User::where('subscribe_status', 1)->get();
         $today_date = Carbon::now();
         $beforeWeek = Carbon::now()->addDay(-7);
+        $beforeMonth = Carbon::now()->subMonth();
+        $startOfMonth = Carbon::now()->startOfMonth();
+        $endOfMonth = Carbon::now()->endOfMonth();
         $weekly = $beforeWeek->format('Y-m-d');
+        $startOfMonthDate = $startOfMonth->format('Y-m-d');
+        $endOfMonthDate = $endOfMonth->format('Y-m-d');
         $today_date = Carbon::now();
-
         $weeklyRegulatories = Regulatory::where('parent_id', '!=', null)->whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
+
+        $weeklyTopicalReports = TopicalReport::whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
+
+        //Podcast update we will send for whole month repeat in every week.
+        $weeklyPodcasts = Podcast::whereDate('created_at', '>=', $startOfMonthDate)->whereDate('created_at', '<=', $endOfMonthDate)->latest()->limit(10)->get();
+
+        $weeklyThinkingPiece = ThinkingPiece::whereDate('created_at', '>=', $weekly)->whereDate('created_at', '<=', $today_date)->latest()->limit(10)->get();
         //dd(DB::getQueryLog());
-        //dd($weeklyRegulatories->count());
-        $content = ['<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
-                <tbody>'];
-        foreach ($weeklyRegulatories as $regulatory) {
-            $value = getRegulatoryData($regulatory->parent_id);
-            if ($value) {
-                $content [] = '<tr>
-								<td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
-								<p style="color: #017cba;font-family: Arial !important; "><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . $regulatory->title . '</p>
-								</td>
-							</tr>
-							<tr>
-							<td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
-							<a href="' . url('regulatory-details', $value->slug) . '?id=' . $regulatory->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
-							</td>
-						</tr>';
+        $content = [];
+        if ($weeklyPodcasts->count()) {
+            $i = 0;
+            $len = $weeklyPodcasts->count();
+            $content[] = '<tr><td>';
+            foreach ($weeklyPodcasts->sortByDesc('created_at') as $podcast) {
+
+                if ($i == 0) {
+                    $content[] = '<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+                        <tbody>';
+                    $content[] = '<tr>
+                                                <td style="border-bottom: #ddd solid 1px; text-align: left; padding: 10px 30px; font-size: 16px;">
+                                                    <p style="color: #f48120;font-family: Arial !important; font-size: 20px; font-weight: bold; margin: 0; ">Podcast</p>
+                                                </td>
+                                            </tr>';
+                }
+                $content[] = '<tr>
+                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                    <table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+														<tbody> 
+															<tr>
+																<td style="padding-top:5px;"><img src="' . asset($podcast->thumb_image) . '" alt="" width="120px" /></td>
+																<td style="padding-top:5px;"><img src="' . asset('images/tempt/blank.png') . '" alt="" style="width:30px" /></td>
+																<td style="padding-top:5px;">
+                                                                <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . $podcast->title . '</p>
+                                                                <p style="color: #000000;font-family: Arial !important;padding-top:10px; ">';
+                if (strlen($podcast->description) > 50) {
+                    $content[] = substr($podcast->description, 0, 50) . '...';
+                } else {
+                    $content[] =  $podcast->description;
+                }
+                $content[] = '</p>
+                                                                <p style="text-align:right"><a href="' . url('podcast') . '?id=' . $podcast->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Listen Now</b></a></p>
+																</td>
+															</tr> 
+														</tbody>
+													</table> 
+                                    
+                                    </td>
+                                </tr>';
+                if ($i == ($len - 1)) {
+                    $content[] = '</tbody>
+                        </table>';
+                }
+
+                $i++;
             }
+            $content[] = '</td></tr>';
         }
-        $content[] = '</tbody>
-            </table>';
+        if ($weeklyRegulatories->count()) {
+            $content[] = '<tr><td>';
+            $i = 0;
+            $len = $weeklyRegulatories->count();
+            foreach ($weeklyRegulatories->sortByDesc('regulatory_date') as $regulatory) {
+                $value = getRegulatoryData($regulatory->parent_id);
+                if ($value) {
+                    if ($i == 0) {
+                        $content[] = '<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+                        <tbody>';
+                        $content[] = '<tr>
+                                                <td style="border-bottom: #ddd solid 1px; text-align: left; padding: 10px 30px; font-size: 16px;">
+                                                    <p style="color: #f48120;font-family: Arial !important; font-size: 20px; font-weight: bold; margin: 0; ">Regulatory Issues</p>
+                                                </td>
+                                            </tr>';
+                    }
+                    $content[] = '<tr>
+                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . $regulatory->title . '</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <a href="' . url('regulatory-details', $value->slug) . '?id=' . $regulatory->id . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
+                                </td>
+                            </tr>';
+                    if ($i == ($len - 1)) {
+                        $content[] = '</tbody>
+                        </table>';
+                    }
+                }
+                $i++;
+            }
+            $content[] = '</td></tr>';
+        }
+
+        if ($weeklyTopicalReports->count()) {
+            $i = 0;
+            $len = $weeklyTopicalReports->count();
+            $content[] = '<tr><td>';
+            foreach ($weeklyTopicalReports->sortByDesc('regulatory_date') as $topical) {
+
+                if ($i == 0) {
+                    $content[] = '<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+                        <tbody>';
+                    $content[] = '<tr>
+                                                <td style="border-bottom: #ddd solid 1px; text-align: left; padding: 10px 30px; font-size: 16px;">
+                                                    <p style="color: #f48120;font-family: Arial !important; font-size: 20px; font-weight: bold; margin: 0; ">Topical Reports</p>
+                                                </td>
+                                            </tr>';
+                }
+                $content[] = '<tr>
+                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($topical->created_at)) . ' | </b>' . $topical->title . '</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <a href="' . url('topical-reports') . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
+                                </td>
+                            </tr>';
+                if ($i == ($len - 1)) {
+                    $content[] = '</tbody>
+                        </table>';
+                }
+
+                $i++;
+            }
+            $content[] = '</td></tr>';
+        }
+
+
+
+        if ($weeklyThinkingPiece->count()) {
+            $i = 0;
+            $len = $weeklyThinkingPiece->count();
+            $content[] = '<tr><td>';
+            foreach ($weeklyThinkingPiece->sortByDesc('created_at') as $thinking) {
+                $thinking_piece_title = str_replace(" ", "-", $thinking->thinking_piece_title);
+                if ($i == 0) {
+                    $content[] = '<table align="center" width="570" cellpadding="0" cellspacing="0" style="box-sizing: border-box; margin: 0 auto; padding: 0; text-align: center; width: 570px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 570px;">
+                        <tbody>';
+                    $content[] = '<tr>
+                                                <td style="border-bottom: #ddd solid 1px; text-align: left; padding: 10px 30px; font-size: 16px;">
+                                                    <p style="color: #f48120;font-family: Arial !important; font-size: 20px; font-weight: bold; margin: 0; ">Thinking Piece</p>
+                                                </td>
+                                            </tr>';
+                }
+                $content[] = '<tr>
+                                    <td style="text-align: left; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                    <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('d M Y', strtotime($thinking->created_at)) . ' | </b>' . $thinking->thinking_piece_title . '</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td style="text-align: right; padding: 0 30px 0; font-size: 16px;padding-bottom: 10px;">
+                                <a href="' . url('thinking-piece/' . strtolower($thinking_piece_title)) . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
+                                </td>
+                            </tr>';
+                if ($i == ($len - 1)) {
+                    $content[] = '</tbody>
+                        </table>';
+                }
+
+                $i++;
+            }
+            $content[] = '</td></tr>';
+        }
+
 
         if ($content) {
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
@@ -524,23 +660,22 @@ class UserController extends Controller
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $data_user['email_sender_name'] = setting()->email_sender_name;
                     $data_user['from_email'] = setting()->from_email;
-                    $unsubscribe = '<a style="color:#999;font-family: Arial !important;" href="' . url('unsubscribe?id=' . base64_encode($user)) . '" target="_blank">unsubscribe</a>';
+                    $unsubscribe = '<a style="color:#999;font-family: Arial !important;" href="' . url('unsubscribe?id=' . base64_encode($user->email)) . '" target="_blank">unsubscribe</a>';
                     $data_user['subject'] = $emailTemplate_user->subject;
                     $key_user = ['{{logo}}', '{{contact}}', '{{linkedin}}', '{{twitter}}', '{{content}}', '{{unsubscribe}}'];
                     $value_user = [$email_template_logo, $contact, $linkedin, $twitter, $content_data, $unsubscribe];
                     $newContents_user = replaceStrByValue($key_user, $value_user, $emailTemplate_user->contents);
                     $data_user['contents'] = $newContents_user;
                     try {
-                        $mail_user = Mail::to($user)->queue(new RegulatoryUpdates($data_user));
-                        //dd($user);
+                        //nikunj mail test
+                        $mail_user = Mail::to('nikunj@verzdesign.com')->queue(new RegulatoryUpdates($data_user));
+                        //user mail test
+                        //$mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
                     } catch (Exception $exception) {
-                        //dd($exception);
                     }
                 }
             }
         }
         dd(count($users), 'sent ok!');
     }
-
-
 }
