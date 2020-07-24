@@ -481,7 +481,7 @@ if (!function_exists('getTopics')) {
 	function getFeaturedResource($value = null)
     {
 
-        $array_list = ["1" => 'Topical Report', "2" => 'Podcast', "3" => 'Thinking Pad'];;
+        $array_list = ["1" => 'Topical Report', "2" => 'Podcast', "3" => 'Thinking Piece'];;
 
         if ($value) {
             return $array_list[$value - 1];
