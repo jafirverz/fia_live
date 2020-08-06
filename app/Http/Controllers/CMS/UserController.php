@@ -512,7 +512,7 @@ class UserController extends Controller
 																<td style="padding-top:5px;"><img src="' . asset($podcast->thumb_image) . '" alt="" width="120px" /></td>
 																<td style="padding-top:5px;"><img src="' . asset('images/tempt/blank.png') . '" alt="" style="width:30px" /></td>
 																<td style="padding-top:5px;">
-                                                                <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . strtoupper($podcast->title) . '</p>
+                                                                <p style="color: #017cba;font-family: Arial !important;padding-top:10px; "><b>' . date('M Y', strtotime($podcast->created_at)) . ' | </b>' . ucfirst($podcast->title) . '</p>
                                                                 <p style="color: #000000;font-family: Arial !important;padding-top:10px; ">';
                 if (strlen($podcast->description) > 50) {
                     $content[] = substr($podcast->description, 0, 50) . '...';
@@ -555,7 +555,7 @@ class UserController extends Controller
                     }
                     $content[] = '<tr>
                                     <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
-                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . strtoupper($regulatory->title) . '</p>
+                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($regulatory->regulatory_date)) . ' | </b>' . ucfirst($regulatory->title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -590,7 +590,7 @@ class UserController extends Controller
                 }
                 $content[] = '<tr>
                                     <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
-                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($topical->created_at)) . ' | </b>' . strtoupper($topical->title) . '</p>
+                                    <p style="color: #017cba;font-family: Arial !important;"><b>' . date('d M Y', strtotime($topical->created_at)) . ' | </b>' . ucfirst($topical->title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -627,7 +627,7 @@ class UserController extends Controller
                 }
                 $content[] = '<tr>
                                     <td style="text-align: left; padding: 10px 30px 0; font-size: 16px;">
-                                    <p style="color: #017cba;font-family: Arial !important; "><b>' . date('d M Y', strtotime($thinking->created_at)) . ' | </b>' . strtoupper($thinking->thinking_piece_title) . '</p>
+                                    <p style="color: #017cba;font-family: Arial !important; "><b>' . date('d M Y', strtotime($thinking->created_at)) . ' | </b>' . ucfirst($thinking->thinking_piece_title) . '</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -644,7 +644,7 @@ class UserController extends Controller
             }
             $content[] = '</td></tr>';
         }
-
+        //dd($content);
 
         if ($content) {
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
@@ -668,14 +668,18 @@ class UserController extends Controller
                     $data_user['contents'] = $newContents_user;
                     try {
                         //nikunj mail test
-                        $mail_user = Mail::to('nikunj@verzdesign.com')->queue(new RegulatoryUpdates($data_user));
+                        $mail_user = Mail::to('nikunj@verzdesign.com','zyon.toh@foodindustry.asia')->queue(new RegulatoryUpdates($data_user));
                         //user mail test
                         //$mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
                     } catch (Exception $exception) {
+                        //phpinfo(); exit;
+                        dd($exception);
                     }
+
+                    dd(count($users), 'sent ok!');
                 }
             }
         }
-        dd(count($users), 'sent ok!');
+       
     }
 }

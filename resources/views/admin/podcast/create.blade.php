@@ -61,7 +61,7 @@
      						</span>
                 @endif
                                     <p class="text-muted"><strong>Note:</strong>
-                                            Image size should be 605*605 for better display
+                                            Image size should be 600*600 and not more than 2MB for better display.
                                     </p>
                                 </div>
                             </div>
@@ -69,7 +69,9 @@
                             <label for="audio_file" class=" control-label">Audio File:</label>                            
                             
                                 <input type="file" name="audio_file" class="form-control" placeholder="" />
-                               
+                                <p class="text-muted"><strong>Note:</strong> Only application/octet-stream,
+                                    audio/mpeg, mpga, mp3, wav file and not more than 50MB.
+                                </p>
                  @if ($errors->has('audio_file'))
                 <span class="help-block">
                     <strong>{{ $errors->first('audio_file') }}</strong>

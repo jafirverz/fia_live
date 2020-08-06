@@ -31,6 +31,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Title</th>
+                                                <th>Author</th>
                                                 <th>Date and time</th>
                                                 <th>Image </th>
                                                 <th>Created on</th>
@@ -45,6 +46,13 @@
                                                         <td>
                                                             @if($thinking->thinking_piece_title)
                                                                 {{ strip_tags($thinking->thinking_piece_title)   }}
+                                                            @else
+                                                                {{__('constant.NONE')}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($thinking->thinking_piece_author)
+                                                                {{ strip_tags($thinking->thinking_piece_author)   }}
                                                             @else
                                                                 {{__('constant.NONE')}}
                                                             @endif
@@ -111,7 +119,7 @@
 <script>
     $(document).ready(function() {
         $('#datatable_event').dataTable( {
-            'order': [3, 'desc'],
+            'order': [4, 'desc'],
         });
     });
 
