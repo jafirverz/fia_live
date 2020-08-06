@@ -1113,12 +1113,6 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	a[href]:after { content: none !important; }
 }
 
-
-
-
-
-
-
 .img-text-wrap {
     background: #8dcef4;
     position: relative;
@@ -1134,3 +1128,9 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 .output{z-index:999; position:relative;}
 .btn-unc{background:#e00024; color:#fff;}
 .btn-cancel{margin-left:10px; background:#fff; color:#000 !important;}
+
+.fea-rsc .title-0{
+	color: #1285bf;
+    font-size: 16px;
+    font-weight: 700;
+}

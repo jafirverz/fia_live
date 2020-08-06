@@ -37,7 +37,7 @@
                     <img src="{{ asset($podcast->podcast_image) }}" alt="" />
                 </div>
                 <div class="audio-wrap">
-                    <audio id="audio" controls controlslist="nodownload" autoplay="">
+                    <audio id="audio" controls controlslist="nodownload">
                         <source src="{{asset($podcast->audio_file)}}" type="audio/mpeg">
                     </audio>
                 </div>
@@ -102,7 +102,7 @@
                     @else
                     <p>{!! $podcast->description !!}</p>
                     @endif
-                    <a class="btn-3" href="{{url('podcast').'?id='.$podcast->id}}">Read more</a>
+                    <a class="btn-3" href="{{url('podcast').'?id='.$podcast->id}}">Discover more</a>
                 </div>
 
             </div>

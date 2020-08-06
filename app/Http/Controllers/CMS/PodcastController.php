@@ -88,8 +88,8 @@ class PodcastController extends Controller
         $validatorFields = [
             'topical_id' => 'required',
             'title' => 'required',
-            'audio_file' => 'nullable|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
-            'podcast_image' => 'nullable|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
+            'audio_file' => 'required_without:existing_audio|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav|max:51200',
+            'podcast_image' => 'required_without:existing_image|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
             'description' => 'required'
         ];
 
@@ -195,7 +195,7 @@ class PodcastController extends Controller
         $validatorFields = [
             'topical_id' => 'required',
             'title' => 'required',
-            'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav',
+            'audio_file' => 'required|mimes:application/octet-stream,audio/mpeg,mpga,mp3,wav|max:51200',
             'podcast_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
             'description' => 'required'
 

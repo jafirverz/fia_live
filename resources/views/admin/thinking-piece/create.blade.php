@@ -61,6 +61,7 @@
                            <div class="row">
                            <label for="thinking_piece_image" class="col-sm-2 control-label">Image:</label>                            
                            <div class="col-sm-10"> <input type="file" name="thinking_piece_image" class="form-control" placeholder="" />
+                            <span class="text-muted"><strong>Note:</strong> Image size should be 1400*470 and not more than 2MB for better display.</span>
                             @if ($errors->has('thinking_piece_image'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('thinking_piece_image') }}</strong>
@@ -69,14 +70,13 @@
                             </div>
                            </div>
                         </div>           
-                <div class="form-group {{ $errors->has('thinking_piece_address') ? ' has-error' : '' }}">
-                   <div class="row"> <label class='col-sm-2 control-label'>Address:</label>
- <div class="col-sm-10"><textarea class="tiny-editor form-control" rows="5" id="thinking_piece_address"
-                              name="thinking_piece_address">{{ old('thinking_piece_address') }}</textarea>
-                              
-                               @if ($errors->has('thinking_piece_address'))
+                <div class="form-group {{ $errors->has('thinking_piece_author') ? ' has-error' : '' }}">
+                   <div class="row"> <label class='col-sm-2 control-label'>Author:</label>
+ <div class="col-sm-10"><input type="text" class="form-control" id="thinking_piece_author"
+                              name="thinking_piece_author" value="{{ old('thinking_piece_author') }}">
+                               @if ($errors->has('thinking_piece_author'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('thinking_piece_address') }}</strong>
+                                <strong>{{ $errors->first('thinking_piece_author') }}</strong>
                             </span>
                             @endif
                               </div>
