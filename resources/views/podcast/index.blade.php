@@ -32,6 +32,7 @@
                     src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56396709ddc4b297"></script>
             </div>
             @if($podcast)
+           
             <div class="document">
                 <div class="text-center">
                     <img src="{{ asset($podcast->podcast_image) }}" alt="" />
@@ -86,6 +87,7 @@
             </div>
             @if($podcasts->count()>0)
             @foreach($podcasts as $podcast)
+            <?php $audio = new \wapmorgan\Mp3Info\Mp3Info($podcast->audio_file, true);?>
             <div class="grid-5 clearfix">
                 <figure class="imgwrap">
                     <a href="{{url('podcast').'?id='.$podcast->id}}"><img src="{{ asset($podcast->podcast_image) }}"
@@ -93,7 +95,7 @@
                 </figure>
                 <div class="descripts">
                     <h3><a href="{{url('podcast').'?id='.$podcast->id}}">{{$podcast->title}}</a></h3>
-                    <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} |
+                    <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} | {{ floor($audio->duration / 60).' : '.floor($audio->duration % 60).' ( Mins ) '}} | 
                         @if($podcast->topical_id)
                         {!! getTopicsName(json_decode($podcast->topical_id)) !!}
                         @endif</p>
