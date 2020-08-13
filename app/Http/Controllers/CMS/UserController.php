@@ -646,7 +646,7 @@ class UserController extends Controller
         }
         //dd($content);
 
-        if ($content) {
+        if ($content) { 
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
@@ -668,7 +668,7 @@ class UserController extends Controller
                     $data_user['contents'] = $newContents_user;
                     try {
                         //nikunj mail test
-                        $mail_user = Mail::to('nikunj@verzdesign.com','zyon.toh@foodindustry.asia')->queue(new RegulatoryUpdates($data_user));
+                        $mail_user = Mail::to('nikunj@verzdesign.com')->queue(new RegulatoryUpdates($data_user));
                         //user mail test
                         //$mail_user = Mail::to($user->email)->queue(new RegulatoryUpdates($data_user));
                     } catch (Exception $exception) {

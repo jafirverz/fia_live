@@ -22,7 +22,7 @@
 @endsection
 <div id="toppage" class="page">
     <div class="main-wrap">
-    <h1 class="hidden">{{ $podcast->title}}</h1>
+        <h1 class="hidden">{{ $podcast->title}}</h1>
         @include('inc.banner')
         <div class="container space-1">
             <div class="share-wrap">
@@ -32,14 +32,14 @@
                     src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56396709ddc4b297"></script>
             </div>
             @if($podcast)
-           
+
             <div class="document">
                 <div class="text-center">
-                    <img src="{{ asset($podcast->podcast_image) }}" alt="" />
+                    <img src="{{ asset($podcast->podcast_image ??'') }}" alt="" />
                 </div>
                 <div class="audio-wrap">
                     <audio id="audio" controls controlslist="nodownload">
-                        <source src="{{asset($podcast->audio_file)}}" type="audio/mpeg">
+                        <source src="{{asset($podcast->audio_file ??'')}}" type="audio/mpeg">
                     </audio>
                 </div>
                 <h3>{{$podcast->title}}</h3>
@@ -87,15 +87,20 @@
             </div>
             @if($podcasts->count()>0)
             @foreach($podcasts as $podcast)
-            <?php $audio = new \wapmorgan\Mp3Info\Mp3Info($podcast->audio_file, true);?>
+            <?php $audio = ''; 
+            if($podcast->audio_file) {
+                $audio = new \wapmorgan\Mp3Info\Mp3Info($podcast->audio_file, true);
+            }
+            ?>
             <div class="grid-5 clearfix">
                 <figure class="imgwrap">
-                    <a href="{{url('podcast').'?id='.$podcast->id}}"><img src="{{ asset($podcast->podcast_image) }}"
-                            alt="" /></a>
+                    <a href="{{url('podcast').'?id='.$podcast->id}}"><img
+                            src="{{ asset($podcast->podcast_image ??'') }}" alt="" /></a>
                 </figure>
                 <div class="descripts">
                     <h3><a href="{{url('podcast').'?id='.$podcast->id}}">{{$podcast->title}}</a></h3>
-                    <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} | {{ floor($audio->duration / 60).' : '.floor($audio->duration % 60).' ( Mins ) '}} | 
+                    <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} |
+                        {{ floor($audio->duration / 60).' : '.floor($audio->duration % 60).' ( Mins ) '}} |
                         @if($podcast->topical_id)
                         {!! getTopicsName(json_decode($podcast->topical_id)) !!}
                         @endif</p>
