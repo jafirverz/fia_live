@@ -255,7 +255,7 @@
                             <p class="read-more">Read more <i class="fas fa-angle-double-right"></i></p>
                         </div>
                         @php $thinking_piece_title=str_replace(" ","-",$thinkingPiece->thinking_piece_title);@endphp
-                        <a class="detail" href="{{url('thinking-piece/'.strtolower($thinking_piece_title))}}">View
+                        <a class="detail" href="{{url('thinking-piece/'.$thinkingPiece->slug)}}">View
                             detail</a>
                     </div>
                 </div>
