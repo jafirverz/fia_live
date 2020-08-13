@@ -72,7 +72,7 @@
                                             <a href="javascript:void(0)" class="text-danger" title="close"
                                                 onclick="removeFile(this,'existing-image');"
                                                 style="padding-left: 100px;"><i class="fa fa-times fa-lg"></i></a>
-                                            <img height="100" src="{!! asset($podcast->podcast_image) !!}" alt="Image">
+                                            <img style=" max-width:100px" src="{!! asset($podcast->podcast_image) !!}" alt="Image">
                                         </div>
                                     </div>
                                     <input type="hidden" id="existing-image" name="existing_image"

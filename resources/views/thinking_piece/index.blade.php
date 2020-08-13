@@ -67,7 +67,7 @@
 					</div>
 				</div>
 				@php $thinking_piece_title=str_replace(" ","-",$thinkingPiece->thinking_piece_title);@endphp
-				<a href="{{url('thinking-piece/'.strtolower($thinking_piece_title))}}" class="more">Read more</a>
+				<a href="{{url('thinking-piece/'.$thinkingPiece->slug)}}" class="more">Read more</a>
 			</div>
 			@endforeach
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Str;
 
 
 class ThinkingPieceController extends Controller
@@ -95,6 +96,7 @@ class ThinkingPieceController extends Controller
         $thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
+        $thinkingPiece->slug = Str::slug($request->thinking_piece_title . Str::uuid(), '-');
 		 if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -164,6 +166,7 @@ class ThinkingPieceController extends Controller
 		$thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
+        $thinkingPiece->slug = Str::slug($request->thinking_piece_title . Str::uuid(), '-');
 		
 		 if (!is_dir('uploads')) {
             mkdir('uploads');

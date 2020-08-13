@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Input;
 use Auth;
 use Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 class ThinkingPieceController extends Controller
 {
     //use DynamicRoute;
@@ -99,8 +101,8 @@ class ThinkingPieceController extends Controller
 		$banner = get_page_banner($page->id);
 		$url_name=str_replace("-"," ",$slug);
 		$breadcrumbs = $breadcrumbs->generate('front_thinking_piece_detail',strtoupper($slug));
-		$thinkingPiece = ThinkingPiece::where('thinking_piece_title', strtoupper($url_name))->orWhere('thinking_piece_title',$slug)->first();
-		if (!$thinkingPiece) {
+        $thinkingPiece = ThinkingPiece::where('slug', $slug)->first();
+        if (!$thinkingPiece) {
            return abort(404);
         }
 

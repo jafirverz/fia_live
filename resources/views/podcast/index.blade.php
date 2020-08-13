@@ -44,7 +44,7 @@
                 </div>
                 <h3>{{$podcast->title}}</h3>
                 <p class="date">{{date('j F Y',strtotime($podcast->created_at))}} | @if($podcast->topical_id)
-                    {!! getTopicsName(json_decode($podcast->topical_id))!!}
+                    {!! getTopicsNameLink(json_decode($podcast->topical_id))!!}
                     @endif</p>
                 {!!$podcast->description!!}
 
@@ -102,7 +102,7 @@
                     <p class="type">{{date('j F Y',strtotime($podcast->created_at))}} |
                         {{ floor($audio->duration / 60).' : '.floor($audio->duration % 60).' ( Mins ) '}} |
                         @if($podcast->topical_id)
-                        {!! getTopicsName(json_decode($podcast->topical_id)) !!}
+                        {!! getTopicsNameLink(json_decode($podcast->topical_id)) !!}
                         @endif</p>
                     @if(strlen($podcast->description)>330)
                     <p>{!!substr($podcast->description,0,330)!!}...</p>
