@@ -72,7 +72,8 @@
                                             <a href="javascript:void(0)" class="text-danger" title="close"
                                                 onclick="removeFile(this,'existing-image');"
                                                 style="padding-left: 100px;"><i class="fa fa-times fa-lg"></i></a>
-                                            <img style=" max-width:100px" src="{!! asset($podcast->podcast_image) !!}" alt="Image">
+                                            <img style=" max-width:100px" src="{!! asset($podcast->podcast_image) !!}"
+                                                alt="Image">
                                         </div>
                                     </div>
                                     <input type="hidden" id="existing-image" name="existing_image"
@@ -84,7 +85,7 @@
                             <div class="form-group {{ $errors->has('audio_file') ? ' has-error' : '' }}">
                                 <div class="row col-md-12">
                                     <label for="audio_file" class=" control-label">Audio File:</label>
-                                    <input type="file" name="audio_file" class="form-control" placeholder="" />
+                                    <input type="file" name="audio_file" class="form-control"  placeholder="" />
                                     <p class="text-muted"><strong>Note:</strong> Only application/octet-stream,
                                         audio/mpeg, mpga, mp3, wav file and not more than 50MB.
                                     </p>
