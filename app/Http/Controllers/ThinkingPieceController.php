@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\ThinkingPiece;
 use App\Page;
 use App\Banner;
@@ -30,58 +31,51 @@ class ThinkingPieceController extends Controller
     {
         //get page data
 
-		
-        $page=Page::where('pages.slug','thinking-piece')
+
+        $page = Page::where('pages.slug', 'thinking-piece')
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
             return abort(404);
         }
-		//dd($page->id);
+        //dd($page->id);
         $banner = get_page_banner($page->id);
 
         $title = __('constant.THINKING_PIECE');
         $breadcrumbs = $breadcrumbs->generate('front_thinking_piece_listing');
-		$thinkingPieces =ThinkingPiece::orderBy('id','desc')->paginate(setting()->pagination_limit);
-		$data=array('month'=>'','year'=>'');
-        return view('thinking_piece/index', compact('title', 'thinkingPieces', 'page', 'data','banner' ,'breadcrumbs'));
+        $thinkingPieces = ThinkingPiece::orderBy('id', 'desc')->paginate(setting()->pagination_limit);
+        $data = array('month' => '', 'year' => '');
+        return view('thinking_piece/index', compact('title', 'thinkingPieces', 'page', 'data', 'banner', 'breadcrumbs'));
     }
-	
-	
+
+
     public function search(BreadcrumbsManager $breadcrumbs, Request $request)
     {
 
-        $page=Page::where('pages.slug','thinking-piece')
+        $page = Page::where('pages.slug', 'thinking-piece')
             ->where('pages.status', 1)
             ->first();
         if (!$page) {
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
         }
-		//dd($page->id);
+        //dd($page->id);
         $banner = get_page_banner($page->id);
         $breadcrumbs = $breadcrumbs->generate('front_thinking_piece_listing');
         $title = __('constant.THINKING_PIECE');
-		$year = $request->year;
-		$month = $request->month;
-		$data=array('month'=>$month,'year'=>$year);
-        if ($month != "" && $year == "")
-        {
-		$thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE MONTH(thinking_piece_date)='.$month);
-		}
-        else if ($month == "" && $year != "")
-        {
-		$thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE YEAR(thinking_piece_date)='.$year);
-		}
-        else if ($month != "" && $year != "")
-        {
-		$thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE MONTH(thinking_piece_date)='.$month.' AND YEAR(thinking_piece_date)='.$year);		
-		}
-		else
-		{
-		$thinkingPieces =ThinkingPiece::orderBy('id')->paginate(setting()->pagination_limit);	
-		}
-		$data=array('month'=>'','year'=>'');
-        return view('thinking_piece/index', compact('title', 'thinkingPieces', 'page', 'banner' ,'breadcrumbs','data'));
+        $year = $request->year;
+        $month = $request->month;
+        $data = array('month' => $month, 'year' => $year);
+        if ($month != "" && $year == "") {
+            $thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE MONTH(thinking_piece_date)=' . $month);
+        } else if ($month == "" && $year != "") {
+            $thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE YEAR(thinking_piece_date)=' . $year);
+        } else if ($month != "" && $year != "") {
+            $thinkingPieces = DB::select('SELECT * FROM thinking_pieces WHERE MONTH(thinking_piece_date)=' . $month . ' AND YEAR(thinking_piece_date)=' . $year);
+        } else {
+            $thinkingPieces = ThinkingPiece::orderBy('id')->paginate(setting()->pagination_limit);
+        }
+        $data = array('month' => '', 'year' => '');
+        return view('thinking_piece/index', compact('title', 'thinkingPieces', 'page', 'banner', 'breadcrumbs', 'data'));
     }
 
 
@@ -91,26 +85,24 @@ class ThinkingPieceController extends Controller
 
         $page = pageDetails('thinking-piece');
         if (!$page) {
-           return abort(404);
+            return abort(404);
         }
-		if (!Auth::check())
-		{
-		return redirect()->route('login');	
-		}
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
         $title = __('constant.THINKING_PIECE_DETAIL');
-		$banner = get_page_banner($page->id);
-		$url_name=str_replace("-"," ",$slug);
-		$breadcrumbs = $breadcrumbs->generate('front_thinking_piece_detail',strtoupper($slug));
+        $banner = get_page_banner($page->id);
+        $url_name = str_replace("-", " ", $slug);
         $thinkingPiece = ThinkingPiece::where('slug', $slug)->first();
         if (!$thinkingPiece) {
-           return abort(404);
+            return abort(404);
+        }
+        $breadcrumbs = $breadcrumbs->generate('front_thinking_piece_detail', strtoupper($thinkingPiece->thinking_piece_title));
+        if (!$thinkingPiece) {
+            return abort(404);
         }
 
         //dd($news);
-        return view('thinking_piece/thinking_piece-details', compact('title', 'breadcrumbs', 'thinkingPiece',  'page' , 'banner'));
+        return view('thinking_piece/thinking_piece-details', compact('title', 'breadcrumbs', 'thinkingPiece',  'page', 'banner'));
     }
-
-
-
-
 }
