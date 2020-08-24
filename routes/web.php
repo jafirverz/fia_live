@@ -221,8 +221,8 @@ Route::group(['prefix' => 'admin'], function () {
 	Route::get('/user/log-status/{id}', 'CMS\UserController@log_status');
     Route::get('/user/create', 'CMS\UserController@create');
     Route::post('/user/store', 'CMS\UserController@store');
-    Route::get('/user/search', 'CMS\UserController@index');
-    Route::post('/user/search', 'CMS\UserController@search');
+    //Route::get('/user/search', 'CMS\UserController@index');
+    Route::get('/user/search', 'CMS\UserController@search');
     Route::get('/user/edit/{id}', 'CMS\UserController@edit');
     Route::get('/user/view/{id}', 'CMS\UserController@view');
     Route::post('/user/update/{id}', 'CMS\UserController@update');

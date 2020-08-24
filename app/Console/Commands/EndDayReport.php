@@ -217,7 +217,7 @@ class EndDayReport extends Command
                                 </tr>
                                 <tr>
                                 <td style="text-align: right; padding: 10px 30px 0; font-size: 16px;">
-                                <a href="' . url('thinking-piece/' . strtolower($thinking_piece_title)) . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
+                                <a href="' . url('thinking-piece/' . strtolower($thinking->slug)) . '" target="_blank" style="font-family: Arial !important;color: #f48120; text-decoration:none; "> <b>Read More</b></a>
                                 </td>
                             </tr>';
                 if ($i == ($len - 1)) {
