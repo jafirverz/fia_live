@@ -33,20 +33,19 @@ class UserController extends Controller
         $this->module_name = 'USER';
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = __('constant.USER');
         $subtitle = 'Index';
-
-
         $search = [];
-        $search['name'] = null;
-        $search['organization'] = null;
-        $search['email'] = null;
-        $search['member_type'] = null;
-        $search['status'] = null;
+        $search['name'] = $request->name ?? "";
+        $search['organization'] = $request->organization ?? "";
+        $search['email'] = $request->email ?? "";
+        $search['member_type'] = $request->member_type ?? "";
+        $search['status'] = $request->status ?? "";
         $result = $this->members($search);
         $users = $result['users'];
+
         return view('admin.users.index', compact('title', 'users', 'subtitle', 'search'));
     }
 
@@ -67,9 +66,15 @@ class UserController extends Controller
      */
     public function search(Request $request)
     {
+        
         $title = __('constant.USER');
         $subtitle = 'Index';
-        $search = $request->all();
+        $search = [];
+        $search['name'] = $request->name ?? "";
+        $search['organization'] = $request->organization ?? "";
+        $search['email'] = $request->email ?? "";
+        $search['member_type'] = $request->member_type ?? "";
+        $search['status'] = $request->status ?? "";
         $result = $this->members($search);
         $users = $result['users'];
 
@@ -646,7 +651,7 @@ class UserController extends Controller
         }
         //dd($content);
 
-        if ($content) { 
+        if ($content) {
             $emailTemplate_user = $this->emailTemplate(__('constant.END_DAY_REPORT'));
             if ($emailTemplate_user) {
                 $content_data = implode(' ', $content);
@@ -680,6 +685,5 @@ class UserController extends Controller
                 }
             }
         }
-       
     }
 }

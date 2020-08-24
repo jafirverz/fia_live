@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="box-body table-responsive">
-                        <form name="user" method="post" action="{{ url('/admin/user/search')}}">
+                        <form name="user" method="get" action="{{ url('/admin/user')}}">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                             <div class="row">
