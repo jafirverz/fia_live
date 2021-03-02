@@ -127,7 +127,7 @@ class CountryInformationController extends Controller
         $country_information->updated_at = Carbon::now();
         $country_information->save();
 
-        return redirect('admin/country-information')->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.COUNTRY_INFORMATION')]));
+        return redirect('admin/country-information/list/'.$request->country_id.'/'.$request->information_filter_id)->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.COUNTRY_INFORMATION')]));
     }
 
     /**

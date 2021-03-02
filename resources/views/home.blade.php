@@ -360,7 +360,7 @@
 						var category=result[0];
                         var url='country-information-details?country='+country_name+'&category='+category;
                         url=url.replace(" ", "+");
-						 content+='<a class="fas fa-angle-double-right link" href="search-results-regulatory?country='+country_id+'"><span class="ico"><img src="images/tempt/ico-5.png" alt="" /></span> Regulatory Updates</a>';
+						 content+='<a class="fas fa-angle-double-right link" href="search-results-regulatory?country='+country_name+'"><span class="ico"><img src="images/tempt/ico-5.png" alt="" /></span> Regulatory Updates</a>';
                         if(data=='#')
                             content+='<a class="fas fa-angle-double-right link" style="background:#CCC;"><span class="ico"><img src="images/tempt/ico-6.png" alt="" /></span> Country Information</a>';
                         else
