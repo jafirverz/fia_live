@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Str;
 
 
 class ThinkingPieceController extends Controller
@@ -86,7 +87,7 @@ class ThinkingPieceController extends Controller
 				'thinking_piece_image' => 'image|nullable|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
                 'description' => 'required',
                 'thinking_piece_date' => 'required|date',
-                'thinking_piece_address' => 'required'
+                'thinking_piece_author' => 'required'
             ];
       
 
@@ -95,6 +96,7 @@ class ThinkingPieceController extends Controller
         $thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
+        $thinkingPiece->slug = Str::slug($request->thinking_piece_title . Str::uuid(), '-');
 		 if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -120,7 +122,7 @@ class ThinkingPieceController extends Controller
             $thinking_piecePath = $destinationPath . "/" . $thinking_piece_url;
 			$thinkingPiece->thinking_piece_image = $thinking_piecePath;
         }
-        $thinkingPiece->thinking_piece_address = $request->thinking_piece_address;
+        $thinkingPiece->thinking_piece_author = $request->thinking_piece_author;
         $thinkingPiece->updated_at = Carbon::now()->toDateTimeString();
         $thinkingPiece->save();
 
@@ -156,7 +158,7 @@ class ThinkingPieceController extends Controller
 				'thinking_piece_image' => 'required|image|mimes:jpg,JPG,jpeg,JPEG,png,PNG,gif,GIF|max:2048',
                 'description' => 'required',
                 'thinking_piece_date' => 'required|date',
-                'thinking_piece_address' => 'required'
+                'thinking_piece_author' => 'required'
             ];
 
         $this->validate($request, $validatorFields);
@@ -164,6 +166,7 @@ class ThinkingPieceController extends Controller
 		$thinkingPiece->thinking_piece_title = $request->thinking_piece_title;
         $thinkingPiece->description = $request->description;
         $thinkingPiece->thinking_piece_date = $request->thinking_piece_date;
+        $thinkingPiece->slug = Str::slug($request->thinking_piece_title . Str::uuid(), '-');
 		
 		 if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -190,7 +193,7 @@ class ThinkingPieceController extends Controller
             $thinking_piecePath = $destinationPath . "/" . $thinking_piece_url;
 			$thinkingPiece->thinking_piece_image = $thinking_piecePath;
         }
-        $thinkingPiece->thinking_piece_address = $request->thinking_piece_address;
+        $thinkingPiece->thinking_piece_author = $request->thinking_piece_author;
         $thinkingPiece->updated_at = Carbon::now()->toDateTimeString();
         $thinkingPiece->save();
 		

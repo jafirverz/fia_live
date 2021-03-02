@@ -234,7 +234,7 @@ if (!function_exists('getTopics')) {
     function get_modules()
     {
         $modules_array = [
-            'DASHBOARD', 'FILTER', 'MENU', 'BANNER', 'PAGE', 'EVENT', 'TOPICAL_REPORT', 'PAYMENT', 'COUNTRY_INFORMATION', 'REGULATORY', 'CONTACTENQUIRY', 'GROUPMANAGEMENT', 'EMAIL_TEMPLATE', 'ROLES_AND_PERMISSION', 'SYSTEM_SETTING'
+            'DASHBOARD', 'FILTER', 'MENU', 'BANNER', 'PAGE', 'EVENT', 'TOPICAL_REPORT', 'PAYMENT', 'COUNTRY_INFORMATION', 'REGULATORY', 'CONTACTENQUIRY', 'GROUPMANAGEMENT', 'EMAIL_TEMPLATE', 'ROLES_AND_PERMISSION', 'SYSTEM_SETTING','PODCAST','THINKING_PIECE',
 
         ];
 
@@ -481,7 +481,7 @@ if (!function_exists('getTopics')) {
 	function getFeaturedResource($value = null)
     {
 
-        $array_list = ["1" => 'Topical Report', "2" => 'Podcast', "3" => 'Thinking Pad'];;
+        $array_list = ["1" => 'Topical Report', "2" => 'Podcast', "3" => 'Thinking Piece'];;
 
         if ($value) {
             return $array_list[$value - 1];
@@ -567,6 +567,18 @@ if (!function_exists('getTopics')) {
     {
         $topics = DB::table('filters')->whereIn('id', $id)->select('id','tag_name')->get();
         foreach ($topics as $topic) {
+            $title[] = $topic->tag_name;
+        }
+        // print_r($title);
+        if (is_array($title) && count($title) > 0)
+            return implode(', ', $title);
+        else
+            return __('constant.NONE');
+    }
+    function getTopicsNameLink($id = null)
+    {
+        $topics = DB::table('filters')->whereIn('id', $id)->select('id','tag_name')->get();
+        foreach ($topics as $topic) {
             $title[] = '<a href="'.url('podcast/search?topical_id='.$topic->id).'">#'.$topic->tag_name.'</a>';
         }
         // print_r($title);
@@ -575,7 +587,6 @@ if (!function_exists('getTopics')) {
         else
             return __('constant.NONE');
     }
-
     function getCountryByTopicalReportId($id)
     {
         $countries = DB::table('filters')

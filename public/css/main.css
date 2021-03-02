@@ -487,6 +487,9 @@ background: linear-gradient(to right, #f1452d 0%,#ffa921 100%); }
 .grid-1:hover .btn-4 { background: #303030; color: #fff !important; }
 .grid-1 .grid-sizer { width: 100%; }
 
+.gridimg .bg { width: 30%; }
+.gridimg .content { padding-left: 0; }
+
 .grid-2 .item { float: left; padding: 15px; width: 25%; }
 .grid-2 .grid-sizer { width: 25%; }
 .grid-2 .text { height: 200px; overflow: hidden; }
@@ -905,7 +908,9 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	.intro-home-3 .intro { margin: 40px 0 0; }
 	.map-wrap h2 { font-size: 40px; }
 	.map-wrap { width: 100%; }
-	.banner .slick-dots { bottom: 5px; left: 0; margin: 0; }
+	.banner .slick-dots { bottom: 5px; left: 0; margin: 0; }    
+    .gridimg .bg { width: 40%; }
+	.gridimg .content-col { padding: 15px; }
 }
 @media (max-width:890px){
 	.map-wrap .map-pins { width: 100%; }
@@ -1090,6 +1095,10 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 	.box-6 .input-group-btn { margin-top: 10px; }
 	.box-6 .input-group-btn .btn-3 { border: none; width: 100%; }
 	.banner .search-wrap h2 { font-size: 16px; }
+      
+    .gridimg .bg { background: none !important; padding: 0; }
+    .gridimg .bg img { display: block !important; width: 100%; }
+    .gridimg .content-col { padding: 20px 15px !important; }
 }
 @media (max-width:426px){
 	.modal-tempt-1 .modal-dialog, .modal-dialog { width: 280px; }
@@ -1134,3 +1143,9 @@ background: linear-gradient(to right, #1285bf 0%,#14afd0 100%); bottom: 220px; b
 .output{z-index:999; position:relative;}
 .btn-unc{background:#e00024; color:#fff;}
 .btn-cancel{margin-left:10px; background:#fff; color:#000 !important;}
+
+.fea-rsc .title-0{
+	color: #1285bf;
+    font-size: 16px;
+    font-weight: 700;
+}

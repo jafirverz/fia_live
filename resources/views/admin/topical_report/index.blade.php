@@ -115,7 +115,7 @@
 <script>
     $(document).ready(function() {
         $('#datatable_report').dataTable( {
-            'order': [3, 'desc'],
+            'order': [4, 'desc'],
         });
     });
 

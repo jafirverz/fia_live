@@ -26,6 +26,7 @@
         "spatie/laravel-sitemap": "^5.2",
         "srmklive/paypal": "~1.0",
         "unisharp/laravel-filemanager": "^1.9",
+        "wapmorgan/mp3info": "^0.0.5",
         "yadahan/laravel-authentication-log": "^1.1"
     },
     "require-dev": {
