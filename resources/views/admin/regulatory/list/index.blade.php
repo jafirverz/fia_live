@@ -20,7 +20,10 @@
                 <div class="box box-default">
                     <!-- /.box-header -->
                     <div class="box-header">
-                        <a href="{{ url('admin/regulatory/list/'.$parent_id.'/create') }}" class="btn btn-primary pull-right">Create</a>
+                    <a href="{{ url('admin/regulatory/list/'.$parent_id.'?slist=archive') }}" class="btn btn-primary pull-right">Archive</a>
+                    <span class="pull-right" style="width:1em;">&nbsp;</span>
+                    <a href="{{ url('admin/regulatory/list/'.$parent_id.'/create') }}" class="btn btn-primary pull-right">Create</a>
+                        
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -50,6 +53,7 @@
                                             <td>
                                                 <table class="action-table">
                                                     <tr>
+                                                    @if(!request()->input('slist'))
                                                         <td>
                                                             <a href="{{ url('admin/regulatory/list/'.$parent_id.'/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         </td>
@@ -60,6 +64,18 @@
                                                                 <input type="hidden" name="id" value="{{ $regulatory->id }}">
                                                             </form>
                                                         </td>
+                                                    @else
+                                                        <td>
+                                                            <a href="{{ url('admin/regulatory/list/'.$parent_id.'/restore', $regulatory->id) }}" class="btn btn-info" title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{ url('admin/regulatory/list/'.$parent_id.'/permanent-destroy') }}" method="post">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete permanently?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                                <input type="hidden" name="id" value="{{ $regulatory->id }}">
+                                                            </form>
+                                                        </td>
+                                                    @endif
                                                     </tr>
                                                 </table>
 

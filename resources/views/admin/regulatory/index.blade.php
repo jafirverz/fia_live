@@ -28,6 +28,9 @@
                                 <td>
                                     <a href="{{ url('admin/regulatory/highlight/edit') }}" class="btn btn-primary pull-right">Highlight</a>
                                 </td>
+                                <td>
+                                    <a href="{{ url('admin/regulatory?list=archive') }}" class="btn btn-primary pull-right">Archive</a>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -71,6 +74,8 @@
                                             <td>
                                                 <table class="action-table">
                                                     <tr>
+                                                        
+                                                        @if(!request()->input('list'))
                                                         <td>
                                                             <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         </td>
@@ -81,6 +86,18 @@
                                                                 <input type="hidden" name="id" value="{{ $regulatory->id }}">
                                                             </form>
                                                         </td>
+                                                        @else
+                                                        <td>
+                                                            <a href="{{ url('admin/regulatory/restore', $regulatory->id) }}" onclick="return confirm('Are you sure you want to restore?');" class="btn btn-info" title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{ url('admin/regulatory/permanent-destroy') }}" method="post">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete permanently?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                                <input type="hidden" name="id" value="{{ $regulatory->id }}">
+                                                            </form>
+                                                        </td>
+                                                        @endif
                                                         <td>
                                                             <a href="{{ url('admin/regulatory/list', $regulatory->id) }}" class="btn btn-info" title="List"><i class="fa fa-list" aria-hidden="true"></i></a>
                                                         </td>

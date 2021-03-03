@@ -77,14 +77,18 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/regulatory/store', 'CMS\RegulatoryController@store');
     Route::get('/regulatory/edit/{id}', 'CMS\RegulatoryController@edit');
     Route::post('/regulatory/update/{id}', 'CMS\RegulatoryController@update');
+	Route::get('/regulatory/restore/{id}', 'CMS\RegulatoryController@restore');
     Route::post('/regulatory/destroy', 'CMS\RegulatoryController@destroy');
+	Route::post('/regulatory/permanent-destroy', 'CMS\RegulatoryController@permanent_destroy');
 
     Route::get('/regulatory/list/{parent_id}', 'CMS\RegulatoryListController@index');
     Route::get('/regulatory/list/{parent_id}/create', 'CMS\RegulatoryListController@create');
     Route::post('/regulatory/list/{parent_id}/store', 'CMS\RegulatoryListController@store');
     Route::get('/regulatory/list/{parent_id}/edit/{id}', 'CMS\RegulatoryListController@edit');
+	Route::get('/regulatory/list/{parent_id}/restore/{id}', 'CMS\RegulatoryListController@restore');
     Route::post('/regulatory/list/{parent_id}/update/{id}', 'CMS\RegulatoryListController@update');
     Route::post('/regulatory/list/{parent_id}/destroy', 'CMS\RegulatoryListController@destroy');
+	Route::post('/regulatory/list/{parent_id}/permanent-destroy', 'CMS\RegulatoryListController@permanent_destroy');
 
     Route::get('/regulatory/highlight/edit', 'CMS\RegulatoryHighlightController@edit');
     Route::post('/regulatory/highlight/update', 'CMS\RegulatoryHighlightController@update');
