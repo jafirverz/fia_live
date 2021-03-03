@@ -26,7 +26,14 @@ class RegulatoryListController extends Controller
         $title = __('constant.REGULATORY_LIST');
         $subtitle = 'Index';
 
-        $regulatories = Regulatory::where('parent_id', $parent_id)->get();
+		if(request()->input('slist')=='archive')
+		{
+		$regulatories = Regulatory::where('parent_id', $parent_id)->where('delete_status', 1)->get();
+		}
+		else
+		{
+        $regulatories = Regulatory::where('parent_id', $parent_id)->where('delete_status', null)->get();
+		}
         $countries = getFilterData(1);
         $topics = getFilterData(2);
         $stages = getFilterData(3);
@@ -141,6 +148,15 @@ class RegulatoryListController extends Controller
 
         return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.UPDATED', ['module'    =>  __('constant.REGULATORY')]));
     }
+	
+	public function restore($parent_id,$id)
+    {
+        $regulatory = Regulatory::findorfail($id);
+		$regulatory->delete_status = NULL;
+        $regulatory->save();
+
+        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -149,6 +165,15 @@ class RegulatoryListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $parent_id)
+    {
+        $regulatory = Regulatory::findorfail($request->id);
+		$regulatory->delete_status = 1;
+        $regulatory->save();
+
+        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
+    }
+	
+	public function permanent_destroy(Request $request, $parent_id)
     {
         $regulatory = Regulatory::findorfail($request->id);
         $regulatory->delete();

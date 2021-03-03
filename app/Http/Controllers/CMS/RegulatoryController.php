@@ -25,14 +25,22 @@ class RegulatoryController extends Controller
     {
         $title = __('constant.REGULATORY');
         $subtitle = 'Index';
-
-        $regulatories = Regulatory::where('parent_id', null)->get();
+		if(request()->input('list')=='archive')
+		{
+		$regulatories = Regulatory::where('parent_id', null)->where('delete_status', 1)->get();
+		}
+		else
+		{
+        $regulatories = Regulatory::where('parent_id', null)->where('delete_status', null)->get();
+		}
         $countries = getFilterData(1);
         $topics = getFilterData(2);
         $stages = getFilterData(3);
 
         return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
     }
+	
+	
 
 
 
@@ -153,8 +161,26 @@ class RegulatoryController extends Controller
     public function destroy(Request $request)
     {
         $regulatory = Regulatory::findorfail($request->id);
-        $regulatory->delete();
+		$regulatory->delete_status = 1;
+        $regulatory->save();
 
         return redirect('admin/regulatory')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
+    }
+	
+	public function restore($id)
+    {
+        $regulatory = Regulatory::findorfail($id);
+		$regulatory->delete_status = NULL;
+        $regulatory->save();
+
+        return redirect('admin/regulatory')->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
+    }
+	
+	public function permanent_destroy(Request $request)
+    {
+        $regulatory = Regulatory::findorfail($request->id);
+        $regulatory->delete();
+
+        return redirect('admin/regulatory?list=archive')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
     }
 }

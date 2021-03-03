@@ -158,7 +158,7 @@ return [
     'UPDATED' => ':Module has been updated.',
 
     'GENERATED' => ':Module has been generated.',
-
+	'RESTORE' => ':Module has been restored.',
     'MENULIMIT' => ':You can create or active 6 menu items.',
 	'SUBSCRIBE_CREATE' => 'User subscribed successfully.',
 	'SUBSCRIBE_UPDATE' => 'Subscriber updated successfully.',
