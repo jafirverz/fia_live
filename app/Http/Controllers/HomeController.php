@@ -153,7 +153,7 @@ class HomeController extends Controller
             }
         }
         //dd($events);
-
+        $events=remove_duplicates_array($events);
         //Topical Reports
         if ($request->country != "Other") {
             $report_description = DB::table('topical_reports')
@@ -226,7 +226,7 @@ class HomeController extends Controller
 
         //dd($reports);
         //Pages
-
+        $reports=remove_duplicates_array($reports);
         $cms_title = DB::table('pages')
             ->where('title', 'like', '%' . $request->search_content . '%')
             ->whereNotIn('id',[17,21,22,25,27,29,30,31,32])
@@ -250,11 +250,13 @@ class HomeController extends Controller
                 $others[] = $item;
             }
         }
+		$others=remove_duplicates_array($others);
         //Regulatories
         if ($request->country == "Other") {
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('country_id', $ActiveCountries)
+				->orderBy('id','asc')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $country_name = getFilterCountry($request->country);
@@ -265,10 +267,12 @@ class HomeController extends Controller
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
+				->orderBy('id','asc')
                 ->get();
         } else {
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
+				->orderBy('id','asc')
                 ->get();
         }
 
@@ -283,8 +287,10 @@ class HomeController extends Controller
                 } else {
                     $link = '#';
                 }
-                $item['link'] = $link;
+                $item['id'] = $value->id;
+				$item['link'] = $link;
                 $item['title'] = $value->title;
+				$item['parent_id'] = $value->parent_id;
                 $regulatories[] = $item;
             }
         }
@@ -293,6 +299,7 @@ class HomeController extends Controller
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('country_id', $ActiveCountries)
+				->orderBy('id','asc')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
             $country_name = getFilterCountry($request->country);
@@ -303,10 +310,12 @@ class HomeController extends Controller
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
+				->orderBy('id','asc')
                 ->get();
         } else {
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
+				->orderBy('id','asc')
                 ->get();
         }
 
@@ -321,14 +330,16 @@ class HomeController extends Controller
                 } else {
                     $link = '#';
                 }
-                $item['link'] = $link;
+                $item['id'] = $value->id;
+				$item['link'] = $link;
                 $item['title'] = $value->title;
+				$item['parent_id'] = $value->parent_id;
                 $regulatories[] = $item;
             }
         }
 
-        //dd($regulatories);
-
+       $regulatories=remove_duplicates_array($regulatories);
+       //dd($regulatories);
         //Country Information
         if ($request->country == "Other") {
             $information_title = DB::table('country_information')
@@ -386,7 +397,7 @@ class HomeController extends Controller
             }
         }
 
-
+        $informations=remove_duplicates_array($informations);
         //$country = $request->country;
         //$search_content = $request->search_content;
 

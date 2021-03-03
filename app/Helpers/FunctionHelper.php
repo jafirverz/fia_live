@@ -807,4 +807,27 @@ if (!function_exists('getTopics')) {
         }
         return $array_list;
     }
+	
+	function remove_duplicates_array($data=[])
+	{
+		$_data = array();
+		foreach ($data as $v) {
+		  if (isset($_data[$v['link']])) {
+			// found duplicate
+			continue;
+		  }
+		  // remember unique item
+		  $_data[$v['link']] = $v;
+		}
+		// if you need a zero-based array, otheriwse work with $_data
+		$data = array_values($_data);
+		usort($data, 'compare_arr');	
+		return $data;
+	}
+	
+	function compare_arr($a, $b)
+	{
+		if(isset($a['id']))
+		return strnatcmp($a['id'], $b['id']);
+	}
 }
