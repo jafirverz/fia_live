@@ -48,9 +48,18 @@
                                 @php
                                 $keyword=strip_tags($_REQUEST['search_content']);
                                 @endphp
-                                <li class="mlist-line"><a
-                                            href="{{ $info['link']}}">{!!  $info['title'] !!}</a>
+                                @if($info['parent_id']==NULL)
+                                <li class="mlist-line"><a href="{{ $info['link']}}">{!!  $info['title'] !!}</a></li>
+                                @else
+                                @php 
+                                $parent_regulatory_title=getParentRegulatory($info['parent_id']);
+                                @endphp
+                                <li class="mlist-line">
+                                    <ul>
+                                     <li class="mlist-line"><a href="{{ $info['link']}}">{!!  $info['title'] !!}</a></li>
+                                    </ul>
                                 </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
