@@ -155,7 +155,7 @@ class RegulatoryListController extends Controller
 		$regulatory->delete_status = NULL;
         $regulatory->save();
 
-        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
+        return redirect('admin/regulatory/list/'.$parent_id.'?slist=archive')->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
     }
 
     /**
@@ -178,6 +178,6 @@ class RegulatoryListController extends Controller
         $regulatory = Regulatory::findorfail($request->id);
         $regulatory->delete();
 
-        return redirect('admin/regulatory/list/'.$parent_id)->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
+        return redirect('admin/regulatory/list/'.$parent_id.'?slist=archive')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
     }
 }

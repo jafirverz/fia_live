@@ -26,6 +26,7 @@
                                     <thead>
                                     <tr>
                                         <th>Country Info. Title</th>
+                                        <th>Country</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
                                         <th>Order</th>
@@ -37,6 +38,7 @@
                                         @foreach($country_information as $country)
                                             <tr>
                                                 <td>{{ $country->information_title }}</td>
+                                                <td>{{ getFilterCountry($country->country_id) }}</td>
                                                 <td data-order="{{ $country->created_at }}">{{ $country->created_at->format('d M, Y h:i A') ?? '-' }}</td>
                                                 <td data-order="{{ $country->updated_at }}">{{ $country->updated_at->format('d M, Y h:i A') ?? '-' }}</td>
                                                 <td>{{ $country->ordering }}</td>

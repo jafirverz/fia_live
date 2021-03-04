@@ -124,7 +124,7 @@
 <script>
     $(document).ready(function () {
         $('.regulatory_datatable').DataTable({
-            "order": [[ 5, "desc" ]]
+            "order": [[ 6, "desc" ], [ 5, "desc" ]]
         });
     });
 
