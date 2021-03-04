@@ -56,7 +56,7 @@
                                 @endphp
                                 <li class="mlist-line">
                                     <ul>
-                                     <li class="mlist-line"><a href="{{ $info['link']}}">{!!  $info['title'] !!}</a></li>
+                                     <li><a href="{{ $info['link']}}">{!!  $info['title'] !!}</a></li>
                                     </ul>
                                 </li>
                                 @endif

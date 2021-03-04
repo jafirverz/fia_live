@@ -28,7 +28,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
-                                <table class="table table-bordered table-hover datatable">
+                                <table class="table table-bordered table-hover regulatory_datatable">
                                     <thead>
                                         <tr>
                                             <th>Title</th>
@@ -97,4 +97,14 @@
         </div>
     </section>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.regulatory_datatable').DataTable({
+            "order": [[ 4, "desc" ], [ 3, "desc" ]]
+        });
+    });
+
+
+
+</script>
 @endsection

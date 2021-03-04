@@ -48,7 +48,8 @@ $id = $_GET['id'];
                 <div class="intro-2 box-content" data-id="{{ $content->id }}">
                     <h4>{{ $content->information_title }}</h4>
                     <p>{!! $content->information_content !!}</p>
-                    <P><label>Content current as of:</label> {{ date('j F, Y h:i A',strtotime($content->updated_at)) }}</P>
+                    <hr />
+                    <P><label>Content current as of:</label> {{ date('d/m/Y',strtotime($content->updated_at)) }}</P>
                 </div>
                 @endforeach
                 @endif

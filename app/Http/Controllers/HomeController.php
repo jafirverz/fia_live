@@ -94,7 +94,15 @@ class HomeController extends Controller
     {
         //dd($_GET);
         $country = getCountryId($_GET['country']);
-        $regulatories = Regulatory::where('title', 'like', '%' . $_GET['country'] . '%')->orderBy('regulatory_date', 'DESC')->get();
+		$country_name=explode(" ",$_GET['country']);
+		if($country==28)
+		{
+        $regulatories = Regulatory::where('title', 'like', '%' . $country_name[1] . '%')->orderBy('regulatory_date', 'DESC')->get();
+		}
+		else
+		{
+		$regulatories = Regulatory::where('title', 'like', '%' . $country_name[0] . '%')->orderBy('regulatory_date', 'DESC')->get();	
+		}
         $total_regulatories = Regulatory::where('country_id', $country)->count();
         $page = Page::where('pages.slug', $slug)
             ->where('pages.status', 1)
