@@ -55,6 +55,7 @@
                                 $parent_regulatory_title=getParentRegulatory($info['parent_id']);
                                 @endphp
                                 <li class="mlist-line">
+                                {!! $parent_regulatory_title !!}
                                     <ul>
                                      <li><a href="{{ $info['link']}}">{!!  $info['title'] !!}</a></li>
                                     </ul>
