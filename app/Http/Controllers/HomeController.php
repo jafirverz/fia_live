@@ -99,6 +99,10 @@ class HomeController extends Controller
 		{
         $regulatories = Regulatory::where('title', 'like', '%' . $country_name[1] . '%')->orderBy('regulatory_date', 'DESC')->get();
 		}
+		elseif($country==29)
+		{
+        $regulatories = Regulatory::where('title', 'like', '%Taiwan%')->orderBy('regulatory_date', 'DESC')->get();
+		}
 		else
 		{
 		$regulatories = Regulatory::where('title', 'like', '%' . $country_name[0] . '%')->orderBy('regulatory_date', 'DESC')->get();	

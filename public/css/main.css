@@ -447,13 +447,16 @@ background: linear-gradient(to bottom, #f9f9f9 0%,#ffffff 50%); padding: 30px 0;
 .box-5 .content { margin-left: 150px; padding: 50px; }
 .box-5 h2 { color: #fb7a10; font-size: 25px; font-weight: 700; margin: 0 0 15px; text-transform: uppercase; }
 .box-5 ul { list-style: none; margin: 0; padding: 0; }
-.box-5 ul li { margin-top: 10px; padding-left: 20px; position: relative; }
+.box-5 ul li { margin-top: 15px; padding-left: 20px; position: relative; }
 .box-5 ul li:before { color: #fb7a10; content: "\f0a9"; font-family: 'Font Awesome 5 Free'; font-size: 9px; font-weight: 900; left: 0; position: absolute; top: 4px; }
-.box-5 ul li a { color: #909090; display: block; white-space: nowrap; overflow: hidden; padding-bottom: 2px; position: relative; text-overflow: ellipsis; }
-.box-5 ul li a:after { border-bottom: #ababab solid 1px; bottom: 1px; content: ""; left: 0; position: absolute; right: 0; }
-.box-5 ul li a:hover:after { display: none; }
+.box-5 ul li a { color: #909090; display: inline-block; white-space: nowrap; overflow: hidden; padding-bottom: 2px; position: relative; text-overflow: ellipsis; }
+.box-5 ul li a:hover { color: #fb7a10; }
+/*.box-5 ul li a:after { border-bottom: #ababab solid 1px; bottom: 1px; content: ""; left: 0; position: absolute; right: 0; }
+.box-5 ul li a:hover:after { display: none; }*/
 .box-5 ul li a strong { color: #303030; display: inline-block; position: relative; }
 .box-5 ul li a strong:before { border-bottom: #303030 solid 1px; bottom: -1px; content: ""; left: 0; position: absolute; right: 0; z-index: 2; }
+.box-5 ul li ul li { margin-top: 10px; }
+.box-5 ul li ul li:before { content: "\f054"; }
 .box-5 .see-all { background: #f1f1f1; color: #909090; display: block; font-weight: 500; padding: 10px; text-align: center; text-transform: uppercase; }
 .box-5 .see-all:hover { border-bottom-color: #fff; color: #fb7a10; }
 
