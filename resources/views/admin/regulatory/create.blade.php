@@ -41,7 +41,7 @@
                                 </span>
                                 @endif
                             </div>
-                            <div
+                            <?php /*?><div
                                 class="form-group{{ $errors->has('date_of_regulation_in_force') ? ' has-error' : '' }}">
                                 <label for="">Date of Regulation</label>
                                 <input type="text" name="date_of_regulation_in_force" class="form-control datepicker"
@@ -52,7 +52,7 @@
                                     <strong>{{ $errors->first('date_of_regulation_in_force') }}</strong>
                                 </span>
                                 @endif
-                            </div>
+                            </div><?php */?>
                             <div class="form-group{{ $errors->has('topic_id') ? ' has-error' : '' }}">
                                 <label for="">Topics</label>
                                 <select name="topic_id[]" class="form-control select2" style="width: 100%;" multiple>

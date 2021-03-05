@@ -100,7 +100,13 @@
 <script>
     $(document).ready(function () {
         $('.regulatory_datatable').DataTable({
-            "order": [[ 4, "desc" ], [ 3, "desc" ]]
+            "order": [[ 4, "desc" ], [ 3, "desc" ]],
+			"aoColumnDefs": [
+			{ 
+			  "bSortable": false, 
+			  "aTargets": [ -1 ] // &lt;-- gets last column and turns off sorting
+			 } 
+		    ]
         });
     });
 

@@ -39,8 +39,8 @@ class RegulatoryController extends Controller
 
         return view('admin.regulatory.index', compact('title', 'subtitle', 'regulatories', 'countries', 'topics', 'stages'));
     }
-	
-	
+
+
 
 
 
@@ -82,7 +82,7 @@ class RegulatoryController extends Controller
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
         $regulatory->agency_responsible = $request->agency_responsible;
-        $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force ?? null;
+        $regulatory->date_of_regulation_in_force =  null;
         $regulatory->parent_id = null;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->country_id = $request->country_id;
@@ -142,7 +142,7 @@ class RegulatoryController extends Controller
         $regulatory->title = $request->title;
         $regulatory->slug = Str::slug($request->title . Str::uuid(), '-');
         $regulatory->agency_responsible = $request->agency_responsible;
-        $regulatory->date_of_regulation_in_force = $request->date_of_regulation_in_force ?? null;
+        $regulatory->date_of_regulation_in_force = null;
         $regulatory->parent_id = null;
         $regulatory->topic_id = json_encode($request->topic_id);
         $regulatory->country_id = $request->country_id;
@@ -163,24 +163,24 @@ class RegulatoryController extends Controller
         $regulatory = Regulatory::findorfail($request->id);
 		$regulatory->delete_status = 1;
         $regulatory->save();
-		
+
 		Regulatory::where('parent_id',$request->id)->update(['delete_status'=>1]);
-		
+
 
         return redirect('admin/regulatory')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
     }
-	
+
 	public function restore($id)
     {
         $regulatory = Regulatory::findorfail($id);
 		$regulatory->delete_status = NULL;
         $regulatory->save();
-		
+
 		Regulatory::where('parent_id',$id)->update(['delete_status'=>NULL]);
 
         return redirect('admin/regulatory')->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
     }
-	
+
 	public function permanent_destroy(Request $request)
     {
         $regulatory = Regulatory::findorfail($request->id);
