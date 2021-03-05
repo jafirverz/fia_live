@@ -163,6 +163,9 @@ class RegulatoryController extends Controller
         $regulatory = Regulatory::findorfail($request->id);
 		$regulatory->delete_status = 1;
         $regulatory->save();
+		
+		Regulatory::where('parent_id',$request->id)->update(['delete_status'=>1]);
+		
 
         return redirect('admin/regulatory')->with('success',  __('constant.DELETED', ['module'    =>  __('constant.REGULATORY')]));
     }
@@ -172,6 +175,8 @@ class RegulatoryController extends Controller
         $regulatory = Regulatory::findorfail($id);
 		$regulatory->delete_status = NULL;
         $regulatory->save();
+		
+		Regulatory::where('parent_id',$id)->update(['delete_status'=>NULL]);
 
         return redirect('admin/regulatory')->with('success',  __('constant.RESTORE', ['module'    =>  __('constant.REGULATORY')]));
     }
