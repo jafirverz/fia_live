@@ -125,7 +125,13 @@
 <script>
     $(document).ready(function () {
         $('.regulatory_datatable').DataTable({
-            "order": [[ 6, "desc" ], [ 5, "desc" ]]
+            "order": [[ 5, "desc" ], [ 4, "desc" ]],
+			"aoColumnDefs": [
+			{ 
+			  "bSortable": false, 
+			  "aTargets": [ -1 ] // &lt;-- gets last column and turns off sorting
+			 } 
+		 ]
         });
     });
 
