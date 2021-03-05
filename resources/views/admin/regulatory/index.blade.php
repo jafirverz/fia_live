@@ -42,7 +42,7 @@
                                         <tr>
                                             <th>Title</th>
                                             <th>Agency Responsible</th>
-                                            <th>Date of Regulation in Force</th>
+                                            <!--<th>Date of Regulation in Force</th>-->
                                             <th>Topic</th>
                                             <th>Country</th>
                                             <th>Created At</th>
@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
-                                            <td data-order="{{ $regulatory->date_of_regulation_in_force }}">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td>
+                                            <?php /*?><td data-order="{{ $regulatory->date_of_regulation_in_force }}">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td><?php */?>
                                             <td>
                                                 @if($topics)
                                                 @foreach($topics as $topic)
@@ -74,7 +74,7 @@
                                             <td>
                                                 <table class="action-table">
                                                     <tr>
-                                                        
+
                                                         @if(!request()->input('list'))
                                                         <td>
                                                             <a href="{{ url('admin/regulatory/edit', $regulatory->id) }}" class="btn btn-info" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -85,6 +85,9 @@
                                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                                                 <input type="hidden" name="id" value="{{ $regulatory->id }}">
                                                             </form>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ url('admin/regulatory/list', $regulatory->id) }}" class="btn btn-info" title="List"><i class="fa fa-list" aria-hidden="true"></i></a>
                                                         </td>
                                                         @else
                                                         <td>
@@ -98,9 +101,7 @@
                                                             </form>
                                                         </td>
                                                         @endif
-                                                        <td>
-                                                            <a href="{{ url('admin/regulatory/list', $regulatory->id) }}" class="btn btn-info" title="List"><i class="fa fa-list" aria-hidden="true"></i></a>
-                                                        </td>
+                                                        
                                                     </tr>
                                                 </table>
                                                 </td>
