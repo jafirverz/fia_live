@@ -178,7 +178,7 @@ class PagesFrontController extends Controller
             $query->where('regulatories.stage_id', $stage);
         }
 
-        $result = $query->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*')->get();
+        $result = $query->orderBy('regulatories.regulatory_date', 'desc')->orderBy('regulatories.title', 'asc')->select('regulatories.id as regulatories_id', 'regulatories.*')->where('delete_status', NULL)->get();
 //return dd($result);
 
         if(!$country && !$month && !$year && !$topic && !$stage)

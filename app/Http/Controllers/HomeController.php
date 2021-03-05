@@ -268,6 +268,7 @@ class HomeController extends Controller
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('country_id', $ActiveCountries)
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
@@ -279,11 +280,13 @@ class HomeController extends Controller
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         } else {
             $regulatories_description = DB::table('regulatories')
                 ->where('description', 'like', '%' . $request->search_content . '%')
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         }
@@ -311,6 +314,7 @@ class HomeController extends Controller
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->whereNotIn('country_id', $ActiveCountries)
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         } elseif ($request->country != "" && $request->search_content != "") {
@@ -322,11 +326,13 @@ class HomeController extends Controller
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
                 ->where('title', 'like', '%' . $country_name . '%')
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         } else {
             $regulatories_title = DB::table('regulatories')
                 ->where('title', 'like', '%' . $request->search_content . '%')
+				->where('delete_status', NULL)
 				->orderBy('id','asc')
                 ->get();
         }
