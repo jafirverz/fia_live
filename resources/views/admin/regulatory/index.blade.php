@@ -42,7 +42,9 @@
                                         <tr>
                                             <th>Title</th>
                                             <th>Agency Responsible</th>
+
                                             <!--<th>Date of Regulation in Force</th>-->
+
                                             <th>Topic</th>
                                             <th>Country</th>
                                             <th>Created At</th>
@@ -56,7 +58,9 @@
                                         <tr>
                                             <td>{{ $regulatory->title ?? '-' }}</td>
                                             <td>{{ $regulatory->agency_responsible ?? '-' }}</td>
-                                            <?php /*?><td data-order="{{ $regulatory->date_of_regulation_in_force }}">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td><?php */?>
+
+                                            {{-- <td data-order="{{ $regulatory->date_of_regulation_in_force }}">@if($regulatory->date_of_regulation_in_force) {{ $regulatory->date_of_regulation_in_force->format('d M, Y') ?? '-' }} @else - @endif</td> --}}
+
                                             <td>
                                                 @if($topics)
                                                 @foreach($topics as $topic)
@@ -125,6 +129,7 @@
 <script>
     $(document).ready(function () {
         $('.regulatory_datatable').DataTable({
+
             "order": [[ 5, "desc" ], [ 4, "desc" ]],
 			"aoColumnDefs": [
 			{ 
@@ -132,6 +137,7 @@
 			  "aTargets": [ -1 ] // &lt;-- gets last column and turns off sorting
 			 } 
 		 ]
+
         });
     });
 
