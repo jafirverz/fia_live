@@ -130,8 +130,10 @@ $id = $_GET['id'] ?? '';
                                 <div class="document">
 
                                     {!! $content->information_content !!}
+                                    @if($content->updated_at)
                                     <hr />
-									<P><label>Content current as of:</label> {{ date('d/m/Y',strtotime($content->updated_at)) }}</P>
+									<P><label>Content current as of:</label> {{ date('F Y',strtotime($content->updated_at)) }}</P>
+                                    @endif
                                 </div>
 
                             </div>
