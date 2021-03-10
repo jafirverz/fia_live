@@ -657,12 +657,12 @@ background: -webkit-linear-gradient(bottom, #efefef 0%,#fff 100%);
 .map-wrap .p-kor { left: 51.5%; top: 17%; }
 .map-wrap .p-nep { left: 20.4%; top: 17%; }
 .map-wrap .p-bhu { left: 28.2%; top: 19.5%; }
-.map-wrap .p-tai { left: 54.8%; top: 22.2%; }
+.map-wrap .p-tai { left: 54.8%; top: 22.2%; z-index: 2; }
 .map-wrap .p-afg { left: 7.1%; top: 24.9%; }
 .map-wrap .p-hon { left: 39.6%; top: 24.9%; }
 .map-wrap .p-ban { left: 26.2%; top: 27.6%; }
 .map-wrap .p-pak { left: 13%; top: 30.5%; }
-.map-wrap .p-mac { left: 43.4%; top: 30.5%; }
+.map-wrap .p-mac { left: 43.4%; top: 30.5%; z-index: 2; }
 .map-wrap .p-mya { left: 29.2%; top: 33%; }
 .map-wrap .p-lao { left: 39.5%; top: 33%; }
 .map-wrap .p-ind { left: 20.8%; top: 35.9%; }
@@ -678,7 +678,11 @@ background: -webkit-linear-gradient(bottom, #efefef 0%,#fff 100%);
 .map-wrap .p-tim { left: 51.25%; top: 62.9%; }
 .map-wrap .p-aus { left: 58.35%; top: 78.9%; }
 .map-wrap .p-new { left: 86.25%; top: 92.5%; }
-.map-wrap h2 { color: #303030; font-size: 57px; font-weight: 700; line-height: 1.2; margin: 0 0 5px; text-transform: capitalize; }
+.map-wrap .p-hong-kong { left: 43.5%; top: 26%; }
+.map-wrap .p-brunei { left: 42%; top: 51.5%; }
+.map-wrap .p-brunei:before { margin-left: -18px; }
+.map-wrap .p-south-korea { left: 53%; top: 17.4%; }
+.map-wrap h2 { color: #303030; font-size: 42px; font-weight: 700; line-height: 1.2; margin: 0 0 5px; text-transform: capitalize; }
 .map-wrap .pin-pp { bottom: 15%; display: none; left: 63%; position: absolute; right: 0; text-align: center; top: 15%; }
 .map-wrap .pin-pp.openpp { display: block; }
 .map-wrap .pin-pp .link { background: #fff; border-radius: 0 50px 50px 0; box-shadow: #eee 0 0 10px; color: #303030; display: block; font-size: 16px; margin: 30px 0 30px 30px; padding: 20px 40px 20px 120px; position: relative; text-align: left; }

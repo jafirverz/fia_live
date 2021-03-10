@@ -94,6 +94,18 @@
             <a class="pin p-new" href="#new_zealand"><span class="flag"><img src="images/tempt/flag-new-zealand.jpg"
                         alt="NEW ZEALAND flag" /></span><span class="text">New Zealand</span></a>
             @endif
+            @if(checkCountryExist('Brunei Darussalam')==1)
+            <a class="pin p-brunei" href="#brunei_darussalam"><span class="flag"><img src=""
+                        alt="Brunei Darussalam flag" /></span><span class="text">Brunei Darussalam</span></a>
+            @endif
+            @if(checkCountryExist('South Korea')==1)
+            <a class="pin p-south-korea" href="#south_korea"><span class="flag"><img src=""
+                        alt="South Korea flag" /></span><span class="text">South Korea</span></a>
+            @endif
+            @if(checkCountryExist('Hong Kong SAR')==1)
+            <a class="pin p-hong-kong" href="#hong_kong_sar"><span class="flag"><img src=""
+                        alt="Hong Kong SAR flag" /></span><span class="text">Hong Kong SAR</span></a>
+            @endif
         </div>
         <div id="map_country_detail">
 
@@ -331,9 +343,10 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $(".map-pins a").on("click", function() {
                 var country_name= $(this).text();
+                
                 var country= $(this).text();
                 country=country.toLowerCase();
-                country=country.replace(" ", "_");
+                country=country.replaceAll(" ", "_");
 				
                 var content="";
                 content+='<div id="'+country+'" class="pin-pp">';
