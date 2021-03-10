@@ -17,7 +17,7 @@
                 <div class="form-type">
                     <h1 class="title-1 text-center">Create an Account</h1>
                     <div class="intro-1">
-                        <p>All employees of FIA member companies may register for access. Membership of FIA is on a company basis. For membership enquiries, please get in touch with us <a target="_blank" href="{{url('contact-us')}}">here</a>.</p>
+                        <p><strong><i>All employees of <a target="_blank" href="https://foodindustry.asia/membership-benefits">FIA member companies</a> may register for access. Membership of FIA is on a company basis. For membership enquiries, please get in touch with us <a target="_blank" href="{{url('contact-us')}}">here</a>.</i></strong></p>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
