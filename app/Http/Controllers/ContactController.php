@@ -56,6 +56,7 @@ class ContactController extends Controller
 
     public function index(BreadcrumbsManager $breadcrumbs,$slug='contact-us')
     {
+        //hello test
         /*if (!$page) {
 
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
