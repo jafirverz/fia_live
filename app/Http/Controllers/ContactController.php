@@ -59,7 +59,7 @@ class ContactController extends Controller
     {
 
 
-
+        //Hello tesst
         /*if (!$page) {
 
             return redirect(url('/home'))->with('error', __('constant.OPPS'));
